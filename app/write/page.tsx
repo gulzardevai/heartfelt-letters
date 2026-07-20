@@ -41,6 +41,7 @@ function WritePageInner() {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [isPasswordProtected, setIsPasswordProtected] = useState(false)
+  const [isUpdatingPassword, setIsUpdatingPassword] = useState(false)
   const [showShareModal, setShowShareModal] = useState(false)
   const [showEmailModal, setShowEmailModal] = useState(false)
 
@@ -113,6 +114,25 @@ function WritePageInner() {
       toast.error('Failed to save letter')
     } finally {
       setIsSaving(false)
+    }
+  }
+
+  const handleSetPassword = async () => {
+    if (!savedShareId || !password) return
+    setIsUpdatingPassword(true)
+    try {
+      const res = await fetch(`/api/letters/${savedShareId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password }),
+      })
+      if (!res.ok) throw new Error()
+      setIsPasswordProtected(true)
+      toast.success('Password set!')
+    } catch {
+      toast.error('Failed to set password')
+    } finally {
+      setIsUpdatingPassword(false)
     }
   }
 
@@ -339,44 +359,78 @@ function WritePageInner() {
                       />
                     </div>
 
-                    {/* Password protection toggle */}
-                    <div className="pt-1">
-                      <div className="flex items-center justify-between">
-                        <label className="text-xs font-medium text-rose-600 flex items-center gap-1.5">
-                          🔒 Password protect
-                        </label>
-                        <button
-                          type="button"
+                    {/* Password protection */}
+                    <div className="pt-1 border-t border-rose-100">
+                      <label className="flex items-center justify-between cursor-pointer mt-3">
+                        <span className="text-xs font-medium text-rose-600">🔒 Password protect</span>
+                        <span
+                          role="checkbox"
+                          aria-checked={hasPassword}
+                          tabIndex={0}
                           onClick={() => { setHasPassword(p => !p); setPassword('') }}
-                          className={`relative w-10 h-5 rounded-full transition-colors ${hasPassword ? 'bg-rose-500' : 'bg-gray-200'}`}
+                          onKeyDown={e => e.key === ' ' && (e.preventDefault(), setHasPassword(p => !p))}
+                          style={{
+                            display: 'inline-flex',
+                            width: 40,
+                            height: 22,
+                            borderRadius: 999,
+                            backgroundColor: hasPassword ? '#e11d48' : '#d1d5db',
+                            position: 'relative',
+                            cursor: 'pointer',
+                            transition: 'background-color 0.2s',
+                            flexShrink: 0,
+                          }}
                         >
-                          <span className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${hasPassword ? 'translate-x-5' : 'translate-x-0.5'}`} />
-                        </button>
-                      </div>
+                          <span style={{
+                            position: 'absolute',
+                            top: 3,
+                            left: hasPassword ? 21 : 3,
+                            width: 16,
+                            height: 16,
+                            borderRadius: '50%',
+                            backgroundColor: 'white',
+                            boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
+                            transition: 'left 0.2s',
+                          }} />
+                        </span>
+                      </label>
 
                       {hasPassword && (
-                        <div className="mt-2 relative">
-                          <input
-                            type={showPassword ? 'text' : 'password'}
-                            value={password}
-                            onChange={e => setPassword(e.target.value)}
-                            placeholder="Set a password..."
-                            className="w-full border border-rose-200 rounded-xl px-3 py-2 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300 bg-rose-50/30"
-                          />
-                          <button
-                            type="button"
-                            onClick={() => setShowPassword(p => !p)}
-                            className="absolute right-3 top-1/2 -translate-y-1/2 text-rose-400 hover:text-rose-600 text-xs"
-                          >
-                            {showPassword ? 'Hide' : 'Show'}
-                          </button>
+                        <div className="mt-3 space-y-2">
+                          <div className="relative">
+                            <input
+                              type={showPassword ? 'text' : 'password'}
+                              value={password}
+                              onChange={e => setPassword(e.target.value)}
+                              placeholder="Enter a password..."
+                              className="w-full border border-rose-200 rounded-xl px-3 py-2 pr-14 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300 bg-rose-50/30"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => setShowPassword(p => !p)}
+                              className="absolute right-3 top-1/2 -translate-y-1/2 text-rose-400 hover:text-rose-600 text-xs font-medium"
+                            >
+                              {showPassword ? 'Hide' : 'Show'}
+                            </button>
+                          </div>
+                          {savedShareId ? (
+                            <button
+                              type="button"
+                              onClick={handleSetPassword}
+                              disabled={!password || isUpdatingPassword}
+                              className="w-full bg-rose-600 text-white text-xs font-medium py-2 rounded-xl hover:bg-rose-700 transition-colors disabled:opacity-40"
+                            >
+                              {isUpdatingPassword ? 'Saving...' : '🔒 Set Password'}
+                            </button>
+                          ) : (
+                            <p className="text-xs text-rose-400">Save the letter first, then set the password.</p>
+                          )}
                         </div>
                       )}
 
-                      {/* Status badge after saving */}
                       {savedShareId && (
                         <div className={`mt-2 flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg ${isPasswordProtected ? 'bg-rose-50 text-rose-700' : 'bg-gray-50 text-gray-500'}`}>
-                          {isPasswordProtected ? '🔒 Password protected' : '🔓 No password set'}
+                          {isPasswordProtected ? '🔒 Password protected' : '🔓 No password'}
                         </div>
                       )}
                     </div>
