@@ -6,32 +6,24 @@ import bcrypt from 'bcryptjs'
 
 export const dynamic = 'force-dynamic'
 
-const FREE_LETTER_LIMIT = 10
+const FREE_MONTHLY_LIMIT = 10
+const ANON_DAILY_LIMIT = 1
 const FREE_EXPIRY_DAYS = 30
+const ANON_EXPIRY_DAYS = 7
+
+function getClientIp(req: NextRequest): string {
+  return (
+    req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    req.headers.get('x-real-ip') ||
+    'unknown'
+  )
+}
 
 export async function POST(req: NextRequest) {
   try {
+    const db = getSupabaseAdmin()
     const serverSupabase = createSupabaseServerClient()
     const { data: { user } } = await serverSupabase.auth.getUser()
-
-    if (!user) {
-      return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
-    }
-
-    const db = getSupabaseAdmin()
-
-    const { count } = await db
-      .from('letters')
-      .select('*', { count: 'exact', head: true })
-      .eq('user_id', user.id)
-      .eq('is_deleted', false)
-
-    if ((count ?? 0) >= FREE_LETTER_LIMIT) {
-      return NextResponse.json({
-        error: 'Free plan limit reached. You can create up to 10 letters on the free plan.',
-        code: 'LIMIT_REACHED'
-      }, { status: 403 })
-    }
 
     const body = await req.json()
     const { title, type, content, recipient_name, sender_name, password, has_password } = body
@@ -46,27 +38,89 @@ export async function POST(req: NextRequest) {
       password_hash = await bcrypt.hash(password, 10)
     }
 
-    const expires_at = new Date()
-    expires_at.setDate(expires_at.getDate() + FREE_EXPIRY_DAYS)
+    if (user) {
+      // Logged-in user: 10 letters per rolling 30 days
+      const since = new Date()
+      since.setDate(since.getDate() - 30)
 
-    const { data: letter, error } = await db.from('letters').insert({
-      share_id,
-      user_id: user.id,
-      title: title || null,
-      type,
-      content,
-      recipient_name: recipient_name || null,
-      sender_name: sender_name || null,
-      has_password: !!(has_password && password),
-      password_hash,
-      expires_at: expires_at.toISOString(),
-    }).select().single()
+      const { count } = await db
+        .from('letters')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id)
+        .eq('is_deleted', false)
+        .gte('created_at', since.toISOString())
 
-    if (error) throw error
+      if ((count ?? 0) >= FREE_MONTHLY_LIMIT) {
+        return NextResponse.json({
+          error: 'You\'ve reached 10 letters this month. Your limit resets on a rolling 30-day basis.',
+          code: 'LIMIT_REACHED'
+        }, { status: 403 })
+      }
 
-    try { await db.rpc('increment_letter_count', { uid: user.id }) } catch {}
+      const expires_at = new Date()
+      expires_at.setDate(expires_at.getDate() + FREE_EXPIRY_DAYS)
 
-    return NextResponse.json({ share_id: letter.share_id, id: letter.id }, { status: 201 })
+      const { data: letter, error } = await db.from('letters').insert({
+        share_id,
+        user_id: user.id,
+        ip_address: getClientIp(req),
+        title: title || null,
+        type,
+        content,
+        recipient_name: recipient_name || null,
+        sender_name: sender_name || null,
+        has_password: !!(has_password && password),
+        password_hash,
+        expires_at: expires_at.toISOString(),
+      }).select().single()
+
+      if (error) throw error
+
+      try { await db.rpc('increment_letter_count', { uid: user.id }) } catch {}
+
+      return NextResponse.json({ share_id: letter.share_id, id: letter.id }, { status: 201 })
+
+    } else {
+      // Anonymous: 1 letter per IP per day
+      const ip = getClientIp(req)
+      const startOfDay = new Date()
+      startOfDay.setHours(0, 0, 0, 0)
+
+      const { count } = await db
+        .from('letters')
+        .select('*', { count: 'exact', head: true })
+        .is('user_id', null)
+        .eq('ip_address', ip)
+        .gte('created_at', startOfDay.toISOString())
+
+      if ((count ?? 0) >= ANON_DAILY_LIMIT) {
+        return NextResponse.json({
+          error: 'Anonymous users can create 1 letter per day. Sign up free for 10 letters per month.',
+          code: 'ANON_LIMIT_REACHED'
+        }, { status: 429 })
+      }
+
+      const expires_at = new Date()
+      expires_at.setDate(expires_at.getDate() + ANON_EXPIRY_DAYS)
+
+      const { data: letter, error } = await db.from('letters').insert({
+        share_id,
+        user_id: null,
+        ip_address: ip,
+        title: title || null,
+        type,
+        content,
+        recipient_name: recipient_name || null,
+        sender_name: sender_name || null,
+        has_password: !!(has_password && password),
+        password_hash,
+        expires_at: expires_at.toISOString(),
+      }).select().single()
+
+      if (error) throw error
+
+      return NextResponse.json({ share_id: letter.share_id, id: letter.id }, { status: 201 })
+    }
   } catch (err) {
     console.error(err)
     return NextResponse.json({ error: 'Failed to save letter' }, { status: 500 })
@@ -79,7 +133,7 @@ export async function PATCH(req: NextRequest) {
     const { data: { user } } = await serverSupabase.auth.getUser()
 
     if (!user) {
-      return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
+      return NextResponse.json({ error: 'Authentication required to edit letters' }, { status: 401 })
     }
 
     const body = await req.json()

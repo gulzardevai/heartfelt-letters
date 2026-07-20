@@ -119,13 +119,12 @@ function WritePageInner() {
       })
       if (!res.ok) {
         const errData = await res.json().catch(() => ({}))
-        if (res.status === 401) {
-          toast.error('Please sign in to save your letter')
-          router.push('/auth/login?redirectTo=/write')
+        if (res.status === 429 && errData.code === 'ANON_LIMIT_REACHED') {
+          toast.error('1 letter per day for guests. Sign up free for 10/month!', { duration: 5000 })
           return
         }
         if (res.status === 403 && errData.code === 'LIMIT_REACHED') {
-          toast.error('You\'ve reached the 10 letter limit on the free plan.')
+          toast.error('You\'ve reached 10 letters this month. Limit resets on a rolling 30-day basis.', { duration: 5000 })
           return
         }
         throw new Error(errData.error || 'Failed to save')
@@ -171,24 +170,6 @@ function WritePageInner() {
     )
   }
 
-  if (!user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 to-pink-50 px-6">
-        <div className="text-center max-w-sm">
-          <div className="text-5xl mb-4">💌</div>
-          <h2 className="font-serif text-2xl font-bold text-rose-900 mb-3">Sign in to write a letter</h2>
-          <p className="text-rose-600/70 text-sm mb-6">Create a free account to write, save, and share heartfelt letters.</p>
-          <Link href="/auth/login?redirectTo=/write" className="inline-block bg-rose-600 text-white px-8 py-3 rounded-full font-semibold text-sm hover:bg-rose-700 transition-colors shadow-md">
-            Sign In
-          </Link>
-          <p className="mt-4 text-xs text-rose-400">
-            No account?{' '}
-            <Link href="/auth/signup" className="text-rose-600 hover:underline">Sign up free</Link>
-          </p>
-        </div>
-      </div>
-    )
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50">
@@ -276,10 +257,21 @@ function WritePageInner() {
       </nav>
 
       <div className="max-w-5xl mx-auto px-6 py-10">
-        {/* Letter count warning */}
+        {/* Anon banner */}
+        {!user && (
+          <div className="mb-6 bg-white border border-rose-100 rounded-2xl px-5 py-3 text-sm flex items-center justify-between gap-4 shadow-sm">
+            <p className="text-rose-700/80">✍️ Writing as a guest — <strong>1 letter per day</strong>. Your letter expires in 7 days.</p>
+            <div className="flex gap-2 shrink-0">
+              <Link href="/auth/signup" className="text-xs bg-rose-600 text-white px-3 py-1.5 rounded-lg hover:bg-rose-700 transition-colors font-medium">Sign up free</Link>
+              <Link href="/auth/login" className="text-xs border border-rose-200 text-rose-700 px-3 py-1.5 rounded-lg hover:bg-rose-50 transition-colors">Sign in</Link>
+            </div>
+          </div>
+        )}
+
+        {/* Letter count warning (logged-in) */}
         {profile && profile.letter_count >= 8 && (
           <div className="mb-6 bg-amber-50 border border-amber-200 text-amber-800 rounded-2xl px-5 py-3 text-sm">
-            ⚠️ You&apos;ve used {profile.letter_count}/10 letters on the free plan. {10 - profile.letter_count} remaining.
+            ⚠️ You&apos;ve used {profile.letter_count}/10 letters this month. {10 - profile.letter_count} remaining — resets on a rolling 30-day basis.
           </div>
         )}
 
