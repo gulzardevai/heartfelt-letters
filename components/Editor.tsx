@@ -6,8 +6,10 @@ import Image from '@tiptap/extension-image'
 import TextAlign from '@tiptap/extension-text-align'
 import { Color } from '@tiptap/extension-color'
 import TextStyle from '@tiptap/extension-text-style'
+import FontFamily from '@tiptap/extension-font-family'
 import Underline from '@tiptap/extension-underline'
 import { useCallback, useRef } from 'react'
+import type { Editor as TiptapEditor } from '@tiptap/react'
 
 interface Props {
   content: string
@@ -17,6 +19,37 @@ interface Props {
 const FONTS = ['Playfair Display', 'Georgia', 'Dancing Script', 'Inter', 'Arial', 'Times New Roman']
 const COLORS = ['#2c1810', '#9f1239', '#1e3a5f', '#14532d', '#7c3aed', '#92400e', '#0f766e', '#374151']
 
+// Defined outside component so React never unmounts/remounts it
+function ToolBtn({
+  onMouseDown,
+  active,
+  title,
+  children,
+}: {
+  onMouseDown: (e: React.MouseEvent) => void
+  active?: boolean
+  title: string
+  children: React.ReactNode
+}) {
+  return (
+    <button
+      type="button"
+      title={title}
+      onMouseDown={onMouseDown}
+      className={`px-2 py-1.5 rounded-lg text-sm transition-all select-none ${
+        active ? 'bg-rose-100 text-rose-700' : 'hover:bg-rose-50 text-rose-800/70 hover:text-rose-700'
+      }`}
+    >
+      {children}
+    </button>
+  )
+}
+
+// Prevent editor blur on every toolbar interaction
+function prevent(e: React.MouseEvent) {
+  e.preventDefault()
+}
+
 export default function Editor({ content, onChange }: Props) {
   const fileRef = useRef<HTMLInputElement>(null)
 
@@ -25,6 +58,7 @@ export default function Editor({ content, onChange }: Props) {
       StarterKit,
       Underline,
       TextStyle,
+      FontFamily,
       Color,
       Image.configure({ inline: false, allowBase64: true }),
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
@@ -34,66 +68,58 @@ export default function Editor({ content, onChange }: Props) {
       onChange(editor.getHTML())
     },
     editorProps: {
-      attributes: {
-        class: 'tiptap-editor',
-      },
+      attributes: { class: 'tiptap-editor' },
     },
   })
 
   const addImage = useCallback((file: File) => {
     const reader = new FileReader()
     reader.onload = (e) => {
-      const src = e.target?.result as string
-      editor?.chain().focus().setImage({ src }).run()
+      editor?.chain().focus().setImage({ src: e.target?.result as string }).run()
     }
     reader.readAsDataURL(file)
   }, [editor])
 
   if (!editor) return null
 
-  const ToolBtn = ({ onClick, active, title, children }: { onClick: () => void; active?: boolean; title: string; children: React.ReactNode }) => (
-    <button
-      onClick={onClick}
-      title={title}
-      type="button"
-      className={`px-2 py-1.5 rounded-lg text-sm transition-all ${active ? 'bg-rose-100 text-rose-700' : 'hover:bg-rose-50 text-rose-800/70 hover:text-rose-700'}`}
-    >
-      {children}
-    </button>
-  )
+  const cmd = (fn: (e: TiptapEditor) => void) => (ev: React.MouseEvent) => {
+    ev.preventDefault()
+    fn(editor)
+  }
 
   return (
     <div className="border border-rose-100 rounded-2xl overflow-hidden bg-white shadow-paper">
       {/* Toolbar */}
       <div className="flex flex-wrap gap-1 p-3 border-b border-rose-100 bg-rose-50/50">
-        <ToolBtn onClick={() => editor.chain().focus().toggleBold().run()} active={editor.isActive('bold')} title="Bold">
+
+        <ToolBtn onMouseDown={cmd(e => e.chain().focus().toggleBold().run())} active={editor.isActive('bold')} title="Bold">
           <strong>B</strong>
         </ToolBtn>
-        <ToolBtn onClick={() => editor.chain().focus().toggleItalic().run()} active={editor.isActive('italic')} title="Italic">
+        <ToolBtn onMouseDown={cmd(e => e.chain().focus().toggleItalic().run())} active={editor.isActive('italic')} title="Italic">
           <em>I</em>
         </ToolBtn>
-        <ToolBtn onClick={() => editor.chain().focus().toggleUnderline().run()} active={editor.isActive('underline')} title="Underline">
+        <ToolBtn onMouseDown={cmd(e => e.chain().focus().toggleUnderline().run())} active={editor.isActive('underline')} title="Underline">
           <u>U</u>
         </ToolBtn>
 
         <div className="w-px bg-rose-200 mx-1" />
 
-        <ToolBtn onClick={() => editor.chain().focus().setTextAlign('left').run()} active={editor.isActive({ textAlign: 'left' })} title="Align Left">
-          ≡
+        <ToolBtn onMouseDown={cmd(e => e.chain().focus().setTextAlign('left').run())} active={editor.isActive({ textAlign: 'left' })} title="Align Left">
+          ▤
         </ToolBtn>
-        <ToolBtn onClick={() => editor.chain().focus().setTextAlign('center').run()} active={editor.isActive({ textAlign: 'center' })} title="Center">
-          ≡
+        <ToolBtn onMouseDown={cmd(e => e.chain().focus().setTextAlign('center').run())} active={editor.isActive({ textAlign: 'center' })} title="Center">
+          ▥
         </ToolBtn>
-        <ToolBtn onClick={() => editor.chain().focus().setTextAlign('right').run()} active={editor.isActive({ textAlign: 'right' })} title="Align Right">
-          ≡
+        <ToolBtn onMouseDown={cmd(e => e.chain().focus().setTextAlign('right').run())} active={editor.isActive({ textAlign: 'right' })} title="Align Right">
+          ▦
         </ToolBtn>
 
         <div className="w-px bg-rose-200 mx-1" />
 
-        <ToolBtn onClick={() => editor.chain().focus().toggleBlockquote().run()} active={editor.isActive('blockquote')} title="Blockquote">
+        <ToolBtn onMouseDown={cmd(e => e.chain().focus().toggleBlockquote().run())} active={editor.isActive('blockquote')} title="Blockquote">
           ❝
         </ToolBtn>
-        <ToolBtn onClick={() => editor.chain().focus().toggleBulletList().run()} active={editor.isActive('bulletList')} title="List">
+        <ToolBtn onMouseDown={cmd(e => e.chain().focus().toggleBulletList().run())} active={editor.isActive('bulletList')} title="Bullet List">
           •≡
         </ToolBtn>
 
@@ -101,12 +127,15 @@ export default function Editor({ content, onChange }: Props) {
 
         {/* Font selector */}
         <select
-          onChange={(e) => editor.chain().focus().setMark('textStyle', { fontFamily: e.target.value }).run()}
+          onMouseDown={prevent}
+          onChange={(e) => {
+            editor.chain().focus().setFontFamily(e.target.value).run()
+          }}
+          value={editor.getAttributes('textStyle').fontFamily || ''}
           className="text-xs border border-rose-200 rounded-lg px-2 py-1 bg-white text-rose-800 focus:outline-none focus:ring-1 focus:ring-rose-300"
-          defaultValue=""
         >
           <option value="" disabled>Font</option>
-          {FONTS.map(f => <option key={f} value={f}>{f}</option>)}
+          {FONTS.map(f => <option key={f} value={f} style={{ fontFamily: f }}>{f}</option>)}
         </select>
 
         {/* Color picker */}
@@ -116,7 +145,10 @@ export default function Editor({ content, onChange }: Props) {
               key={color}
               type="button"
               title={color}
-              onClick={() => editor.chain().focus().setColor(color).run()}
+              onMouseDown={(e) => {
+                e.preventDefault()
+                editor.chain().focus().setColor(color).run()
+              }}
               className="w-5 h-5 rounded-full border-2 border-white shadow-sm hover:scale-110 transition-transform"
               style={{ backgroundColor: color }}
             />
@@ -131,18 +163,18 @@ export default function Editor({ content, onChange }: Props) {
           type="file"
           accept="image/*"
           className="hidden"
-          onChange={(e) => {
-            const file = e.target.files?.[0]
-            if (file) addImage(file)
-          }}
+          onChange={(e) => { if (e.target.files?.[0]) addImage(e.target.files[0]) }}
         />
-        <ToolBtn onClick={() => fileRef.current?.click()} title="Add Image">
+        <ToolBtn
+          onMouseDown={(e) => { e.preventDefault(); fileRef.current?.click() }}
+          title="Add Image"
+        >
           🖼️
         </ToolBtn>
       </div>
 
-      {/* Editor content */}
-      <div className="letter-paper-plain p-6 min-h-[400px] tiptap-editor">
+      {/* Editor area */}
+      <div className="letter-paper-plain p-6 min-h-[400px]">
         <EditorContent editor={editor} />
       </div>
     </div>
