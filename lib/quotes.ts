@@ -32,7 +32,9 @@ export const QUOTES: Quote[] = [
   ...encouragement,
   ...apology,
   ...celebration,
-] as Quote[]
+].map((q, i) => ({ q: q as Quote, sort: ((i + 1) * 2654435761) % 4294967296 }))
+  .sort((a, b) => a.sort - b.sort)
+  .map(({ q }) => q)
 
 // Deterministic quote of the day — same quote for everyone on a given date
 export function getQuoteOfTheDay(): Quote {
