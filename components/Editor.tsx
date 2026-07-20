@@ -68,7 +68,7 @@ export default function Editor({ content, onChange }: Props) {
       onChange(editor.getHTML())
     },
     editorProps: {
-      attributes: { class: 'tiptap-editor' },
+      attributes: { class: 'prose-editor' },
     },
   })
 
@@ -174,7 +174,7 @@ export default function Editor({ content, onChange }: Props) {
       </div>
 
       {/* Editor area */}
-      <div className="letter-paper-plain p-6 min-h-[400px]">
+      <div className="tiptap-editor letter-paper-plain p-6 min-h-[400px]">
         <EditorContent editor={editor} />
       </div>
     </div>
