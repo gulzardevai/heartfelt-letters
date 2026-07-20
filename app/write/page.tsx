@@ -177,12 +177,26 @@ function WritePageInner() {
             <div className="flex items-center gap-2">
               {savedShareId && (
                 <>
-                  <button
-                    onClick={() => setShowEmailModal(true)}
-                    className="text-sm px-4 py-2 border border-rose-200 text-rose-700 rounded-xl hover:bg-rose-50 transition-colors"
-                  >
-                    📧 Email
-                  </button>
+                  {profile?.plan === 'pro' ? (
+                    <button
+                      onClick={() => setShowEmailModal(true)}
+                      className="text-sm px-4 py-2 border border-rose-200 text-rose-700 rounded-xl hover:bg-rose-50 transition-colors"
+                    >
+                      📧 Email
+                    </button>
+                  ) : (
+                    <div className="relative group">
+                      <button
+                        disabled
+                        className="text-sm px-4 py-2 border border-gray-200 text-gray-400 rounded-xl cursor-not-allowed flex items-center gap-1.5"
+                      >
+                        📧 Email <span className="text-xs bg-gray-100 text-gray-400 px-1.5 py-0.5 rounded-full">Pro</span>
+                      </button>
+                      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 bg-gray-900 text-white text-xs rounded-lg px-3 py-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none text-center">
+                        Email delivery is a Pro feature. Upgrade to send letters by email.
+                      </div>
+                    </div>
+                  )}
                   <button
                     onClick={() => setShowShareModal(true)}
                     className="text-sm px-4 py-2 border border-rose-200 text-rose-700 rounded-xl hover:bg-rose-50 transition-colors"
