@@ -44,9 +44,30 @@ function WritePageInner() {
   const [isUpdatingPassword, setIsUpdatingPassword] = useState(false)
   const [showShareModal, setShowShareModal] = useState(false)
   const [showEmailModal, setShowEmailModal] = useState(false)
+  const [editLoading, setEditLoading] = useState(false)
+
+  const editId = searchParams.get('edit')
 
   useEffect(() => {
-    if (selectedType) setStep('template')
+    if (editId) {
+      setEditLoading(true)
+      fetch(`/api/letters/${editId}`)
+        .then(r => r.json())
+        .then(({ letter }) => {
+          if (!letter) return
+          setSelectedType(letter.type)
+          setTitle(letter.title || '')
+          setRecipientName(letter.recipient_name || '')
+          setSenderName(letter.sender_name || '')
+          setContent(letter.content)
+          setSavedShareId(letter.share_id)
+          setIsPasswordProtected(letter.has_password)
+          setStep('write')
+        })
+        .finally(() => setEditLoading(false))
+    } else if (selectedType) {
+      setStep('template')
+    }
   }, [])
 
   const handleTypeSelect = (typeId: string) => {
@@ -142,10 +163,10 @@ function WritePageInner() {
   const selectedTypeData = LETTER_TYPES.find(t => t.id === selectedType)
   const templates = selectedType ? getTemplatesForType(selectedType) : []
 
-  if (authLoading) {
+  if (authLoading || editLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-rose-50 to-pink-50">
-        <div className="text-rose-400 text-sm">Loading...</div>
+        <div className="text-rose-400 text-sm">{editLoading ? 'Loading letter...' : 'Loading...'}</div>
       </div>
     )
   }

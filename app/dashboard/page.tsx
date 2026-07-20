@@ -155,6 +155,12 @@ export default function DashboardPage() {
                     >
                       View
                     </Link>
+                    <Link
+                      href={`/write?edit=${letter.share_id}`}
+                      className="text-xs px-3 py-1.5 bg-rose-50 text-rose-700 rounded-lg hover:bg-rose-100 transition-colors"
+                    >
+                      Edit
+                    </Link>
                     <button
                       onClick={() => handleCopyLink(letter.share_id)}
                       className="text-xs px-3 py-1.5 bg-rose-50 text-rose-700 rounded-lg hover:bg-rose-100 transition-colors"
