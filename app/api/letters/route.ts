@@ -72,3 +72,44 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: 'Failed to save letter' }, { status: 500 })
   }
 }
+
+export async function PATCH(req: NextRequest) {
+  try {
+    const serverSupabase = createSupabaseServerClient()
+    const { data: { user } } = await serverSupabase.auth.getUser()
+
+    if (!user) {
+      return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
+    }
+
+    const body = await req.json()
+    const { share_id, title, type, content, recipient_name, sender_name } = body
+
+    if (!share_id || !type || !content) {
+      return NextResponse.json({ error: 'share_id, type and content are required' }, { status: 400 })
+    }
+
+    const db = getSupabaseAdmin()
+
+    const { data: letter, error } = await db
+      .from('letters')
+      .update({
+        title: title || null,
+        type,
+        content,
+        recipient_name: recipient_name || null,
+        sender_name: sender_name || null,
+      })
+      .eq('share_id', share_id)
+      .eq('user_id', user.id)
+      .select()
+      .single()
+
+    if (error) throw error
+
+    return NextResponse.json({ share_id: letter.share_id, id: letter.id })
+  } catch (err) {
+    console.error(err)
+    return NextResponse.json({ error: 'Failed to update letter' }, { status: 500 })
+  }
+}

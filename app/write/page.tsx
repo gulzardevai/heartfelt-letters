@@ -80,17 +80,20 @@ function WritePageInner() {
     }
     setIsSaving(true)
     try {
+      const isUpdate = !!savedShareId
       const res = await fetch('/api/letters', {
-        method: 'POST',
+        method: isUpdate ? 'PATCH' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          ...(isUpdate ? { share_id: savedShareId } : {
+            has_password: hasPassword && !!password,
+            password: hasPassword ? password : null,
+          }),
           type: selectedType,
           content,
           title: title || null,
           recipient_name: recipientName || null,
           sender_name: senderName || null,
-          has_password: hasPassword && !!password,
-          password: hasPassword ? password : null,
         }),
       })
       if (!res.ok) {
@@ -109,7 +112,7 @@ function WritePageInner() {
       const data = await res.json()
       setSavedShareId(data.share_id)
       setIsPasswordProtected(hasPassword && !!password)
-      toast.success('Letter saved!')
+      toast.success(savedShareId ? 'Letter updated!' : 'Letter saved!')
     } catch {
       toast.error('Failed to save letter')
     } finally {
