@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import PasswordGate from '@/components/PasswordGate'
-import LetterView from '@/components/LetterView'
+import EnvelopeReveal from '@/components/EnvelopeReveal'
 import { Letter } from '@/lib/supabase'
 
 interface Props {
@@ -13,7 +13,7 @@ export default function PasswordGateWrapper({ shareId }: Props) {
   const [letter, setLetter] = useState<Letter | null>(null)
 
   if (letter) {
-    return <LetterView letter={letter} />
+    return <EnvelopeReveal letter={letter} />
   }
 
   return <PasswordGate shareId={shareId} onUnlock={setLetter} />

@@ -172,3 +172,150 @@ body {
 .float-animation {
   animation: float 6s ease-in-out infinite;
 }
+
+/* ===== Envelope reveal ===== */
+.envelope-scene {
+  position: relative;
+  cursor: pointer;
+  perspective: 1200px;
+  animation: envelope-drop 0.8s cubic-bezier(0.22, 1.2, 0.36, 1) forwards;
+}
+
+@keyframes envelope-drop {
+  from { opacity: 0; transform: translateY(-40px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.envelope {
+  position: relative;
+  width: min(340px, 84vw);
+  height: 230px;
+  transition: transform 0.5s ease;
+}
+
+.envelope-scene:hover:not(.is-opening) .envelope {
+  transform: translateY(-6px) rotate(-1deg);
+}
+
+.envelope-back {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, #fecdd3, #fda4af);
+  border-radius: 10px;
+  box-shadow: 0 20px 50px -12px rgba(159, 18, 57, 0.35);
+}
+
+.envelope-letter {
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  top: 10px;
+  height: 200px;
+  background: #fdf8f0;
+  border-radius: 6px 6px 0 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  z-index: 2;
+  overflow: hidden;
+}
+
+.envelope-front {
+  position: absolute;
+  inset: 0;
+  border-radius: 10px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(200deg, transparent 46%, #ffe4e6 46.5%) top left / 51% 100% no-repeat,
+    linear-gradient(160deg, transparent 46%, #ffe4e6 46.5%) top right / 51% 100% no-repeat,
+    linear-gradient(to top, #fff1f2 55%, transparent 55%);
+  box-shadow: inset 0 -2px 6px rgba(159, 18, 57, 0.06);
+}
+
+.envelope-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 115px;
+  background: linear-gradient(to bottom, #fb7185, #f43f5e);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  border-radius: 10px 10px 0 0;
+  transform-origin: top center;
+  z-index: 4;
+  transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1), z-index 0s 0.7s;
+}
+
+.wax-seal {
+  position: absolute;
+  top: 92px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 52px;
+  height: 52px;
+  background: radial-gradient(circle at 35% 30%, #be123c, #881337);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  z-index: 5;
+  box-shadow: 0 3px 8px rgba(136, 19, 55, 0.4), inset 0 2px 4px rgba(255,255,255,0.25);
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+
+/* Opening sequence */
+.envelope-scene.is-opening { cursor: default; }
+
+.envelope-scene.is-opening .wax-seal {
+  transform: translateX(-50%) scale(0);
+  opacity: 0;
+}
+
+.envelope-scene.is-opening .envelope-flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+  transition-delay: 0.25s;
+}
+
+.envelope-scene.is-opening .envelope-letter {
+  animation: letter-rise 1.1s cubic-bezier(0.34, 1.3, 0.5, 1) 0.85s forwards;
+}
+
+@keyframes letter-rise {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-190px); }
+}
+
+.envelope-scene.is-opening .envelope {
+  animation: envelope-fall 0.7s ease-in 1.35s forwards;
+}
+
+@keyframes envelope-fall {
+  to { opacity: 0; transform: translateY(60px) scale(0.92); }
+}
+
+.letter-reveal {
+  animation: letter-reveal-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes letter-reveal-in {
+  from { opacity: 0; transform: translateY(35px) scale(0.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.float-heart {
+  position: absolute;
+  bottom: 40%;
+  font-size: 22px;
+  pointer-events: none;
+  animation: heart-float 1.6s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes heart-float {
+  0% { opacity: 0; transform: translateY(0) scale(0.6); }
+  25% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(-140px) scale(1.15) rotate(12deg); }
+}
