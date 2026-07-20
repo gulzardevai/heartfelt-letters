@@ -30,6 +30,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-rose-700">
           <Link href="/" className="hover:text-rose-900 transition-colors">Home</Link>
           <Link href="/write" className="hover:text-rose-900 transition-colors">Write a Letter</Link>
+          <Link href="/quotes" className="hover:text-rose-900 transition-colors">Quotes</Link>
           <Link href="/blog" className="hover:text-rose-900 transition-colors">Blog</Link>
           <Link href="/compare" className="hover:text-rose-900 transition-colors">Why Us</Link>
           <Link href="/about" className="hover:text-rose-900 transition-colors">About</Link>
