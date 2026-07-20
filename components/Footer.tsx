@@ -20,6 +20,7 @@ export default function Footer() {
               <li><Link href="/about" className="hover:text-rose-800 transition-colors">About</Link></li>
               <li><Link href="/blog" className="hover:text-rose-800 transition-colors">Blog</Link></li>
               <li><Link href="/quotes" className="hover:text-rose-800 transition-colors">Quotes</Link></li>
+              <li><Link href="/quotes" className="hover:text-rose-800 transition-colors">Quotes</Link></li>
               <li><Link href="/compare" className="hover:text-rose-800 transition-colors">Why Us?</Link></li>
               <li><Link href="/contact" className="hover:text-rose-800 transition-colors">Contact</Link></li>
             </ul>

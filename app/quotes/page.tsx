@@ -29,7 +29,7 @@ export default function QuotesPage() {
 
   const saveFavorites = (next: Set<string>) => {
     if (!user) return
-    localStorage.setItem(FAVORITES_KEY(user.id), JSON.stringify([...next]))
+    localStorage.setItem(FAVORITES_KEY(user.id), JSON.stringify(Array.from(next)))
     setFavorites(next)
   }
 

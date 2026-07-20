@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { LETTER_TYPES } from '@/lib/templates'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import QuoteOfTheDay from '@/components/QuoteOfTheDay'
 
 export default function Home() {
   return (
@@ -47,6 +48,9 @@ export default function Home() {
           <div className="absolute -top-3 -right-3 bg-rose-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm shadow-md">💕</div>
         </div>
       </section>
+
+      {/* Quote of the day */}
+      <QuoteOfTheDay />
 
       {/* Features */}
       <section className="py-16 px-6 bg-white/40">
