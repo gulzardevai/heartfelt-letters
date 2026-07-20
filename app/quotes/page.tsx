@@ -17,6 +17,8 @@ export default function QuotesPage() {
   const [favorites, setFavorites] = useState<Set<string>>(new Set())
   const [showFavOnly, setShowFavOnly] = useState(false)
   const [copied, setCopied] = useState<string | null>(null)
+  const [page, setPage] = useState(1)
+  const PER_PAGE = 24
 
   // Load favorites from localStorage
   useEffect(() => {
@@ -61,6 +63,18 @@ export default function QuotesPage() {
       return true
     })
   }, [activeCategory, search, showFavOnly, favorites])
+
+  // Reset to first page whenever filters change
+  useEffect(() => { setPage(1) }, [activeCategory, search, showFavOnly])
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / PER_PAGE))
+  const currentPage = Math.min(page, totalPages)
+  const paginated = filtered.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE)
+
+  const goToPage = (p: number) => {
+    setPage(p)
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
 
   const categoryInfo = QUOTE_CATEGORIES.find(c => c.id === activeCategory)
 
@@ -149,7 +163,7 @@ export default function QuotesPage() {
             </div>
           ) : (
             <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5">
-              {filtered.map(quote => {
+              {paginated.map(quote => {
                 const cat = QUOTE_CATEGORIES.find(c => c.id === quote.category)
                 const isFav = favorites.has(quote.id)
                 const isCopied = copied === quote.id
@@ -207,6 +221,43 @@ export default function QuotesPage() {
                   </div>
                 )
               })}
+            </div>
+          )}
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-12 flex-wrap">
+              <button
+                onClick={() => goToPage(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="px-4 py-2 rounded-full text-sm font-medium border border-rose-100 bg-white text-rose-700 hover:bg-rose-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                ← Prev
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1)
+                .filter(p => p === 1 || p === totalPages || Math.abs(p - currentPage) <= 2)
+                .map((p, idx, arr) => (
+                  <span key={p} className="flex items-center gap-2">
+                    {idx > 0 && arr[idx - 1] !== p - 1 && <span className="text-rose-300 text-sm">…</span>}
+                    <button
+                      onClick={() => goToPage(p)}
+                      className={`w-9 h-9 rounded-full text-sm font-medium transition-colors ${
+                        p === currentPage
+                          ? 'bg-rose-600 text-white shadow-sm'
+                          : 'bg-white text-rose-700 border border-rose-100 hover:bg-rose-50'
+                      }`}
+                    >
+                      {p}
+                    </button>
+                  </span>
+                ))}
+              <button
+                onClick={() => goToPage(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="px-4 py-2 rounded-full text-sm font-medium border border-rose-100 bg-white text-rose-700 hover:bg-rose-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                Next →
+              </button>
             </div>
           )}
         </div>
