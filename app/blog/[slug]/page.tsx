@@ -47,6 +47,11 @@ export default async function BlogPostPage({ params }: Props) {
             </div>
           </header>
 
+          {post.cover_image && (
+            /* eslint-disable-next-line @next/next/no-img-element */
+            <img src={post.cover_image} alt={post.title} className="w-full rounded-2xl mb-10 shadow-md object-cover max-h-[420px]" />
+          )}
+
           <div
             className="prose prose-rose max-w-none prose-headings:font-serif prose-h2:text-rose-900 prose-p:text-rose-800/80 prose-p:leading-relaxed prose-em:text-rose-700"
             dangerouslySetInnerHTML={{ __html: post.content }}

@@ -10,6 +10,7 @@ type BlogPost = {
   slug: string
   title: string
   excerpt: string | null
+  cover_image: string | null
   author: string
   tags: string[]
   published_at: string | null
@@ -20,7 +21,7 @@ export default async function BlogPage() {
   const supabase = createSupabaseServerClient()
   const { data: posts } = await supabase
     .from('blog_posts')
-    .select('id, slug, title, excerpt, author, tags, published_at, created_at')
+    .select('id, slug, title, excerpt, cover_image, author, tags, published_at, created_at')
     .eq('published', true)
     .order('published_at', { ascending: false })
 
@@ -47,6 +48,12 @@ export default async function BlogPage() {
                 const formatted = new Date(date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
                 return (
                   <article key={post.id} className="bg-white rounded-2xl border border-rose-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+                    {post.cover_image && (
+                      <Link href={`/blog/${post.slug}`} className="block">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={post.cover_image} alt={post.title} className="w-full h-44 object-cover" />
+                      </Link>
+                    )}
                     <div className="p-6">
                       <div className="flex flex-wrap gap-2 mb-4">
                         {post.tags.map(tag => (
