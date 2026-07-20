@@ -5,10 +5,16 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Heartfelt Letters vs Competitors — Why We\'re Different',
-  description: 'See how Heartfelt Letters compares to Paperless Post, Hallmark, Canva Cards, and other letter writing tools. No subscriptions, no design skills needed.',
+  description: 'See how Heartfelt Letters compares to Digital Love Letters, Paperless Post, Hallmark, Canva, and other letter writing tools. Free, all occasions, no account required.',
 }
 
 const competitors = [
+  {
+    name: 'Digital Love Letters',
+    focus: 'Online love letters',
+    price: 'Paid plans',
+    weakness: 'Focused almost entirely on romantic letters, requires an account to start writing, and premium features sit behind paid plans. No quote library, no anonymous writing.',
+  },
   {
     name: 'Paperless Post',
     focus: 'Digital greeting cards',
@@ -42,17 +48,18 @@ const competitors = [
 ]
 
 const features = [
-  { feature: 'Purpose-built for letters', us: true, paperless: false, hallmark: false, canva: false, docs: false },
-  { feature: '30 letter templates by type', us: true, paperless: false, hallmark: true, canva: false, docs: false },
-  { feature: 'Rich text editor', us: true, paperless: false, hallmark: false, canva: true, docs: true },
-  { feature: 'Share via private link', us: true, paperless: true, hallmark: false, canva: false, docs: true },
-  { feature: 'Password protection', us: true, paperless: false, hallmark: false, canva: false, docs: true },
-  { feature: 'Image uploads', us: true, paperless: true, hallmark: false, canva: true, docs: true },
-  { feature: 'Beautiful recipient view', us: true, paperless: true, hallmark: true, canva: false, docs: false },
-  { feature: 'Anonymous writing', us: true, paperless: false, hallmark: false, canva: false, docs: false },
-  { feature: 'Free to use', us: true, paperless: false, hallmark: false, canva: true, docs: true },
-  { feature: 'No design skills needed', us: true, paperless: true, hallmark: true, canva: false, docs: true },
-  { feature: 'Email delivery', us: true, paperless: true, hallmark: true, canva: false, docs: false },
+  { feature: 'Purpose-built for letters', us: true, dll: true, paperless: false, hallmark: false, canva: false, docs: false },
+  { feature: 'All occasions, not just romance', us: true, dll: false, paperless: true, hallmark: true, canva: true, docs: true },
+  { feature: '30 letter templates by type', us: true, dll: false, paperless: false, hallmark: true, canva: false, docs: false },
+  { feature: 'Rich text editor', us: true, dll: true, paperless: false, hallmark: false, canva: true, docs: true },
+  { feature: 'Share via private link', us: true, dll: true, paperless: true, hallmark: false, canva: false, docs: true },
+  { feature: 'Password protection', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: true },
+  { feature: 'Envelope opening animation', us: true, dll: false, paperless: true, hallmark: false, canva: false, docs: false },
+  { feature: 'No account needed to start', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
+  { feature: 'Image uploads', us: true, dll: true, paperless: true, hallmark: false, canva: true, docs: true },
+  { feature: '700+ quote library', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
+  { feature: 'Anonymous writing', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
+  { feature: 'Free to use', us: true, dll: false, paperless: false, hallmark: false, canva: true, docs: true },
 ]
 
 const Check = () => (
@@ -128,6 +135,7 @@ export default function ComparePage() {
                     <th className="px-4 py-4 text-center">
                       <span className="font-semibold text-rose-700 bg-rose-50 px-3 py-1 rounded-full text-xs">💌 Us</span>
                     </th>
+                    <th className="px-4 py-4 text-center text-xs text-gray-500 font-medium">Digital Love Letters</th>
                     <th className="px-4 py-4 text-center text-xs text-gray-500 font-medium">Paperless Post</th>
                     <th className="px-4 py-4 text-center text-xs text-gray-500 font-medium">Hallmark</th>
                     <th className="px-4 py-4 text-center text-xs text-gray-500 font-medium">Canva</th>
@@ -139,6 +147,7 @@ export default function ComparePage() {
                     <tr key={row.feature} className="hover:bg-rose-50/30 transition-colors">
                       <td className="px-6 py-3.5 text-gray-700">{row.feature}</td>
                       <td className="px-4 py-3.5 text-center">{row.us ? <Check /> : <Cross />}</td>
+                      <td className="px-4 py-3.5 text-center">{row.dll ? <Check /> : <Cross />}</td>
                       <td className="px-4 py-3.5 text-center">{row.paperless ? <Check /> : <Cross />}</td>
                       <td className="px-4 py-3.5 text-center">{row.hallmark ? <Check /> : <Cross />}</td>
                       <td className="px-4 py-3.5 text-center">{row.canva ? <Check /> : <Cross />}</td>
