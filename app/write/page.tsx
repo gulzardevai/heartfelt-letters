@@ -37,11 +37,7 @@ function WritePageInner() {
   const [senderName, setSenderName] = useState('')
   const [isSaving, setIsSaving] = useState(false)
   const [savedShareId, setSavedShareId] = useState<string | null>(null)
-  const [hasPassword, setHasPassword] = useState(false)
-  const [password, setPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
-  const [isPasswordProtected, setIsPasswordProtected] = useState(false)
-  const [isUpdatingPassword, setIsUpdatingPassword] = useState(false)
+
   const [showShareModal, setShowShareModal] = useState(false)
   const [showEmailModal, setShowEmailModal] = useState(false)
   const [editLoading, setEditLoading] = useState(false)
@@ -61,7 +57,7 @@ function WritePageInner() {
           setSenderName(letter.sender_name || '')
           setContent(letter.content)
           setSavedShareId(letter.share_id)
-          setIsPasswordProtected(letter.has_password)
+
           setStep('write')
         })
         .finally(() => setEditLoading(false))
@@ -106,10 +102,7 @@ function WritePageInner() {
         method: isUpdate ? 'PATCH' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...(isUpdate ? { share_id: savedShareId } : {
-            has_password: hasPassword && !!password,
-            password: hasPassword ? password : null,
-          }),
+          ...(isUpdate ? { share_id: savedShareId } : {}),
           type: selectedType,
           content,
           title: title || null,
@@ -131,8 +124,11 @@ function WritePageInner() {
       }
       const data = await res.json()
       setSavedShareId(data.share_id)
-      setIsPasswordProtected(hasPassword && !!password)
-      toast.success(savedShareId ? 'Letter updated!' : 'Letter saved!')
+      if (!user) {
+        setShowShareModal(true)
+      } else {
+        toast.success(savedShareId ? 'Letter updated!' : 'Letter saved!')
+      }
     } catch {
       toast.error('Failed to save letter')
     } finally {
@@ -140,24 +136,6 @@ function WritePageInner() {
     }
   }
 
-  const handleSetPassword = async () => {
-    if (!savedShareId || !password) return
-    setIsUpdatingPassword(true)
-    try {
-      const res = await fetch(`/api/letters/${savedShareId}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
-      })
-      if (!res.ok) throw new Error()
-      setIsPasswordProtected(true)
-      toast.success('Password set!')
-    } catch {
-      toast.error('Failed to set password')
-    } finally {
-      setIsUpdatingPassword(false)
-    }
-  }
 
   const selectedTypeData = LETTER_TYPES.find(t => t.id === selectedType)
   const templates = selectedType ? getTemplatesForType(selectedType) : []
@@ -375,81 +353,6 @@ function WritePageInner() {
                       />
                     </div>
 
-                    {/* Password protection */}
-                    <div className="pt-1 border-t border-rose-100">
-                      <label className="flex items-center justify-between cursor-pointer mt-3">
-                        <span className="text-xs font-medium text-rose-600">🔒 Password protect</span>
-                        <span
-                          role="checkbox"
-                          aria-checked={hasPassword}
-                          tabIndex={0}
-                          onClick={() => { setHasPassword(p => !p); setPassword('') }}
-                          onKeyDown={e => e.key === ' ' && (e.preventDefault(), setHasPassword(p => !p))}
-                          style={{
-                            display: 'inline-flex',
-                            width: 40,
-                            height: 22,
-                            borderRadius: 999,
-                            backgroundColor: hasPassword ? '#e11d48' : '#d1d5db',
-                            position: 'relative',
-                            cursor: 'pointer',
-                            transition: 'background-color 0.2s',
-                            flexShrink: 0,
-                          }}
-                        >
-                          <span style={{
-                            position: 'absolute',
-                            top: 3,
-                            left: hasPassword ? 21 : 3,
-                            width: 16,
-                            height: 16,
-                            borderRadius: '50%',
-                            backgroundColor: 'white',
-                            boxShadow: '0 1px 3px rgba(0,0,0,0.2)',
-                            transition: 'left 0.2s',
-                          }} />
-                        </span>
-                      </label>
-
-                      {hasPassword && (
-                        <div className="mt-3 space-y-2">
-                          <div className="relative">
-                            <input
-                              type={showPassword ? 'text' : 'password'}
-                              value={password}
-                              onChange={e => setPassword(e.target.value)}
-                              placeholder="Enter a password..."
-                              className="w-full border border-rose-200 rounded-xl px-3 py-2 pr-14 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300 bg-rose-50/30"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => setShowPassword(p => !p)}
-                              className="absolute right-3 top-1/2 -translate-y-1/2 text-rose-400 hover:text-rose-600 text-xs font-medium"
-                            >
-                              {showPassword ? 'Hide' : 'Show'}
-                            </button>
-                          </div>
-                          {savedShareId ? (
-                            <button
-                              type="button"
-                              onClick={handleSetPassword}
-                              disabled={!password || isUpdatingPassword}
-                              className="w-full bg-rose-600 text-white text-xs font-medium py-2 rounded-xl hover:bg-rose-700 transition-colors disabled:opacity-40"
-                            >
-                              {isUpdatingPassword ? 'Saving...' : '🔒 Set Password'}
-                            </button>
-                          ) : (
-                            <p className="text-xs text-rose-400">Save the letter first, then set the password.</p>
-                          )}
-                        </div>
-                      )}
-
-                      {savedShareId && (
-                        <div className={`mt-2 flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg ${isPasswordProtected ? 'bg-rose-50 text-rose-700' : 'bg-gray-50 text-gray-500'}`}>
-                          {isPasswordProtected ? '🔒 Password protected' : '🔓 No password'}
-                        </div>
-                      )}
-                    </div>
                   </div>
                 </div>
 
@@ -481,7 +384,7 @@ function WritePageInner() {
       </div>
 
       {showShareModal && savedShareId && (
-        <ShareModal shareId={savedShareId} onClose={() => setShowShareModal(false)} />
+        <ShareModal shareId={savedShareId} onClose={() => setShowShareModal(false)} showPasswordSetup={!user} />
       )}
       {showEmailModal && savedShareId && (
         <EmailModal shareId={savedShareId} senderName={senderName} onClose={() => setShowEmailModal(false)} />
