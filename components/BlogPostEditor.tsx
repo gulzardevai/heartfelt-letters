@@ -53,6 +53,10 @@ export default function BlogPostEditor({ initial }: { initial?: Partial<Post> })
   const [deleting, setDeleting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [coverPreview, setCoverPreview] = useState(initial?.cover_image ?? '')
+  const [showLinkPanel, setShowLinkPanel] = useState(false)
+  const [linkUrl, setLinkUrl] = useState('')
+  const [linkNoFollow, setLinkNoFollow] = useState(false)
+  const [linkNewTab, setLinkNewTab] = useState(true)
 
   const editor = useEditor({
     extensions: [
@@ -234,6 +238,23 @@ export default function BlogPostEditor({ initial }: { initial?: Partial<Post> })
               <button onClick={() => editor?.chain().focus().setTextAlign('center').run()} className="p-1.5 rounded text-xs text-gray-600 hover:bg-gray-100">≡C</button>
               <div className="w-px h-5 bg-gray-300 mx-1"></div>
               <button
+                onClick={() => {
+                  if (!editor) return
+                  if (editor.isActive('link')) {
+                    editor.chain().focus().unsetLink().run()
+                    return
+                  }
+                  const attrs = editor.getAttributes('link')
+                  setLinkUrl(attrs.href || '')
+                  setLinkNoFollow((attrs.rel || '').includes('nofollow'))
+                  setShowLinkPanel(p => !p)
+                }}
+                className={`p-1.5 rounded text-xs flex items-center gap-1 ${editor?.isActive('link') ? 'bg-rose-100 text-rose-700' : 'text-gray-600 hover:bg-gray-100'}`}
+                title={editor?.isActive('link') ? 'Remove link' : 'Insert link'}
+              >
+                🔗 {editor?.isActive('link') ? 'Unlink' : 'Link'}
+              </button>
+              <button
                 onClick={() => fileRef.current?.click()}
                 className="p-1.5 rounded text-xs text-gray-600 hover:bg-gray-100 flex items-center gap-1"
               >
@@ -247,6 +268,45 @@ export default function BlogPostEditor({ initial }: { initial?: Partial<Post> })
                 onChange={e => { if (e.target.files?.[0]) handleInlineImage(e.target.files[0]) }}
               />
             </div>
+            {showLinkPanel && (
+              <div className="border-b border-gray-200 px-4 py-3 bg-rose-50/40 flex flex-wrap items-center gap-3">
+                <input
+                  value={linkUrl}
+                  onChange={e => setLinkUrl(e.target.value)}
+                  placeholder="https://example.com"
+                  className="flex-1 min-w-[220px] border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300 bg-white"
+                />
+                <label className="flex items-center gap-1.5 text-xs text-gray-600 cursor-pointer">
+                  <input type="checkbox" checked={linkNoFollow} onChange={e => setLinkNoFollow(e.target.checked)} className="accent-rose-600" />
+                  nofollow
+                </label>
+                <label className="flex items-center gap-1.5 text-xs text-gray-600 cursor-pointer">
+                  <input type="checkbox" checked={linkNewTab} onChange={e => setLinkNewTab(e.target.checked)} className="accent-rose-600" />
+                  new tab
+                </label>
+                <button
+                  onClick={() => {
+                    if (!editor || !linkUrl) return
+                    const rel = linkNoFollow ? 'nofollow noopener noreferrer' : 'noopener'
+                    editor.chain().focus().extendMarkRange('link')
+                      .setLink({ href: linkUrl, target: linkNewTab ? '_blank' : null, rel } as never)
+                      .run()
+                    setShowLinkPanel(false)
+                    setLinkUrl('')
+                  }}
+                  disabled={!linkUrl}
+                  className="text-xs bg-rose-600 text-white px-4 py-1.5 rounded-lg font-medium hover:bg-rose-700 transition-colors disabled:opacity-40"
+                >
+                  Apply
+                </button>
+                <button
+                  onClick={() => setShowLinkPanel(false)}
+                  className="text-xs text-gray-400 hover:text-gray-600 px-2"
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
             <EditorContent editor={editor} />
             <div className="border-t border-gray-100 px-4 py-2 text-xs text-gray-400 text-right">
               {wordCount} {wordCount === 1 ? 'word' : 'words'}
