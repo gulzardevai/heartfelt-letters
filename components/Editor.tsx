@@ -127,7 +127,6 @@ export default function Editor({ content, onChange }: Props) {
 
         {/* Font selector */}
         <select
-          onMouseDown={prevent}
           onChange={(e) => {
             editor.chain().focus().setFontFamily(e.target.value).run()
           }}
