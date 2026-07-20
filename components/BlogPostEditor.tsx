@@ -36,7 +36,7 @@ export default function BlogPostEditor({ initial }: { initial?: Partial<Post> })
     excerpt: initial?.excerpt ?? '',
     content: initial?.content ?? '',
     cover_image: initial?.cover_image ?? '',
-    author: initial?.author ?? 'Heartfelt Letters Team',
+    author: initial?.author ?? 'ShareLove Letters Team',
     tags: initial?.tags ?? [],
     published: initial?.published ?? false,
     meta_title: initial?.meta_title ?? '',
@@ -393,7 +393,7 @@ export default function BlogPostEditor({ initial }: { initial?: Partial<Post> })
               <p className="text-blue-600 truncate font-medium">
                 {form.meta_title || form.title || 'Post title'}
               </p>
-              <p className="text-green-700 text-[11px]">heartfelt-letters.vercel.app/blog/{form.slug || 'slug'}</p>
+              <p className="text-green-700 text-[11px]">shareloveletters.com/blog/{form.slug || 'slug'}</p>
               <p className="text-gray-500 mt-0.5 line-clamp-2">
                 {form.meta_description || form.excerpt || 'Post description will appear here.'}
               </p>

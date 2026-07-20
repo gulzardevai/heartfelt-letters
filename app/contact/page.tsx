@@ -5,7 +5,7 @@ import Footer from '@/components/Footer'
 
 const FAQS = [
   { q: 'How long do letters last?', a: 'Letters on the free plan are accessible for 30 days from the date they are created. After that, they expire and the link will no longer work.' },
-  { q: 'Is Heartfelt Letters free?', a: 'Yes! Creating an account and writing letters is completely free. The free plan lets you create up to 10 letters.' },
+  { q: 'Is ShareLove Letters free?', a: 'Yes! Creating an account and writing letters is completely free. The free plan lets you create up to 10 letters.' },
   { q: 'Can I password-protect my letter?', a: 'Yes. When saving your letter, you can optionally set a password. Anyone who receives the link will need to enter the password to read it.' },
   { q: 'How do I share a letter?', a: 'After saving your letter, you will receive a unique shareable link. You can send this link to anyone via email, text, or any messaging app. No account is required to read a letter.' },
   { q: 'Can I edit a letter after saving it?', a: 'Currently, once a letter is saved, it creates a new version each time. You can write a new letter at any time from your dashboard.' },
@@ -32,7 +32,7 @@ export default function ContactPage() {
           <div className="max-w-2xl mx-auto">
             <h1 className="font-serif text-4xl font-bold text-rose-900 mb-4">Get in Touch</h1>
             <p className="text-rose-600/70">Have a question, suggestion, or just want to say hello? We&apos;d love to hear from you.</p>
-            <p className="text-rose-500 text-sm mt-2">hello@heartfeltletters.app</p>
+            <p className="text-rose-500 text-sm mt-2">hello@shareloveletters.com</p>
           </div>
         </section>
 

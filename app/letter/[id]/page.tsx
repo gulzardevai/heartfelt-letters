@@ -68,7 +68,7 @@ export async function generateMetadata({ params }: Props) {
     || (letter.recipient_name ? `A letter for ${letter.recipient_name}` : 'A heartfelt letter')
 
   return {
-    title: `${title} — Heartfelt Letters`,
+    title: `${title} — ShareLove Letters`,
     description: letter.sender_name
       ? `A ${letter.type.replace('_', ' ')} letter from ${letter.sender_name}`
       : `A heartfelt ${letter.type.replace('_', ' ')} letter`,

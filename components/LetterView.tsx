@@ -81,7 +81,7 @@ export default function LetterView({ letter }: Props) {
         {/* Footer */}
         <div className="text-center mt-8 fade-in" style={{animationDelay: '0.2s'}}>
           <p className="text-rose-400 text-xs">
-            Created with 💌 <a href="/" className="underline hover:text-rose-600 transition-colors">Heartfelt Letters</a>
+            Created with 💌 <a href="/" className="underline hover:text-rose-600 transition-colors">ShareLove Letters</a>
           </p>
           {letter.view_count > 0 && (
             <p className="text-rose-300 text-xs mt-1">{letter.view_count} {letter.view_count === 1 ? 'read' : 'reads'}</p>

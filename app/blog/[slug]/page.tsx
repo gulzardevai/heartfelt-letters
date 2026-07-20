@@ -86,7 +86,7 @@ export async function generateMetadata({ params }: Props) {
   if (!post) return { title: 'Post Not Found' }
 
   return {
-    title: post.meta_title || `${post.title} — Heartfelt Letters Blog`,
+    title: post.meta_title || `${post.title} — ShareLove Letters Blog`,
     description: post.meta_description || post.excerpt || '',
   }
 }

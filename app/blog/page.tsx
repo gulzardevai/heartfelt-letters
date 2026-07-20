@@ -33,7 +33,7 @@ export default async function BlogPage() {
       <main className="flex-1">
         <section className="bg-gradient-to-br from-rose-50 to-pink-50 py-16 px-6 text-center">
           <div className="max-w-2xl mx-auto">
-            <h1 className="font-serif text-4xl font-bold text-rose-900 mb-4">The Heartfelt Letters Blog</h1>
+            <h1 className="font-serif text-4xl font-bold text-rose-900 mb-4">The ShareLove Letters Blog</h1>
             <p className="text-rose-600/70">Tips, ideas, and reflections on the art of writing letters</p>
           </div>
         </section>

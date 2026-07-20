@@ -1,4 +1,4 @@
-# Heartfelt Letters — Setup Guide
+# ShareLove Letters — Setup Guide
 
 ## 1. Install dependencies
 

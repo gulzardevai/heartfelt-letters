@@ -16,7 +16,7 @@ export default function AboutPage() {
               <span className="text-rose-600 italic">Last a Lifetime</span>
             </h1>
             <p className="text-lg text-rose-700/70 leading-relaxed max-w-2xl mx-auto">
-              We believe that words have the power to change relationships, heal wounds, and create memories that outlast us. Heartfelt Letters makes it easy to write something real.
+              We believe that words have the power to change relationships, heal wounds, and create memories that outlast us. ShareLove Letters makes it easy to write something real.
             </p>
           </div>
         </section>
@@ -27,7 +27,7 @@ export default function AboutPage() {
             <h2 className="font-serif text-3xl font-bold text-rose-900 mb-6">Our Story</h2>
             <div className="prose prose-rose max-w-none text-rose-800/80 leading-relaxed space-y-4">
               <p>
-                We built Heartfelt Letters because we kept noticing the same problem: people had so much they wanted to say — to a parent, a partner, a friend — but never quite found the right moment or the right words.
+                We built ShareLove Letters because we kept noticing the same problem: people had so much they wanted to say — to a parent, a partner, a friend — but never quite found the right moment or the right words.
               </p>
               <p>
                 Texting is fast but shallow. Social media is public but impersonal. Email is professional but cold. What people needed was a space designed for something more — a tool that made the act of letter writing feel natural again.

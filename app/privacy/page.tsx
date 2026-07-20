@@ -37,7 +37,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="font-serif text-2xl font-bold text-rose-900 mb-3">6. Your Rights</h2>
-            <p>You have the right to access, correct, or delete your personal information. You may request a copy of your data or ask us to delete your account by contacting us at <a href="mailto:hello@heartfeltletters.app" className="text-rose-600 underline">hello@heartfeltletters.app</a>.</p>
+            <p>You have the right to access, correct, or delete your personal information. You may request a copy of your data or ask us to delete your account by contacting us at <a href="mailto:hello@shareloveletters.com" className="text-rose-600 underline">hello@shareloveletters.com</a>.</p>
           </section>
 
           <section>
@@ -52,7 +52,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="font-serif text-2xl font-bold text-rose-900 mb-3">9. Contact</h2>
-            <p>If you have questions about this Privacy Policy, please contact us at <a href="mailto:hello@heartfeltletters.app" className="text-rose-600 underline">hello@heartfeltletters.app</a>.</p>
+            <p>If you have questions about this Privacy Policy, please contact us at <a href="mailto:hello@shareloveletters.com" className="text-rose-600 underline">hello@shareloveletters.com</a>.</p>
           </section>
         </div>
       </main>

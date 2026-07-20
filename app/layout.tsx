@@ -4,11 +4,12 @@ import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from '@/components/AuthProvider'
 
 export const metadata: Metadata = {
-  title: 'Heartfelt Letters — Write Letters That Last Forever',
+  metadataBase: new URL('https://shareloveletters.com'),
+  title: 'ShareLove Letters — Write Letters That Last Forever',
   description: 'Create beautiful, heartfelt letters for your loved ones. Share them via unique links or send directly to their inbox.',
   keywords: 'letter writing, love letters, birthday letters, heartfelt messages',
   openGraph: {
-    title: 'Heartfelt Letters',
+    title: 'ShareLove Letters',
     description: 'Write letters that last forever',
     type: 'website',
   },

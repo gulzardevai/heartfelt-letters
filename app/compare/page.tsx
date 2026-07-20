@@ -4,8 +4,8 @@ import Footer from '@/components/Footer'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Heartfelt Letters vs Competitors — Why We\'re Different',
-  description: 'See how Heartfelt Letters compares to Digital Love Letters, Paperless Post, Hallmark, Canva, and other letter writing tools. Free, all occasions, no account required.',
+  title: 'ShareLove Letters vs Competitors — Why We\'re Different',
+  description: 'See how ShareLove Letters compares to Digital Love Letters, Paperless Post, Hallmark, Canva, and other letter writing tools. Free, all occasions, no account required.',
 }
 
 const competitors = [
@@ -81,7 +81,7 @@ export default function ComparePage() {
             Honest comparison
           </span>
           <h1 className="font-serif text-4xl md:text-5xl font-bold text-rose-900 mb-6 leading-tight">
-            Why Heartfelt Letters?<br />
+            Why ShareLove Letters?<br />
             <span className="text-rose-500">The honest answer.</span>
           </h1>
           <p className="text-rose-700/70 text-lg leading-relaxed max-w-2xl mx-auto">
@@ -107,7 +107,7 @@ export default function ComparePage() {
             {/* Us */}
             <div className="bg-rose-600 rounded-2xl p-6 shadow-sm text-white md:col-span-2 lg:col-span-1">
               <div className="flex items-start justify-between mb-3">
-                <h3 className="font-semibold">💌 Heartfelt Letters</h3>
+                <h3 className="font-semibold">💌 ShareLove Letters</h3>
                 <span className="text-xs bg-white/20 px-2 py-0.5 rounded-full whitespace-nowrap ml-2">Free</span>
               </div>
               <p className="text-xs text-rose-200 mb-3 font-medium uppercase tracking-wide">Purpose-built letter writing</p>

@@ -8,7 +8,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center gap-2 mb-3">
               <span className="text-2xl">💌</span>
-              <span className="font-serif text-lg font-bold text-rose-900">Heartfelt Letters</span>
+              <span className="font-serif text-lg font-bold text-rose-900">ShareLove Letters</span>
             </div>
             <p className="text-sm text-rose-600/70 leading-relaxed">
               Write letters that last a lifetime. Share them with the people who matter most.
@@ -33,7 +33,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t border-rose-100 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-rose-400">
-          <p>© 2025 Heartfelt Letters. All rights reserved.</p>
+          <p>© 2025 ShareLove Letters. All rights reserved.</p>
           <p>Free to use • Made with ❤️</p>
         </div>
       </div>

@@ -121,7 +121,7 @@ export default function ProfilePage() {
           <h3 className="font-serif text-lg font-semibold text-red-800 mb-2">Account</h3>
           <p className="text-sm text-red-500/70 mb-4">
             To permanently delete your account, please contact us at{' '}
-            <a href="mailto:hello@heartfeltletters.app" className="underline">hello@heartfeltletters.app</a>.
+            <a href="mailto:hello@shareloveletters.com" className="underline">hello@shareloveletters.com</a>.
           </p>
           <button
             onClick={async () => {

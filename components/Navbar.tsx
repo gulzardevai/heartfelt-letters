@@ -24,7 +24,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <span className="text-2xl">💌</span>
-          <span className="font-serif text-xl font-bold text-rose-900">Heartfelt Letters</span>
+          <span className="font-serif text-xl font-bold text-rose-900">ShareLove Letters</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-rose-700">

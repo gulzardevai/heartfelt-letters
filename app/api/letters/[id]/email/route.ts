@@ -85,8 +85,8 @@ export async function POST(
   </div>
 
   <div class="footer">
-    <p>Delivered with love by <strong>Heartfelt Letters</strong></p>
-    <p style="color: #fecdd3;">Heartfelt Letters — Write Letters That Last Forever</p>
+    <p>Delivered with love by <strong>ShareLove Letters</strong></p>
+    <p style="color: #fecdd3;">ShareLove Letters — Write Letters That Last Forever</p>
   </div>
 </div>
 </body>
@@ -96,7 +96,7 @@ export async function POST(
     const { Resend } = await import('resend')
     const resend = new Resend(process.env.RESEND_API_KEY)
     await resend.emails.send({
-      from: 'Heartfelt Letters <letters@heartfelt.love>',
+      from: 'ShareLove Letters <letters@heartfelt.love>',
       to: to_email,
       subject: `💌 ${senderDisplay} has written you a heartfelt letter`,
       html: emailHtml,
