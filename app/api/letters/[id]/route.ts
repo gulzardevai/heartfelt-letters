@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabaseAdmin } from '@/lib/supabase-admin'
+import { getSupabaseAdmin } from '@/lib/supabase-admin'
 import bcrypt from 'bcryptjs'
+
+export const dynamic = 'force-dynamic'
 
 export async function GET(
   req: NextRequest,
@@ -8,8 +10,9 @@ export async function GET(
 ) {
   try {
     const password = req.nextUrl.searchParams.get('password')
+    const db = getSupabaseAdmin()
 
-    const { data: letter, error } = await supabaseAdmin
+    const { data: letter, error } = await db
       .from('letters')
       .select('*')
       .eq('share_id', params.id)
@@ -29,7 +32,9 @@ export async function GET(
       }
     }
 
-    return NextResponse.json({ letter })
+    // Never expose the hash to the client
+    const { password_hash: _, ...safeLetter } = letter
+    return NextResponse.json({ letter: safeLetter })
   } catch (err) {
     console.error('Error fetching letter:', err)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })
@@ -49,8 +54,9 @@ export async function PATCH(
     }
 
     const password_hash = await bcrypt.hash(password, 12)
+    const db = getSupabaseAdmin()
 
-    const { error } = await supabaseAdmin
+    const { error } = await db
       .from('letters')
       .update({ has_password: true, password_hash })
       .eq('share_id', params.id)

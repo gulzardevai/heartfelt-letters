@@ -37,6 +37,10 @@ function WritePageInner() {
   const [senderName, setSenderName] = useState('')
   const [isSaving, setIsSaving] = useState(false)
   const [savedShareId, setSavedShareId] = useState<string | null>(null)
+  const [hasPassword, setHasPassword] = useState(false)
+  const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [isPasswordProtected, setIsPasswordProtected] = useState(false)
   const [showShareModal, setShowShareModal] = useState(false)
   const [showEmailModal, setShowEmailModal] = useState(false)
 
@@ -84,6 +88,8 @@ function WritePageInner() {
           title: title || null,
           recipient_name: recipientName || null,
           sender_name: senderName || null,
+          has_password: hasPassword && !!password,
+          password: hasPassword ? password : null,
         }),
       })
       if (!res.ok) {
@@ -101,6 +107,7 @@ function WritePageInner() {
       }
       const data = await res.json()
       setSavedShareId(data.share_id)
+      setIsPasswordProtected(hasPassword && !!password)
       toast.success('Letter saved!')
     } catch {
       toast.error('Failed to save letter')
@@ -330,6 +337,48 @@ function WritePageInner() {
                         placeholder="Your name..."
                         className="w-full border border-rose-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300 bg-rose-50/30"
                       />
+                    </div>
+
+                    {/* Password protection toggle */}
+                    <div className="pt-1">
+                      <div className="flex items-center justify-between">
+                        <label className="text-xs font-medium text-rose-600 flex items-center gap-1.5">
+                          🔒 Password protect
+                        </label>
+                        <button
+                          type="button"
+                          onClick={() => { setHasPassword(p => !p); setPassword('') }}
+                          className={`relative w-10 h-5 rounded-full transition-colors ${hasPassword ? 'bg-rose-500' : 'bg-gray-200'}`}
+                        >
+                          <span className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-transform ${hasPassword ? 'translate-x-5' : 'translate-x-0.5'}`} />
+                        </button>
+                      </div>
+
+                      {hasPassword && (
+                        <div className="mt-2 relative">
+                          <input
+                            type={showPassword ? 'text' : 'password'}
+                            value={password}
+                            onChange={e => setPassword(e.target.value)}
+                            placeholder="Set a password..."
+                            className="w-full border border-rose-200 rounded-xl px-3 py-2 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300 bg-rose-50/30"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(p => !p)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-rose-400 hover:text-rose-600 text-xs"
+                          >
+                            {showPassword ? 'Hide' : 'Show'}
+                          </button>
+                        </div>
+                      )}
+
+                      {/* Status badge after saving */}
+                      {savedShareId && (
+                        <div className={`mt-2 flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-lg ${isPasswordProtected ? 'bg-rose-50 text-rose-700' : 'bg-gray-50 text-gray-500'}`}>
+                          {isPasswordProtected ? '🔒 Password protected' : '🔓 No password set'}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
