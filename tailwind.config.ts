@@ -25,9 +25,9 @@ const config: Config = {
         parchment: '#f5e6d3',
       },
       fontFamily: {
-        serif: ['Playfair Display', 'Georgia', 'serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        cursive: ['Dancing Script', 'cursive'],
+        serif: ['var(--font-playfair)', 'Georgia', 'serif'],
+        sans: ['var(--font-inter)', 'system-ui', 'sans-serif'],
+        cursive: ['var(--font-dancing)', 'cursive'],
       },
       boxShadow: {
         'paper': '0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03), inset 0 0 0 1px rgba(0,0,0,0.05)',

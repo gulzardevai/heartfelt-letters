@@ -9,6 +9,7 @@ export default function Home() {
     <div className="min-h-screen flex flex-col">
       <Navbar />
 
+      <main>
       {/* Hero */}
       <section className="text-center px-6 py-20 max-w-4xl mx-auto">
         <div className="inline-block bg-rose-100 text-rose-700 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
@@ -139,6 +140,7 @@ export default function Home() {
           </Link>
         </div>
       </section>
+      </main>
 
       <Footer />
     </div>
