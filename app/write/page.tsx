@@ -384,7 +384,7 @@ function WritePageInner() {
       </div>
 
       {showShareModal && savedShareId && (
-        <ShareModal shareId={savedShareId} onClose={() => setShowShareModal(false)} showPasswordSetup={!user} />
+        <ShareModal shareId={savedShareId} onClose={() => setShowShareModal(false)} showPasswordSetup />
       )}
       {showEmailModal && savedShareId && (
         <EmailModal shareId={savedShareId} senderName={senderName} onClose={() => setShowEmailModal(false)} />
