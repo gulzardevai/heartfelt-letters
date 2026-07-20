@@ -37,6 +37,7 @@ function WritePageInner() {
   const [senderName, setSenderName] = useState('')
   const [isSaving, setIsSaving] = useState(false)
   const [savedShareId, setSavedShareId] = useState<string | null>(null)
+  const [letterHasPassword, setLetterHasPassword] = useState(false)
 
   const [showShareModal, setShowShareModal] = useState(false)
   const [showEmailModal, setShowEmailModal] = useState(false)
@@ -47,7 +48,7 @@ function WritePageInner() {
   useEffect(() => {
     if (editId) {
       setEditLoading(true)
-      fetch(`/api/letters/${editId}`)
+      fetch(`/api/letters/${editId}?owner=1`)
         .then(r => r.json())
         .then(({ letter }) => {
           if (!letter) return
@@ -57,7 +58,7 @@ function WritePageInner() {
           setSenderName(letter.sender_name || '')
           setContent(letter.content)
           setSavedShareId(letter.share_id)
-
+          setLetterHasPassword(!!letter.has_password)
           setStep('write')
         })
         .finally(() => setEditLoading(false))
@@ -376,7 +377,7 @@ function WritePageInner() {
 
               {/* Right: Editor */}
               <div className="lg:col-span-2">
-                <Editor content={content} onChange={setContent} />
+                <Editor key={editId || 'new'} content={content} onChange={setContent} />
               </div>
             </div>
           </div>
@@ -384,7 +385,7 @@ function WritePageInner() {
       </div>
 
       {showShareModal && savedShareId && (
-        <ShareModal shareId={savedShareId} onClose={() => setShowShareModal(false)} showPasswordSetup />
+        <ShareModal shareId={savedShareId} onClose={() => setShowShareModal(false)} showPasswordSetup initialHasPassword={letterHasPassword} />
       )}
       {showEmailModal && savedShareId && (
         <EmailModal shareId={savedShareId} senderName={senderName} onClose={() => setShowEmailModal(false)} />

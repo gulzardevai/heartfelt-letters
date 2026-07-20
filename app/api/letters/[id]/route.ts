@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAdmin } from '@/lib/supabase-admin'
+import { createSupabaseServerClient } from '@/lib/supabase-server'
 import bcrypt from 'bcryptjs'
 
 export const dynamic = 'force-dynamic'
@@ -10,6 +11,7 @@ export async function GET(
 ) {
   try {
     const password = req.nextUrl.searchParams.get('password')
+    const ownerFetch = req.nextUrl.searchParams.get('owner') === '1'
     const db = getSupabaseAdmin()
 
     const { data: letter, error } = await db
@@ -22,6 +24,17 @@ export async function GET(
       return NextResponse.json({ error: 'Letter not found' }, { status: 404 })
     }
 
+    // Owner bypass: verify session and ownership
+    if (ownerFetch) {
+      const serverSupabase = createSupabaseServerClient()
+      const { data: { user } } = await serverSupabase.auth.getUser()
+      if (!user || letter.user_id !== user.id) {
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      }
+      const { password_hash: _, ...safeLetter } = letter
+      return NextResponse.json({ letter: safeLetter })
+    }
+
     if (letter.has_password) {
       if (!password) {
         return NextResponse.json({ error: 'Password required' }, { status: 401 })
@@ -32,7 +45,6 @@ export async function GET(
       }
     }
 
-    // Never expose the hash to the client
     const { password_hash: _, ...safeLetter } = letter
     return NextResponse.json({ letter: safeLetter })
   } catch (err) {
@@ -47,22 +59,29 @@ export async function PATCH(
 ) {
   try {
     const body = await req.json()
-    const { password } = body
+    const { password, remove_password } = body
+    const db = getSupabaseAdmin()
+
+    if (remove_password) {
+      const { error } = await db
+        .from('letters')
+        .update({ has_password: false, password_hash: null })
+        .eq('share_id', params.id)
+      if (error) throw error
+      return NextResponse.json({ success: true })
+    }
 
     if (!password) {
       return NextResponse.json({ error: 'Password is required' }, { status: 400 })
     }
 
     const password_hash = await bcrypt.hash(password, 12)
-    const db = getSupabaseAdmin()
-
     const { error } = await db
       .from('letters')
       .update({ has_password: true, password_hash })
       .eq('share_id', params.id)
 
     if (error) throw error
-
     return NextResponse.json({ success: true })
   } catch (err) {
     console.error('Error updating letter:', err)
