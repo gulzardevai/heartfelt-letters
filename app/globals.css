@@ -325,7 +325,9 @@ body {
 
 @keyframes letter-reveal-in {
   from { opacity: 0; transform: translateY(35px) scale(0.97); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  /* Must end at transform:none — a lingering transform turns descendants'
+     position:fixed into container-relative and the action bar scrolls away */
+  to { opacity: 1; transform: none; }
 }
 
 .float-heart {
