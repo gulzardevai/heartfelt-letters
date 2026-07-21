@@ -11,7 +11,7 @@ const faqJsonLd = {
     { '@type': 'Question', name: 'Is ShareLove Letters really free?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Writing and sharing letters is completely free — templates, the editor, photo uploads, private links, and password protection included. No credit card, and you can even write without an account.' } },
     { '@type': 'Question', name: 'Can I write a love letter without signing up?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Guests can write and share one letter per day with no account. Sign up free to save up to 10 letters a month.' } },
     { '@type': 'Question', name: 'How does the recipient open my letter?', acceptedAnswer: { '@type': 'Answer', text: 'You share a private link. The recipient sees a sealed envelope with their name on it — they tap to break the wax seal and the letter unfolds with a beautiful animation.' } },
-    { '@type': 'Question', name: 'Can I make my letter private?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. You can protect any letter with a password so only the person you share it with can read it. Letters are never public or searchable.' } },
+    { '@type': 'Question', name: 'Are my letters private and secure?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Every letter is encrypted at rest with AES-256 encryption. You can also add a password so only your recipient can open it. Letters are never public, indexed, or searchable.' } },
   ],
 }
 
@@ -78,7 +78,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { icon: '📝', title: '30+ Templates', desc: 'Thoughtfully crafted templates for every occasion and relationship.' },
-              { icon: '🔒', title: 'Password Protected', desc: 'Share your letter with a private link and optional password protection.' },
+              { icon: '🔐', title: 'Encrypted & Private', desc: 'Every letter is encrypted with bank-grade AES-256 encryption. Add a password for an extra layer — your words are for their eyes only.' },
               { icon: '📧', title: 'Email Delivery', desc: 'Send your letter directly to your loved one\'s inbox.' },
               { icon: '🖼️', title: 'Add Images', desc: 'Upload photos and images to make your letter even more special.' },
             ].map((f) => (
@@ -166,7 +166,7 @@ export default function Home() {
               { q: 'Is ShareLove Letters really free?', a: 'Yes. Writing and sharing letters is completely free — templates, the editor, photo uploads, private links, and password protection included. No credit card, and you can even write without an account.' },
               { q: 'Can I write a love letter without signing up?', a: 'Yes. Guests can write and share one letter per day with no account. Sign up free to save up to 10 letters a month and manage them from your dashboard.' },
               { q: 'How does the recipient open my letter?', a: 'You share a private link. When your recipient opens it, they see a sealed envelope with their name on it — they tap to break the wax seal and the letter unfolds with a beautiful animation.' },
-              { q: 'Can I make my letter private?', a: 'Yes. You can protect any letter with a password so only the person you share it with can read it. Letters are never public or searchable.' },
+              { q: 'Are my letters private and secure?', a: 'Yes. Every letter is encrypted at rest with AES-256 encryption — the same standard banks use — so no one can read it in storage. You can also add a password so only your recipient can open it. Letters are never public, indexed, or searchable.' },
             ].map(item => (
               <details key={item.q} className="bg-white rounded-2xl border border-rose-100 px-5 py-4 group">
                 <summary className="font-medium text-rose-900 cursor-pointer text-sm list-none flex justify-between items-center">

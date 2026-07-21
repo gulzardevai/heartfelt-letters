@@ -54,6 +54,7 @@ const features = [
   { feature: 'Rich text editor', us: true, dll: true, paperless: false, hallmark: false, canva: true, docs: true },
   { feature: 'Share via private link', us: true, dll: true, paperless: true, hallmark: false, canva: false, docs: true },
   { feature: 'Password protection', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: true },
+  { feature: 'AES-256 encrypted letters', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Envelope opening animation', us: true, dll: false, paperless: true, hallmark: false, canva: false, docs: false },
   { feature: 'No account needed to start', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Image uploads', us: true, dll: true, paperless: true, hallmark: false, canva: true, docs: true },

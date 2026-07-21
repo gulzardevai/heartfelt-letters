@@ -22,7 +22,7 @@ export default function PrivacyPage() {
 
           <section>
             <h2 className="font-serif text-2xl font-bold text-rose-900 mb-3">3. Data Storage & Security</h2>
-            <p>Your data is stored securely using Supabase, which uses industry-standard encryption at rest and in transit. We use Row Level Security to ensure your letters are only accessible to you and the people you share them with. Letters on the free plan expire after 30 days.</p>
+            <p>Every letter you write is encrypted with AES-256-GCM encryption before it is stored — the same standard used by banks. This means the content of your letters is unreadable in our database, even to anyone with database access. Data is additionally protected with industry-standard encryption in transit, and we use Row Level Security to ensure your letters are only accessible to you and the people you share them with. Letters on the free plan expire after 30 days.</p>
           </section>
 
           <section>

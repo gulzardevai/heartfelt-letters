@@ -87,6 +87,7 @@ export default function LetterView({ letter }: Props) {
           <p className="text-rose-400 text-xs">
             Created with 💌 <a href="/" className="underline hover:text-rose-600 transition-colors">ShareLove Letters</a>
           </p>
+          <p className="text-rose-300 text-[11px] mt-1">🔐 This letter is protected with AES-256 encryption</p>
           {letter.view_count > 0 && (
             <p className="text-rose-300 text-xs mt-1">{letter.view_count} {letter.view_count === 1 ? 'read' : 'reads'}</p>
           )}
