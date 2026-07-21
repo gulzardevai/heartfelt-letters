@@ -26,6 +26,7 @@ export type Letter = {
   content: string
   recipient_name: string | null
   sender_name: string | null
+  theme: string
   has_password: boolean
   password_hash: string | null
   created_at: string

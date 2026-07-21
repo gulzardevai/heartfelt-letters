@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
     const { data: { user } } = await serverSupabase.auth.getUser()
 
     const body = await req.json()
-    const { title, type, content, recipient_name, sender_name, password, has_password } = body
+    const { title, type, content, recipient_name, sender_name, password, has_password, theme } = body
 
     if (!type || !content) {
       return NextResponse.json({ error: 'type and content are required' }, { status: 400 })
@@ -70,6 +70,7 @@ export async function POST(req: NextRequest) {
         content: encryptContent(content),
         recipient_name: recipient_name || null,
         sender_name: sender_name || null,
+        theme: theme || 'classic',
         has_password: !!(has_password && password),
         password_hash,
         expires_at: expires_at.toISOString(),
@@ -113,6 +114,7 @@ export async function POST(req: NextRequest) {
         content: encryptContent(content),
         recipient_name: recipient_name || null,
         sender_name: sender_name || null,
+        theme: theme || 'classic',
         has_password: !!(has_password && password),
         password_hash,
         expires_at: expires_at.toISOString(),
@@ -138,7 +140,7 @@ export async function PATCH(req: NextRequest) {
     }
 
     const body = await req.json()
-    const { share_id, title, type, content, recipient_name, sender_name } = body
+    const { share_id, title, type, content, recipient_name, sender_name, theme } = body
 
     if (!share_id || !type || !content) {
       return NextResponse.json({ error: 'share_id, type and content are required' }, { status: 400 })
@@ -154,6 +156,7 @@ export async function PATCH(req: NextRequest) {
         content: encryptContent(content),
         recipient_name: recipient_name || null,
         sender_name: sender_name || null,
+        theme: theme || 'classic',
       })
       .eq('share_id', share_id)
       .eq('user_id', user.id)

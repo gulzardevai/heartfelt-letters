@@ -14,6 +14,8 @@ import type { Editor as TiptapEditor } from '@tiptap/react'
 interface Props {
   content: string
   onChange: (html: string) => void
+  paperColor?: string
+  textColor?: string
 }
 
 const FONTS = ['Playfair Display', 'Georgia', 'Dancing Script', 'Inter', 'Arial', 'Times New Roman']
@@ -50,7 +52,7 @@ function prevent(e: React.MouseEvent) {
   e.preventDefault()
 }
 
-export default function Editor({ content, onChange }: Props) {
+export default function Editor({ content, onChange, paperColor, textColor }: Props) {
   const fileRef = useRef<HTMLInputElement>(null)
 
   const editor = useEditor({
@@ -173,7 +175,13 @@ export default function Editor({ content, onChange }: Props) {
       </div>
 
       {/* Editor area — scrolls internally so the toolbar stays visible */}
-      <div className="tiptap-editor letter-paper-plain p-6 min-h-[400px] max-h-[65vh] overflow-y-auto">
+      <div
+        className="tiptap-editor letter-paper-plain p-6 min-h-[400px] max-h-[65vh] overflow-y-auto"
+        style={{
+          ...(paperColor ? { backgroundColor: paperColor } : {}),
+          ...(textColor ? { '--letter-text': textColor } : {}),
+        } as React.CSSProperties}
+      >
         <EditorContent editor={editor} />
       </div>
     </div>

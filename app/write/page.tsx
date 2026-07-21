@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import { LETTER_TYPES, TEMPLATES, getTemplatesForType } from '@/lib/templates'
+import { THEMES, DEFAULT_THEME_ID, getTheme } from '@/lib/themes'
 import LetterTypeCard from '@/components/LetterTypeCard'
 import TemplateCard from '@/components/TemplateCard'
 import ShareModal from '@/components/ShareModal'
@@ -36,6 +37,8 @@ function WritePageInner() {
   const [title, setTitle] = useState('')
   const [recipientName, setRecipientName] = useState('')
   const [senderName, setSenderName] = useState('')
+  const [selectedTheme, setSelectedTheme] = useState(DEFAULT_THEME_ID)
+  const [showReplyBanner, setShowReplyBanner] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [savedShareId, setSavedShareId] = useState<string | null>(null)
   const [letterHasPassword, setLetterHasPassword] = useState(false)
@@ -45,8 +48,18 @@ function WritePageInner() {
   const [editLoading, setEditLoading] = useState(false)
 
   const editId = searchParams.get('edit')
+  const replyTo = searchParams.get('replyTo')
+  const replyToName = searchParams.get('to') || ''
 
   useEffect(() => {
+    if (!editId && replyTo) {
+      // Reply flow: pre-fill names swapped from the original letter
+      if (replyToName) setRecipientName(replyToName)
+      const from = searchParams.get('from')
+      if (from) setSenderName(from)
+      setShowReplyBanner(true)
+      sendGAEvent('event', 'letter_reply_started')
+    }
     if (editId) {
       setEditLoading(true)
       fetch(`/api/letters/${editId}?owner=1`)
@@ -57,6 +70,7 @@ function WritePageInner() {
           setTitle(letter.title || '')
           setRecipientName(letter.recipient_name || '')
           setSenderName(letter.sender_name || '')
+          setSelectedTheme(letter.theme || DEFAULT_THEME_ID)
           setContent(letter.content)
           setSavedShareId(letter.share_id)
           setLetterHasPassword(!!letter.has_password)
@@ -118,6 +132,7 @@ function WritePageInner() {
           title: title || null,
           recipient_name: recipientName || null,
           sender_name: senderName || null,
+          theme: selectedTheme,
         }),
       })
       if (!res.ok) {
@@ -243,6 +258,22 @@ function WritePageInner() {
       </nav>
 
       <div className="max-w-5xl mx-auto px-6 py-10">
+        {/* Reply banner */}
+        {showReplyBanner && (
+          <div className="mb-6 bg-rose-50 border border-rose-200 rounded-2xl px-5 py-3 text-sm flex items-center justify-between gap-4 shadow-sm">
+            <p className="text-rose-700/80">
+              ✍️ Writing back{replyToName ? <> to <strong>{replyToName}</strong></> : null} — we&apos;ve filled in the names for you.
+            </p>
+            <button
+              onClick={() => setShowReplyBanner(false)}
+              className="shrink-0 text-rose-400 hover:text-rose-600 transition-colors text-lg leading-none"
+              aria-label="Dismiss"
+            >
+              ×
+            </button>
+          </div>
+        )}
+
         {/* Anon banner */}
         {!user && (
           <div className="mb-6 bg-white border border-rose-100 rounded-2xl px-5 py-3 text-sm flex items-center justify-between gap-4 shadow-sm">
@@ -390,6 +421,35 @@ function WritePageInner() {
                 </div>
 
                 <div className="bg-white rounded-2xl p-5 shadow-paper border border-rose-100">
+                  <h3 className="font-serif font-semibold text-rose-900 mb-3">🎨 Theme</h3>
+                  <div className="grid grid-cols-2 gap-2">
+                    {THEMES.map(t => (
+                      <button
+                        key={t.id}
+                        type="button"
+                        onClick={() => {
+                          setSelectedTheme(t.id)
+                          if (t.id !== DEFAULT_THEME_ID) {
+                            sendGAEvent('event', 'theme_selected', { theme: t.id })
+                          }
+                        }}
+                        className={`rounded-xl p-2 border text-left transition-all ${
+                          selectedTheme === t.id
+                            ? 'ring-2 ring-rose-400 border-rose-300'
+                            : 'border-rose-100 hover:border-rose-300'
+                        }`}
+                      >
+                        <div
+                          className="h-8 rounded-lg mb-1.5 border border-black/5"
+                          style={{ backgroundColor: t.paper }}
+                        />
+                        <span className="text-xs text-rose-800 font-medium">{t.emoji} {t.label}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-2xl p-5 shadow-paper border border-rose-100">
                   <h3 className="font-serif font-semibold text-rose-900 mb-3">💡 Tips</h3>
                   <ul className="text-xs text-rose-700/60 space-y-2">
                     <li>• Write from the heart — authenticity is everything</li>
@@ -409,7 +469,13 @@ function WritePageInner() {
 
               {/* Right: Editor */}
               <div className="lg:col-span-2">
-                <Editor key={editId || 'new'} content={content} onChange={setContent} />
+                <Editor
+                  key={editId || 'new'}
+                  content={content}
+                  onChange={setContent}
+                  paperColor={getTheme(selectedTheme).paper}
+                  textColor={getTheme(selectedTheme).text}
+                />
               </div>
             </div>
           </div>

@@ -52,7 +52,7 @@ body {
   min-height: 400px;
   font-size: 16px;
   line-height: 1.8;
-  color: #2c1810;
+  color: var(--letter-text, #2c1810);
   /* No font-family here — let FontFamily extension inline styles work */
 }
 
@@ -130,7 +130,7 @@ body {
   font-family: var(--font-playfair), Georgia, serif;
   font-size: 16px;
   line-height: 1.9;
-  color: #2c1810;
+  color: var(--letter-text, #2c1810);
 }
 
 .letter-content p {
@@ -222,7 +222,7 @@ body {
 .envelope-back {
   position: absolute;
   inset: 0;
-  background: linear-gradient(160deg, #fecdd3, #fda4af);
+  background: linear-gradient(160deg, var(--env-back-1, #fecdd3), var(--env-back-2, #fda4af));
   border-radius: 10px;
   box-shadow: 0 20px 50px -12px rgba(159, 18, 57, 0.35);
 }
@@ -233,7 +233,7 @@ body {
   right: 12px;
   top: 10px;
   height: 200px;
-  background: #fdf8f0;
+  background: var(--letter-paper, #fdf8f0);
   border-radius: 6px 6px 0 0;
   box-shadow: 0 2px 10px rgba(0,0,0,0.08);
   z-index: 2;
@@ -250,9 +250,9 @@ body {
   justify-content: center;
   padding-bottom: 26px;
   background:
-    linear-gradient(200deg, transparent 46%, #ffe4e6 46.5%) top left / 51% 100% no-repeat,
-    linear-gradient(160deg, transparent 46%, #ffe4e6 46.5%) top right / 51% 100% no-repeat,
-    linear-gradient(to top, #fff1f2 55%, transparent 55%);
+    linear-gradient(200deg, transparent 46%, var(--env-front-1, #ffe4e6) 46.5%) top left / 51% 100% no-repeat,
+    linear-gradient(160deg, transparent 46%, var(--env-front-1, #ffe4e6) 46.5%) top right / 51% 100% no-repeat,
+    linear-gradient(to top, var(--env-front-2, #fff1f2) 55%, transparent 55%);
   box-shadow: inset 0 -2px 6px rgba(159, 18, 57, 0.06);
 }
 
@@ -262,7 +262,7 @@ body {
   left: 0;
   right: 0;
   height: 115px;
-  background: linear-gradient(to bottom, #fb7185, #f43f5e);
+  background: linear-gradient(to bottom, var(--env-flap-1, #fb7185), var(--env-flap-2, #f43f5e));
   clip-path: polygon(0 0, 100% 0, 50% 100%);
   border-radius: 10px 10px 0 0;
   transform-origin: top center;
@@ -277,7 +277,7 @@ body {
   transform: translateX(-50%);
   width: 52px;
   height: 52px;
-  background: radial-gradient(circle at 35% 30%, #be123c, #881337);
+  background: radial-gradient(circle at 35% 30%, var(--env-seal-1, #be123c), var(--env-seal-2, #881337));
   border-radius: 50%;
   display: flex;
   align-items: center;

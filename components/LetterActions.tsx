@@ -6,6 +6,7 @@ import { sendGAEvent } from '@next/third-parties/google'
 
 interface Props {
   senderName?: string | null
+  replyHref?: string
 }
 
 const btnCls =
@@ -19,7 +20,7 @@ function Label({ text }: { text: string }) {
   )
 }
 
-export default function LetterActions({ senderName }: Props) {
+export default function LetterActions({ senderName, replyHref }: Props) {
   const [mounted, setMounted] = useState(false)
   useEffect(() => setMounted(true), [])
 
@@ -44,6 +45,17 @@ export default function LetterActions({ senderName }: Props) {
       ✍️ <span className="hidden sm:inline">Write Your Own</span><span className="sm:hidden">Write</span>
     </a>
     <div className="no-print fixed z-40 flex flex-row gap-2.5 bottom-4 left-1/2 -translate-x-1/2 bg-white/70 backdrop-blur-md rounded-full px-3 py-2 shadow-lg border border-rose-100 lg:bg-transparent lg:backdrop-blur-none lg:shadow-none lg:border-0 lg:px-0 lg:py-0 lg:rounded-none lg:bottom-auto lg:top-24 lg:left-1/2 lg:translate-x-[23rem] lg:flex-col">
+      {replyHref && (
+        <a
+          href={replyHref}
+          onClick={() => sendGAEvent('event', 'recipient_cta_clicked', { placement: 'action_rail_reply' })}
+          className={btnCls}
+          aria-label={senderName ? `Write back to ${senderName}` : 'Write back'}
+        >
+          <Label text={senderName ? `Write back to ${senderName}` : 'Write back'} />
+          💌
+        </a>
+      )}
       <button onClick={() => window.print()} className={btnCls} aria-label="Print letter">
         <Label text="Print letter" />
         🖨️
