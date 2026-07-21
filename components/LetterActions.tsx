@@ -24,7 +24,7 @@ export default function LetterActions({ senderName }: Props) {
   const enc = encodeURIComponent
 
   return (
-    <div className="no-print fixed right-3 sm:right-5 top-4 sm:top-6 z-40 flex flex-col gap-2.5">
+    <div className="no-print fixed top-20 sm:top-24 z-40 flex flex-col gap-2.5 right-3 lg:right-auto lg:left-1/2 lg:translate-x-[23rem]">
       <button onClick={() => window.print()} className={btnCls} aria-label="Print letter">
         <Label text="Print letter" />
         🖨️
