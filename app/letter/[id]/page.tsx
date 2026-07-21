@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic'
 import { notFound } from 'next/navigation'
 import { supabase } from '@/lib/supabase'
 import EnvelopeReveal from '@/components/EnvelopeReveal'
+import { decryptContent } from '@/lib/crypto'
 import PasswordGateWrapper from './PasswordGateWrapper'
 import Link from 'next/link'
 
@@ -52,7 +53,7 @@ export default async function LetterPage({ params }: Props) {
     return <PasswordGateWrapper shareId={params.id} />
   }
 
-  return <EnvelopeReveal letter={letter} />
+  return <EnvelopeReveal letter={{ ...letter, content: decryptContent(letter.content), password_hash: null }} />
 }
 
 export async function generateMetadata({ params }: Props) {

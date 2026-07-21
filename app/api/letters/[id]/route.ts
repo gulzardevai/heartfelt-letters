@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAdmin } from '@/lib/supabase-admin'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
 import bcrypt from 'bcryptjs'
+import { decryptContent } from '@/lib/crypto'
 
 export const dynamic = 'force-dynamic'
 
@@ -32,7 +33,7 @@ export async function GET(
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
       }
       const { password_hash: _, ...safeLetter } = letter
-      return NextResponse.json({ letter: safeLetter })
+      return NextResponse.json({ letter: { ...safeLetter, content: decryptContent(safeLetter.content) } })
     }
 
     if (letter.has_password) {
@@ -46,7 +47,7 @@ export async function GET(
     }
 
     const { password_hash: _, ...safeLetter } = letter
-    return NextResponse.json({ letter: safeLetter })
+    return NextResponse.json({ letter: { ...safeLetter, content: decryptContent(safeLetter.content) } })
   } catch (err) {
     console.error('Error fetching letter:', err)
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 })

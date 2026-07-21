@@ -3,6 +3,7 @@ import { getSupabaseAdmin } from '@/lib/supabase-admin'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
 import { nanoid } from 'nanoid'
 import bcrypt from 'bcryptjs'
+import { encryptContent } from '@/lib/crypto'
 
 export const dynamic = 'force-dynamic'
 
@@ -66,7 +67,7 @@ export async function POST(req: NextRequest) {
         ip_address: getClientIp(req),
         title: title || null,
         type,
-        content,
+        content: encryptContent(content),
         recipient_name: recipient_name || null,
         sender_name: sender_name || null,
         has_password: !!(has_password && password),
@@ -109,7 +110,7 @@ export async function POST(req: NextRequest) {
         ip_address: ip,
         title: title || null,
         type,
-        content,
+        content: encryptContent(content),
         recipient_name: recipient_name || null,
         sender_name: sender_name || null,
         has_password: !!(has_password && password),
@@ -150,7 +151,7 @@ export async function PATCH(req: NextRequest) {
       .update({
         title: title || null,
         type,
-        content,
+        content: encryptContent(content),
         recipient_name: recipient_name || null,
         sender_name: sender_name || null,
       })
