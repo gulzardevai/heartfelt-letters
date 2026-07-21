@@ -8,6 +8,7 @@ export default function Navbar() {
   const { user, profile, signOut } = useAuth()
   const router = useRouter()
   const [dropdownOpen, setDropdownOpen] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   const handleSignOut = async () => {
     setDropdownOpen(false)
@@ -24,7 +25,9 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
           <span className="text-2xl">💌</span>
-          <span className="font-serif text-xl font-bold text-rose-900">ShareLove Letters</span>
+          <span className="font-serif text-lg sm:text-xl font-bold text-rose-900 whitespace-nowrap">
+            ShareLove<span className="hidden sm:inline"> Letters</span>
+          </span>
         </Link>
 
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-rose-700">
@@ -36,7 +39,7 @@ export default function Navbar() {
           <Link href="/about" className="hover:text-rose-900 transition-colors">About</Link>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           {user ? (
             <div className="relative">
               <button
@@ -77,20 +80,46 @@ export default function Navbar() {
             <>
               <Link
                 href="/auth/login"
-                className="text-sm font-medium text-rose-700 hover:text-rose-900 transition-colors px-3 py-2"
+                className="text-xs sm:text-sm font-medium text-rose-700 hover:text-rose-900 transition-colors px-2 sm:px-3 py-2 whitespace-nowrap"
               >
                 Sign In
               </Link>
               <Link
                 href="/auth/signup"
-                className="text-sm font-medium bg-rose-600 text-white px-4 py-2 rounded-full hover:bg-rose-700 transition-colors shadow-sm"
+                className="text-xs sm:text-sm font-medium bg-rose-600 text-white px-3 sm:px-4 py-2 rounded-full hover:bg-rose-700 transition-colors shadow-sm whitespace-nowrap"
               >
                 Sign Up
               </Link>
             </>
           )}
+
+          {/* Hamburger — mobile only */}
+          <button
+            onClick={() => setMobileOpen(o => !o)}
+            className="md:hidden flex flex-col justify-center items-center w-9 h-9 rounded-lg hover:bg-rose-50 transition-colors gap-[5px]"
+            aria-label="Toggle menu"
+            aria-expanded={mobileOpen}
+          >
+            <span className={`block w-5 h-0.5 bg-rose-700 rounded transition-transform ${mobileOpen ? 'rotate-45 translate-y-[7px]' : ''}`} />
+            <span className={`block w-5 h-0.5 bg-rose-700 rounded transition-opacity ${mobileOpen ? 'opacity-0' : ''}`} />
+            <span className={`block w-5 h-0.5 bg-rose-700 rounded transition-transform ${mobileOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
+          </button>
         </div>
       </div>
+
+      {/* Mobile menu panel */}
+      {mobileOpen && (
+        <div className="md:hidden border-t border-rose-100 bg-white/95 backdrop-blur-md px-6 py-3">
+          <div className="flex flex-col text-sm font-medium text-rose-700">
+            <Link href="/" onClick={() => setMobileOpen(false)} className="py-2.5 border-b border-rose-50">Home</Link>
+            <Link href="/write" onClick={() => setMobileOpen(false)} className="py-2.5 border-b border-rose-50">Write a Letter</Link>
+            <Link href="/quotes" onClick={() => setMobileOpen(false)} className="py-2.5 border-b border-rose-50">Quotes</Link>
+            <Link href="/blog" onClick={() => setMobileOpen(false)} className="py-2.5 border-b border-rose-50">Blog</Link>
+            <Link href="/compare" onClick={() => setMobileOpen(false)} className="py-2.5 border-b border-rose-50">Why Us</Link>
+            <Link href="/about" onClick={() => setMobileOpen(false)} className="py-2.5">About</Link>
+          </div>
+        </div>
+      )}
     </nav>
   )
 }

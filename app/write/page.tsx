@@ -154,23 +154,23 @@ function WritePageInner() {
     <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50">
       {/* Nav */}
       <nav className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-rose-100">
-        <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex flex-wrap items-center justify-between gap-y-2">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-xl">💌</span>
-            <span className="font-serif font-bold text-rose-800">ShareLove Letters</span>
+            <span className="font-serif font-bold text-rose-800 hidden md:inline">ShareLove Letters</span>
           </Link>
 
           {/* Steps indicator */}
-          <div className="flex items-center gap-2 text-sm">
+          <div className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm">
             {(['type', 'template', 'write'] as Step[]).map((s, i) => (
               <div key={s} className="flex items-center gap-1">
-                {i > 0 && <span className="text-rose-200 mx-1">›</span>}
+                {i > 0 && <span className="text-rose-200 mx-0.5 sm:mx-1">›</span>}
                 <button
                   onClick={() => {
                     if (s === 'type') setStep('type')
                     if (s === 'template' && selectedType) setStep('template')
                   }}
-                  className={`px-3 py-1 rounded-full font-medium capitalize transition-all ${
+                  className={`px-2 sm:px-3 py-1 rounded-full font-medium capitalize transition-all whitespace-nowrap ${
                     step === s
                       ? 'bg-rose-600 text-white'
                       : s === 'write' && step !== 'write'
@@ -185,13 +185,13 @@ function WritePageInner() {
           </div>
 
           {step === 'write' && (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap justify-end w-full lg:w-auto">
               {savedShareId && (
                 <>
                   {profile?.plan === 'pro' ? (
                     <button
                       onClick={() => setShowEmailModal(true)}
-                      className="text-sm px-4 py-2 border border-rose-200 text-rose-700 rounded-xl hover:bg-rose-50 transition-colors"
+                      className="text-xs sm:text-sm px-3 sm:px-4 py-2 border border-rose-200 text-rose-700 rounded-xl hover:bg-rose-50 transition-colors whitespace-nowrap"
                     >
                       📧 Email
                     </button>
@@ -199,7 +199,7 @@ function WritePageInner() {
                     <div className="relative group">
                       <button
                         disabled
-                        className="text-sm px-4 py-2 border border-gray-200 text-gray-400 rounded-xl cursor-not-allowed flex items-center gap-1.5"
+                        className="text-xs sm:text-sm px-3 sm:px-4 py-2 border border-gray-200 text-gray-400 rounded-xl cursor-not-allowed flex items-center gap-1.5 whitespace-nowrap"
                       >
                         📧 Email <span className="text-xs bg-gray-100 text-gray-400 px-1.5 py-0.5 rounded-full">Pro</span>
                       </button>
@@ -210,14 +210,14 @@ function WritePageInner() {
                   )}
                   <button
                     onClick={() => setShowShareModal(true)}
-                    className="text-sm px-4 py-2 border border-rose-200 text-rose-700 rounded-xl hover:bg-rose-50 transition-colors"
+                    className="text-xs sm:text-sm px-3 sm:px-4 py-2 border border-rose-200 text-rose-700 rounded-xl hover:bg-rose-50 transition-colors whitespace-nowrap"
                   >
                     🔗 Share
                   </button>
                   <Link
                     href={`/letter/${savedShareId}`}
                     target="_blank"
-                    className="text-sm px-4 py-2 bg-rose-100 text-rose-700 rounded-xl hover:bg-rose-200 transition-colors"
+                    className="text-xs sm:text-sm px-3 sm:px-4 py-2 bg-rose-100 text-rose-700 rounded-xl hover:bg-rose-200 transition-colors whitespace-nowrap"
                   >
                     👁 Preview
                   </Link>
@@ -226,7 +226,7 @@ function WritePageInner() {
               <button
                 onClick={handleSave}
                 disabled={isSaving}
-                className="text-sm px-5 py-2 bg-rose-600 text-white rounded-xl hover:bg-rose-700 transition-colors disabled:opacity-50 font-medium"
+                className="text-xs sm:text-sm px-4 sm:px-5 py-2 bg-rose-600 text-white rounded-xl hover:bg-rose-700 transition-colors disabled:opacity-50 font-medium whitespace-nowrap"
               >
                 {isSaving ? 'Saving...' : savedShareId ? '💾 Update' : '💾 Save & Share'}
               </button>
