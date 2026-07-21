@@ -172,8 +172,8 @@ export default function Editor({ content, onChange }: Props) {
         </ToolBtn>
       </div>
 
-      {/* Editor area */}
-      <div className="tiptap-editor letter-paper-plain p-6 min-h-[400px]">
+      {/* Editor area — scrolls internally so the toolbar stays visible */}
+      <div className="tiptap-editor letter-paper-plain p-6 min-h-[400px] max-h-[65vh] overflow-y-auto">
         <EditorContent editor={editor} />
       </div>
     </div>
