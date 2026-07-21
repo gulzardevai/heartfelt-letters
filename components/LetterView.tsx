@@ -1,5 +1,6 @@
 import { Letter } from '@/lib/supabase'
 import { LETTER_TYPES } from '@/lib/templates'
+import LetterActions from '@/components/LetterActions'
 
 interface Props {
   letter: Letter
@@ -29,7 +30,7 @@ export default function LetterView({ letter }: Props) {
     <div className="min-h-screen py-12 px-4 bg-gradient-to-br from-rose-50 via-cream to-pink-50">
       <div className="max-w-2xl mx-auto">
         {/* Header badge */}
-        <div className="text-center mb-6 fade-in">
+        <div className="no-print text-center mb-6 fade-in">
           <div className="inline-flex items-center gap-2 bg-white border border-rose-200 rounded-full px-4 py-2 shadow-sm">
             <span>{emoji}</span>
             <span className="text-rose-700 text-sm font-medium">{typeLabel}</span>
@@ -78,8 +79,11 @@ export default function LetterView({ letter }: Props) {
           )}
         </div>
 
+        {/* Print & share actions */}
+        <LetterActions senderName={letter.sender_name} />
+
         {/* Footer */}
-        <div className="text-center mt-8 fade-in" style={{animationDelay: '0.2s'}}>
+        <div className="no-print text-center mt-8 fade-in" style={{animationDelay: '0.2s'}}>
           <p className="text-rose-400 text-xs">
             Created with 💌 <a href="/" className="underline hover:text-rose-600 transition-colors">ShareLove Letters</a>
           </p>

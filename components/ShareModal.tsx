@@ -8,9 +8,10 @@ interface Props {
   onClose: () => void
   showPasswordSetup?: boolean
   initialHasPassword?: boolean
+  senderName?: string
 }
 
-export default function ShareModal({ shareId, onClose, showPasswordSetup = false, initialHasPassword = false }: Props) {
+export default function ShareModal({ shareId, onClose, showPasswordSetup = false, initialHasPassword = false, senderName }: Props) {
   const shareUrl = typeof window !== 'undefined'
     ? `${window.location.origin}/letter/${shareId}`
     : `/letter/${shareId}`
@@ -21,10 +22,19 @@ export default function ShareModal({ shareId, onClose, showPasswordSetup = false
   const [showPw, setShowPw] = useState(false)
   const [saving, setSaving] = useState(false)
 
+  const shareMessage = senderName
+    ? `💌 ${senderName} sent you a heartfelt letter! Open your sealed envelope here: ${shareUrl}`
+    : `💌 Someone sent you a heartfelt letter! Open your sealed envelope here: ${shareUrl}`
+
   const copyLink = async () => {
-    await navigator.clipboard.writeText(shareUrl)
+    await navigator.clipboard.writeText(shareMessage)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
+  }
+
+  const copyLinkOnly = async () => {
+    await navigator.clipboard.writeText(shareUrl)
+    toast.success('Link copied!')
   }
 
   const handleToggle = async () => {
@@ -94,6 +104,12 @@ export default function ShareModal({ shareId, onClose, showPasswordSetup = false
               }`}
             >
               {copied ? '✓ Copied!' : 'Copy'}
+            </button>
+          </div>
+          <div className="flex items-center justify-between mt-2 px-1">
+            <p className="text-[11px] text-rose-400">Copies a ready-to-send message with your link</p>
+            <button onClick={copyLinkOnly} className="text-[11px] text-rose-500 underline hover:text-rose-700 whitespace-nowrap ml-2">
+              Copy link only
             </button>
           </div>
         </div>

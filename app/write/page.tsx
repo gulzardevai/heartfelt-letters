@@ -96,6 +96,14 @@ function WritePageInner() {
       toast.error('Please write something in your letter')
       return
     }
+    if (!recipientName.trim()) {
+      toast.error('Please add the recipient\'s name')
+      return
+    }
+    if (!senderName.trim()) {
+      toast.error('Please add your name')
+      return
+    }
     setIsSaving(true)
     try {
       const isUpdate = !!savedShareId
@@ -125,11 +133,8 @@ function WritePageInner() {
       }
       const data = await res.json()
       setSavedShareId(data.share_id)
-      if (!user) {
-        setShowShareModal(true)
-      } else {
-        toast.success(savedShareId ? 'Letter updated!' : 'Letter saved!')
-      }
+      toast.success(savedShareId ? 'Letter updated!' : 'Letter published!')
+      setShowShareModal(true)
     } catch {
       toast.error('Failed to save letter')
     } finally {
@@ -228,7 +233,7 @@ function WritePageInner() {
                 disabled={isSaving}
                 className="text-xs sm:text-sm px-4 sm:px-5 py-2 bg-rose-600 text-white rounded-xl hover:bg-rose-700 transition-colors disabled:opacity-50 font-medium whitespace-nowrap"
               >
-                {isSaving ? 'Saving...' : savedShareId ? '💾 Update' : '💾 Save & Share'}
+                {isSaving ? 'Publishing...' : savedShareId ? '💾 Update' : '🚀 Publish'}
               </button>
             </div>
           )}
@@ -361,7 +366,7 @@ function WritePageInner() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-rose-600 mb-1">To (recipient name)</label>
+                      <label className="block text-xs font-medium text-rose-600 mb-1">To (recipient name) <span className="text-rose-400">*</span></label>
                       <input
                         value={recipientName}
                         onChange={e => setRecipientName(e.target.value)}
@@ -370,7 +375,7 @@ function WritePageInner() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs font-medium text-rose-600 mb-1">From (your name)</label>
+                      <label className="block text-xs font-medium text-rose-600 mb-1">From (your name) <span className="text-rose-400">*</span></label>
                       <input
                         value={senderName}
                         onChange={e => setSenderName(e.target.value)}
@@ -410,7 +415,7 @@ function WritePageInner() {
       </div>
 
       {showShareModal && savedShareId && (
-        <ShareModal shareId={savedShareId} onClose={() => setShowShareModal(false)} showPasswordSetup initialHasPassword={letterHasPassword} />
+        <ShareModal shareId={savedShareId} onClose={() => setShowShareModal(false)} showPasswordSetup initialHasPassword={letterHasPassword} senderName={senderName} />
       )}
       {showEmailModal && savedShareId && (
         <EmailModal shareId={savedShareId} senderName={senderName} onClose={() => setShowEmailModal(false)} />
