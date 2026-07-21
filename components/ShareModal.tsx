@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import toast from 'react-hot-toast'
+import { sendGAEvent } from '@next/third-parties/google'
 
 interface Props {
   shareId: string
@@ -28,6 +29,7 @@ export default function ShareModal({ shareId, onClose, showPasswordSetup = false
 
   const copyLink = async () => {
     await navigator.clipboard.writeText(shareMessage)
+    sendGAEvent('event', 'share_link_copied', {})
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }

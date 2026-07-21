@@ -7,6 +7,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { QUOTES, QUOTE_CATEGORIES } from '@/lib/quotes'
 import { useAuth } from '@/components/AuthProvider'
+import { sendGAEvent } from '@next/third-parties/google'
 
 const FAVORITES_KEY = (userId: string) => `hl_favorites_${userId}`
 
@@ -49,6 +50,7 @@ export default function QuotesPage() {
     await navigator.clipboard.writeText(`"${text}" — ${author}`)
     setCopied(id)
     toast.success('Quote copied!')
+    sendGAEvent('event', 'quote_copied', { quote_id: id })
     setTimeout(() => setCopied(null), 2000)
   }
 

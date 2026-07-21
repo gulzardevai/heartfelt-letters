@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Script from 'next/script'
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { Playfair_Display, Inter, Dancing_Script } from 'next/font/google'
 import './globals.css'
 import { Toaster } from 'react-hot-toast'
@@ -77,6 +78,7 @@ export default function RootLayout({
           }}
         />
       </body>
+      <GoogleAnalytics gaId="G-EEQZTB0DFJ" />
     </html>
   )
 }

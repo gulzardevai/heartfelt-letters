@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Letter } from '@/lib/supabase'
 import LetterView from '@/components/LetterView'
+import { sendGAEvent } from '@next/third-parties/google'
 
 const TYPE_EMOJI: Record<string, string> = {
   love: '💕', birthday: '🎂', anniversary: '💍', thank_you: '🙏',
@@ -19,6 +20,7 @@ export default function EnvelopeReveal({ letter }: { letter: Letter }) {
   const handleOpen = () => {
     if (stage !== 'closed') return
     setStage('opening')
+    sendGAEvent('event', 'envelope_opened', { letter_type: letter.type })
     setTimeout(() => setStage('open'), 1900)
   }
 

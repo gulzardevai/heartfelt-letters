@@ -11,6 +11,7 @@ import TemplateCard from '@/components/TemplateCard'
 import ShareModal from '@/components/ShareModal'
 import EmailModal from '@/components/EmailModal'
 import { useAuth } from '@/components/AuthProvider'
+import { sendGAEvent } from '@next/third-parties/google'
 
 const Editor = dynamic(() => import('@/components/Editor'), {
   ssr: false,
@@ -134,6 +135,7 @@ function WritePageInner() {
       const data = await res.json()
       setSavedShareId(data.share_id)
       toast.success(savedShareId ? 'Letter updated!' : 'Letter published!')
+      sendGAEvent('event', savedShareId ? 'letter_updated' : 'letter_published', { letter_type: selectedType })
       setShowShareModal(true)
     } catch {
       toast.error('Failed to save letter')
