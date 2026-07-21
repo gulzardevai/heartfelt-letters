@@ -50,7 +50,7 @@ export default function RootLayout({
       <body className="min-h-screen bg-cream">
         <Script
           async
-          strategy="afterInteractive"
+          strategy="lazyOnload"
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1228680334439068"
           crossOrigin="anonymous"
         />
