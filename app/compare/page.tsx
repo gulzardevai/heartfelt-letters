@@ -135,7 +135,7 @@ export default function ComparePage() {
                   <tr className="border-b border-rose-100">
                     <th className="text-left px-6 py-4 font-semibold text-gray-700 w-48">Feature</th>
                     <th className="px-4 py-4 text-center">
-                      <span className="font-semibold text-rose-700 bg-rose-50 px-3 py-1 rounded-full text-xs">💌 Us</span>
+                      <span className="font-semibold text-rose-700 bg-rose-50 px-3 py-1 rounded-full text-xs whitespace-nowrap inline-block">💌&nbsp;Us</span>
                     </th>
                     <th className="px-4 py-4 text-center text-xs text-gray-500 font-medium">Digital Love Letters</th>
                     <th className="px-4 py-4 text-center text-xs text-gray-500 font-medium">Paperless Post</th>
