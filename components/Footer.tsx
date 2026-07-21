@@ -33,7 +33,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="border-t border-rose-100 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-rose-400">
-          <p>© 2025 ShareLove Letters. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} ShareLove Letters. All rights reserved.</p>
           <p>Free to use • Made with ❤️</p>
         </div>
       </div>
