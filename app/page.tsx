@@ -77,10 +77,14 @@ export default function Home() {
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
-              { icon: '📝', title: '30+ Templates', desc: 'Thoughtfully crafted templates for every occasion and relationship.' },
-              { icon: '🔐', title: 'Encrypted & Private', desc: 'Every letter is encrypted with bank-grade AES-256 encryption. Add a password for an extra layer — your words are for their eyes only.' },
-              { icon: '📧', title: 'Email Delivery', desc: 'Send your letter directly to your loved one\'s inbox.' },
-              { icon: '🖼️', title: 'Add Images', desc: 'Upload photos and images to make your letter even more special.' },
+              { icon: '✉️', title: 'Envelope Opening Magic', desc: 'Your letter arrives as a sealed envelope with a wax seal — recipients tap to open it with a beautiful animation.' },
+              { icon: '🔐', title: 'AES-256 Encrypted', desc: 'Bank-grade encryption means your letters are unreadable in storage — your words are for their eyes only.' },
+              { icon: '📝', title: '30+ Templates', desc: 'Thoughtfully crafted templates for every occasion — love, birthdays, apologies, gratitude, and more.' },
+              { icon: '🔑', title: 'Password Protection', desc: 'Lock any letter with a password so only your person can open it.' },
+              { icon: '🕶️', title: 'Anonymous Letters', desc: 'Send a letter without an account or a name — perfect for secret admirers.' },
+              { icon: '💬', title: '700+ Quotes Library', desc: 'Borrow the perfect line from our free quote collection, organized by mood and occasion.' },
+              { icon: '🖼️', title: 'Photos & Fine Fonts', desc: 'Add photos, elegant fonts, and colors to make your letter unmistakably yours.' },
+              { icon: '🖨️', title: 'Print & Share', desc: 'Recipients can print the letter as a keepsake or share it on WhatsApp and social media.' },
             ].map((f) => (
               <div key={f.title} className="bg-white rounded-2xl p-6 shadow-paper border border-rose-50 text-center hover:-translate-y-1 transition-transform">
                 <div className="text-4xl mb-3">{f.icon}</div>
