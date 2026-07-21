@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next'
 import { getSupabaseAdmin } from '@/lib/supabase-admin'
 
 export const dynamic = 'force-dynamic'
+export const fetchCache = 'force-no-store'
 
 const BASE = 'https://www.shareloveletters.com'
 
