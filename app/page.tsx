@@ -4,9 +4,24 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import QuoteOfTheDay from '@/components/QuoteOfTheDay'
 
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'Is ShareLove Letters really free?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Writing and sharing letters is completely free — templates, the editor, photo uploads, private links, and password protection included. No credit card, and you can even write without an account.' } },
+    { '@type': 'Question', name: 'Can I write a love letter without signing up?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Guests can write and share one letter per day with no account. Sign up free to save up to 10 letters a month.' } },
+    { '@type': 'Question', name: 'How does the recipient open my letter?', acceptedAnswer: { '@type': 'Answer', text: 'You share a private link. The recipient sees a sealed envelope with their name on it — they tap to break the wax seal and the letter unfolds with a beautiful animation.' } },
+    { '@type': 'Question', name: 'Can I make my letter private?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. You can protect any letter with a password so only the person you share it with can read it. Letters are never public or searchable.' } },
+  ],
+}
+
 export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <Navbar />
 
       <main>
@@ -20,8 +35,9 @@ export default function Home() {
           <span className="text-rose-600 italic">Last Forever</span>
         </h1>
         <p className="text-lg text-rose-800/60 max-w-2xl mx-auto mb-10 leading-relaxed">
-          Create beautiful, heartfelt letters for your loved ones. Choose from elegant templates,
-          add images, and share with a private link or send directly to their inbox.
+          Write free love letters online for her, him, family, and friends. Choose from elegant
+          templates, add images, and share with a private link — opened like a real envelope.
+          No account needed.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
@@ -116,6 +132,49 @@ export default function Home() {
                 <h3 className="font-serif font-semibold text-rose-900 text-lg mb-2">{s.title}</h3>
                 <p className="text-rose-700/60 text-sm leading-relaxed">{s.desc}</p>
               </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SEO content + FAQ */}
+      <section className="py-16 px-6 bg-white/40">
+        <div className="max-w-3xl mx-auto">
+          <h2 className="font-serif text-3xl font-bold text-rose-900 mb-6 text-center">
+            Free love letters for every relationship
+          </h2>
+          <div className="text-rose-800/70 leading-relaxed space-y-4 text-[15px]">
+            <p>
+              ShareLove Letters is a <strong>free love letter generator</strong> and writing studio.
+              Pick from 30 <Link href="/write" className="text-rose-600 underline hover:text-rose-800">free love letter templates</Link> —
+              romantic letters for her or him, birthday and anniversary letters, apology letters,
+              thank-you notes, and letters for parents and friends — then make them yours with our
+              rich editor, custom fonts, and photos.
+            </p>
+            <p>
+              Every letter is shared as a private link that opens like a real envelope, complete with
+              a wax seal. Add a password so only your person can read it, or write an
+              <strong> anonymous love letter</strong> without creating an account. Need the right
+              words? Borrow a line from our <Link href="/quotes" className="text-rose-600 underline hover:text-rose-800">library of 700+ free quotes</Link> or
+              follow the guides on our <Link href="/blog" className="text-rose-600 underline hover:text-rose-800">letter-writing blog</Link>.
+            </p>
+          </div>
+
+          <div className="mt-10 space-y-4">
+            <h3 className="font-serif text-xl font-bold text-rose-900 text-center mb-6">Frequently asked questions</h3>
+            {[
+              { q: 'Is ShareLove Letters really free?', a: 'Yes. Writing and sharing letters is completely free — templates, the editor, photo uploads, private links, and password protection included. No credit card, and you can even write without an account.' },
+              { q: 'Can I write a love letter without signing up?', a: 'Yes. Guests can write and share one letter per day with no account. Sign up free to save up to 10 letters a month and manage them from your dashboard.' },
+              { q: 'How does the recipient open my letter?', a: 'You share a private link. When your recipient opens it, they see a sealed envelope with their name on it — they tap to break the wax seal and the letter unfolds with a beautiful animation.' },
+              { q: 'Can I make my letter private?', a: 'Yes. You can protect any letter with a password so only the person you share it with can read it. Letters are never public or searchable.' },
+            ].map(item => (
+              <details key={item.q} className="bg-white rounded-2xl border border-rose-100 px-5 py-4 group">
+                <summary className="font-medium text-rose-900 cursor-pointer text-sm list-none flex justify-between items-center">
+                  {item.q}
+                  <span className="text-rose-300 group-open:rotate-45 transition-transform text-lg leading-none">+</span>
+                </summary>
+                <p className="text-sm text-rose-700/70 leading-relaxed mt-3">{item.a}</p>
+              </details>
             ))}
           </div>
         </div>
