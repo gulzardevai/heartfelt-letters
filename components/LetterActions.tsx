@@ -37,9 +37,9 @@ export default function LetterActions({ senderName }: Props) {
     <>
     <a
       href="/write"
-      className="no-print fixed top-3 right-3 sm:top-5 sm:right-5 z-40 bg-rose-600 text-white text-xs sm:text-sm font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-md hover:bg-rose-700 transition-colors whitespace-nowrap"
+      className="no-print fixed top-2.5 right-2.5 sm:top-5 sm:right-5 z-40 bg-rose-600 text-white text-[11px] sm:text-sm font-semibold px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full shadow-md hover:bg-rose-700 transition-colors whitespace-nowrap"
     >
-      ✍️ Write Your Own
+      ✍️ <span className="hidden sm:inline">Write Your Own</span><span className="sm:hidden">Write</span>
     </a>
     <div className="no-print fixed z-40 flex flex-row gap-2.5 bottom-4 left-1/2 -translate-x-1/2 bg-white/70 backdrop-blur-md rounded-full px-3 py-2 shadow-lg border border-rose-100 lg:bg-transparent lg:backdrop-blur-none lg:shadow-none lg:border-0 lg:px-0 lg:py-0 lg:rounded-none lg:bottom-auto lg:top-24 lg:left-1/2 lg:translate-x-[23rem] lg:flex-col">
       <button onClick={() => window.print()} className={btnCls} aria-label="Print letter">
