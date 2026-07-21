@@ -116,6 +116,7 @@ export default function ComparePage() {
                 <li>✓ Built only for writing letters — nothing else</li>
                 <li>✓ 30 templates across 10 emotional categories</li>
                 <li>✓ Beautiful presentation for whoever receives it</li>
+                <li>✓ AES-256 encrypted — unreadable even in our database</li>
                 <li>✓ Share via private link, optionally with a password</li>
                 <li>✓ Write anonymously or with an account</li>
                 <li>✓ Free — no coins, no subscriptions</li>
@@ -184,7 +185,8 @@ export default function ComparePage() {
                 <div className="text-4xl mb-4">🔒</div>
                 <h3 className="font-semibold text-rose-900 mb-2">Private by design</h3>
                 <p className="text-sm text-rose-700/70 leading-relaxed">
-                  Password protect any letter. Write anonymously. Your words go only where you intend them to go.
+                  Every letter is encrypted with bank-grade AES-256 — unreadable even in our own database.
+                  Password protect any letter, write anonymously, and know your words go only where you intend.
                 </p>
               </div>
             </div>
