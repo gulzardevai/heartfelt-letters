@@ -14,7 +14,7 @@ export default async function AdminPostsPage() {
   const db = getSupabaseAdmin()
   const { data: posts } = await db
     .from('blog_posts')
-    .select('id, slug, title, published, published_at, created_at, tags, cover_image, content')
+    .select('id, slug, title, published, published_at, created_at, tags, cover_image, content, view_count')
     .order('created_at', { ascending: false })
 
   const rows = (posts ?? []).map((p) => ({
@@ -27,6 +27,7 @@ export default async function AdminPostsPage() {
     tags: (p.tags ?? []) as string[],
     cover_image: p.cover_image as string | null,
     word_count: wordCount(p.content as string | null),
+    view_count: (p.view_count as number) ?? 0,
   }))
 
   return (

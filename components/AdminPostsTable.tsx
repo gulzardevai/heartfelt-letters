@@ -14,6 +14,7 @@ type PostRow = {
   tags: string[]
   cover_image: string | null
   word_count: number
+  view_count: number
 }
 
 type Filter = 'all' | 'published' | 'drafts'
@@ -99,6 +100,7 @@ export default function AdminPostsTable({ posts }: { posts: PostRow[] }) {
                 <th className="text-left px-6 py-3 font-medium text-gray-600">Post</th>
                 <th className="text-left px-6 py-3 font-medium text-gray-600">Tags</th>
                 <th className="text-left px-6 py-3 font-medium text-gray-600">Words</th>
+                <th className="text-left px-6 py-3 font-medium text-gray-600">Views</th>
                 <th className="text-left px-6 py-3 font-medium text-gray-600">Status</th>
                 <th className="text-left px-6 py-3 font-medium text-gray-600">Date</th>
                 <th className="px-6 py-3"></th>
@@ -129,6 +131,7 @@ export default function AdminPostsTable({ posts }: { posts: PostRow[] }) {
                     </div>
                   </td>
                   <td className="px-6 py-4 text-gray-500">{post.word_count.toLocaleString()}</td>
+                  <td className="px-6 py-4 text-gray-500">👁 {post.view_count.toLocaleString()}</td>
                   <td className="px-6 py-4">
                     <span className={`inline-flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full ${
                       post.published ? 'bg-green-50 text-green-700' : 'bg-yellow-50 text-yellow-700'
