@@ -258,8 +258,13 @@ function WritePageInner() {
         {step === 'type' && (
           <div className="fade-in">
             <div className="text-center mb-10">
-              <h1 className="font-serif text-4xl font-bold text-rose-900 mb-3">What kind of letter?</h1>
-              <p className="text-rose-700/60">Choose the occasion for your letter</p>
+              <h1 className="font-serif text-3xl sm:text-4xl font-bold text-rose-900 mb-3">
+                Write a Free Love Letter Online
+              </h1>
+              <p className="text-rose-700/60 max-w-xl mx-auto">
+                Our free love letter generator helps you write something beautiful in minutes.
+                Choose the occasion, pick a template, and share it as a sealed envelope — no account needed.
+              </p>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
               {LETTER_TYPES.map(type => (
@@ -270,6 +275,26 @@ function WritePageInner() {
                   onClick={() => handleTypeSelect(type.id)}
                 />
               ))}
+            </div>
+
+            {/* SEO copy */}
+            <div className="mt-16 max-w-2xl mx-auto text-center border-t border-rose-100 pt-10">
+              <h2 className="font-serif text-xl font-bold text-rose-900 mb-4">
+                Free letter templates for every occasion
+              </h2>
+              <p className="text-sm text-rose-700/60 leading-relaxed mb-3">
+                Whether you need a romantic love letter for her or him, a heartfelt birthday letter,
+                an anniversary letter, a sincere apology, or a thank-you note for a friend or parent —
+                start from one of our 30 free templates and make it your own with custom fonts, colors,
+                and photos.
+              </p>
+              <p className="text-sm text-rose-700/60 leading-relaxed">
+                Every letter is free to write and share: your recipient opens a private link and finds a
+                sealed envelope with their name on it. Add a password to keep it just between you two,
+                or write anonymously — no signup required. Need inspiration first? Browse our{' '}
+                <Link href="/quotes" className="text-rose-600 underline hover:text-rose-800">700+ free quotes</Link>{' '}
+                or read our <Link href="/blog" className="text-rose-600 underline hover:text-rose-800">letter-writing guides</Link>.
+              </p>
             </div>
           </div>
         )}
