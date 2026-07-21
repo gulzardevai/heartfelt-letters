@@ -1,5 +1,8 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
+
 interface Props {
   senderName?: string | null
 }
@@ -16,6 +19,9 @@ function Label({ text }: { text: string }) {
 }
 
 export default function LetterActions({ senderName }: Props) {
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
+
   const pageUrl = typeof window !== 'undefined' ? window.location.href : ''
   const text = senderName
     ? `💌 ${senderName} sent a heartfelt letter`
@@ -23,7 +29,11 @@ export default function LetterActions({ senderName }: Props) {
 
   const enc = encodeURIComponent
 
-  return (
+  if (!mounted) return null
+
+  // Portal to <body>: position:fixed breaks inside transformed/animated
+  // ancestors (the envelope reveal), so render outside them entirely.
+  return createPortal(
     <div className="no-print fixed top-20 sm:top-24 z-40 flex flex-col gap-2.5 right-3 lg:right-auto lg:left-1/2 lg:translate-x-[23rem]">
       <button onClick={() => window.print()} className={btnCls} aria-label="Print letter">
         <Label text="Print letter" />
@@ -59,6 +69,7 @@ export default function LetterActions({ senderName }: Props) {
         <Label text="Share on X" />
         🐦
       </a>
-    </div>
+    </div>,
+    document.body
   )
 }
