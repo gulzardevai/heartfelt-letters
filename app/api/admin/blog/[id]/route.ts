@@ -54,6 +54,33 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
   return NextResponse.json(data)
 }
 
+// Toggle-only update (publish/unpublish) — does not touch other fields
+export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+  const user = await checkAdmin()
+  if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+
+  const { published } = await req.json()
+  if (typeof published !== 'boolean') {
+    return NextResponse.json({ error: 'published must be a boolean' }, { status: 400 })
+  }
+
+  const db = getSupabaseAdmin()
+  const existing = await db.from('blog_posts').select('published, published_at').eq('id', params.id).single()
+  if (existing.error) return NextResponse.json({ error: existing.error.message }, { status: 404 })
+
+  const publishedAt = !existing.data.published && published
+    ? new Date().toISOString()
+    : existing.data.published_at
+
+  const { error } = await db
+    .from('blog_posts')
+    .update({ published, published_at: publishedAt, updated_at: new Date().toISOString() })
+    .eq('id', params.id)
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  return NextResponse.json({ success: true })
+}
+
 export async function DELETE(_req: NextRequest, { params }: { params: { id: string } }) {
   const user = await checkAdmin()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })

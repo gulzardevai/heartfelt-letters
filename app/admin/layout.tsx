@@ -20,8 +20,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <Link href="/admin" className="font-semibold text-gray-900 flex items-center gap-2">
             <span>💌</span> Admin Panel
           </Link>
-          <Link href="/admin/blog/new" className="text-sm text-gray-600 hover:text-gray-900">New Post</Link>
-          <Link href="/admin" className="text-sm text-gray-600 hover:text-gray-900">All Posts</Link>
+          <Link href="/admin" className="text-sm text-gray-600 hover:text-gray-900">Dashboard</Link>
+          <Link href="/admin/posts" className="text-sm text-gray-600 hover:text-gray-900">Posts</Link>
+          <Link href="/admin/users" className="text-sm text-gray-600 hover:text-gray-900">Users</Link>
         </div>
         <div className="flex items-center gap-4">
           <Link href="/" className="text-sm text-gray-500 hover:text-gray-700">← Back to site</Link>
