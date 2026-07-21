@@ -11,6 +11,8 @@ type BlogPost = {
   title: string
   excerpt: string | null
   cover_image: string | null
+  content: string
+  view_count: number
   author: string
   tags: string[]
   published_at: string | null
@@ -21,7 +23,7 @@ export default async function BlogPage() {
   const supabase = createSupabaseServerClient()
   const { data: posts } = await supabase
     .from('blog_posts')
-    .select('id, slug, title, excerpt, cover_image, author, tags, published_at, created_at')
+    .select('id, slug, title, excerpt, cover_image, author, tags, published_at, created_at, content, view_count')
     .eq('published', true)
     .order('published_at', { ascending: false })
 
@@ -46,6 +48,8 @@ export default async function BlogPage() {
               {blogPosts.map(post => {
                 const date = post.published_at ?? post.created_at
                 const formatted = new Date(date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+                const words = post.content.replace(/<[^>]+>/g, ' ').trim().split(/\s+/).filter(Boolean).length
+                const readMins = Math.max(1, Math.round(words / 200))
                 return (
                   <article key={post.id} className="bg-white rounded-2xl border border-rose-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
                     {post.cover_image && (
@@ -71,6 +75,10 @@ export default async function BlogPage() {
                       <div className="flex items-center justify-between text-xs text-rose-400">
                         <span>{post.author}</span>
                         <span>{formatted}</span>
+                      </div>
+                      <div className="flex items-center gap-3 text-xs text-rose-400 mt-2">
+                        <span>📖 {readMins} min read</span>
+                        {post.view_count > 0 && <span>👁 {post.view_count.toLocaleString()} views</span>}
                       </div>
                     </div>
                     <div className="border-t border-rose-50 px-6 py-3">

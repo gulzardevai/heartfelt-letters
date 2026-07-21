@@ -21,8 +21,18 @@ export default async function BlogPostPage({ params }: Props) {
 
   if (!post) notFound()
 
+  // Increment view count (fire and forget)
+  supabase
+    .from('blog_posts')
+    .update({ view_count: (post.view_count || 0) + 1 })
+    .eq('id', post.id)
+    .then(() => {})
+
   const date = post.published_at ?? post.created_at
   const formatted = new Date(date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+  const words = post.content.replace(/<[^>]+>/g, ' ').trim().split(/\s+/).filter(Boolean).length
+  const readMins = Math.max(1, Math.round(words / 200))
+  const views = (post.view_count || 0) + 1
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -40,10 +50,14 @@ export default async function BlogPostPage({ params }: Props) {
               ))}
             </div>
             <h1 className="font-serif text-4xl font-bold text-rose-900 mb-4 leading-tight">{post.title}</h1>
-            <div className="flex items-center gap-3 text-sm text-rose-400">
+            <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-rose-400">
               <span>{post.author}</span>
               <span>•</span>
               <span>{formatted}</span>
+              <span>•</span>
+              <span>📖 {readMins} min read</span>
+              <span>•</span>
+              <span>👁 {views.toLocaleString()} {views === 1 ? 'view' : 'views'}</span>
             </div>
           </header>
 
