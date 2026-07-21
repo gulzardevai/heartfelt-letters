@@ -62,7 +62,11 @@ export async function generateMetadata({ params }: Props) {
     .eq('share_id', params.id)
     .single()
 
-  if (!letter) return { title: 'Letter Not Found' }
+  const noindex = {
+    robots: { index: false, follow: false, googleBot: { index: false, follow: false } },
+  }
+
+  if (!letter) return { title: 'Letter Not Found', ...noindex }
 
   const title = letter.title
     || (letter.recipient_name ? `A letter for ${letter.recipient_name}` : 'A heartfelt letter')
@@ -72,5 +76,6 @@ export async function generateMetadata({ params }: Props) {
     description: letter.sender_name
       ? `A ${letter.type.replace('_', ' ')} letter from ${letter.sender_name}`
       : `A heartfelt ${letter.type.replace('_', ' ')} letter`,
+    ...noindex,
   }
 }
