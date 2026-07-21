@@ -82,6 +82,23 @@ export default function LetterView({ letter }: Props) {
         {/* Print & share actions */}
         <LetterActions senderName={letter.sender_name} />
 
+        {/* Write-your-own CTA */}
+        <div className="no-print mt-10 bg-white/80 border border-rose-100 rounded-3xl p-6 sm:p-8 text-center shadow-sm fade-in">
+          <div className="text-3xl mb-2">✍️</div>
+          <h2 className="font-serif text-xl sm:text-2xl font-bold text-rose-900 mb-2">
+            Touched by this letter?
+          </h2>
+          <p className="text-sm text-rose-700/70 mb-5 max-w-md mx-auto">
+            Write one of your own — it&apos;s free, takes a few minutes, and arrives as a sealed envelope just like this one. No account needed.
+          </p>
+          <a
+            href="/write"
+            className="inline-block bg-rose-600 text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-rose-700 transition-colors shadow-md"
+          >
+            Write Your Own Letter — Free
+          </a>
+        </div>
+
         {/* Footer */}
         <div className="no-print text-center mt-8 fade-in" style={{animationDelay: '0.2s'}}>
           <p className="text-rose-400 text-xs">

@@ -13,6 +13,9 @@ export default function Footer() {
             <p className="text-sm text-rose-600/70 leading-relaxed">
               Write letters that last a lifetime. Share them with the people who matter most.
             </p>
+            <a href="mailto:hello@shareloveletters.com" className="inline-block mt-3 text-sm text-rose-500 hover:text-rose-700 transition-colors">
+              ✉️ hello@shareloveletters.com
+            </a>
           </div>
           <div>
             <h4 className="font-semibold text-rose-900 mb-3 text-sm uppercase tracking-wide">Pages</h4>
