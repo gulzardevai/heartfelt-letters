@@ -31,11 +31,11 @@ const dancing = Dancing_Script({
 export const metadata: Metadata = {
   metadataBase: new URL('https://shareloveletters.com'),
   title: 'Free Love Letters Online — Write & Share Beautiful Letters | ShareLove Letters',
-  description: 'Write free love letters online with beautiful templates. Share via private link with an envelope opening animation — no account needed. Letters for her, him, family & friends.',
+  description: 'Write free love letters online with beautiful templates. AES-256 encrypted, shared via a private link that opens like a sealed envelope. No account needed.',
   keywords: 'free love letters, free love letter generator, love letter templates free, write a love letter online, letter writing, birthday letters, heartfelt messages',
   openGraph: {
     title: 'ShareLove Letters — Free Love Letters Online',
-    description: 'Write free love letters with beautiful templates and share them via private link. No account needed.',
+    description: 'Free, encrypted love letters shared as sealed envelopes. Beautiful templates, private links, no account needed.',
     type: 'website',
   },
 }
