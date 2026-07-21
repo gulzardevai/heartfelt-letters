@@ -1,6 +1,7 @@
 import { Letter } from '@/lib/supabase'
 import { LETTER_TYPES } from '@/lib/templates'
 import LetterActions from '@/components/LetterActions'
+import WriteCta from '@/components/WriteCta'
 
 interface Props {
   letter: Letter
@@ -91,12 +92,12 @@ export default function LetterView({ letter }: Props) {
           <p className="text-sm text-rose-700/70 mb-5 max-w-md mx-auto">
             Write one of your own — it&apos;s free, takes a few minutes, and arrives as a sealed envelope just like this one. No account needed.
           </p>
-          <a
-            href="/write"
+          <WriteCta
+            placement="below_letter"
             className="inline-block bg-rose-600 text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-rose-700 transition-colors shadow-md"
           >
             Write Your Own Letter — Free
-          </a>
+          </WriteCta>
         </div>
 
         {/* Footer */}

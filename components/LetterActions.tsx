@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { sendGAEvent } from '@next/third-parties/google'
 
 interface Props {
   senderName?: string | null
@@ -37,6 +38,7 @@ export default function LetterActions({ senderName }: Props) {
     <>
     <a
       href="/write"
+      onClick={() => sendGAEvent('event', 'recipient_cta_clicked', { placement: 'top_right' })}
       className="no-print fixed top-2.5 right-2.5 sm:top-5 sm:right-5 z-40 bg-rose-600 text-white text-[11px] sm:text-sm font-semibold px-3 py-1.5 sm:px-5 sm:py-2.5 rounded-full shadow-md hover:bg-rose-700 transition-colors whitespace-nowrap"
     >
       ✍️ <span className="hidden sm:inline">Write Your Own</span><span className="sm:hidden">Write</span>
