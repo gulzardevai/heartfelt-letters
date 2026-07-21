@@ -14,7 +14,7 @@ const TYPE_EMOJI: Record<string, string> = {
 
 type Stage = 'closed' | 'opening' | 'open'
 
-export default function EnvelopeReveal({ letter }: { letter: Letter }) {
+export default function EnvelopeReveal({ letter, unlockPassword }: { letter: Letter; unlockPassword?: string }) {
   const [stage, setStage] = useState<Stage>('closed')
   const emoji = TYPE_EMOJI[letter.type] || '💌'
   const theme = getTheme(letter.theme)
@@ -30,7 +30,7 @@ export default function EnvelopeReveal({ letter }: { letter: Letter }) {
   if (stage === 'open') {
     return (
       <div className="letter-reveal">
-        <LetterView letter={letter} />
+        <LetterView letter={letter} unlockPassword={unlockPassword} />
       </div>
     )
   }

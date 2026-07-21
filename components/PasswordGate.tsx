@@ -6,7 +6,7 @@ import { Letter } from '@/lib/supabase'
 
 interface Props {
   shareId: string
-  onUnlock: (letter: Letter) => void
+  onUnlock: (letter: Letter, password: string) => void
 }
 
 export default function PasswordGate({ shareId, onUnlock }: Props) {
@@ -23,7 +23,7 @@ export default function PasswordGate({ shareId, onUnlock }: Props) {
       const res = await fetch(`/api/letters/${shareId}?password=${encodeURIComponent(password)}`)
       if (res.ok) {
         const data = await res.json()
-        onUnlock(data.letter)
+        onUnlock(data.letter, password)
       } else if (res.status === 401) {
         setError('Incorrect password. Please try again.')
         toast.error('Incorrect password')

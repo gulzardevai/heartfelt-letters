@@ -2,10 +2,12 @@ import { Letter } from '@/lib/supabase'
 import { LETTER_TYPES } from '@/lib/templates'
 import { getTheme } from '@/lib/themes'
 import LetterActions from '@/components/LetterActions'
+import LetterReplies from '@/components/LetterReplies'
 import WriteCta from '@/components/WriteCta'
 
 interface Props {
   letter: Letter
+  unlockPassword?: string
 }
 
 const TYPE_EMOJI: Record<string, string> = {
@@ -21,14 +23,7 @@ const TYPE_LABEL: Record<string, string> = {
   congratulations: 'Congratulations', farewell: 'Farewell Letter',
 }
 
-function buildReplyHref(letter: Letter): string {
-  const params = new URLSearchParams({ replyTo: letter.share_id })
-  if (letter.sender_name) params.set('to', letter.sender_name)
-  if (letter.recipient_name) params.set('from', letter.recipient_name)
-  return `/write?${params.toString()}`
-}
-
-export default function LetterView({ letter }: Props) {
+export default function LetterView({ letter, unlockPassword }: Props) {
   const date = new Date(letter.created_at).toLocaleDateString('en-US', {
     year: 'numeric', month: 'long', day: 'numeric'
   })
@@ -36,7 +31,6 @@ export default function LetterView({ letter }: Props) {
   const typeLabel = TYPE_LABEL[letter.type] || 'Letter'
   const theme = getTheme(letter.theme)
   const themed = theme.id !== 'classic'
-  const replyHref = buildReplyHref(letter)
 
   return (
     <div className="min-h-screen py-12 px-4 bg-gradient-to-br from-rose-50 via-cream to-pink-50">
@@ -132,7 +126,7 @@ export default function LetterView({ letter }: Props) {
         </div>
 
         {/* Print & share actions */}
-        <LetterActions senderName={letter.sender_name} replyHref={replyHref} />
+        <LetterActions senderName={letter.sender_name} />
 
         {/* Write-your-own CTA */}
         <div className="no-print mt-10 bg-white/80 border border-rose-100 rounded-3xl p-6 sm:p-8 text-center shadow-sm fade-in">
@@ -144,12 +138,6 @@ export default function LetterView({ letter }: Props) {
             Write one of your own — it&apos;s free, takes a few minutes, and arrives as a sealed envelope just like this one. No account needed.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <a
-              href={replyHref}
-              className="inline-block border-2 border-rose-300 text-rose-700 px-8 py-3 rounded-full text-sm font-semibold hover:bg-rose-50 transition-colors"
-            >
-              💌 Write Back{letter.sender_name ? ` to ${letter.sender_name}` : ''}
-            </a>
             <WriteCta
               placement="below_letter"
               className="inline-block bg-rose-600 text-white px-8 py-3 rounded-full text-sm font-semibold hover:bg-rose-700 transition-colors shadow-md"
@@ -158,6 +146,9 @@ export default function LetterView({ letter }: Props) {
             </WriteCta>
           </div>
         </div>
+
+        {/* Replies */}
+        <LetterReplies shareId={letter.share_id} unlockPassword={unlockPassword} />
 
         {/* Footer */}
         <div className="no-print text-center mt-8 fade-in" style={{animationDelay: '0.2s'}}>

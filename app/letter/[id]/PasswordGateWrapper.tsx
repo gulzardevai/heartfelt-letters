@@ -10,11 +10,11 @@ interface Props {
 }
 
 export default function PasswordGateWrapper({ shareId }: Props) {
-  const [letter, setLetter] = useState<Letter | null>(null)
+  const [unlocked, setUnlocked] = useState<{ letter: Letter; password: string } | null>(null)
 
-  if (letter) {
-    return <EnvelopeReveal letter={letter} />
+  if (unlocked) {
+    return <EnvelopeReveal letter={unlocked.letter} unlockPassword={unlocked.password} />
   }
 
-  return <PasswordGate shareId={shareId} onUnlock={setLetter} />
+  return <PasswordGate shareId={shareId} onUnlock={(letter, password) => setUnlocked({ letter, password })} />
 }
