@@ -81,7 +81,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-rose-50 to-pink-50">
       <Navbar />
-      <main className="flex-1 max-w-5xl mx-auto px-6 py-12 w-full">
+      <main className="flex-1 max-w-5xl mx-auto px-4 sm:px-6 py-8 sm:py-12 w-full">
         <div className="mb-8">
           <h1 className="font-serif text-4xl font-bold text-rose-900 mb-1">
             Welcome back{profile?.full_name ? `, ${profile.full_name.split(' ')[0]}` : ''}! 💌
@@ -90,7 +90,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-8">
           <div className="bg-white rounded-2xl p-5 border border-rose-100 shadow-sm text-center">
             <div className="text-3xl font-bold text-rose-700">{count}</div>
             <div className="text-xs text-rose-500 mt-1">Letters Written</div>
