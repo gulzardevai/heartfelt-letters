@@ -7,7 +7,7 @@ export default function PrivacyPage() {
       <Navbar />
       <main className="flex-1 max-w-3xl mx-auto px-6 py-16">
         <h1 className="font-serif text-4xl font-bold text-rose-900 mb-2">Privacy Policy</h1>
-        <p className="text-rose-500 text-sm mb-10">Effective date: July 1, 2025</p>
+        <p className="text-rose-500 text-sm mb-10">Effective date: July 21, 2026</p>
 
         <div className="prose prose-rose max-w-none space-y-10 text-rose-800/80">
           <section>
