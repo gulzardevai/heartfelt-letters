@@ -46,6 +46,13 @@ export const BADGES: DirectoryBadge[] = [
     width: 139,
     height: 44,
   },
+  {
+    name: 'Findly.tools',
+    listingUrl: 'https://findly.tools/sharelove-letters?utm_source=sharelove-letters',
+    imgSrc: 'https://findly.tools/badges/findly-tools-badge-light.svg',
+    width: 175,
+    height: 55,
+  },
 ]
 
 // Milliseconds each badge stays visible before crossfading to the next.
