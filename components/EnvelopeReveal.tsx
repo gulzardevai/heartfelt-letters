@@ -11,7 +11,7 @@ import { sendGAEvent } from '@next/third-parties/google'
 const TYPE_EMOJI: Record<string, string> = {
   love: '💕', birthday: '🎂', anniversary: '💍', thank_you: '🙏',
   apology: '💙', friendship: '🤝', condolence: '🕊️', get_well: '🌸',
-  congratulations: '🎉', farewell: '👋',
+  congratulations: '🎉', farewell: '👋', future_self: '🕰️',
 }
 
 type Stage = 'closed' | 'opening' | 'bouquet' | 'open'

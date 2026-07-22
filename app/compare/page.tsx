@@ -62,7 +62,8 @@ const competitors = [
 const features = [
   { feature: 'Purpose-built for letters', us: true, dll: true, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'All occasions, not just romance', us: true, dll: false, paperless: true, hallmark: true, canva: true, docs: true },
-  { feature: '30 letter templates by type', us: true, dll: false, paperless: false, hallmark: true, canva: false, docs: false },
+  { feature: '33 letter templates by type', us: true, dll: false, paperless: false, hallmark: true, canva: false, docs: false },
+  { feature: 'Occasion guides on what to actually say', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Rich text editor', us: true, dll: true, paperless: false, hallmark: false, canva: true, docs: true },
   { feature: 'Share via private link', us: true, dll: true, paperless: true, hallmark: false, canva: false, docs: true },
   { feature: 'Password protection', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: true },
@@ -130,7 +131,8 @@ export default function ComparePage() {
               <p className="text-xs text-rose-200 mb-3 font-medium uppercase tracking-wide">Purpose-built letter writing</p>
               <ul className="text-sm text-rose-100 space-y-1.5 leading-relaxed">
                 <li>✓ Built only for writing letters — nothing else</li>
-                <li>✓ 30 templates across 10 emotional categories</li>
+                <li>✓ 33 templates across 11 emotional categories</li>
+                <li>✓ Occasion-by-occasion guides on what to say — and what to skip</li>
                 <li>✓ Beautiful presentation for whoever receives it</li>
                 <li>✓ AES-256 encrypted — unreadable even in our database</li>
                 <li>✓ Share via private link, optionally with a password</li>

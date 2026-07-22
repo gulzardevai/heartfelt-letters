@@ -99,7 +99,16 @@ function WritePageInner() {
         })
         .finally(() => setEditLoading(false))
     } else if (selectedType) {
-      setStep('template')
+      // Deep link from an occasion page: ?type=love&template=love-1 opens the editor directly
+      const templateId = searchParams.get('template')
+      const template = templateId ? TEMPLATES.find(t => t.id === templateId && t.type === selectedType) : null
+      if (template) {
+        setSelectedTemplate(template.id)
+        setContent(template.content)
+        setStep('write')
+      } else {
+        setStep('template')
+      }
     }
   }, [])
 
@@ -353,14 +362,15 @@ function WritePageInner() {
               <p className="text-sm text-rose-700/60 leading-relaxed mb-3">
                 Whether you need a romantic love letter for her or him, a heartfelt birthday letter,
                 an anniversary letter, a sincere apology, or a thank-you note for a friend or parent —
-                start from one of our 30 free templates and make it your own with custom fonts, colors,
+                start from one of our 33 free templates and make it your own with custom fonts, colors,
                 and photos.
               </p>
               <p className="text-sm text-rose-700/60 leading-relaxed">
                 Every letter is free to write and share: your recipient opens a private link and finds a
                 sealed envelope with their name on it. Add a password to keep it just between you two,
                 or write anonymously — no signup required. Need inspiration first? Browse our{' '}
-                <Link href="/quotes" className="text-rose-600 underline hover:text-rose-800">700+ free quotes</Link>{' '}
+                <Link href="/quotes" className="text-rose-600 underline hover:text-rose-800">700+ free quotes</Link>,{' '}
+                browse <Link href="/letters" className="text-rose-600 underline hover:text-rose-800">letters by occasion</Link>{' '}
                 or read our <Link href="/blog" className="text-rose-600 underline hover:text-rose-800">letter-writing guides</Link>.
               </p>
             </div>

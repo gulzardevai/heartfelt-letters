@@ -33,6 +33,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-rose-700">
           <Link href="/" className="hover:text-rose-900 transition-colors">Home</Link>
           <Link href="/write" className="hover:text-rose-900 transition-colors">Write a Letter</Link>
+          <Link href="/letters" className="hover:text-rose-900 transition-colors">Occasions</Link>
           <Link href="/quotes" className="hover:text-rose-900 transition-colors">Quotes</Link>
           <Link href="/blog" className="hover:text-rose-900 transition-colors">Blog</Link>
           <Link href="/compare" className="hover:text-rose-900 transition-colors">Why Us</Link>
@@ -113,6 +114,7 @@ export default function Navbar() {
           <div className="flex flex-col text-sm font-medium text-rose-700">
             <Link href="/" onClick={() => setMobileOpen(false)} className="py-2.5 border-b border-rose-50">Home</Link>
             <Link href="/write" onClick={() => setMobileOpen(false)} className="py-2.5 border-b border-rose-50">Write a Letter</Link>
+            <Link href="/letters" onClick={() => setMobileOpen(false)} className="py-2.5 border-b border-rose-50">Occasions</Link>
             <Link href="/quotes" onClick={() => setMobileOpen(false)} className="py-2.5 border-b border-rose-50">Quotes</Link>
             <Link href="/blog" onClick={() => setMobileOpen(false)} className="py-2.5 border-b border-rose-50">Blog</Link>
             <Link href="/compare" onClick={() => setMobileOpen(false)} className="py-2.5 border-b border-rose-50">Why Us</Link>

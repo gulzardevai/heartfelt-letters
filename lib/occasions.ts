@@ -1,0 +1,452 @@
+// Occasion landing pages (/letters/[occasion]).
+// Each occasion maps to an existing letter type so the page can show real
+// templates and deep-link into /write with one preselected.
+
+export type Occasion = {
+  slug: string
+  type: string            // LETTER_TYPES id
+  emoji: string
+  name: string            // short label, used in lists and breadcrumbs
+  h1: string
+  metaTitle: string
+  metaDescription: string
+  intro: string[]         // 2 paragraphs
+  whatToSay: string[]     // 4 concrete prompts
+  avoid: string           // one honest "don't do this" line
+  faq: { q: string; a: string }[]
+  related: string[]       // slugs
+}
+
+export const OCCASIONS: Occasion[] = [
+  {
+    slug: 'anniversary',
+    type: 'anniversary',
+    emoji: '💍',
+    name: 'Anniversary',
+    h1: 'Anniversary Letter',
+    metaTitle: 'Anniversary Letter Template — Write a Free Anniversary Letter',
+    metaDescription: 'Free anniversary letter templates. Write a heartfelt anniversary letter to your husband, wife or partner and share it as a sealed envelope — no account needed.',
+    intro: [
+      'An anniversary letter is the one gift that gets better with time. Flowers fade and dinners end, but a letter that names exactly what this year held — the hard month, the running joke, the ordinary Tuesday you would not trade — is something they will still have in ten years.',
+      'You do not need to summarise your whole relationship. Pick this year. What changed, what held, what you noticed about them that you never got around to saying out loud.',
+    ],
+    whatToSay: [
+      'One specific memory from this year, told in detail — not "we had a great trip" but the moment on the trip you keep replaying.',
+      'Something they did that you never properly thanked them for.',
+      'A small habit of theirs you have quietly fallen in love with.',
+      'What you are looking forward to in the year ahead, concretely.',
+    ],
+    avoid: 'Avoid opening with "I can\'t believe it\'s been X years." Start with a moment instead — it earns attention in a way a milestone never does.',
+    faq: [
+      { q: 'What should I write in an anniversary letter?', a: 'Lead with one specific memory from the past year, say what it showed you about them, thank them for something concrete, and end with what you are looking forward to. Specificity is what makes it feel like it could only have been written by you, to them.' },
+      { q: 'How long should an anniversary letter be?', a: 'Between 200 and 500 words is plenty. A shorter letter with three real details beats a long one full of general praise.' },
+      { q: 'Can I schedule it to open on our anniversary?', a: 'Yes. Write it whenever you like, set the opening date, and the link stays sealed with a countdown until the day arrives.' },
+    ],
+    related: ['valentines-day', 'wedding', 'long-distance', 'love'],
+  },
+  {
+    slug: 'love',
+    type: 'love',
+    emoji: '💕',
+    name: 'Love Letter',
+    h1: 'Love Letter',
+    metaTitle: 'Love Letter Template — Write a Free Love Letter Online',
+    metaDescription: 'Free love letter templates for him and her. Write a romantic love letter online and share it as a sealed envelope, privately and free.',
+    intro: [
+      'A love letter is not a performance. The ones that land are rarely the most poetic — they are the most observed. They prove you have been paying attention.',
+      'Start from a template if the blank page is intimidating, then replace the general lines with your own details. The template is scaffolding, not the building.',
+    ],
+    whatToSay: [
+      'The moment you realised how you felt — where you were, what they were doing.',
+      'Something ordinary they do that undoes you completely.',
+      'A way they have changed how you see yourself.',
+      'One promise you actually intend to keep.',
+    ],
+    avoid: 'Avoid stacking adjectives. "You are amazing, beautiful, incredible" says less than one sentence about the way they hum while cooking.',
+    faq: [
+      { q: 'How do I start a love letter?', a: 'Skip the throat-clearing. Open in the middle of a memory: "You were standing in the kitchen doorway when I realised..." It pulls the reader straight in.' },
+      { q: 'Is it okay to send a love letter online?', a: 'Yes — and it arrives instantly. On ShareLove Letters your recipient opens a private link and finds a sealed envelope with their name on it, so the moment still feels like a moment.' },
+    ],
+    related: ['valentines-day', 'anniversary', 'long-distance', 'proposal'],
+  },
+  {
+    slug: 'valentines-day',
+    type: 'love',
+    emoji: '💘',
+    name: "Valentine's Day",
+    h1: "Valentine's Day Letter",
+    metaTitle: "Valentine's Day Letter Template — Free Valentine Letter Writing",
+    metaDescription: "Free Valentine's Day letter templates. Write a romantic Valentine letter for your girlfriend, boyfriend, husband or wife and send it as a sealed envelope.",
+    intro: [
+      "The card aisle has already said everything in the most forgettable way possible. A Valentine's letter works because it does the one thing a bought card structurally cannot: it sounds like you.",
+      "You have permission to be sincere on this day specifically. Use it. Say the thing you would normally soften with a joke.",
+    ],
+    whatToSay: [
+      'What you would miss most about them if they were gone for a month.',
+      'The most attractive thing about them that has nothing to do with how they look.',
+      'A time they were kind to you when you did not deserve it.',
+      'What you want more of this year — together.',
+    ],
+    avoid: 'Avoid quoting a famous love poem in place of your own words. Borrow a line if you must, then immediately follow it with something only you could say.',
+    faq: [
+      { q: "What do you write in a Valentine's letter?", a: "One honest observation, one memory, one wish for the year ahead. That structure is short enough to finish and specific enough to matter." },
+      { q: "Can I send a Valentine's letter anonymously?", a: "Yes. You can write without an account, and a secret admirer letter is one of the few cases where leaving the sender name a mystery genuinely works." },
+    ],
+    related: ['love', 'anniversary', 'long-distance', 'proposal'],
+  },
+  {
+    slug: 'long-distance',
+    type: 'love',
+    emoji: '✈️',
+    name: 'Long Distance',
+    h1: 'Long Distance Relationship Letter',
+    metaTitle: 'Long Distance Love Letter Template — Free & Private',
+    metaDescription: 'Free long distance relationship letter templates. Write a heartfelt letter to a partner far away and send it as a sealed envelope, instantly and free.',
+    intro: [
+      'Distance turns small updates into a lifeline. A letter does something a video call cannot: it can be re-read at 2am when the time difference is doing its worst.',
+      'Write the mundane details. What the walk to work looked like, what you ate, what made you laugh. Closeness is built out of unremarkable information.',
+    ],
+    whatToSay: [
+      'What your daily routine actually looks like right now, in detail.',
+      'A moment this week you wished they had been there for.',
+      'Something you are grateful they did despite the distance.',
+      'The next date you will see each other — and one thing you want to do first.',
+    ],
+    avoid: 'Avoid only writing about how hard the distance is. Half the letter should be your actual life, or it reads as a complaint they cannot fix.',
+    faq: [
+      { q: 'What should I write to my long distance partner?', a: 'Ordinary detail plus one piece of real feeling. Tell them what your days look like, then say the thing you have been carrying around all week.' },
+      { q: 'Can I schedule letters to arrive while we are apart?', a: 'Yes — write several at once and set each to open on a different future date, so something arrives even on the weeks you are busy.' },
+    ],
+    related: ['love', 'anniversary', 'valentines-day', 'friendship'],
+  },
+  {
+    slug: 'proposal',
+    type: 'love',
+    emoji: '💍',
+    name: 'Proposal',
+    h1: 'Proposal Letter',
+    metaTitle: 'Proposal Letter Template — Write a Letter to Propose',
+    metaDescription: 'Free proposal letter templates. Write the letter that goes with the question — heartfelt, private and free to share.',
+    intro: [
+      'Most people can barely speak in the moment. A letter is the version of the proposal where you get to say everything properly, and the version they will still have long after the day blurs.',
+      'Write it to be read slowly, either just before you ask or just after. Answer the real question underneath the question: why them, and why now.',
+    ],
+    whatToSay: [
+      'The moment you knew — not the day you decided to ask, the day you knew.',
+      'What kind of life you are picturing, described concretely.',
+      'What you promise to do when things are difficult, not when they are easy.',
+      'Why you are certain, in plain language.',
+    ],
+    avoid: 'Avoid making it a list of their best qualities. A proposal letter is about a future, not a review.',
+    faq: [
+      { q: 'Should I write a letter for my proposal?', a: 'It helps enormously if you get nervous speaking. Many people read the letter aloud, or hand it over and let the other person read it while they gather themselves.' },
+      { q: 'How long should a proposal letter be?', a: 'Around 300 to 600 words — long enough to say why, short enough to be read in the moment without the emotion draining out of it.' },
+    ],
+    related: ['love', 'wedding', 'anniversary', 'valentines-day'],
+  },
+  {
+    slug: 'wedding',
+    type: 'anniversary',
+    emoji: '💒',
+    name: 'Wedding Day',
+    h1: 'Wedding Day Letter',
+    metaTitle: 'Wedding Day Letter Template — Letter to Your Bride or Groom',
+    metaDescription: 'Free wedding day letter templates. Write a letter to your bride, groom or partner to read on the morning of the wedding — free and private.',
+    intro: [
+      'The letter read on the morning of the wedding is often the part people remember best — before the photographs, the speeches and the schedule take over.',
+      'It is also the last thing you will write to them as not-yet-married. That is worth saying out loud somewhere in the letter.',
+    ],
+    whatToSay: [
+      'What you are feeling this morning, honestly — including the nerves.',
+      'The moment you first pictured this day with them in it.',
+      'What you want them to know before they walk into a room full of people.',
+      'A vow that is not in the ceremony, just for them.',
+    ],
+    avoid: 'Avoid rehearsing your actual vows here. Let this letter be the private version — smaller, plainer, and only for them.',
+    faq: [
+      { q: 'What do you write in a wedding day letter?', a: 'Write how you feel this morning, one memory of how you got here, and one private promise. Keep it to something readable in a couple of minutes, because the day moves fast.' },
+      { q: 'When should they read it?', a: 'Most couples exchange letters while getting ready. You can also schedule one to open on your first anniversary — a letter from the day itself, opened a year later.' },
+    ],
+    related: ['anniversary', 'proposal', 'love', 'congratulations'],
+  },
+  {
+    slug: 'birthday',
+    type: 'birthday',
+    emoji: '🎂',
+    name: 'Birthday',
+    h1: 'Birthday Letter',
+    metaTitle: 'Birthday Letter Template — Write a Free Birthday Letter',
+    metaDescription: 'Free birthday letter templates. Write a heartfelt birthday letter for a friend, partner, parent or child and share it as a sealed envelope.',
+    intro: [
+      'Everybody gets messages on their birthday. Almost nobody gets a letter. That gap is the entire opportunity.',
+      'The most memorable birthday letters tell the person something about themselves they cannot quite see — the effect they have on the people around them.',
+    ],
+    whatToSay: [
+      'Something they did this year that you are still thinking about.',
+      'The quality of theirs that other people underestimate.',
+      'A memory from the year that made you glad to know them.',
+      'One wish for their year ahead that is not generic.',
+    ],
+    avoid: 'Avoid "hope you have a great day" as the whole message. Say what you actually think of them — a birthday is a rare licence to be sincere without explanation.',
+    faq: [
+      { q: 'What do you write in a birthday letter?', a: 'One specific memory from the past year, one thing you admire about them, and one wish for the year ahead. Three short paragraphs is enough.' },
+      { q: 'Can I schedule a birthday letter in advance?', a: 'Yes. Write it whenever you have the time and set it to open on their birthday — the link shows a countdown until then.' },
+    ],
+    related: ['friendship', 'thank-you', 'love', 'congratulations'],
+  },
+  {
+    slug: 'apology',
+    type: 'apology',
+    emoji: '💙',
+    name: 'Apology',
+    h1: 'Apology Letter',
+    metaTitle: 'Apology Letter Template — Write a Sincere Sorry Letter',
+    metaDescription: 'Free apology letter templates. Write a sincere apology letter to a partner, friend or family member — private, encrypted and free.',
+    intro: [
+      'A real apology has three parts and only three: name what you did, show you understand the effect it had, and say what you will do differently. Everything else weakens it.',
+      'Writing rather than speaking lets the other person read it without having to manage your face. That is a genuine kindness when you are the one who caused the hurt.',
+    ],
+    whatToSay: [
+      'Exactly what you did — no euphemisms, no passive voice.',
+      'What it cost them, in their terms rather than yours.',
+      'What you now understand that you did not understand then.',
+      'The specific change you are making, not a promise to "do better".',
+    ],
+    avoid: 'Avoid the word "if". "I\'m sorry if you were hurt" undoes the entire letter. Also avoid explaining yourself before apologising — reasons read as excuses when they come first.',
+    faq: [
+      { q: 'How do I write a sincere apology letter?', a: 'Name the specific thing you did, acknowledge the impact without minimising it, take responsibility without listing reasons, and say what will be different. Do not ask for forgiveness in the same breath — let them arrive at that themselves.' },
+      { q: 'Should I apologise in writing or in person?', a: 'A letter gives the other person space to react honestly and re-read it once the sting has faded. Many people send the letter first, then talk.' },
+    ],
+    related: ['love', 'friendship', 'thank-you', 'farewell'],
+  },
+  {
+    slug: 'thank-you',
+    type: 'thank_you',
+    emoji: '🙏',
+    name: 'Thank You',
+    h1: 'Thank You Letter',
+    metaTitle: 'Thank You Letter Template — Write a Free Thank You Letter',
+    metaDescription: 'Free thank you letter templates. Write a heartfelt thank you letter to a friend, teacher, parent or mentor and share it instantly.',
+    intro: [
+      'Gratitude is easy to feel and strangely hard to deliver. Most of it gets compressed into "thanks so much!" and lost.',
+      'A thank-you letter is worth writing precisely because it is slower. It tells the person that what they did stayed with you long enough to be written down.',
+    ],
+    whatToSay: [
+      'The specific thing they did, described as though they might have forgotten it.',
+      'What was going on for you at the time.',
+      'What difference it actually made, then and since.',
+      'Something you have carried forward because of them.',
+    ],
+    avoid: 'Avoid making it about your inadequacy ("I could never repay you"). Keep the focus on what they did and what it changed.',
+    faq: [
+      { q: 'How do I write a meaningful thank you letter?', a: 'Describe the specific act, explain what your situation was at the time, and say what changed as a result. The context is what turns thanks into something the person can actually feel.' },
+      { q: 'Is it too late to send a thank you letter?', a: 'Almost never. A thank-you that arrives years later is often more moving, because it proves the thing was not forgotten.' },
+    ],
+    related: ['mothers-day', 'fathers-day', 'friendship', 'birthday'],
+  },
+  {
+    slug: 'mothers-day',
+    type: 'thank_you',
+    emoji: '🌷',
+    name: "Mother's Day",
+    h1: "Mother's Day Letter",
+    metaTitle: "Mother's Day Letter Template — Write a Letter to Mum",
+    metaDescription: "Free Mother's Day letter templates. Write a heartfelt letter to your mother and share it as a sealed envelope — free, private, no account needed.",
+    intro: [
+      'Most of what mothers do goes unremarked precisely because it is constant. A letter is a chance to remark on it — to name the specific things you only understood later.',
+      'If your relationship is complicated, the letter can hold that too. Honest and warm beats perfect and hollow.',
+    ],
+    whatToSay: [
+      'Something she did for you that you did not appreciate at the time.',
+      'A phrase of hers you now hear coming out of your own mouth.',
+      'A way she shaped how you treat other people.',
+      'What you want her to know about how you are doing now.',
+    ],
+    avoid: 'Avoid writing the version you think a mother is supposed to receive. Write the version that is true about your mother specifically.',
+    faq: [
+      { q: "What should I write in a Mother's Day letter?", a: "Pick one thing she did that you understand differently now that you are older, and tell her. That single shift in perspective is more moving than a list of thanks." },
+      { q: "Can I send it if we live far apart?", a: "Yes — she opens a private link and finds a sealed envelope with her name on it, so it arrives instantly and still feels like something." },
+    ],
+    related: ['fathers-day', 'thank-you', 'birthday', 'love'],
+  },
+  {
+    slug: 'fathers-day',
+    type: 'thank_you',
+    emoji: '👔',
+    name: "Father's Day",
+    h1: "Father's Day Letter",
+    metaTitle: "Father's Day Letter Template — Write a Letter to Dad",
+    metaDescription: "Free Father's Day letter templates. Write a heartfelt letter to your father and share it privately as a sealed envelope, free.",
+    intro: [
+      'Plenty of fathers and children love each other fluently in every language except this one. A letter gets around that, because nobody has to hold eye contact.',
+      'You do not need to become someone else to write it. Plain, specific and slightly understated is often exactly right for the relationship.',
+    ],
+    whatToSay: [
+      'A thing he taught you that you use constantly, however small.',
+      'A memory of him that you have told other people about.',
+      'Something you have never said because it felt unnecessary.',
+      'What you admire about how he handled something difficult.',
+    ],
+    avoid: 'Avoid grand declarations if that is not how you two talk. A true sentence in your normal register lands harder than borrowed sentiment.',
+    faq: [
+      { q: "What do you write in a Father's Day letter?", a: "One thing he taught you, one memory you have repeated to other people, and one thing you have never said out loud. Keep it in your own voice." },
+      { q: "What if we're not the emotional type?", a: "Then write it that way. Understatement is its own form of sincerity, and he will hear it." },
+    ],
+    related: ['mothers-day', 'thank-you', 'birthday', 'friendship'],
+  },
+  {
+    slug: 'friendship',
+    type: 'friendship',
+    emoji: '🤝',
+    name: 'Friendship',
+    h1: 'Friendship Letter',
+    metaTitle: 'Friendship Letter Template — Write a Letter to a Best Friend',
+    metaDescription: 'Free friendship letter templates. Write a heartfelt letter to your best friend and share it as a sealed envelope — free and private.',
+    intro: [
+      'We tell partners and parents how we feel. Friends mostly get jokes. That is fine, until you realise your closest friend may have no idea what they mean to you.',
+      'A friendship letter with no occasion attached is one of the most disarming things you can send, precisely because nothing prompted it.',
+    ],
+    whatToSay: [
+      'The moment you went from acquaintances to actual friends.',
+      'A time they showed up for you without being asked.',
+      'The thing you would call them about before anyone else.',
+      'What you hope is still true about the two of you in ten years.',
+    ],
+    avoid: 'Avoid undercutting every sincere line with a joke. One joke is charming; four is a defence mechanism they will notice.',
+    faq: [
+      { q: 'What do you write in a letter to your best friend?', a: 'Start with how you became friends, name a specific time they showed up for you, and say plainly what they mean to you. The lack of an occasion is what makes it hit.' },
+      { q: 'Is it weird to send a friend a letter?', a: 'Surprising, not weird. Nearly everyone reports that an unprompted letter from a friend is one of the nicest things they have received.' },
+    ],
+    related: ['thank-you', 'birthday', 'long-distance', 'farewell'],
+  },
+  {
+    slug: 'congratulations',
+    type: 'congratulations',
+    emoji: '🎉',
+    name: 'Congratulations',
+    h1: 'Congratulations Letter',
+    metaTitle: 'Congratulations Letter Template — Graduation, New Job & More',
+    metaDescription: 'Free congratulations letter templates for graduations, new jobs, promotions and new babies. Write and share a heartfelt letter, free.',
+    intro: [
+      'Congratulations messages arrive in a flood and blur into one. A letter separates itself immediately by talking about the work rather than the result.',
+      'The person already knows they achieved something. What they usually have not heard is that someone watched them get there.',
+    ],
+    whatToSay: [
+      'What you saw them put in that other people did not see.',
+      'A moment when it looked hard and they kept going anyway.',
+      'What this achievement says about who they are.',
+      'What you expect them to do next — said as confidence, not pressure.',
+    ],
+    avoid: 'Avoid making it about your own pride alone. "I\'m so proud of you" is warmer when it follows evidence of what you noticed.',
+    faq: [
+      { q: 'What do you write in a congratulations letter?', a: 'Name the effort, not just the outcome. Mention a specific moment when it was difficult and they continued — that is what turns a generic message into something they keep.' },
+      { q: 'Does this work for graduations and new jobs?', a: 'Yes — the same structure fits graduations, promotions, new jobs, new homes and new babies. Change the specifics, keep the shape.' },
+    ],
+    related: ['birthday', 'friendship', 'thank-you', 'farewell'],
+  },
+  {
+    slug: 'get-well',
+    type: 'get_well',
+    emoji: '🌸',
+    name: 'Get Well Soon',
+    h1: 'Get Well Soon Letter',
+    metaTitle: 'Get Well Soon Letter Template — Write a Free Get Well Letter',
+    metaDescription: 'Free get well soon letter templates. Write a comforting letter to someone who is unwell and share it privately, free.',
+    intro: [
+      'Being unwell is boring and isolating in roughly equal measure. A letter helps with both, and unlike a visit it makes no demands on the person receiving it.',
+      'Keep the pressure low. No advice, no forced brightness, no requirement to reply.',
+    ],
+    whatToSay: [
+      'That you are thinking of them, without asking for an update.',
+      'Something light and ordinary from your own week — a distraction they can enjoy.',
+      'A concrete offer of help rather than "let me know if you need anything".',
+      'That there is no obligation to write back.',
+    ],
+    avoid: 'Avoid health advice and silver linings. "Everything happens for a reason" is the least comforting sentence in the language.',
+    faq: [
+      { q: 'What do you say to someone who is ill?', a: 'Say you are thinking of them, share something ordinary and light, offer one specific piece of help, and release them from replying. Presence without pressure is the goal.' },
+      { q: 'What should I not say?', a: 'Avoid medical advice, comparisons to other people\'s illnesses, and forced positivity. Warmth and normality are what actually help.' },
+    ],
+    related: ['sympathy', 'friendship', 'thank-you', 'birthday'],
+  },
+  {
+    slug: 'sympathy',
+    type: 'condolence',
+    emoji: '🕊️',
+    name: 'Sympathy',
+    h1: 'Sympathy & Condolence Letter',
+    metaTitle: 'Sympathy Letter Template — Write a Condolence Letter',
+    metaDescription: 'Free sympathy and condolence letter templates. Write a comforting letter to someone grieving — private, respectful and free.',
+    intro: [
+      'Most people say nothing after a death because they are frightened of saying the wrong thing. Saying nothing is the wrong thing. Almost anything warm and specific is better than silence.',
+      'You are not trying to fix anything. You are telling a grieving person that the one they lost mattered and was noticed.',
+    ],
+    whatToSay: [
+      'Name the person who died, and use their name.',
+      'A specific memory of them, however small — grieving people are hungry for these.',
+      'Something you admired about them that the family may not know.',
+      'A concrete offer of help with a date attached.',
+    ],
+    avoid: 'Avoid "they are in a better place" and "at least". Avoid asking the bereaved to reach out — they will not. Offer something specific instead.',
+    faq: [
+      { q: 'What do you write in a sympathy letter?', a: 'Use the person\'s name, share one specific memory of them, say what you admired, and make one concrete offer of help. Do not try to explain or soften the loss.' },
+      { q: 'Is a letter better than a card?', a: 'Usually, yes. Bereaved families often keep letters that contain memories of the person, because those memories are new to them.' },
+    ],
+    related: ['get-well', 'friendship', 'thank-you', 'farewell'],
+  },
+  {
+    slug: 'farewell',
+    type: 'farewell',
+    emoji: '👋',
+    name: 'Farewell',
+    h1: 'Farewell Letter',
+    metaTitle: 'Farewell Letter Template — Goodbye Letter to a Friend or Colleague',
+    metaDescription: 'Free farewell letter templates. Write a goodbye letter to a friend, colleague or team and share it as a sealed envelope, free.',
+    intro: [
+      'Leaving is the one moment when it is completely normal to say what someone meant to you. It is a shame to waste it on "keep in touch".',
+      'Whether you are the one going or the one staying, name the specific thing you will miss. Vague warmth is forgotten by the following week.',
+    ],
+    whatToSay: [
+      'What you will genuinely miss — a routine, a joke, a person\'s presence at a particular time of day.',
+      'Something you learned from them.',
+      'A moment you are taking with you.',
+      'How you would actually like to stay in contact, specifically.',
+    ],
+    avoid: 'Avoid "let\'s definitely stay in touch" with no plan attached. Suggest something real, even if it is a message every few months.',
+    faq: [
+      { q: 'What do you write in a farewell letter?', a: 'Name what you will miss, what you learned, and one memory you are keeping. Then propose a concrete way to stay in contact rather than a vague intention.' },
+      { q: 'Is this suitable for leaving a job?', a: 'Yes. It works for colleagues and teams as well as friends — keep the tone warm and specific, and skip the corporate register.' },
+    ],
+    related: ['friendship', 'thank-you', 'congratulations', 'long-distance'],
+  },
+  {
+    slug: 'future-self',
+    type: 'future_self',
+    emoji: '🕰️',
+    name: 'Future Self',
+    h1: 'Letter to My Future Self',
+    metaTitle: 'Write a Letter to Your Future Self — Free, Private, No Account',
+    metaDescription: 'Write a letter to your future self and set the date it opens. Free, encrypted, no account and no email required — and you can write to someone else too.',
+    intro: [
+      'A letter to your future self is a time capsule made of words. You write down who you are right now — the worries, the plans, the things you have not said out loud — and seal it until a date you choose.',
+      'The value is not in predicting anything. It is in the gap between the person writing and the person reading, and how much that gap tells you when you finally close it.',
+    ],
+    whatToSay: [
+      'What your ordinary day looks like right now, in unglamorous detail.',
+      'What you are most worried about, named honestly.',
+      'A promise you are making to yourself, and a date by which you mean it.',
+      'A question you genuinely want your future self to answer.',
+    ],
+    avoid: 'Avoid writing only about goals. In five years the goals will be the least interesting part — the texture of your ordinary life is what you will actually want back.',
+    faq: [
+      { q: 'How do I write a letter to my future self?', a: 'Describe your life as it is today in specific detail, name what you are afraid of and hoping for, make one promise, and ask one question. Then set the date you want it to open.' },
+      { q: 'Is it really free, and do I need an account?', a: 'It is free and you can write without an account. Your letter is encrypted with AES-256 and stays sealed behind a countdown until the date you chose — no email verification, and nothing is ever published publicly.' },
+      { q: 'Can I write to my future self and to someone else?', a: 'Both. Any letter can be scheduled, so you can seal one for yourself in five years and another for your daughter\'s eighteenth birthday.' },
+    ],
+    related: ['love', 'birthday', 'anniversary', 'friendship'],
+  },
+]
+
+export function getOccasion(slug: string): Occasion | undefined {
+  return OCCASIONS.find(o => o.slug === slug)
+}

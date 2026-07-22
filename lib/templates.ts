@@ -25,6 +25,7 @@ export const LETTER_TYPES: LetterType[] = [
   { id: 'get_well', label: 'Get Well Soon', emoji: '🌸', color: 'text-pink-700', bgColor: 'bg-pink-50 border-pink-200' },
   { id: 'congratulations', label: 'Congratulations', emoji: '🎉', color: 'text-orange-700', bgColor: 'bg-orange-50 border-orange-200' },
   { id: 'farewell', label: 'Farewell', emoji: '👋', color: 'text-teal-700', bgColor: 'bg-teal-50 border-teal-200' },
+  { id: 'future_self', label: 'Future Self', emoji: '🕰️', color: 'text-indigo-700', bgColor: 'bg-indigo-50 border-indigo-200' },
 ]
 
 export const TEMPLATES: Template[] = [
@@ -256,6 +257,29 @@ export const TEMPLATES: Template[] = [
     name: 'Until We Meet Again',
     preview: 'Distance is just a number when the connection is real...',
     content: '<p>Dear [Name],</p><p>Distance is just a number when the connection is real. And what we have built — this friendship, this bond — is real enough to survive any miles between us.</p><p>You are taking a piece of my heart with you as you go. And that is okay, because you have always known how to take care of the things that matter.</p><p>Go and live beautifully. Come back and tell me everything. And know that no matter how much time passes, you will always have a home here — in this place and in my heart.</p><p>Until we meet again,</p>',
+  },
+
+  // FUTURE SELF (3)
+  {
+    id: 'future_self-1',
+    type: 'future_self',
+    name: 'One Year From Now',
+    preview: 'By the time you read this, a whole year will have happened to you...',
+    content: '<p>Dear me,</p><p>By the time you read this, a whole year will have happened to you. I hope some of it was good. I hope you laughed at something so hard you could not breathe. I hope you were brave at least once when it would have been easier not to be.</p><p>Here is where I am today: I am worried about things I cannot control, I am proud of a few things I rarely say out loud, and I am trying. Whatever happened between then and now, please remember that this version of you was trying.</p><p>If things went well — celebrate properly, not just in your head. If they did not — you are still here, reading this, and that counts for more than you think.</p><p>Rooting for you,</p>',
+  },
+  {
+    id: 'future_self-2',
+    type: 'future_self',
+    name: 'Promises I\'m Making',
+    preview: 'These are the promises I am making today, and I want you to hold me to them...',
+    content: '<p>To the person I am becoming,</p><p>These are the promises I am making today, and I want you to hold me to them.</p><p>I promise to stop waiting for the perfect moment to start. I promise to be kinder to my body and less patient with people who make me feel small. I promise to say the thing instead of rehearsing it for weeks.</p><p>If you are reading this and I kept even one of them — good. If I kept none of them, do not be cruel about it. Just start again today. That has always been allowed.</p><p>Tell me honestly: are you happier? Are you the person we talked about being? There is still time.</p><p>With hope,</p>',
+  },
+  {
+    id: 'future_self-3',
+    type: 'future_self',
+    name: 'A Snapshot of Right Now',
+    preview: 'I want you to remember exactly what this moment felt like...',
+    content: '<p>Hello, future me,</p><p>I want you to remember exactly what this moment felt like, because memory softens everything and I do not want this one blurred.</p><p>Right now, my days look like this — the same walk, the same songs on repeat, the same people I would drop everything for. The thing I am most afraid of is still the same thing. The thing I most want, I have not said out loud to anyone.</p><p>Whatever your life looks like now, I hope you still notice small things: good coffee, warm light, someone remembering a detail about you. That was always the good part.</p><p>Do not forget who you were when you wrote this.</p><p>With love, from then,</p>',
   },
 ]
 
