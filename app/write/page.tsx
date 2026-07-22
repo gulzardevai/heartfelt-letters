@@ -7,6 +7,8 @@ import Link from 'next/link'
 import toast from 'react-hot-toast'
 import { LETTER_TYPES, TEMPLATES, getTemplatesForType } from '@/lib/templates'
 import { THEMES, DEFAULT_THEME_ID, getTheme } from '@/lib/themes'
+import { BOUQUETS } from '@/lib/bouquets'
+import BouquetArt from '@/components/BouquetArt'
 import LetterTypeCard from '@/components/LetterTypeCard'
 import TemplateCard from '@/components/TemplateCard'
 import ShareModal from '@/components/ShareModal'
@@ -49,6 +51,7 @@ function WritePageInner() {
   const [recipientName, setRecipientName] = useState('')
   const [senderName, setSenderName] = useState('')
   const [selectedTheme, setSelectedTheme] = useState(DEFAULT_THEME_ID)
+  const [selectedBouquet, setSelectedBouquet] = useState<string | null>(null)
   const [scheduled, setScheduled] = useState(false)
   const [openAt, setOpenAt] = useState('')
   const [showReplyBanner, setShowReplyBanner] = useState(false)
@@ -84,6 +87,7 @@ function WritePageInner() {
           setRecipientName(letter.recipient_name || '')
           setSenderName(letter.sender_name || '')
           setSelectedTheme(letter.theme || DEFAULT_THEME_ID)
+          setSelectedBouquet(letter.bouquet || null)
           if (letter.open_at) {
             setScheduled(true)
             setOpenAt(toLocalInput(letter.open_at))
@@ -155,6 +159,7 @@ function WritePageInner() {
           sender_name: senderName || null,
           theme: selectedTheme,
           open_at: scheduled && openAt ? new Date(openAt).toISOString() : null,
+          bouquet: selectedBouquet,
         }),
       })
       if (!res.ok) {
@@ -442,6 +447,46 @@ function WritePageInner() {
                       />
                     </div>
 
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-2xl p-5 shadow-paper border border-rose-100">
+                  <h3 className="font-serif font-semibold text-rose-900 mb-1">💐 Send flowers too</h3>
+                  <p className="text-xs text-rose-700/60 mb-3 leading-relaxed">
+                    Optional. A bouquet blooms on screen right after the envelope opens — and it never wilts.
+                  </p>
+                  <div className="grid grid-cols-3 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setSelectedBouquet(null)}
+                      className={`rounded-xl p-2 border text-center transition-all ${
+                        selectedBouquet === null
+                          ? 'ring-2 ring-rose-400 border-rose-300'
+                          : 'border-rose-100 hover:border-rose-300'
+                      }`}
+                    >
+                      <div className="h-14 flex items-center justify-center text-rose-300 text-xl">✕</div>
+                      <span className="text-[11px] text-rose-800 font-medium">None</span>
+                    </button>
+                    {BOUQUETS.map(b => (
+                      <button
+                        key={b.id}
+                        type="button"
+                        title={b.note}
+                        onClick={() => {
+                          setSelectedBouquet(b.id)
+                          sendGAEvent('event', 'bouquet_selected', { bouquet: b.id })
+                        }}
+                        className={`rounded-xl p-2 border text-center transition-all ${
+                          selectedBouquet === b.id
+                            ? 'ring-2 ring-rose-400 border-rose-300'
+                            : 'border-rose-100 hover:border-rose-300'
+                        }`}
+                      >
+                        <BouquetArt bouquet={b} className="h-14 w-auto mx-auto" />
+                        <span className="text-[11px] text-rose-800 font-medium">{b.label}</span>
+                      </button>
+                    ))}
                   </div>
                 </div>
 

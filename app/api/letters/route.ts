@@ -4,6 +4,7 @@ import { createSupabaseServerClient } from '@/lib/supabase-server'
 import { nanoid } from 'nanoid'
 import bcrypt from 'bcryptjs'
 import { encryptContent } from '@/lib/crypto'
+import { BOUQUETS } from '@/lib/bouquets'
 
 export const dynamic = 'force-dynamic'
 
@@ -24,6 +25,12 @@ function parseOpenAt(value: unknown): string | null {
   max.setFullYear(max.getFullYear() + MAX_SCHEDULE_YEARS)
   if (when > max) return null
   return when.toISOString()
+}
+
+// Only ids we actually know how to draw make it into the database.
+function parseBouquet(value: unknown): string | null {
+  if (!value || typeof value !== 'string') return null
+  return BOUQUETS.some(b => b.id === value) ? value : null
 }
 
 // A scheduled letter must outlive its own opening date.
@@ -55,6 +62,7 @@ export async function POST(req: NextRequest) {
     }
 
     const open_at = parseOpenAt(body.open_at)
+    const bouquet = parseBouquet(body.bouquet)
     const share_id = nanoid(10)
     let password_hash: string | null = null
     if (has_password && password) {
@@ -92,6 +100,7 @@ export async function POST(req: NextRequest) {
         recipient_name: recipient_name || null,
         sender_name: sender_name || null,
         theme: theme || 'classic',
+        bouquet,
         has_password: !!(has_password && password),
         password_hash,
         open_at,
@@ -136,6 +145,7 @@ export async function POST(req: NextRequest) {
         recipient_name: recipient_name || null,
         sender_name: sender_name || null,
         theme: theme || 'classic',
+        bouquet,
         has_password: !!(has_password && password),
         password_hash,
         open_at,
@@ -170,6 +180,7 @@ export async function PATCH(req: NextRequest) {
 
     const db = getSupabaseAdmin()
     const open_at = parseOpenAt(body.open_at)
+    const bouquet = parseBouquet(body.bouquet)
 
     const { data: letter, error } = await db
       .from('letters')
@@ -180,6 +191,7 @@ export async function PATCH(req: NextRequest) {
         recipient_name: recipient_name || null,
         sender_name: sender_name || null,
         theme: theme || 'classic',
+        bouquet,
         open_at,
         ...(open_at ? { expires_at: expiryFor(open_at, FREE_EXPIRY_DAYS) } : {}),
       })

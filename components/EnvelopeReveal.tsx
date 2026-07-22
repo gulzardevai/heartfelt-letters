@@ -3,7 +3,9 @@
 import { useState } from 'react'
 import { Letter } from '@/lib/supabase'
 import LetterView from '@/components/LetterView'
+import BouquetReveal from '@/components/BouquetReveal'
 import { getTheme, envelopeCssVars } from '@/lib/themes'
+import { getBouquet } from '@/lib/bouquets'
 import { sendGAEvent } from '@next/third-parties/google'
 
 const TYPE_EMOJI: Record<string, string> = {
@@ -12,19 +14,34 @@ const TYPE_EMOJI: Record<string, string> = {
   congratulations: '🎉', farewell: '👋',
 }
 
-type Stage = 'closed' | 'opening' | 'open'
+type Stage = 'closed' | 'opening' | 'bouquet' | 'open'
 
 export default function EnvelopeReveal({ letter, unlockPassword }: { letter: Letter; unlockPassword?: string }) {
   const [stage, setStage] = useState<Stage>('closed')
   const emoji = TYPE_EMOJI[letter.type] || '💌'
   const theme = getTheme(letter.theme)
   const themed = theme.id !== 'classic'
+  const bouquet = getBouquet(letter.bouquet)
 
   const handleOpen = () => {
     if (stage !== 'closed') return
     setStage('opening')
     sendGAEvent('event', 'envelope_opened', { letter_type: letter.type })
-    setTimeout(() => setStage('open'), 1900)
+    setTimeout(() => setStage(bouquet ? 'bouquet' : 'open'), 1900)
+  }
+
+  if (stage === 'bouquet' && bouquet) {
+    return (
+      <BouquetReveal
+        bouquet={bouquet}
+        senderName={letter.sender_name}
+        recipientName={letter.recipient_name}
+        onContinue={() => {
+          sendGAEvent('event', 'bouquet_viewed', { bouquet: bouquet.id })
+          setStage('open')
+        }}
+      />
+    )
   }
 
   if (stage === 'open') {

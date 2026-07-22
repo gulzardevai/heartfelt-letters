@@ -71,6 +71,7 @@ const features = [
   { feature: 'Letter themes (vintage, midnight...)', us: true, dll: false, paperless: true, hallmark: true, canva: true, docs: false },
   { feature: 'Recipients can reply on the letter', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Schedule a letter to open on a future date', us: true, dll: false, paperless: true, hallmark: true, canva: false, docs: false },
+  { feature: 'Virtual flower bouquet with the letter', us: true, dll: true, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'No account needed to start', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Image uploads', us: true, dll: true, paperless: true, hallmark: false, canva: true, docs: true },
   { feature: '700+ quote library', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
@@ -135,6 +136,7 @@ export default function ComparePage() {
                 <li>✓ Share via private link, optionally with a password</li>
                 <li>✓ Recipients can reply right on the letter</li>
                 <li>✓ Schedule any letter to unseal on a future date — to someone else or your future self</li>
+                <li>✓ Send a virtual bouquet with it — six styles, free, never wilts</li>
                 <li>✓ Four letter themes — vintage, midnight &amp; more</li>
                 <li>✓ Write anonymously or with an account</li>
                 <li>✓ Free — no coins, no subscriptions</li>

@@ -30,6 +30,7 @@ export type Letter = {
   has_password: boolean
   password_hash: string | null
   open_at: string | null
+  bouquet: string | null
   created_at: string
   view_count: number
 }

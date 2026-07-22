@@ -1,6 +1,8 @@
 import { Letter } from '@/lib/supabase'
 import { LETTER_TYPES } from '@/lib/templates'
 import { getTheme } from '@/lib/themes'
+import { getBouquet } from '@/lib/bouquets'
+import BouquetArt from '@/components/BouquetArt'
 import LetterActions from '@/components/LetterActions'
 import LetterReplies from '@/components/LetterReplies'
 import WriteCta from '@/components/WriteCta'
@@ -31,6 +33,7 @@ export default function LetterView({ letter, unlockPassword }: Props) {
   const typeLabel = TYPE_LABEL[letter.type] || 'Letter'
   const theme = getTheme(letter.theme)
   const themed = theme.id !== 'classic'
+  const bouquet = getBouquet(letter.bouquet)
 
   return (
     <div className="min-h-screen py-12 px-4 bg-gradient-to-br from-rose-50 via-cream to-pink-50">
@@ -124,6 +127,21 @@ export default function LetterView({ letter, unlockPassword }: Props) {
             </div>
           )}
         </div>
+
+        {/* Bouquet that came with the letter */}
+        {bouquet && (
+          <div className="mt-6 bg-white/80 border border-rose-100 rounded-3xl p-6 flex items-center gap-5 shadow-sm fade-in" style={{ animationDelay: '0.15s' }}>
+            <BouquetArt bouquet={bouquet} className="w-20 h-auto shrink-0" />
+            <div>
+              <h2 className="font-serif text-lg font-semibold text-rose-900 mb-1">
+                {bouquet.emoji} {bouquet.label}
+              </h2>
+              <p className="text-sm text-rose-700/70 leading-relaxed">
+                {letter.sender_name ? `${letter.sender_name} sent these` : 'These came'} with the letter — they never wilt.
+              </p>
+            </div>
+          </div>
+        )}
 
         {/* Print & share actions */}
         <LetterActions senderName={letter.sender_name} />
