@@ -36,6 +36,14 @@ export async function GET(
       return NextResponse.json({ letter: { ...safeLetter, content: decryptContent(safeLetter.content) } })
     }
 
+    // Scheduled letter: never hand out the content before its opening date
+    if (letter.open_at && new Date(letter.open_at) > new Date()) {
+      return NextResponse.json(
+        { error: 'This letter is sealed until its opening date', code: 'SEALED', open_at: letter.open_at },
+        { status: 423 }
+      )
+    }
+
     if (letter.has_password) {
       if (!password) {
         return NextResponse.json({ error: 'Password required' }, { status: 401 })

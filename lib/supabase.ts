@@ -29,6 +29,7 @@ export type Letter = {
   theme: string
   has_password: boolean
   password_hash: string | null
+  open_at: string | null
   created_at: string
   view_count: number
 }

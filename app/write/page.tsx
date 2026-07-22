@@ -25,6 +25,17 @@ const Editor = dynamic(() => import('@/components/Editor'), {
 
 type Step = 'type' | 'template' | 'write'
 
+// <input type="datetime-local"> works in local time; convert both ways.
+function toLocalInput(iso: string): string {
+  const d = new Date(iso)
+  const pad = (n: number) => String(n).padStart(2, '0')
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`
+}
+
+function minLocalInput(): string {
+  return toLocalInput(new Date(Date.now() + 5 * 60 * 1000).toISOString())
+}
+
 function WritePageInner() {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -38,6 +49,8 @@ function WritePageInner() {
   const [recipientName, setRecipientName] = useState('')
   const [senderName, setSenderName] = useState('')
   const [selectedTheme, setSelectedTheme] = useState(DEFAULT_THEME_ID)
+  const [scheduled, setScheduled] = useState(false)
+  const [openAt, setOpenAt] = useState('')
   const [showReplyBanner, setShowReplyBanner] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [savedShareId, setSavedShareId] = useState<string | null>(null)
@@ -71,6 +84,10 @@ function WritePageInner() {
           setRecipientName(letter.recipient_name || '')
           setSenderName(letter.sender_name || '')
           setSelectedTheme(letter.theme || DEFAULT_THEME_ID)
+          if (letter.open_at) {
+            setScheduled(true)
+            setOpenAt(toLocalInput(letter.open_at))
+          }
           setContent(letter.content)
           setSavedShareId(letter.share_id)
           setLetterHasPassword(!!letter.has_password)
@@ -119,6 +136,10 @@ function WritePageInner() {
       toast.error('Please add your name')
       return
     }
+    if (scheduled && (!openAt || new Date(openAt).getTime() <= Date.now())) {
+      toast.error('Pick a future date and time for the letter to open')
+      return
+    }
     setIsSaving(true)
     try {
       const isUpdate = !!savedShareId
@@ -133,6 +154,7 @@ function WritePageInner() {
           recipient_name: recipientName || null,
           sender_name: senderName || null,
           theme: selectedTheme,
+          open_at: scheduled && openAt ? new Date(openAt).toISOString() : null,
         }),
       })
       if (!res.ok) {
@@ -150,7 +172,10 @@ function WritePageInner() {
       const data = await res.json()
       setSavedShareId(data.share_id)
       toast.success(savedShareId ? 'Letter updated!' : 'Letter published!')
-      sendGAEvent('event', savedShareId ? 'letter_updated' : 'letter_published', { letter_type: selectedType })
+      sendGAEvent('event', savedShareId ? 'letter_updated' : 'letter_published', {
+        letter_type: selectedType,
+        scheduled: scheduled && !!openAt,
+      })
       setShowShareModal(true)
     } catch {
       toast.error('Failed to save letter')
@@ -418,6 +443,41 @@ function WritePageInner() {
                     </div>
 
                   </div>
+                </div>
+
+                <div className="bg-white rounded-2xl p-5 shadow-paper border border-rose-100">
+                  <h3 className="font-serif font-semibold text-rose-900 mb-1">⏳ Open on a future date</h3>
+                  <p className="text-xs text-rose-700/60 mb-3 leading-relaxed">
+                    Keep the letter sealed until the day you choose. Until then the link shows a countdown — perfect for
+                    an anniversary, a birthday, or a letter to your future self.
+                  </p>
+                  <label className="flex items-center gap-2 cursor-pointer mb-3">
+                    <input
+                      type="checkbox"
+                      checked={scheduled}
+                      onChange={e => {
+                        setScheduled(e.target.checked)
+                        if (e.target.checked && !openAt) {
+                          const d = new Date()
+                          d.setDate(d.getDate() + 7)
+                          d.setHours(9, 0, 0, 0)
+                          setOpenAt(toLocalInput(d.toISOString()))
+                        }
+                        if (e.target.checked) sendGAEvent('event', 'schedule_enabled')
+                      }}
+                      className="w-4 h-4 accent-rose-600"
+                    />
+                    <span className="text-sm text-rose-800">Schedule this letter</span>
+                  </label>
+                  {scheduled && (
+                    <input
+                      type="datetime-local"
+                      value={openAt}
+                      min={minLocalInput()}
+                      onChange={e => setOpenAt(e.target.value)}
+                      className="w-full border border-rose-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300 bg-rose-50/30 text-rose-900"
+                    />
+                  )}
                 </div>
 
                 <div className="bg-white rounded-2xl p-5 shadow-paper border border-rose-100">

@@ -5,6 +5,7 @@ import { supabase } from '@/lib/supabase'
 import EnvelopeReveal from '@/components/EnvelopeReveal'
 import { decryptContent } from '@/lib/crypto'
 import PasswordGateWrapper from './PasswordGateWrapper'
+import SealedUntil from '@/components/SealedUntil'
 import Link from 'next/link'
 
 interface Props {
@@ -39,6 +40,18 @@ export default async function LetterPage({ params }: Props) {
           </Link>
         </div>
       </div>
+    )
+  }
+
+  // Scheduled letter: stays sealed (and encrypted, never decrypted) until open_at
+  if (letter.open_at && new Date(letter.open_at) > new Date()) {
+    return (
+      <SealedUntil
+        openAt={letter.open_at}
+        recipientName={letter.recipient_name}
+        senderName={letter.sender_name}
+        theme={letter.theme}
+      />
     )
   }
 

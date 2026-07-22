@@ -27,6 +27,7 @@ type Letter = {
   recipient_name: string | null
   created_at: string
   expires_at: string | null
+  open_at: string | null
   is_deleted: boolean
 }
 
@@ -140,6 +141,11 @@ export default function DashboardPage() {
                   </h3>
                   {letter.recipient_name && (
                     <p className="text-xs text-rose-500 mb-3">To: {letter.recipient_name}</p>
+                  )}
+                  {letter.open_at && new Date(letter.open_at) > new Date() && (
+                    <p className="inline-block text-[11px] bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 rounded-full mb-3">
+                      ⏳ Opens {new Date(letter.open_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                    </p>
                   )}
                   <div className="text-xs text-rose-400 mb-4">
                     <div>Created {new Date(letter.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</div>

@@ -12,6 +12,27 @@ const ANON_DAILY_LIMIT = 1
 const FREE_EXPIRY_DAYS = 30
 const ANON_EXPIRY_DAYS = 7
 
+const MAX_SCHEDULE_YEARS = 10
+
+// Returns a validated future ISO date, or null if not scheduled / invalid.
+function parseOpenAt(value: unknown): string | null {
+  if (!value || typeof value !== 'string') return null
+  const when = new Date(value)
+  if (isNaN(when.getTime())) return null
+  if (when.getTime() <= Date.now()) return null
+  const max = new Date()
+  max.setFullYear(max.getFullYear() + MAX_SCHEDULE_YEARS)
+  if (when > max) return null
+  return when.toISOString()
+}
+
+// A scheduled letter must outlive its own opening date.
+function expiryFor(openAt: string | null, days: number): string {
+  const base = openAt ? new Date(openAt) : new Date()
+  base.setDate(base.getDate() + days)
+  return base.toISOString()
+}
+
 function getClientIp(req: NextRequest): string {
   return (
     req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
@@ -33,6 +54,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'type and content are required' }, { status: 400 })
     }
 
+    const open_at = parseOpenAt(body.open_at)
     const share_id = nanoid(10)
     let password_hash: string | null = null
     if (has_password && password) {
@@ -58,8 +80,7 @@ export async function POST(req: NextRequest) {
         }, { status: 403 })
       }
 
-      const expires_at = new Date()
-      expires_at.setDate(expires_at.getDate() + FREE_EXPIRY_DAYS)
+      const expires_at = expiryFor(open_at, FREE_EXPIRY_DAYS)
 
       const { data: letter, error } = await db.from('letters').insert({
         share_id,
@@ -73,7 +94,8 @@ export async function POST(req: NextRequest) {
         theme: theme || 'classic',
         has_password: !!(has_password && password),
         password_hash,
-        expires_at: expires_at.toISOString(),
+        open_at,
+        expires_at,
       }).select().single()
 
       if (error) throw error
@@ -102,8 +124,7 @@ export async function POST(req: NextRequest) {
         }, { status: 429 })
       }
 
-      const expires_at = new Date()
-      expires_at.setDate(expires_at.getDate() + ANON_EXPIRY_DAYS)
+      const expires_at = expiryFor(open_at, ANON_EXPIRY_DAYS)
 
       const { data: letter, error } = await db.from('letters').insert({
         share_id,
@@ -117,7 +138,8 @@ export async function POST(req: NextRequest) {
         theme: theme || 'classic',
         has_password: !!(has_password && password),
         password_hash,
-        expires_at: expires_at.toISOString(),
+        open_at,
+        expires_at,
       }).select().single()
 
       if (error) throw error
@@ -147,6 +169,7 @@ export async function PATCH(req: NextRequest) {
     }
 
     const db = getSupabaseAdmin()
+    const open_at = parseOpenAt(body.open_at)
 
     const { data: letter, error } = await db
       .from('letters')
@@ -157,6 +180,8 @@ export async function PATCH(req: NextRequest) {
         recipient_name: recipient_name || null,
         sender_name: sender_name || null,
         theme: theme || 'classic',
+        open_at,
+        ...(open_at ? { expires_at: expiryFor(open_at, FREE_EXPIRY_DAYS) } : {}),
       })
       .eq('share_id', share_id)
       .eq('user_id', user.id)
