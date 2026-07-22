@@ -287,8 +287,13 @@ export default function BouquetArt({
           <StemsAndLeaves bouquet={bouquet} />
           <ConeAndRibbon bouquet={bouquet} />
           {HEADS.map((f, i) => (
-            <g key={i} transform={`translate(${f.x} ${f.y})`} {...bloomProps(animate, i, f.x, f.y)}>
-              <Head bouquet={bouquet} r={f.r} i={i} />
+            // Outer g holds position via attribute; inner g gets the CSS bloom
+            // animation — CSS transforms override the transform ATTRIBUTE, so
+            // they must live on separate elements or heads collapse to (0,0).
+            <g key={i} transform={`translate(${f.x} ${f.y})`}>
+              <g {...bloomProps(animate, i, 0, 0)}>
+                <Head bouquet={bouquet} r={f.r} i={i} />
+              </g>
             </g>
           ))}
         </>
