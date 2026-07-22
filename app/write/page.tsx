@@ -39,6 +39,57 @@ function minLocalInput(): string {
   return toLocalInput(new Date(Date.now() + 5 * 60 * 1000).toISOString())
 }
 
+// Optional sidebar section. On desktop it renders exactly like a plain card
+// (heading + content, always open). Below `lg` it becomes an accordion row so
+// the editor isn't buried under six cards on mobile.
+function OptionCard({
+  id,
+  title,
+  state,
+  order,
+  headingClass,
+  children,
+}: {
+  id: string
+  title: string
+  state?: string
+  order: string
+  headingClass: string
+  children: React.ReactNode
+}) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div className={`bg-white rounded-2xl p-5 shadow-paper border border-rose-100 ${order} lg:order-none`}>
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        aria-expanded={open}
+        aria-controls={id}
+        className="lg:hidden w-full min-h-[44px] flex items-center justify-between gap-3 text-left rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-400"
+      >
+        <span className="font-serif font-semibold text-rose-900">{title}</span>
+        <span className="flex items-center gap-2 shrink-0">
+          {state && <span className="text-xs text-rose-700/60">{state}</span>}
+          <svg
+            className={`w-4 h-4 text-rose-400 transition-transform ${open ? 'rotate-180' : ''}`}
+            viewBox="0 0 20 20"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            aria-hidden="true"
+          >
+            <path d="M5 8l5 5 5-5" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </span>
+      </button>
+      <h3 className={`hidden lg:block ${headingClass}`}>{title}</h3>
+      <div id={id} className={`${open ? 'mt-3' : 'hidden'} lg:block lg:mt-0`}>
+        {children}
+      </div>
+    </div>
+  )
+}
+
 function WritePageInner() {
   const searchParams = useSearchParams()
   const router = useRouter()
@@ -429,10 +480,11 @@ function WritePageInner() {
         {/* Step 3: Write */}
         {step === 'write' && (
           <div className="fade-in">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Left: Meta fields */}
-              <div className="lg:col-span-1 space-y-4">
-                <div className="bg-white rounded-2xl p-5 shadow-paper border border-rose-100">
+            <div className="flex flex-col gap-4 lg:grid lg:grid-cols-3 lg:gap-6">
+              {/* Left: Meta fields. `contents` on mobile so each card is a flex
+                  item that can be ordered around the single editor instance. */}
+              <div className="contents lg:block lg:col-span-1 lg:space-y-4">
+                <div className="bg-white rounded-2xl p-5 shadow-paper border border-rose-100 order-1 lg:order-none">
                   <h3 className="font-serif font-semibold text-rose-900 mb-4 flex items-center gap-2">
                     {selectedTypeData?.emoji} Letter Details
                   </h3>
@@ -468,8 +520,13 @@ function WritePageInner() {
                   </div>
                 </div>
 
-                <div className="bg-white rounded-2xl p-5 shadow-paper border border-rose-100">
-                  <h3 className="font-serif font-semibold text-rose-900 mb-1">💐 Send flowers too</h3>
+                <OptionCard
+                  id="opt-flowers"
+                  title="💐 Send flowers too"
+                  state={selectedBouquet ? (BOUQUETS.find(b => b.id === selectedBouquet)?.label || 'None') : 'None'}
+                  order="order-3"
+                  headingClass="font-serif font-semibold text-rose-900 mb-1"
+                >
                   <p className="text-xs text-rose-700/60 mb-3 leading-relaxed">
                     Optional. A bouquet blooms on screen right after the envelope opens — and it never wilts.
                   </p>
@@ -506,10 +563,15 @@ function WritePageInner() {
                       </button>
                     ))}
                   </div>
-                </div>
+                </OptionCard>
 
-                <div className="bg-white rounded-2xl p-5 shadow-paper border border-rose-100">
-                  <h3 className="font-serif font-semibold text-rose-900 mb-1">🎵 Attach your song</h3>
+                <OptionCard
+                  id="opt-song"
+                  title="🎵 Attach your song"
+                  state={songUrl.trim() && isSupportedSongUrl(songUrl) ? 'Song attached' : 'None'}
+                  order="order-4"
+                  headingClass="font-serif font-semibold text-rose-900 mb-1"
+                >
                   <p className="text-xs text-rose-700/60 mb-3 leading-relaxed">
                     Optional. Paste a Spotify, Apple Music or YouTube link and they can play it right under the letter.
                   </p>
@@ -531,10 +593,19 @@ function WritePageInner() {
                         : 'That link isn’t recognised. Use a Spotify, Apple Music or YouTube link.'}
                     </p>
                   )}
-                </div>
+                </OptionCard>
 
-                <div className="bg-white rounded-2xl p-5 shadow-paper border border-rose-100">
-                  <h3 className="font-serif font-semibold text-rose-900 mb-1">⏳ Open on a future date</h3>
+                <OptionCard
+                  id="opt-schedule"
+                  title="⏳ Open on a future date"
+                  state={
+                    scheduled && openAt
+                      ? new Date(openAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+                      : 'Not scheduled'
+                  }
+                  order="order-5"
+                  headingClass="font-serif font-semibold text-rose-900 mb-1"
+                >
                   <p className="text-xs text-rose-700/60 mb-3 leading-relaxed">
                     Keep the letter sealed until the day you choose. Until then the link shows a countdown — perfect for
                     an anniversary, a birthday, or a letter to your future self.
@@ -566,10 +637,15 @@ function WritePageInner() {
                       className="w-full border border-rose-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300 bg-rose-50/30 text-rose-900"
                     />
                   )}
-                </div>
+                </OptionCard>
 
-                <div className="bg-white rounded-2xl p-5 shadow-paper border border-rose-100">
-                  <h3 className="font-serif font-semibold text-rose-900 mb-3">🎨 Theme</h3>
+                <OptionCard
+                  id="opt-theme"
+                  title="🎨 Theme"
+                  state={getTheme(selectedTheme).label}
+                  order="order-6"
+                  headingClass="font-serif font-semibold text-rose-900 mb-3"
+                >
                   <div className="grid grid-cols-2 gap-2">
                     {THEMES.map(t => (
                       <button
@@ -595,28 +671,32 @@ function WritePageInner() {
                       </button>
                     ))}
                   </div>
-                </div>
+                </OptionCard>
 
-                <div className="bg-white rounded-2xl p-5 shadow-paper border border-rose-100">
-                  <h3 className="font-serif font-semibold text-rose-900 mb-3">💡 Tips</h3>
+                <OptionCard
+                  id="opt-tips"
+                  title="💡 Tips"
+                  order="order-7"
+                  headingClass="font-serif font-semibold text-rose-900 mb-3"
+                >
                   <ul className="text-xs text-rose-700/60 space-y-2">
                     <li>• Write from the heart — authenticity is everything</li>
                     <li>• Use specific memories and details</li>
                     <li>• Add photos to make it more personal</li>
                     <li>• Take your time — there&apos;s no rush</li>
                   </ul>
-                </div>
+                </OptionCard>
 
                 <button
                   onClick={() => setStep('template')}
-                  className="text-rose-500 hover:text-rose-700 text-sm flex items-center gap-1 transition-colors"
+                  className="text-rose-500 hover:text-rose-700 text-sm flex items-center gap-1 transition-colors order-8 lg:order-none"
                 >
                   ← Back to templates
                 </button>
               </div>
 
-              {/* Right: Editor */}
-              <div className="lg:col-span-2">
+              {/* Right: Editor — single instance, moved above the optional cards on mobile */}
+              <div className="lg:col-span-2 order-2 lg:order-none">
                 <Editor
                   key={editId || 'new'}
                   content={content}
