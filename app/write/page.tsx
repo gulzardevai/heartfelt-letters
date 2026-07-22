@@ -8,6 +8,7 @@ import toast from 'react-hot-toast'
 import { LETTER_TYPES, TEMPLATES, getTemplatesForType } from '@/lib/templates'
 import { THEMES, DEFAULT_THEME_ID, getTheme } from '@/lib/themes'
 import { BOUQUETS } from '@/lib/bouquets'
+import { isSupportedSongUrl } from '@/lib/song'
 import BouquetArt from '@/components/BouquetArt'
 import LetterTypeCard from '@/components/LetterTypeCard'
 import TemplateCard from '@/components/TemplateCard'
@@ -52,6 +53,7 @@ function WritePageInner() {
   const [senderName, setSenderName] = useState('')
   const [selectedTheme, setSelectedTheme] = useState(DEFAULT_THEME_ID)
   const [selectedBouquet, setSelectedBouquet] = useState<string | null>(null)
+  const [songUrl, setSongUrl] = useState('')
   const [scheduled, setScheduled] = useState(false)
   const [openAt, setOpenAt] = useState('')
   const [showReplyBanner, setShowReplyBanner] = useState(false)
@@ -88,6 +90,7 @@ function WritePageInner() {
           setSenderName(letter.sender_name || '')
           setSelectedTheme(letter.theme || DEFAULT_THEME_ID)
           setSelectedBouquet(letter.bouquet || null)
+          setSongUrl(letter.song_url || '')
           if (letter.open_at) {
             setScheduled(true)
             setOpenAt(toLocalInput(letter.open_at))
@@ -153,6 +156,10 @@ function WritePageInner() {
       toast.error('Pick a future date and time for the letter to open')
       return
     }
+    if (songUrl.trim() && !isSupportedSongUrl(songUrl)) {
+      toast.error('Song link must be from Spotify, Apple Music or YouTube')
+      return
+    }
     setIsSaving(true)
     try {
       const isUpdate = !!savedShareId
@@ -169,6 +176,7 @@ function WritePageInner() {
           theme: selectedTheme,
           open_at: scheduled && openAt ? new Date(openAt).toISOString() : null,
           bouquet: selectedBouquet,
+          song_url: songUrl.trim() || null,
         }),
       })
       if (!res.ok) {
@@ -498,6 +506,31 @@ function WritePageInner() {
                       </button>
                     ))}
                   </div>
+                </div>
+
+                <div className="bg-white rounded-2xl p-5 shadow-paper border border-rose-100">
+                  <h3 className="font-serif font-semibold text-rose-900 mb-1">🎵 Attach your song</h3>
+                  <p className="text-xs text-rose-700/60 mb-3 leading-relaxed">
+                    Optional. Paste a Spotify, Apple Music or YouTube link and they can play it right under the letter.
+                  </p>
+                  <input
+                    value={songUrl}
+                    onChange={e => setSongUrl(e.target.value)}
+                    onBlur={() => {
+                      if (songUrl.trim() && isSupportedSongUrl(songUrl)) {
+                        sendGAEvent('event', 'song_attached')
+                      }
+                    }}
+                    placeholder="https://open.spotify.com/track/..."
+                    className="w-full border border-rose-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300 bg-rose-50/30"
+                  />
+                  {songUrl.trim() && (
+                    <p className={`text-xs mt-2 ${isSupportedSongUrl(songUrl) ? 'text-green-600' : 'text-rose-500'}`}>
+                      {isSupportedSongUrl(songUrl)
+                        ? '✓ Song attached — it appears below the letter'
+                        : 'That link isn’t recognised. Use a Spotify, Apple Music or YouTube link.'}
+                    </p>
+                  )}
                 </div>
 
                 <div className="bg-white rounded-2xl p-5 shadow-paper border border-rose-100">

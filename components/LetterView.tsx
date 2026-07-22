@@ -2,7 +2,9 @@ import { Letter } from '@/lib/supabase'
 import { LETTER_TYPES } from '@/lib/templates'
 import { getTheme } from '@/lib/themes'
 import { getBouquet } from '@/lib/bouquets'
+import { parseSong } from '@/lib/song'
 import BouquetArt from '@/components/BouquetArt'
+import SongCard from '@/components/SongCard'
 import LetterActions from '@/components/LetterActions'
 import LetterReplies from '@/components/LetterReplies'
 import WriteCta from '@/components/WriteCta'
@@ -35,6 +37,7 @@ export default function LetterView({ letter, unlockPassword }: Props) {
   const theme = getTheme(letter.theme)
   const themed = theme.id !== 'classic'
   const bouquet = getBouquet(letter.bouquet)
+  const song = parseSong(letter.song_url)
 
   return (
     <div className="min-h-screen py-12 px-4 bg-gradient-to-br from-rose-50 via-cream to-pink-50">
@@ -143,6 +146,9 @@ export default function LetterView({ letter, unlockPassword }: Props) {
             </div>
           </div>
         )}
+
+        {/* Song that came with the letter */}
+        {song && <SongCard song={song} senderName={letter.sender_name} />}
 
         {/* Print & share actions */}
         <LetterActions senderName={letter.sender_name} />

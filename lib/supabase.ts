@@ -31,6 +31,7 @@ export type Letter = {
   password_hash: string | null
   open_at: string | null
   bouquet: string | null
+  song_url: string | null
   created_at: string
   view_count: number
 }

@@ -5,6 +5,7 @@ import { nanoid } from 'nanoid'
 import bcrypt from 'bcryptjs'
 import { encryptContent } from '@/lib/crypto'
 import { BOUQUETS } from '@/lib/bouquets'
+import { parseSong } from '@/lib/song'
 
 export const dynamic = 'force-dynamic'
 
@@ -31,6 +32,11 @@ function parseOpenAt(value: unknown): string | null {
 function parseBouquet(value: unknown): string | null {
   if (!value || typeof value !== 'string') return null
   return BOUQUETS.some(b => b.id === value) ? value : null
+}
+
+// Only links we can actually embed are stored; anything else is dropped.
+function parseSongUrl(value: unknown): string | null {
+  return parseSong(value) ? (value as string).trim() : null
 }
 
 // A scheduled letter must outlive its own opening date.
@@ -63,6 +69,7 @@ export async function POST(req: NextRequest) {
 
     const open_at = parseOpenAt(body.open_at)
     const bouquet = parseBouquet(body.bouquet)
+    const song_url = parseSongUrl(body.song_url)
     const share_id = nanoid(10)
     let password_hash: string | null = null
     if (has_password && password) {
@@ -101,6 +108,7 @@ export async function POST(req: NextRequest) {
         sender_name: sender_name || null,
         theme: theme || 'classic',
         bouquet,
+        song_url,
         has_password: !!(has_password && password),
         password_hash,
         open_at,
@@ -146,6 +154,7 @@ export async function POST(req: NextRequest) {
         sender_name: sender_name || null,
         theme: theme || 'classic',
         bouquet,
+        song_url,
         has_password: !!(has_password && password),
         password_hash,
         open_at,
@@ -181,6 +190,7 @@ export async function PATCH(req: NextRequest) {
     const db = getSupabaseAdmin()
     const open_at = parseOpenAt(body.open_at)
     const bouquet = parseBouquet(body.bouquet)
+    const song_url = parseSongUrl(body.song_url)
 
     const { data: letter, error } = await db
       .from('letters')
@@ -192,6 +202,7 @@ export async function PATCH(req: NextRequest) {
         sender_name: sender_name || null,
         theme: theme || 'classic',
         bouquet,
+        song_url,
         open_at,
         ...(open_at ? { expires_at: expiryFor(open_at, FREE_EXPIRY_DAYS) } : {}),
       })

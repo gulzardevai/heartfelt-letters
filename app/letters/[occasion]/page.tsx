@@ -145,7 +145,7 @@ export default function OccasionPage({ params }: Props) {
                 <div className="text-3xl mb-3">✍️</div>
                 <h3 className="font-semibold text-rose-900 text-sm mb-1.5">Write it</h3>
                 <p className="text-xs text-rose-700/70 leading-relaxed">
-                  Pick a template, change the words, choose a theme. Add photos and a bouquet if you like.
+                  Pick a template, change the words, choose a theme. Add photos, a bouquet and your song if you like.
                 </p>
               </div>
               <div>
