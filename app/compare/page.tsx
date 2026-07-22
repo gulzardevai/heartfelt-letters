@@ -5,7 +5,7 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'ShareLove Letters vs Competitors — Why We\'re Different',
-  description: 'See how ShareLove Letters compares to Digital Love Letters, Paperless Post, Hallmark, Canva, and other letter writing tools. Free, all occasions, no account required.',
+  description: 'See how ShareLove Letters compares to Digital Love Letters, FutureMe, Paperless Post, Hallmark, Canva and anonymous letter sites. Free, private, no account required.',
 }
 
 const competitors = [
@@ -44,6 +44,18 @@ const competitors = [
     focus: 'Handwritten notes',
     price: '$3–$6 per note',
     weakness: 'Physical delivery only, charges per letter, slow delivery. No instant sharing, no digital link.',
+  },
+  {
+    name: 'FutureMe',
+    focus: 'Letters to your future self',
+    price: 'Free / paid Premium',
+    weakness: 'Only delivers letters to yourself, and only by email on a scheduled date. Requires an account and email verification, and many letters end up in a public archive. No way to write to someone else.',
+  },
+  {
+    name: 'Dear You / Letters Anonymous',
+    focus: 'Public anonymous confession walls',
+    price: 'Free',
+    weakness: 'Your letter is posted to a public wall for strangers to read — the person it was written for never actually receives it. No private delivery to a recipient, no password protection.',
   },
 ]
 
