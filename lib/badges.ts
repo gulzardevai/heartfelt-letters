@@ -35,6 +35,17 @@ export const BADGES: DirectoryBadge[] = [
     width: 175,
     height: 54,
   },
+  {
+    // SVG (vector) — intrinsic viewBox is 0 0 139 44. Their embed snippet says
+    // width=150, but BADGE_MAX_WIDTH derives the rendered width from the true
+    // aspect ratio, so the real intrinsic values must be used here.
+    name: 'ufind.best',
+    // The ?utm_source param is how ufind attributes the referral — keep it.
+    listingUrl: 'https://ufind.best/products/sharelove-letters?utm_source=ufind.best',
+    imgSrc: 'https://ufind.best/badges/ufind-best-badge-light.svg',
+    width: 139,
+    height: 44,
+  },
 ]
 
 // Milliseconds each badge stays visible before crossfading to the next.
