@@ -4,8 +4,8 @@ import Footer from '@/components/Footer'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'ShareLove Letters vs Competitors — Why We\'re Different',
-  description: 'See how ShareLove Letters compares to Digital Love Letters, FutureMe, Paperless Post, Hallmark, Canva and anonymous letter sites. Free, private, no account required.',
+  title: 'Best Online Love Letter Websites Compared (Free & Paid)',
+  description: 'Compare the best online love letter websites: ShareLove vs Digital Love Letters, FutureMe, Paperless Post and Canva. Free, encrypted, no account needed.',
 }
 
 const competitors = [
