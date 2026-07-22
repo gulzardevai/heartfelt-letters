@@ -28,7 +28,25 @@ export const BADGES: DirectoryBadge[] = [
     width: 207,
     height: 54,
   },
+  {
+    name: 'Acid Tools',
+    listingUrl: 'https://acidtools.com/ai/shareloveletters',
+    imgSrc: 'https://acidtools.com/assets/images/badge.png',
+    width: 175,
+    height: 54,
+  },
 ]
 
 // Milliseconds each badge stays visible before crossfading to the next.
 export const BADGE_ROTATE_MS = 2000
+
+// All badges render at a uniform height; width scales with each badge's aspect
+// ratio. The rotating container is sized to the WIDEST rendered badge so no
+// badge is cropped and the footer never shifts as they swap. Derived from the
+// array above — adding a badge needs no layout change anywhere.
+export const BADGE_DISPLAY_HEIGHT = 54
+
+export const BADGE_MAX_WIDTH = BADGES.reduce(
+  (max, b) => Math.max(max, Math.round((b.width * BADGE_DISPLAY_HEIGHT) / b.height)),
+  0
+)

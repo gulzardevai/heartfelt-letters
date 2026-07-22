@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { BADGES, BADGE_ROTATE_MS } from '@/lib/badges'
+import { useEffect, useState, type CSSProperties } from 'react'
+import { BADGES, BADGE_ROTATE_MS, BADGE_DISPLAY_HEIGHT, BADGE_MAX_WIDTH } from '@/lib/badges'
 
 // Every badge is always mounted and always in the SSR HTML — see lib/badges.ts.
 // Rotation only toggles opacity. Do not "optimise" this into conditional rendering.
@@ -43,9 +43,17 @@ export default function BadgeStrip() {
       <h4 className="text-xs uppercase tracking-wide text-rose-400 shrink-0">Featured on</h4>
       <div
         aria-live="off"
+        // Sized from the widest badge in BADGES, so a new badge never crops
+        // and the strip never reflows mid-rotation.
+        style={
+          {
+            '--badge-h': `${BADGE_DISPLAY_HEIGHT}px`,
+            '--badge-w': `${BADGE_MAX_WIDTH}px`,
+          } as CSSProperties
+        }
         className={
           rotates
-            ? 'relative h-[54px] w-[207px] motion-reduce:h-auto motion-reduce:w-auto motion-reduce:flex motion-reduce:flex-wrap motion-reduce:items-center motion-reduce:gap-4'
+            ? 'relative h-[var(--badge-h)] w-[var(--badge-w)] motion-reduce:h-auto motion-reduce:w-auto motion-reduce:flex motion-reduce:flex-wrap motion-reduce:items-center motion-reduce:gap-4'
             : 'flex flex-wrap items-center gap-4'
         }
       >
@@ -58,7 +66,7 @@ export default function BadgeStrip() {
             aria-label={`Featured on ${badge.name}`}
             className={
               rotates
-                ? `absolute inset-0 transition-opacity duration-[400ms] motion-reduce:static motion-reduce:opacity-100 motion-reduce:pointer-events-auto motion-reduce:transition-none ${
+                ? `absolute inset-0 flex items-center justify-center transition-opacity duration-[400ms] motion-reduce:static motion-reduce:opacity-100 motion-reduce:pointer-events-auto motion-reduce:transition-none ${
                     i === active ? 'opacity-100' : 'opacity-0 pointer-events-none'
                   }`
                 : 'inline-block'
@@ -70,7 +78,7 @@ export default function BadgeStrip() {
               width={badge.width}
               height={badge.height}
               loading="lazy"
-              className="h-[54px] w-auto max-w-full"
+              className="h-[var(--badge-h)] w-auto max-w-full"
             />
           </a>
         ))}
