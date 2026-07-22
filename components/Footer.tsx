@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import BadgeStrip from './BadgeStrip'
 
 export default function Footer() {
   return (
@@ -36,6 +37,7 @@ export default function Footer() {
             </ul>
           </div>
         </div>
+        <BadgeStrip />
         <div className="border-t border-rose-100 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-rose-400">
           <p>© {new Date().getFullYear()} ShareLove Letters. All rights reserved.</p>
           <p>Free to use • Made with ❤️</p>
