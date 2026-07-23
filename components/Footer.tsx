@@ -17,6 +17,20 @@ export default function Footer() {
             <a href="mailto:hello@shareloveletters.com" className="inline-block mt-3 text-sm text-rose-500 hover:text-rose-700 transition-colors">
               ✉️ hello@shareloveletters.com
             </a>
+            <a
+              href="https://launchory.app/startups/sharelove-letters?ref=badge"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block mt-4"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="https://launchory.app/api/badge/sharelove-letters?theme=light"
+                alt="Featured on Launchory"
+                width={240}
+                height={54}
+              />
+            </a>
           </div>
           <div>
             <h4 className="font-semibold text-rose-900 mb-3 text-sm uppercase tracking-wide">Pages</h4>
