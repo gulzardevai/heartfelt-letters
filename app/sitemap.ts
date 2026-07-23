@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next'
 import { getSupabaseAdmin } from '@/lib/supabase-admin'
 import { OCCASIONS } from '@/lib/occasions'
+import { QUOTE_CATEGORY_PAGES } from '@/lib/quotes'
 
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
@@ -19,6 +20,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     })),
     { url: `${BASE}/quotes`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    ...QUOTE_CATEGORY_PAGES.map(c => ({
+      url: `${BASE}/quotes/${c.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })),
     { url: `${BASE}/blog`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.8 },
     { url: `${BASE}/compare`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/about`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.5 },

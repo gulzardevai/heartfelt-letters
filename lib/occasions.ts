@@ -15,6 +15,7 @@ export type Occasion = {
   avoid: string           // one honest "don't do this" line
   faq: { q: string; a: string }[]
   related: string[]       // slugs
+  moat?: { heading: string; body: string } // optional differentiator callout
 }
 
 export const OCCASIONS: Occasion[] = [
@@ -530,8 +531,8 @@ export const OCCASIONS: Occasion[] = [
     emoji: '🕰️',
     name: 'Future Self',
     h1: 'Letter to My Future Self',
-    metaTitle: 'Write a Letter to Your Future Self — Free, Private, No Account',
-    metaDescription: 'Write a letter to your future self and set the date it opens. Free, encrypted, no account and no email required — and you can write to someone else too.',
+    metaTitle: 'Letter to Your Future Self — Free Letter That Opens on a Future Date',
+    metaDescription: 'Write a letter to your future self that opens on a future date you choose. Free, AES-256 encrypted, no account and no email required — and you can address it to someone else too.',
     intro: [
       'A letter to your future self is a time capsule made of words. You write down who you are right now — the worries, the plans, the things you have not said out loud — and seal it until a date you choose.',
       'The value is not in predicting anything. It is in the gap between the person writing and the person reading, and how much that gap tells you when you finally close it.',
@@ -547,8 +548,13 @@ export const OCCASIONS: Occasion[] = [
       { q: 'How do I write a letter to my future self?', a: 'Describe your life as it is today in specific detail, name what you are afraid of and hoping for, make one promise, and ask one question. Then set the date you want it to open.' },
       { q: 'Is it really free, and do I need an account?', a: 'It is free and you can write without an account. Your letter is encrypted with AES-256 and stays sealed behind a countdown until the date you chose — no email verification, and nothing is ever published publicly.' },
       { q: 'Can I write to my future self and to someone else?', a: 'Both. Any letter can be scheduled, so you can seal one for yourself in five years and another for your daughter\'s eighteenth birthday.' },
+      { q: 'How far in the future can I schedule the letter?', a: 'As far as you like — a year, five years, a decade or more. Set any future date and time, and the letter stays sealed behind a live countdown until it arrives, then opens with the usual envelope animation.' },
     ],
     related: ['love', 'birthday', 'anniversary', 'friendship'],
+    moat: {
+      heading: 'How ShareLove compares to FutureMe',
+      body: 'This works because every letter on ShareLove can be sealed until a future date you choose: pick the day it opens and the private link shows a sealed envelope with a live countdown until then. Unlike FutureMe, it is completely free with no upsell, needs no account and no email verification, the content is encrypted with AES-256 at rest, and nothing is ever added to a public archive for strangers to browse. And where FutureMe only sends to yourself by email, a ShareLove letter can be addressed to someone else — your future self today, your child on their eighteenth birthday tomorrow.',
+    },
   },
 ]
 

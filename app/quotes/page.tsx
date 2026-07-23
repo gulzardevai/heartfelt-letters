@@ -5,7 +5,7 @@ import Link from 'next/link'
 import toast from 'react-hot-toast'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import { QUOTES, QUOTE_CATEGORIES } from '@/lib/quotes'
+import { QUOTES, QUOTE_CATEGORIES, QUOTE_CATEGORY_PAGES } from '@/lib/quotes'
 import { useAuth } from '@/components/AuthProvider'
 import { sendGAEvent } from '@next/third-parties/google'
 
@@ -96,6 +96,19 @@ export default function QuotesPage() {
           <p className="text-rose-700/70 text-lg max-w-xl mx-auto">
             Find the perfect words for your letter. Copy any quote or save your favorites for later.
           </p>
+
+          {/* Category landing links (crawlable per-category pages) */}
+          <div className="flex flex-wrap justify-center gap-2.5 mt-8">
+            {QUOTE_CATEGORY_PAGES.map(c => (
+              <Link
+                key={c.slug}
+                href={`/quotes/${c.slug}`}
+                className="bg-white border border-rose-100 rounded-full px-4 py-2 text-sm text-rose-700 hover:border-rose-300 hover:text-rose-900 transition-colors shadow-sm"
+              >
+                {c.emoji} {c.name} quotes
+              </Link>
+            ))}
+          </div>
         </section>
 
         <div className="max-w-6xl mx-auto px-6 pb-24">

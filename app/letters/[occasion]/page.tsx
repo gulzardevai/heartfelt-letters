@@ -166,6 +166,16 @@ export default function OccasionPage({ params }: Props) {
           </div>
         </section>
 
+        {/* Differentiator callout */}
+        {occasion.moat && (
+          <section className="max-w-3xl mx-auto px-6 pb-14">
+            <div className="bg-rose-600 text-white rounded-3xl shadow-md p-8 md:p-10">
+              <h2 className="font-serif text-2xl font-bold mb-4">{occasion.moat.heading}</h2>
+              <p className="text-rose-50/90 leading-relaxed text-sm md:text-[15px]">{occasion.moat.body}</p>
+            </div>
+          </section>
+        )}
+
         {/* FAQ */}
         <section className="max-w-3xl mx-auto px-6 pb-14">
           <h2 className="font-serif text-2xl font-bold text-rose-900 mb-6 text-center">Questions people ask</h2>

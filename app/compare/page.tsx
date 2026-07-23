@@ -76,7 +76,7 @@ const features = [
   { feature: 'Attach a song (Spotify, Apple Music, YouTube)', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'No account needed to start', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Image uploads', us: true, dll: true, paperless: true, hallmark: false, canva: true, docs: true },
-  { feature: '700+ quote library', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
+  { feature: '700+ quote library, browsable by category', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Anonymous writing', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Free to use', us: true, dll: false, paperless: false, hallmark: false, canva: true, docs: true },
 ]
