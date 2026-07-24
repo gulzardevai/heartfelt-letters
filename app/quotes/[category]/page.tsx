@@ -74,6 +74,20 @@ export default function QuoteCategoryPage({ params }: Props) {
           <p className="text-xs text-rose-400 mt-3">No account needed • Free • Encrypted</p>
         </section>
 
+        {/* Optional keyword-targeted prose (e.g. for-him / for-her) */}
+        {cat.sections && cat.sections.length > 0 && (
+          <section className="max-w-3xl mx-auto px-6 pb-4">
+            <div className="grid sm:grid-cols-2 gap-5">
+              {cat.sections.map(s => (
+                <div key={s.heading} className="bg-white rounded-2xl border border-rose-100 p-6 shadow-sm">
+                  <h2 className="font-serif text-lg font-bold text-rose-900 mb-2">{s.heading}</h2>
+                  <p className="text-sm text-rose-700/70 leading-relaxed">{s.body}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Quotes grid */}
         <section className="max-w-6xl mx-auto px-6 pb-16">
           <p className="text-sm text-rose-600/60 mb-5">{quotes.length} {cat.name.toLowerCase()} quotes</p>

@@ -5,6 +5,10 @@ import gratitude from '@/data/quotes/gratitude.json'
 import encouragement from '@/data/quotes/encouragement.json'
 import apology from '@/data/quotes/apology.json'
 import celebration from '@/data/quotes/celebration.json'
+import thinkingOfYou from '@/data/quotes/thinking-of-you.json'
+import missingYou from '@/data/quotes/missing-you.json'
+import goodMorning from '@/data/quotes/good-morning.json'
+import longDistance from '@/data/quotes/long-distance.json'
 
 export interface Quote {
   id: string
@@ -36,10 +40,21 @@ export const QUOTES: Quote[] = [
   .sort((a, b) => a.sort - b.sort)
   .map(({ q }) => q)
 
+// Thematic quote pools that power the /quotes/[theme] sub-cluster pages
+// (thinking-of-you, missing-you, good-morning, long-distance). Kept separate
+// from the curated hub QUOTES array so the hub categories stay clean, but
+// searchable via getQuotesByCategory below.
+export const THEME_QUOTES: Quote[] = [
+  ...thinkingOfYou,
+  ...missingYou,
+  ...goodMorning,
+  ...longDistance,
+] as Quote[]
+
 // ---------------------------------------------------------------------------
 // Per-category SEO landing pages (/quotes/[category])
-// Each maps to a real library category (100 quotes) so the page is substantial,
-// with a unique H1/title/meta, an intro and a CTA into /write.
+// Each maps to a real library category (100 quotes) or a thematic pool (40+)
+// so the page is substantial, with a unique H1/title/meta, an intro and a CTA.
 // ---------------------------------------------------------------------------
 
 export type QuoteCategoryPage = {
@@ -53,6 +68,9 @@ export type QuoteCategoryPage = {
   intro: string
   writeType: string      // LETTER_TYPES id for the "write a letter" CTA
   related: string[]      // slugs
+  // Optional keyword-targeted prose blocks rendered under the intro
+  // (e.g. for-him / for-her split on the thinking-of-you page).
+  sections?: { heading: string; body: string }[]
 }
 
 export const QUOTE_CATEGORY_PAGES: QuoteCategoryPage[] = [
@@ -140,6 +158,64 @@ export const QUOTE_CATEGORY_PAGES: QuoteCategoryPage[] = [
     writeType: 'congratulations',
     related: ['friendship', 'gratitude', 'love'],
   },
+  {
+    slug: 'thinking-of-you',
+    category: 'thinking-of-you',
+    emoji: '💭',
+    name: 'Thinking of You',
+    h1: 'Thinking of You Quotes (for Him & for Her)',
+    metaTitle: 'Thinking of You Quotes — 48 Free Quotes for Him & Her to Copy',
+    metaDescription: 'Free "thinking of you" quotes for him or her — sweet, simple lines to text, put in a card, or open a letter with. Copy any quote in one tap. Free, no account.',
+    intro: 'Sometimes the whole message is just: you were on my mind. These are the lines that say it without trying too hard — some sweet, some quiet, all easy to send. Copy one for a text or card, or use it to open a letter and finish it in your own words.',
+    writeType: 'love',
+    related: ['missing-you', 'long-distance', 'good-morning'],
+    sections: [
+      {
+        heading: 'Thinking of You Quotes for Him',
+        body: 'When you want to let him know he crossed your mind, keep it warm and specific. Lines like "There\'s no distance long enough to keep a good man like you off my mind" work in a text, a card, or the first line of a letter — pair the quote with one real detail only the two of you would understand.',
+      },
+      {
+        heading: 'Thinking of You Quotes for Her',
+        body: 'For her, the sweetest thinking-of-you notes feel personal, not generic. Try "A woman like you doesn\'t leave a person\'s thoughts; she settles into them," then add why she\'s on your mind today. Any of the quotes below copies straight into a message or a ShareLove letter.',
+      },
+    ],
+  },
+  {
+    slug: 'missing-you',
+    category: 'missing-you',
+    emoji: '🥺',
+    name: 'Missing You',
+    h1: 'Missing You Quotes for Letters & Messages',
+    metaTitle: 'Missing You Quotes — 45 Free "I Miss You" Quotes to Copy',
+    metaDescription: 'Free "I miss you" quotes for him, her, or a long-distance love. Heartfelt lines to text, put in a card, or open a letter with. Copy any quote in one tap. Free, no account.',
+    intro: 'Missing someone is hard to put into words — until someone else already has. These are the lines for the nights the distance feels bigger than usual. Copy one for a message, or use it to open a letter to the person you wish were here.',
+    writeType: 'love',
+    related: ['thinking-of-you', 'long-distance', 'good-morning'],
+  },
+  {
+    slug: 'good-morning',
+    category: 'good-morning',
+    emoji: '☀️',
+    name: 'Good Morning',
+    h1: 'Good Morning Quotes for Him & Her',
+    metaTitle: 'Good Morning Quotes — 45 Free Sweet Good Morning Love Quotes',
+    metaDescription: 'Free good morning quotes for him or her — sweet, romantic lines to text first thing or put in a card. Copy any quote in one tap, or open a letter with it. Free, no account.',
+    intro: 'A good-morning message is a small thing that lands big. These are the sweet, warm lines that make someone smile before their feet even hit the floor. Copy one for a morning text, or set it as the opening line of a letter that waits for them.',
+    writeType: 'love',
+    related: ['thinking-of-you', 'missing-you', 'long-distance'],
+  },
+  {
+    slug: 'long-distance',
+    category: 'long-distance',
+    emoji: '🌍',
+    name: 'Long Distance',
+    h1: 'Long Distance Relationship Quotes',
+    metaTitle: 'Long Distance Relationship Quotes — 45 Free Quotes to Copy',
+    metaDescription: 'Free long-distance relationship quotes for him or her. Heartfelt lines about missing someone and loving across the miles. Copy any quote in one tap. Free, no account.',
+    intro: 'Loving someone across the miles takes a special kind of patience — and, some days, the right words. These are the lines that make the distance feel smaller. Copy one for a message, or use it to open a letter that closes the gap for a moment.',
+    writeType: 'love',
+    related: ['missing-you', 'thinking-of-you', 'good-morning'],
+  },
 ]
 
 export function getQuoteCategoryPage(slug: string): QuoteCategoryPage | undefined {
@@ -147,7 +223,7 @@ export function getQuoteCategoryPage(slug: string): QuoteCategoryPage | undefine
 }
 
 export function getQuotesByCategory(category: string): Quote[] {
-  return QUOTES.filter(q => q.category === category)
+  return [...QUOTES, ...THEME_QUOTES].filter(q => q.category === category)
 }
 
 // Deterministic quote of the day — same quote for everyone on a given date
