@@ -81,6 +81,39 @@ const features = [
   { feature: 'Free to use', us: true, dll: false, paperless: false, hallmark: false, canva: true, docs: true },
 ]
 
+const faqs = [
+  {
+    q: 'What is the best free online love letter website?',
+    a: 'ShareLove Letters is a free, purpose-built love letter website: 33 templates, a rich-text editor, photo uploads, private shareable links and a real envelope-opening experience — with no account required to start and no paid tiers. Unlike design tools or e-card sites, it is built for one thing: writing meaningful, long-form letters to the people you love.',
+  },
+  {
+    q: 'Is ShareLove Letters really free?',
+    a: 'Yes. Writing and sharing letters is completely free — templates, the editor, photo uploads, private links, password protection, scheduled delivery, quotes and bouquets all included. There are no coins, no subscriptions and no credit card required.',
+  },
+  {
+    q: 'Do I need an account to send a letter?',
+    a: 'No. Guests can write and share a letter with no sign-up at all. Creating a free account is optional — it lets you save up to 10 letters a month and manage them from a dashboard.',
+  },
+  {
+    q: 'Are the letters private and encrypted?',
+    a: 'Yes. Every letter is encrypted at rest with bank-grade AES-256 encryption, so it is unreadable even in our own database. Letters are never public, indexed or searchable, and you can add a password so only your recipient can open it.',
+  },
+  {
+    q: 'Can I send a love letter anonymously?',
+    a: 'Yes. You can write and share a letter without an account and without revealing who you are — no competitor on this list offers true anonymous send. Pair it with password protection for a private, secret letter that only reaches the person you intend.',
+  },
+]
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+}
+
 const Check = () => (
   <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-green-100 text-green-600 text-sm font-bold">✓</span>
 )
@@ -91,6 +124,10 @@ const Cross = () => (
 export default function ComparePage() {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-rose-50 to-pink-50">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
       <Navbar />
 
       <main className="flex-1">
@@ -214,6 +251,19 @@ export default function ComparePage() {
                 </p>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="max-w-3xl mx-auto px-6 pb-20">
+          <h2 className="font-serif text-3xl font-bold text-rose-900 mb-8 text-center">Frequently asked questions</h2>
+          <div className="space-y-4">
+            {faqs.map((f) => (
+              <div key={f.q} className="bg-white rounded-2xl border border-rose-100 shadow-sm p-6">
+                <h3 className="font-semibold text-rose-900 mb-2">{f.q}</h3>
+                <p className="text-sm text-rose-700/70 leading-relaxed">{f.a}</p>
+              </div>
+            ))}
           </div>
         </section>
 
