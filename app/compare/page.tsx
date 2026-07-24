@@ -104,7 +104,7 @@ export default function ComparePage() {
             <span className="text-rose-500">The honest answer.</span>
           </h1>
           <p className="text-rose-700/70 text-lg leading-relaxed max-w-2xl mx-auto">
-            There are plenty of tools for sending cards and documents. None of them were built specifically for writing meaningful, long-form letters to the people you love. We were.
+            Looking for the best digital love letter website? There are plenty of tools for sending cards and documents, but none of them were built specifically for writing meaningful, long-form letters to the people you love. We were — free, encrypted, and no account needed.
           </p>
         </section>
 
