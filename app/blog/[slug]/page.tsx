@@ -102,5 +102,8 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: post.meta_title || `${post.title} — ShareLove Letters Blog`,
     description: post.meta_description || post.excerpt || '',
+    alternates: {
+      canonical: `https://www.shareloveletters.com/blog/${params.slug}`,
+    },
   }
 }
