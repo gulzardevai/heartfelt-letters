@@ -32,7 +32,6 @@ export default function Navbar() {
 
         <div className="hidden md:flex items-center gap-6 text-sm font-medium text-rose-700">
           <Link href="/" className="hover:text-rose-900 transition-colors">Home</Link>
-          <Link href="/write" className="hover:text-rose-900 transition-colors">Write a Letter</Link>
           <Link href="/letters" className="hover:text-rose-900 transition-colors">Occasions</Link>
           <Link href="/quotes" className="hover:text-rose-900 transition-colors">Quotes</Link>
           <Link href="/blog" className="hover:text-rose-900 transition-colors">Blog</Link>
@@ -41,6 +40,12 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3">
+          <Link
+            href="/write"
+            className="hidden md:inline-block bg-rose-600 text-white text-sm font-semibold px-4 py-2 rounded-full hover:bg-rose-700 transition-colors shadow-sm whitespace-nowrap"
+          >
+            ✍️ Write a Letter
+          </Link>
           {user ? (
             <div className="relative">
               <button
