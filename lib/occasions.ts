@@ -296,6 +296,33 @@ export const OCCASIONS: Occasion[] = [
     related: ['mothers-day', 'thank-you', 'birthday', 'friendship'],
   },
   {
+    slug: 'grandparents',
+    type: 'thank_you',
+    emoji: '🌻',
+    name: 'Grandparents',
+    h1: 'Letter to Grandparents',
+    metaTitle: 'Grandparents Day Letter — Write a Letter to Grandparents',
+    metaDescription: 'Free letter templates for grandma and grandpa. Write a heartfelt Grandparents Day letter and share it as a sealed envelope — free, private, no account needed.',
+    intro: [
+      'Grandparents keep everything. The drawing from when you were six, the school photo, the postcard you barely remember sending. A letter to grandma or grandpa joins that collection immediately — and unlike a phone call, it can be re-read on the quiet afternoons.',
+      'US National Grandparents Day falls on the first Sunday after Labor Day — September 13 in 2026 — and the UK marks its own Grandparents Day on the first Sunday of October. But this is one letter that needs no date at all. Whether you are nine or forty-nine, telling a grandparent what they gave you is never out of season.',
+    ],
+    whatToSay: [
+      'A memory from their house — the smell of the kitchen, the routine, the thing you were always allowed to do there and nowhere else.',
+      'Something they taught you that you still use, even if they never called it teaching.',
+      'A story of theirs you want them to know you remember — and want to hear again.',
+      'What your life looks like now, in real detail. Grandparents are starved for the ordinary specifics everyone else edits out.',
+    ],
+    avoid: 'Avoid writing as though you are summing up their life. A letter that says "here is one Tuesday at your house I never forgot" lands far better than one that reads like a farewell.',
+    faq: [
+      { q: 'What should I write in a letter to my grandma?', a: 'Pick one memory from her house or her company and tell it in full detail — the room, the smell, what she said. Then tell her something true about your life right now. Those two things, memory and update, are exactly what a grandmother wants in a letter.' },
+      { q: 'What do you write in a letter to grandpa?', a: 'Something he taught you and the moment you last used it, a story of his you remember, and a question that invites him to tell you another. Plain and specific beats sentimental — most grandfathers hear "I remember" more clearly than "I love you", though there is room for both.' },
+      { q: 'When is Grandparents Day?', a: 'In the United States, National Grandparents Day is the first Sunday after Labor Day — September 13 in 2026. In the UK it is the first Sunday of October. You can write the letter early and schedule it to open on the day itself.' },
+      { q: 'Can grandparents open the letter easily?', a: 'Yes. They tap one private link and a sealed envelope opens with their name on it — no app to install, no account to create, and the text is large and readable. Many families send the link to a parent who opens it with them.' },
+    ],
+    related: ['thank-you', 'mothers-day', 'fathers-day', 'birthday'],
+  },
+  {
     slug: 'friendship',
     type: 'friendship',
     emoji: '🤝',

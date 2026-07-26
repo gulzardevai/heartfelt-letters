@@ -120,6 +120,27 @@ export const TEMPLATES: Template[] = [
     preview: 'During one of the hardest chapters of my life, you were there...',
     content: '<p>Dear [Name],</p><p>During one of the hardest chapters of my life, you were there. You did not try to fix everything or say the perfect thing — you just stayed. And that meant everything.</p><p>Your support carried me through days when I did not know how I would get through them. I am on the other side now, and I owe a great deal of that to you.</p><p>Thank you for your patience, your presence, and your heart. I am forever grateful.</p><p>With love and gratitude,</p>',
   },
+  {
+    id: 'thank_you-grandma',
+    type: 'thank_you',
+    name: 'To Grandma',
+    preview: 'I was thinking about your kitchen today — and then I thought, does she know?...',
+    content: '<p>Dear Grandma,</p><p>I was thinking about your kitchen today. The way it always smelled like something was almost ready, the chair by the window that was somehow mine, the fact that nothing I did there was ever a bother. And then I thought — does she know? Have I ever actually told her?</p><p>So I am telling you now. So much of what feels safe and good in my life, I first learned at your house. You made being loved feel ordinary, and it took me years to realise how rare that is.</p><p>I would trade a lot for one more afternoon at your table. Until then, this letter will have to hold some of it.</p><p>All my love,</p>',
+  },
+  {
+    id: 'thank_you-grandpa',
+    type: 'thank_you',
+    name: 'To Grandpa',
+    preview: 'You probably don’t remember teaching me half the things I use every week...',
+    content: '<p>Dear Grandpa,</p><p>You probably don’t remember teaching me half the things I use every week. How to check something twice before calling it done. How to be quiet in a way that isn’t empty. You never announced any of it — you just did things, and I was watching.</p><p>I still tell people your stories. The ones I have heard twenty times are the ones I retell the most, and I want to hear them all again, so consider this a request.</p><p>I don’t say this kind of thing out loud, and neither do you, which is exactly why I am writing it down: I am proud to be yours.</p><p>With love,</p>',
+  },
+  {
+    id: 'thank_you-grandchild',
+    type: 'thank_you',
+    name: 'From a Grandparent',
+    preview: 'By the time you read this, you may be taller than me. Some things you should know...',
+    content: '<p>My dear [Name],</p><p>By the time you read this, you may well be taller than me, and busier than I ever was. So let me put a few things down while I have your attention.</p><p>I remember the day you were born better than I remember most of last week. I remember your first steps in our hallway, and the questions you asked that none of us could answer. Watching you grow has been one of the great joys of my life — I want you to know that plainly, in writing, from me.</p><p>Wherever life takes you, our door and my heart are open. You come from people who love you. Carry that with you.</p><p>Forever yours,</p>',
+  },
 
   // APOLOGY (3)
   {
