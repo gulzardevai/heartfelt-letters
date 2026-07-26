@@ -4,7 +4,7 @@ import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { OCCASIONS, getOccasion } from '@/lib/occasions'
-import { getTemplatesForType } from '@/lib/templates'
+import { getTemplatesForType, TEMPLATES } from '@/lib/templates'
 
 interface Props {
   params: { occasion: string }
@@ -35,7 +35,13 @@ export default function OccasionPage({ params }: Props) {
   const occasion = getOccasion(params.occasion)
   if (!occasion) notFound()
 
-  const templates = getTemplatesForType(occasion.type)
+  // Occasions that share a letter type declare their own template subset so
+  // no two occasion pages render identical template lists (dedupes for SEO).
+  const templates = occasion.templateIds
+    ? occasion.templateIds
+        .map(id => TEMPLATES.find(t => t.id === id))
+        .filter((t): t is NonNullable<typeof t> => Boolean(t))
+    : getTemplatesForType(occasion.type)
   const related = occasion.related.map(getOccasion).filter(Boolean)
 
   const faqJsonLd = {

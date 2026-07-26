@@ -51,6 +51,20 @@ export const TEMPLATES: Template[] = [
     preview: 'I never knew ordinary moments could feel so extraordinary...',
     content: '<p>My love,</p><p>I never knew ordinary moments could feel so extraordinary until I started spending them with you. Coffee in the morning. Walks in the evening. The way we talk about everything and nothing at all.</p><p>I do not need grand gestures or perfect words. I just need you — exactly as you are — beside me for all the days to come.</p><p>Thank you for being you. Thank you for being mine.</p><p>All my love,</p>',
   },
+  {
+    id: 'love-4',
+    type: 'love',
+    name: 'An Ordinary Wednesday',
+    preview: 'Nothing happened today. That is exactly why I am writing...',
+    content: '<p>Hey you,</p><p>Nothing happened today. No anniversary, no birthday, no reason at all — and that is exactly why I am writing. Somewhere between the walk home and putting the kettle on, you crossed my mind, and I decided that this time I would tell you instead of just smiling to myself.</p><p>I like my life with you in it. The ordinary parts most of all — the half-finished conversations, the way you narrate what you are cooking, the fact that a boring errand is somehow better when you come along.</p><p>That is the whole letter. You were thought of today, on a day when nothing was happening. It felt worth putting in writing.</p><p>Yours,</p>',
+  },
+  {
+    id: 'love-5',
+    type: 'love',
+    name: 'After the Other Night',
+    preview: 'I keep replaying one small moment from the other night...',
+    content: '<p>Hi,</p><p>I keep replaying one small moment from the other night — not the obvious one, a smaller one. The pause before you answered my question, like you were actually deciding to tell me the truth. People rarely do that, and I noticed.</p><p>I had a genuinely good time. I am not going to dress that up in anything cooler than it is.</p><p>No pressure attached to this letter — it asks for nothing. But if you wanted to do it again, I already know where I would take you.</p><p>Until then,</p>',
+  },
 
   // BIRTHDAY (3)
   {
@@ -140,6 +154,20 @@ export const TEMPLATES: Template[] = [
     name: 'From a Grandparent',
     preview: 'By the time you read this, you may be taller than me. Some things you should know...',
     content: '<p>My dear [Name],</p><p>By the time you read this, you may well be taller than me, and busier than I ever was. So let me put a few things down while I have your attention.</p><p>I remember the day you were born better than I remember most of last week. I remember your first steps in our hallway, and the questions you asked that none of us could answer. Watching you grow has been one of the great joys of my life — I want you to know that plainly, in writing, from me.</p><p>Wherever life takes you, our door and my heart are open. You come from people who love you. Carry that with you.</p><p>Forever yours,</p>',
+  },
+  {
+    id: 'thank_you-mom',
+    type: 'thank_you',
+    name: 'To Mom',
+    preview: 'I caught myself doing the thing you always do — and had to sit down and write this...',
+    content: '<p>Dear Mom,</p><p>I caught myself doing the thing you always do — checking the stove twice, saying "text me when you\'re home" — and I had to sit down and write this, because it finally landed: so much of who I am is just you, carried forward.</p><p>There are things I did not understand until I had to do them myself. How tired you must have been. How often you chose us without announcing it. How many things you wanted that you quietly set down so we could have ours.</p><p>I understand more now, and I want it on paper: thank you. Not for one thing — for the whole long unglamorous everything of it.</p><p>I love you,</p>',
+  },
+  {
+    id: 'thank_you-dad',
+    type: 'thank_you',
+    name: 'To Dad',
+    preview: 'You never made speeches. You just showed up, every single time...',
+    content: '<p>Dear Dad,</p><p>You never made speeches. You just showed up — every practice, every breakdown on the side of the road, every time I said I was fine and clearly wasn\'t. I used to think that was normal. I know better now.</p><p>Half the things I do well, I learned by standing next to you while you did them. You never once called it a lesson, which is probably why it stuck.</p><p>We are not big on saying this kind of thing out loud, so I am writing it instead: I noticed all of it. I am grateful for all of it. And when people say I remind them of you, I take it as a compliment every time.</p><p>Your kid,</p>',
   },
 
   // APOLOGY (3)

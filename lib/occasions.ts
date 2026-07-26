@@ -16,6 +16,10 @@ export type Occasion = {
   faq: { q: string; a: string }[]
   related: string[]       // slugs
   moat?: { heading: string; body: string } // optional differentiator callout
+  // Optional explicit template list (TEMPLATES ids). When present, the occasion
+  // page shows ONLY these templates instead of every template of `type` —
+  // keeps occasion pages that share a letter type from duplicating each other.
+  templateIds?: string[]
 }
 
 export const OCCASIONS: Occasion[] = [
@@ -48,6 +52,7 @@ export const OCCASIONS: Occasion[] = [
   {
     slug: 'love',
     type: 'love',
+    templateIds: ['love-1', 'love-2', 'love-3'],
     emoji: '💕',
     name: 'Love Letter',
     h1: 'Love Letter',
@@ -73,6 +78,7 @@ export const OCCASIONS: Occasion[] = [
   {
     slug: 'valentines-day',
     type: 'love',
+    templateIds: ['love-1', 'love-2'],
     emoji: '💘',
     name: "Valentine's Day",
     h1: "Valentine's Day Letter",
@@ -98,6 +104,7 @@ export const OCCASIONS: Occasion[] = [
   {
     slug: 'long-distance',
     type: 'love',
+    templateIds: ['love-2', 'love-3'],
     emoji: '✈️',
     name: 'Long Distance',
     h1: 'Long Distance Relationship Letter',
@@ -123,6 +130,7 @@ export const OCCASIONS: Occasion[] = [
   {
     slug: 'proposal',
     type: 'love',
+    templateIds: ['love-1', 'love-3'],
     emoji: '💍',
     name: 'Proposal',
     h1: 'Proposal Letter',
@@ -148,6 +156,7 @@ export const OCCASIONS: Occasion[] = [
   {
     slug: 'wedding',
     type: 'anniversary',
+    templateIds: ['anniversary-3', 'anniversary-1'],
     emoji: '💒',
     name: 'Wedding Day',
     h1: 'Wedding Day Letter',
@@ -223,6 +232,7 @@ export const OCCASIONS: Occasion[] = [
   {
     slug: 'thank-you',
     type: 'thank_you',
+    templateIds: ['thank_you-1', 'thank_you-2', 'thank_you-3'],
     emoji: '🙏',
     name: 'Thank You',
     h1: 'Thank You Letter',
@@ -248,6 +258,7 @@ export const OCCASIONS: Occasion[] = [
   {
     slug: 'mothers-day',
     type: 'thank_you',
+    templateIds: ['thank_you-mom', 'thank_you-1', 'thank_you-3'],
     emoji: '🌷',
     name: "Mother's Day",
     h1: "Mother's Day Letter",
@@ -267,12 +278,14 @@ export const OCCASIONS: Occasion[] = [
     faq: [
       { q: "What should I write in a Mother's Day letter?", a: "Pick one thing she did that you understand differently now that you are older, and tell her. That single shift in perspective is more moving than a list of thanks." },
       { q: "Can I send it if we live far apart?", a: "Yes — she opens a private link and finds a sealed envelope with her name on it, so it arrives instantly and still feels like something." },
+      { q: "What if my mum and I have a difficult relationship?", a: "Write only what is true. You can thank her for one specific thing without pretending the rest was perfect — a narrow, honest letter is worth more than a broad one you do not mean, and it often opens more doors than it closes." },
     ],
     related: ['fathers-day', 'thank-you', 'birthday', 'love'],
   },
   {
     slug: 'fathers-day',
     type: 'thank_you',
+    templateIds: ['thank_you-dad', 'thank_you-2'],
     emoji: '👔',
     name: "Father's Day",
     h1: "Father's Day Letter",
@@ -292,12 +305,14 @@ export const OCCASIONS: Occasion[] = [
     faq: [
       { q: "What do you write in a Father's Day letter?", a: "One thing he taught you, one memory you have repeated to other people, and one thing you have never said out loud. Keep it in your own voice." },
       { q: "What if we're not the emotional type?", a: "Then write it that way. Understatement is its own form of sincerity, and he will hear it." },
+      { q: "How long should a Father's Day letter be?", a: "Shorter than you think — 150 to 300 words. Fathers who are not fluent in this register tend to re-read a short, concrete letter many times; a long emotional one can feel like a performance he has to respond to." },
     ],
     related: ['mothers-day', 'thank-you', 'birthday', 'friendship'],
   },
   {
     slug: 'grandparents',
     type: 'thank_you',
+    templateIds: ['thank_you-grandma', 'thank_you-grandpa', 'thank_you-grandchild'],
     emoji: '🌻',
     name: 'Grandparents',
     h1: 'Letter to Grandparents',
@@ -450,6 +465,7 @@ export const OCCASIONS: Occasion[] = [
   {
     slug: 'just-because',
     type: 'love',
+    templateIds: ['love-4', 'love-3'],
     emoji: '☀️',
     name: 'Just Because',
     h1: 'Just Because Letter',
@@ -476,6 +492,7 @@ export const OCCASIONS: Occasion[] = [
   {
     slug: 'first-date',
     type: 'love',
+    templateIds: ['love-5', 'love-2'],
     emoji: '🌙',
     name: 'First Date',
     h1: 'First Date Letter',
@@ -502,6 +519,7 @@ export const OCCASIONS: Occasion[] = [
   {
     slug: 'secret-letter',
     type: 'love',
+    templateIds: ['love-5', 'love-1'],
     emoji: '🤫',
     name: 'Secret Letter',
     h1: 'Secret Letter',
@@ -529,6 +547,7 @@ export const OCCASIONS: Occasion[] = [
   {
     slug: 'romantic-surprise',
     type: 'love',
+    templateIds: ['love-4', 'love-2'],
     emoji: '🌹',
     name: 'Romantic Surprise',
     h1: 'Romantic Surprise Letter',
