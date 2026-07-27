@@ -1,6 +1,10 @@
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
+export const metadata = {
+  alternates: { canonical: 'https://www.shareloveletters.com/privacy' },
+}
+
 export default function PrivacyPage() {
   return (
     <div className="min-h-screen flex flex-col">

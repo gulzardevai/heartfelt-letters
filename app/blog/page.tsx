@@ -1,3 +1,8 @@
+export const metadata = {
+  title: 'Letter Writing Blog — Guides, Ideas & Examples | ShareLove Letters',
+  alternates: { canonical: 'https://www.shareloveletters.com/blog' },
+}
+
 export const dynamic = 'force-dynamic'
 
 import Link from 'next/link'

@@ -29,6 +29,7 @@ const dancing = Dancing_Script({
 })
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://www.shareloveletters.com/' },
   metadataBase: new URL('https://shareloveletters.com'),
   title: 'Free Love Letters Online — Write & Share Beautiful Letters | ShareLove Letters',
   description: 'Write free love letters online with beautiful templates. AES-256 encrypted, shared via a private link that opens like a sealed envelope. No account needed.',

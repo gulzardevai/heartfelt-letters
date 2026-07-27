@@ -2,6 +2,10 @@ import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
+export const metadata = {
+  alternates: { canonical: 'https://www.shareloveletters.com/about' },
+}
+
 export default function AboutPage() {
   return (
     <div className="min-h-screen flex flex-col">

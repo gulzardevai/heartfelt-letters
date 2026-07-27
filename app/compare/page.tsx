@@ -4,6 +4,7 @@ import Footer from '@/components/Footer'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
+  alternates: { canonical: 'https://www.shareloveletters.com/compare' },
   title: 'Best Online Love Letter Websites Compared (Free & Paid)',
   description: 'Compare the best online love letter websites: ShareLove vs Digital Love Letters, FutureMe, Paperless Post and Canva. Free, encrypted, no account needed.',
 }
