@@ -3,6 +3,8 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
 export const metadata = {
+  title: 'About ShareLove Letters — Why We Built a Letter-Writing App',
+  description: 'The story behind ShareLove Letters: a free, encrypted letter-writing app built on the belief that meaningful words deserve a better home than a chat bubble.',
   alternates: { canonical: 'https://www.shareloveletters.com/about' },
 }
 
@@ -43,16 +45,46 @@ export default function AboutPage() {
           </div>
         </section>
 
+        {/* Privacy stance */}
+        <section className="py-20 px-6">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="font-serif text-3xl font-bold text-rose-900 mb-6">Why Privacy Comes First</h2>
+            <div className="prose prose-rose max-w-none text-rose-800/80 leading-relaxed space-y-4">
+              <p>
+                A letter is one of the most intimate things a person can write, so we treat every letter accordingly. Each one is encrypted with AES-256 — the same standard banks use — before it ever touches our database, which means your words are unreadable in storage, even to us. Letters are never public, never indexed by search engines, and never used for anything except being delivered to the person you chose.
+              </p>
+              <p>
+                You can add a password so only your recipient can open a letter, write anonymously without creating an account, or seal a letter until a date in the future — it stays encrypted and undeliverable until the day arrives. We built these protections not as premium features but as defaults, because trust is the whole point of a letter.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* How it works */}
+        <section className="py-20 px-6 bg-white/40">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="font-serif text-3xl font-bold text-rose-900 mb-6">How It Works</h2>
+            <div className="prose prose-rose max-w-none text-rose-800/80 leading-relaxed space-y-4">
+              <p>
+                Pick an occasion — from <Link href="/letters/anniversary" className="text-rose-600 underline">anniversaries</Link> and apologies to <Link href="/letters/future-self" className="text-rose-600 underline">letters to your future self</Link> — start from one of 30+ templates or a blank page, and make it yours with photos, fonts, themes, even a song or a virtual bouquet. Need the right words? Borrow a line from our <Link href="/quotes" className="text-rose-600 underline">library of 700+ quotes</Link>.
+              </p>
+              <p>
+                When you publish, you get a private link. Your recipient opens it and finds a sealed envelope with their name on it — they tap to break the wax seal, the letter unfolds, and they can even write a reply right on the page. No app to install, no account to create, nothing between your words and the person they&apos;re for.
+              </p>
+            </div>
+          </div>
+        </section>
+
         {/* What We Offer */}
         <section className="py-20 px-6">
           <div className="max-w-5xl mx-auto">
             <h2 className="font-serif text-3xl font-bold text-rose-900 text-center mb-12">What We Offer</h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
               {[
-                { icon: '📝', title: '10 Letter Types', desc: 'Love, apology, gratitude, birthday, and more — each with beautiful templates.' },
-                { icon: '🔒', title: 'Password Protection', desc: 'Keep your letters private with optional password protection.' },
-                { icon: '🔗', title: 'Shareable Links', desc: 'Share your letter with a unique link anyone can open and read.' },
-                { icon: '✨', title: 'Beautiful Presentation', desc: 'Your words deserve to be presented beautifully. Every letter looks stunning.' },
+                { icon: '📝', title: '30+ Templates', desc: 'Eleven letter types across every occasion — love, apology, gratitude, birthday, future self, and more.' },
+                { icon: '🔐', title: 'Encrypted & Private', desc: 'AES-256 encryption, optional passwords, and anonymous writing. Your words stay yours.' },
+                { icon: '✉️', title: 'The Envelope Moment', desc: 'Every letter arrives as a sealed envelope with a wax seal — opened with a tap, remembered forever.' },
+                { icon: '⏰', title: 'Scheduled Delivery', desc: 'Seal a letter until a birthday, an anniversary, or years into the future.' },
               ].map(f => (
                 <div key={f.title} className="bg-white rounded-2xl p-6 border border-rose-100 shadow-sm text-center">
                   <div className="text-4xl mb-4">{f.icon}</div>
