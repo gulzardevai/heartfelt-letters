@@ -23,14 +23,27 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser()
 
+  const pathname = request.nextUrl.pathname
+
   const protectedPaths = ['/profile', '/dashboard', '/admin']
-  const isProtected = protectedPaths.some(p => request.nextUrl.pathname.startsWith(p))
+  const isProtected = protectedPaths.some(p => pathname.startsWith(p))
 
   if (isProtected && !user) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/login'
-    url.searchParams.set('redirectTo', request.nextUrl.pathname)
+    url.searchParams.set('redirectTo', pathname)
     return NextResponse.redirect(url)
+  }
+
+  // Emit a self-referencing HTTP canonical header on public marketing pages.
+  // Scrapers copy our HTML but rarely replicate response headers, so this is a
+  // strong anti-hijack signal (Google weights the header canonical highly).
+  // Skip private/noindex letter pages and auth/account areas.
+  const noCanonicalPrefixes = ['/letter', '/api', '/auth', '/profile', '/dashboard', '/admin']
+  const skipCanonical = noCanonicalPrefixes.some(p => pathname === p || pathname.startsWith(p + '/'))
+  if (!skipCanonical) {
+    const canonicalUrl = `https://www.shareloveletters.com${pathname}`
+    supabaseResponse.headers.set('Link', `<${canonicalUrl}>; rel="canonical"`)
   }
 
   return supabaseResponse
