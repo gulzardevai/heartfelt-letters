@@ -1,5 +1,6 @@
 export const metadata = {
   title: 'Letter Writing Blog — Guides, Ideas & Examples | ShareLove Letters',
+  description: 'Letter-writing guides, copy-and-paste examples and heartfelt message ideas — for love letters, apologies, goodbyes, birthdays, grandparents and every occasion.',
   alternates: { canonical: 'https://www.shareloveletters.com/blog' },
 }
 

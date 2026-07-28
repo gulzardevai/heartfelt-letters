@@ -93,17 +93,35 @@ export async function generateMetadata({ params }: Props) {
   const supabase = createSupabaseServerClient()
   const { data: post } = await supabase
     .from('blog_posts')
-    .select('title, excerpt, meta_title, meta_description')
+    .select('title, excerpt, meta_title, meta_description, cover_image')
     .eq('slug', params.slug)
     .single()
 
   if (!post) return { title: 'Post Not Found' }
 
+  const url = `https://www.shareloveletters.com/blog/${params.slug}`
+  const ogTitle = post.meta_title || post.title
+  const ogDescription = post.meta_description || post.excerpt || ''
+  const images = post.cover_image ? [{ url: post.cover_image, width: 1200, height: 630, alt: post.title }] : undefined
+
   return {
     title: post.meta_title || `${post.title} — ShareLove Letters Blog`,
-    description: post.meta_description || post.excerpt || '',
+    description: ogDescription,
     alternates: {
-      canonical: `https://www.shareloveletters.com/blog/${params.slug}`,
+      canonical: url,
+    },
+    openGraph: {
+      type: 'article',
+      title: ogTitle,
+      description: ogDescription,
+      url,
+      images,
+    },
+    twitter: {
+      card: images ? 'summary_large_image' : 'summary',
+      title: ogTitle,
+      description: ogDescription,
+      images: post.cover_image ? [post.cover_image] : undefined,
     },
   }
 }
