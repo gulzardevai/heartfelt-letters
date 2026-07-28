@@ -394,9 +394,9 @@ function WritePageInner() {
         {step === 'type' && (
           <div className="fade-in">
             <div className="text-center mb-10">
-              <h1 className="font-serif text-3xl sm:text-4xl font-bold text-rose-900 mb-3">
+              <h2 className="font-serif text-3xl sm:text-4xl font-bold text-rose-900 mb-3">
                 Write a Free Love Letter Online
-              </h1>
+              </h2>
               <p className="text-rose-700/60 max-w-xl mx-auto">
                 Our free love letter generator helps you write something beautiful in minutes.
                 Choose the occasion, pick a template, and share it as a sealed envelope — no account needed.
@@ -441,9 +441,9 @@ function WritePageInner() {
           <div className="fade-in">
             <div className="text-center mb-10">
               <div className="text-4xl mb-3">{selectedTypeData?.emoji}</div>
-              <h1 className="font-serif text-4xl font-bold text-rose-900 mb-3">
+              <h2 className="font-serif text-4xl font-bold text-rose-900 mb-3">
                 Choose a template
-              </h1>
+              </h2>
               <p className="text-rose-700/60">Start with a template or write from scratch</p>
             </div>
 
@@ -722,8 +722,14 @@ function WritePageInner() {
 
 export default function WritePage() {
   return (
-    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="text-rose-400">Loading...</div></div>}>
-      <WritePageInner />
-    </Suspense>
+    <>
+      {/* Always server-rendered H1 for crawlers: the interactive compose UI below
+          lives behind a Suspense/useSearchParams boundary that renders client-side
+          only, so this guarantees /write ships exactly one H1 in the initial HTML. */}
+      <h1 className="sr-only">Write a Free Love Letter Online</h1>
+      <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="text-rose-400">Loading...</div></div>}>
+        <WritePageInner />
+      </Suspense>
+    </>
   )
 }
