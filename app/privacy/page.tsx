@@ -3,6 +3,8 @@ import Footer from '@/components/Footer'
 
 export const metadata = {
   alternates: { canonical: 'https://www.shareloveletters.com/privacy' },
+  title: 'Privacy Policy | ShareLove Letters',
+  description: 'How ShareLove Letters protects your data: AES-256 encrypted letters, Row Level Security, and what information we collect and why. Read our privacy policy.',
 }
 
 export default function PrivacyPage() {

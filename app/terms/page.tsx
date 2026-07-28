@@ -3,6 +3,8 @@ import Footer from '@/components/Footer'
 
 export const metadata = {
   alternates: { canonical: 'https://www.shareloveletters.com/terms' },
+  title: 'Terms of Service | ShareLove Letters',
+  description: 'The terms for using ShareLove Letters: your account, acceptable use, letter storage and expiry, and your rights. Read our full terms of service.',
 }
 
 export default function TermsPage() {
