@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import BlogMobileCta from '@/components/BlogMobileCta'
 
 interface Props {
   params: { slug: string }
@@ -119,6 +120,7 @@ export default async function BlogPostPage({ params }: Props) {
             </Link>
           </div>
         </article>
+        <BlogMobileCta />
       </main>
       <Footer />
     </div>

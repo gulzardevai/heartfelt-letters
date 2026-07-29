@@ -1,0 +1,10 @@
+# Disavow file for launchory.app
+# Keep this as the FULL cumulative list — each upload REPLACES the previous one.
+# Upload at: https://search.google.com/search-console/disavow-links
+# (requires a URL-prefix property: https://www.launchory.app/)
+
+# 747live.bet — external gambling scraper hijacking our page canonicals
+# (googleCanonical wrongly resolved to 747live.bet on 12 pages incl. /startups, /categories,
+#  /blog, /startups/supabase, /alternatives/discord, /blog/best-startup-directories — see dev-queue 815f411)
+# Added 2026-07-30
+domain:747live.bet
