@@ -9,14 +9,11 @@ export default function BlogMobileCta() {
   const [visible, setVisible] = useState(false)
   const [dismissed, setDismissed] = useState(false)
 
+  // Slide in right after the page opens (small delay so it animates in
+  // rather than just being there)
   useEffect(() => {
-    const onScroll = () => {
-      // appear once the reader has actually started reading (~1.5 screens)
-      setVisible(window.scrollY > window.innerHeight * 1.2)
-    }
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    const t = setTimeout(() => setVisible(true), 600)
+    return () => clearTimeout(t)
   }, [])
 
   if (dismissed) return null
