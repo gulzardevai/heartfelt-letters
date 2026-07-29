@@ -82,7 +82,7 @@ export const OCCASIONS: Occasion[] = [
     emoji: '💘',
     name: "Valentine's Day",
     h1: "Valentine's Day Letter",
-    metaTitle: "Valentine's Day Letter Template — Free Valentine Letter Writing",
+    metaTitle: "Valentine's Day Letter Template — Free Valentine Letter",
     metaDescription: "Free Valentine's Day letter templates. Write a romantic Valentine letter for your girlfriend, boyfriend, husband or wife and send it as a sealed envelope.",
     intro: [
       "The card aisle has already said everything in the most forgettable way possible. A Valentine's letter works because it does the one thing a bought card structurally cannot: it sounds like you.",
@@ -443,7 +443,7 @@ export const OCCASIONS: Occasion[] = [
     emoji: '👋',
     name: 'Farewell',
     h1: 'Farewell Letter',
-    metaTitle: 'Farewell Letter Template — Goodbye Letter to a Friend or Colleague',
+    metaTitle: 'Farewell Letter Template — Goodbye to a Friend or Colleague',
     metaDescription: 'Free farewell letter templates. Write a goodbye letter to a friend, colleague or team and share it as a sealed envelope, free.',
     intro: [
       'Leaving is the one moment when it is completely normal to say what someone meant to you. It is a shame to waste it on "keep in touch".',
@@ -577,8 +577,8 @@ export const OCCASIONS: Occasion[] = [
     emoji: '🕰️',
     name: 'Future Self',
     h1: 'Letter to My Future Self',
-    metaTitle: 'Letter to Your Future Self — Free Letter That Opens on a Future Date',
-    metaDescription: 'Write a letter to your future self that opens on a future date you choose. Free, AES-256 encrypted, no account and no email required — and you can address it to someone else too.',
+    metaTitle: 'Letter to Your Future Self — Free, Opens on a Future Date',
+    metaDescription: 'Write a letter to your future self that opens on a date you choose. Free, AES-256 encrypted, no account or email required — or address it to someone else.',
     intro: [
       'A letter to your future self is a time capsule made of words. You write down who you are right now — the worries, the plans, the things you have not said out loud — and seal it until a date you choose.',
       'The value is not in predicting anything. It is in the gap between the person writing and the person reading, and how much that gap tells you when you finally close it.',
