@@ -6,11 +6,42 @@ export const metadata = {
   title: 'About ShareLove Letters — Why We Built a Letter-Writing App',
   description: 'The story behind ShareLove Letters: a free, encrypted letter-writing app built on the belief that meaningful words deserve a better home than a chat bubble.',
   alternates: { canonical: 'https://www.shareloveletters.com/about' },
+  openGraph: {
+    type: 'website',
+    title: 'About ShareLove Letters — Why We Built a Letter-Writing App',
+    description: 'The story behind ShareLove Letters: a free, encrypted letter-writing app built on the belief that meaningful words deserve a better home than a chat bubble.',
+    url: 'https://www.shareloveletters.com/about',
+  },
+}
+
+const organizationJsonLd = {
+  '@type': 'Organization',
+  '@id': 'https://www.shareloveletters.com/#organization',
+  name: 'ShareLove Letters',
+  url: 'https://www.shareloveletters.com',
+  description: 'A free, encrypted letter-writing app for sending heartfelt letters via a private link — opened like a real envelope.',
+  logo: {
+    '@type': 'ImageObject',
+    url: 'https://www.shareloveletters.com/favicon.ico',
+  },
+}
+
+const aboutJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'AboutPage',
+  '@id': 'https://www.shareloveletters.com/about',
+  url: 'https://www.shareloveletters.com/about',
+  name: 'About ShareLove Letters',
+  description: 'The story behind ShareLove Letters: a free, encrypted letter-writing app built on the belief that meaningful words deserve a better home than a chat bubble.',
+  mainEntity: organizationJsonLd,
+  publisher: organizationJsonLd,
 }
 
 export default function AboutPage() {
   return (
     <div className="min-h-screen flex flex-col">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({ '@context': 'https://schema.org', ...organizationJsonLd }) }} />
       <Navbar />
       <main className="flex-1">
         {/* Hero */}

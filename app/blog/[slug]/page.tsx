@@ -34,8 +34,44 @@ export default async function BlogPostPage({ params }: Props) {
   const readMins = Math.max(1, Math.round(words / 200))
   const views = (post.view_count || 0) + 1
 
+  const canonical = `https://www.shareloveletters.com/blog/${params.slug}`
+  const publisher = {
+    '@type': 'Organization',
+    name: 'ShareLove Letters',
+    url: 'https://www.shareloveletters.com',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://www.shareloveletters.com/favicon.ico',
+    },
+  }
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': canonical,
+    url: canonical,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+    headline: post.title,
+    description: post.meta_description || post.excerpt || '',
+    datePublished: new Date(date).toISOString(),
+    dateModified: new Date(post.updated_at ?? date).toISOString(),
+    author: { '@type': 'Organization', name: 'ShareLove Letters Team', url: 'https://www.shareloveletters.com' },
+    publisher,
+    ...(post.cover_image ? { image: [post.cover_image] } : {}),
+  }
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.shareloveletters.com' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.shareloveletters.com/blog' },
+      { '@type': 'ListItem', position: 3, name: post.title, item: canonical },
+    ],
+  }
+
   return (
     <div className="min-h-screen flex flex-col">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <Navbar />
       <main className="flex-1">
         <article className="max-w-3xl mx-auto px-6 py-16">
