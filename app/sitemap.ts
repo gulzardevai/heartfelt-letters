@@ -19,6 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     })),
+    { url: `${BASE}/letter-themes`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/quotes`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
     ...QUOTE_CATEGORY_PAGES.map(c => ({
       url: `${BASE}/quotes/${c.slug}`,

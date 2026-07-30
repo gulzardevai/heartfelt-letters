@@ -37,6 +37,7 @@ export default function Footer() {
             <ul className="space-y-2 text-sm text-rose-600/70">
               <li><Link href="/about" className="hover:text-rose-800 transition-colors">About</Link></li>
               <li><Link href="/letters" className="hover:text-rose-800 transition-colors">Letters by Occasion</Link></li>
+              <li><Link href="/letter-themes" className="hover:text-rose-800 transition-colors">Letter Themes</Link></li>
               <li><Link href="/blog" className="hover:text-rose-800 transition-colors">Blog</Link></li>
               <li><Link href="/quotes" className="hover:text-rose-800 transition-colors">Quotes</Link></li>
               <li><Link href="/compare" className="hover:text-rose-800 transition-colors">Why Us?</Link></li>

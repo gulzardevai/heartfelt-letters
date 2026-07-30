@@ -129,6 +129,12 @@ function WritePageInner() {
       setShowReplyBanner(true)
       sendGAEvent('event', 'letter_reply_started')
     }
+    // Deep link from the letter-themes page: ?theme=vintage preselects a theme
+    // (works with or without a type; editing loads the letter's own theme instead)
+    if (!editId) {
+      const themeParam = searchParams.get('theme')
+      if (themeParam && THEMES.some(t => t.id === themeParam)) setSelectedTheme(themeParam)
+    }
     if (editId) {
       setEditLoading(true)
       fetch(`/api/letters/${editId}?owner=1`)
