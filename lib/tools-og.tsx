@@ -32,12 +32,12 @@ export async function loadHeadingFont(): Promise<ArrayBuffer | null> {
 
 export function cardElement(card: CardData, format: 'og' | 'story', serif: string) {
   const story = format === 'story'
-  const pad = story ? 96 : 72
-  const emojiSize = story ? 150 : 96
-  const headingSize = story ? 84 : 60
-  const bigSize = story ? 260 : 180
-  const subSize = story ? 44 : 34
-  const brandSize = story ? 40 : 30
+  const pad = story ? 96 : 60
+  const emojiSize = story ? 140 : 76
+  const headingSize = story ? 76 : 50
+  const bigSize = story ? 220 : 128
+  const subSize = story ? 42 : 30
+  const brandSize = story ? 40 : 28
 
   return (
     <div
