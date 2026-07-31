@@ -57,6 +57,25 @@ export default function ToolsHubPage() {
           </p>
         </section>
 
+        {/* Featured: user-generated quiz builder */}
+        <section className="max-w-4xl mx-auto px-6 pb-6">
+          <Link
+            href="/tools/quiz"
+            className="group block bg-rose-600 rounded-3xl shadow-sm p-6 sm:p-7 hover:bg-rose-700 transition-colors text-white"
+          >
+            <div className="flex items-start gap-4">
+              <span className="text-3xl">❓💘</span>
+              <span className="flex-1">
+                <span className="block font-serif text-lg font-bold">How well do you know me? — Quiz builder</span>
+                <span className="block text-sm text-rose-100 mt-1 leading-relaxed">
+                  Make your own quiz, share the link, and see everyone&rsquo;s scores on a private scoreboard. Free, no sign-up.
+                </span>
+              </span>
+              <span className="text-rose-200 group-hover:text-white transition-colors mt-1">→</span>
+            </div>
+          </Link>
+        </section>
+
         {/* Tool grid */}
         <section className="max-w-4xl mx-auto px-6 pb-14">
           <div className="grid sm:grid-cols-2 gap-5">

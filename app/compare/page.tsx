@@ -80,6 +80,7 @@ const features = [
   { feature: '700+ quote library, browsable by category', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Free love tools (love calculator, quizzes, counters)', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Shareable results & couple quizzes (send a link, unfurls as a card)', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
+  { feature: 'Build a "how well do you know me?" quiz with a private scoreboard', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Anonymous writing', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Free to use', us: true, dll: false, paperless: false, hallmark: false, canva: true, docs: true },
 ]
@@ -184,6 +185,7 @@ export default function ComparePage() {
                 <li>✓ Four letter themes — vintage, midnight &amp; more</li>
                 <li>✓ Free love tools — love calculator, love language quiz, zodiac match &amp; more</li>
                 <li>✓ Shareable results — send a link, take a couple quiz together, save it as a Story card</li>
+                <li>✓ Make a &ldquo;how well do you know me?&rdquo; quiz and see everyone&rsquo;s scores on a private scoreboard</li>
                 <li>✓ Write anonymously or with an account</li>
                 <li>✓ Free — no coins, no subscriptions</li>
               </ul>

@@ -22,6 +22,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
     { url: `${BASE}/letter-themes`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/tools`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/tools/quiz`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
     ...TOOLS.map(t => ({
       url: `${BASE}/tools/${t.slug}`,
       lastModified: new Date(),

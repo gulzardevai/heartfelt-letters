@@ -46,6 +46,17 @@ export async function middleware(request: NextRequest) {
     return supabaseResponse
   }
 
+  // User-generated quiz instances (/tools/quiz/<id>, its /scoreboard and /card,
+  // and the /create builder) are never indexable — only the /tools/quiz hub is.
+  // Match anything UNDER /tools/quiz/ (the trailing slash spares the hub itself).
+  // noindex here + no self-referencing Link canonical, so UGC never enters search
+  // or the index-coverage sweep.
+  const isQuizInstance = /^\/tools\/quiz\/.+/.test(pathname)
+  if (isQuizInstance) {
+    supabaseResponse.headers.set('X-Robots-Tag', 'noindex, follow')
+    return supabaseResponse
+  }
+
   // Emit a self-referencing HTTP canonical header on public marketing pages.
   // Scrapers copy our HTML but rarely replicate response headers, so this is a
   // strong anti-hijack signal (Google weights the header canonical highly).
