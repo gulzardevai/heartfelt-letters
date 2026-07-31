@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import ResultShare from './ResultShare'
 
 const POOLS: Record<string, string[]> = {
   sweet: ['Love', 'Sweetheart', 'Darling', 'Honey', 'Angel', 'Sunshine', 'My love', 'Dearest', 'Sweetpea', 'Treasure', 'Precious', 'Beloved'],
@@ -24,9 +25,9 @@ function shuffle<T>(arr: T[]): T[] {
   return a
 }
 
-export default function NicknameGenerator() {
-  const [vibe, setVibe] = useState('sweet')
-  const [picks, setPicks] = useState<string[]>([])
+export default function NicknameGenerator({ initial = null }: { initial?: { v?: string; p?: string[] } | null }) {
+  const [vibe, setVibe] = useState(initial?.v && POOLS[initial.v] ? initial.v : 'sweet')
+  const [picks, setPicks] = useState<string[]>(Array.isArray(initial?.p) ? initial!.p! : [])
 
   const generate = () => setPicks(shuffle(POOLS[vibe]).slice(0, 6))
 
@@ -54,15 +55,18 @@ export default function NicknameGenerator() {
       </div>
 
       {picks.length > 0 && (
-        <div className="mt-6 border-t border-rose-50 pt-6 grid grid-cols-2 sm:grid-cols-3 gap-3">
-          {picks.map((n, i) => (
-            <div
-              key={i}
-              className="bg-rose-50 rounded-xl py-3 px-3 text-center font-serif text-rose-800 font-semibold"
-            >
-              {n}
-            </div>
-          ))}
+        <div className="mt-6 border-t border-rose-50 pt-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            {picks.map((n, i) => (
+              <div
+                key={i}
+                className="bg-rose-50 rounded-xl py-3 px-3 text-center font-serif text-rose-800 font-semibold"
+              >
+                {n}
+              </div>
+            ))}
+          </div>
+          <ResultShare slug="nickname-generator" state={{ v: vibe, p: picks }} label="Send them their new name" />
         </div>
       )}
     </div>

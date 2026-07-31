@@ -35,6 +35,17 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
+  // Tool RESULT permalinks (/tools/<slug>/r/<data>, plus their /card and /story
+  // image routes) are shareable artifacts, not indexable surfaces. They carry an
+  // HTML canonical back to the base /tools/<slug> page; here we reinforce that
+  // with X-Robots-Tag: noindex and deliberately do NOT emit a self-referencing
+  // Link canonical, so they never spawn thin duplicate index bloat.
+  const isToolResult = /^\/tools\/[^/]+\/r\//.test(pathname)
+  if (isToolResult) {
+    supabaseResponse.headers.set('X-Robots-Tag', 'noindex, follow')
+    return supabaseResponse
+  }
+
   // Emit a self-referencing HTTP canonical header on public marketing pages.
   // Scrapers copy our HTML but rarely replicate response headers, so this is a
   // strong anti-hijack signal (Google weights the header canonical highly).
