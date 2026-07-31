@@ -40,6 +40,7 @@ export default function Footer() {
               <li><Link href="/letter-themes" className="hover:text-rose-800 transition-colors">Letter Themes</Link></li>
               <li><Link href="/blog" className="hover:text-rose-800 transition-colors">Blog</Link></li>
               <li><Link href="/quotes" className="hover:text-rose-800 transition-colors">Quotes</Link></li>
+              <li><Link href="/tools" className="hover:text-rose-800 transition-colors">Love Tools</Link></li>
               <li><Link href="/compare" className="hover:text-rose-800 transition-colors">Why Us?</Link></li>
               <li><Link href="/contact" className="hover:text-rose-800 transition-colors">Contact</Link></li>
             </ul>

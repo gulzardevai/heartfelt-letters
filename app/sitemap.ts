@@ -2,6 +2,7 @@ import { MetadataRoute } from 'next'
 import { getSupabaseAdmin } from '@/lib/supabase-admin'
 import { OCCASIONS } from '@/lib/occasions'
 import { QUOTE_CATEGORY_PAGES } from '@/lib/quotes'
+import { TOOLS } from '@/lib/tools'
 
 export const dynamic = 'force-dynamic'
 export const fetchCache = 'force-no-store'
@@ -20,6 +21,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     })),
     { url: `${BASE}/letter-themes`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/tools`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
+    ...TOOLS.map(t => ({
+      url: `${BASE}/tools/${t.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.6,
+    })),
     { url: `${BASE}/quotes`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
     ...QUOTE_CATEGORY_PAGES.map(c => ({
       url: `${BASE}/quotes/${c.slug}`,
