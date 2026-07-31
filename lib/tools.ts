@@ -150,6 +150,7 @@ export const TOOLS: Tool[] = [
     ctaLine: 'Speak their love language in writing.',
     writeType: 'love',
     related: [
+      { href: '/tools/quiz', label: 'How well do you know me? quiz maker' },
       { href: '/tools/couples-questions', label: 'Couples questions' },
       { href: '/letters/love', label: 'Love letter templates' },
       { href: '/quotes/love', label: 'Love quotes' },
@@ -294,6 +295,7 @@ export const TOOLS: Tool[] = [
     ctaLine: 'A great answer deserves to be written down.',
     writeType: 'love',
     related: [
+      { href: '/tools/quiz', label: 'How well do you know me? quiz maker' },
       { href: '/tools/love-language-quiz', label: 'Love language quiz' },
       { href: '/tools/nickname-generator', label: 'Cute nickname generator' },
       { href: '/letters/love', label: 'Love letter templates' },
@@ -310,6 +312,46 @@ export const TOOLS: Tool[] = [
       {
         q: 'What if an answer really moves me?',
         a: 'Write it down for them. A letter capturing what someone said, and what it meant to you, is a gift they will reread for years — and you can create one free on ShareLove.',
+      },
+    ],
+  },
+  {
+    slug: 'love-note',
+    emoji: '💌',
+    name: 'Love Note Reveal',
+    hubTagline: 'Turn a few words into a link that opens like a little envelope.',
+    keyword: 'Love note',
+    metaTitle: 'Love Note Reveal — Send a Sweet Note as a Surprise Link',
+    metaDescription:
+      'Write a short love note and turn it into a private link that opens with a little envelope reveal. Free, no sign-up — a sweet surprise, then send a real letter.',
+    h1: 'Love Note Reveal',
+    intro: [
+      'Type a few sweet words and turn them into a private link that opens like a tiny envelope. Send it in a text, and when they tap it your note is revealed with a gentle little animation — a small surprise that lands right in the middle of their day.',
+      'It is the pocket-sized version of a love letter: quick to make, lovely to receive. And when a few words turn into something you want to say properly, that same feeling becomes a full letter you can seal and send.',
+    ],
+    ctaLine: 'A note is a spark. A letter is the whole fire.',
+    writeType: 'love',
+    related: [
+      { href: '/tools/nickname-generator', label: 'Cute nickname generator' },
+      { href: '/letters/love', label: 'Love letter templates' },
+      { href: '/quotes/love', label: 'Love quotes' },
+    ],
+    faq: [
+      {
+        q: 'How does the love note link work?',
+        a: 'You type a short note and we turn it into a private web link. Nothing is saved on our servers — the words are encoded into the link itself, right in your browser. When the person you send it to opens the link, the note is revealed with a little envelope animation.',
+      },
+      {
+        q: 'Is my love note private?',
+        a: 'It is unlisted and never indexed by search engines, so it will not turn up in Google. But because the note travels inside the link, anyone who has the link can open it — so treat it as a sweet surprise to share, not a place for secrets.',
+      },
+      {
+        q: 'Is it free, and do I need an account?',
+        a: 'Completely free, with no sign-up. Write your note, copy the link, and send it however you like — text, chat or email.',
+      },
+      {
+        q: 'What is the difference between this and a real letter?',
+        a: 'This is a quick, playful note — a few words that open with a smile. A ShareLove letter is the real thing: longer, sealed like an envelope, with room for photos and even the option to schedule when it opens. When your note wants to become a letter, you can write one free.',
       },
     ],
   },

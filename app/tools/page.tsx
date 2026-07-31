@@ -66,9 +66,9 @@ export default function ToolsHubPage() {
             <div className="flex items-start gap-4">
               <span className="text-3xl">❓💘</span>
               <span className="flex-1">
-                <span className="block font-serif text-lg font-bold">How well do you know me? — Quiz builder</span>
+                <span className="block font-serif text-lg font-bold">How well do you know me? — free quiz maker</span>
                 <span className="block text-sm text-rose-100 mt-1 leading-relaxed">
-                  Make your own quiz, share the link, and see everyone&rsquo;s scores on a private scoreboard. Free, no sign-up.
+                  Make your own quiz for a partner or friends, share the link, and see everyone&rsquo;s scores on a private scoreboard. Free, no sign-up.
                 </span>
               </span>
               <span className="text-rose-200 group-hover:text-white transition-colors mt-1">→</span>

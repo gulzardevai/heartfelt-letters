@@ -253,6 +253,19 @@ export function cardFor(slug: string, s: any): CardData {
       const info = LANG_INFO[lang]
       return { emoji: info?.emoji ?? '💞', heading: 'My love language is', big: info?.label ?? '', sub: 'What’s yours?', footer: 'Love language quiz' }
     }
+    case 'love-note': {
+      // Teaser only — the private note text is NEVER placed on the card, in the
+      // OG image, or in the page title/description. The message stays behind the
+      // reveal; only a recipient name (which the sender opted to add) is shown.
+      const to = (s.t && String(s.t).trim()) || ''
+      return {
+        emoji: '💌',
+        heading: to ? `A love note for ${to}` : 'You have a love note',
+        big: '',
+        sub: 'Someone sent you a love note — tap to open 💞',
+        footer: 'Love note',
+      }
+    }
     case 'couples-questions': {
       if (s.m === 'score') {
         const pct = s.total ? Math.round((s.score / s.total) * 100) : 0

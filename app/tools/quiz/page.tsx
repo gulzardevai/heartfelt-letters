@@ -9,14 +9,14 @@ export const dynamic = 'force-static'
 const URL = 'https://www.shareloveletters.com/tools/quiz'
 
 export const metadata: Metadata = {
-  title: 'How Well Do You Know Me? — Make a Free Quiz for Friends',
+  title: 'How Well Do You Know Me Quiz Maker — Free, No Sign-Up',
   description:
-    'Create a free "how well do you know me?" quiz in minutes, share the link, and see everyone\'s scores on your own private scoreboard. No sign-up needed.',
+    'Free "how well do you know me?" quiz maker: build a quiz, share the link, and see everyone\'s scores on a private scoreboard. Great for couples & friends.',
   alternates: { canonical: URL },
   openGraph: {
-    title: 'How Well Do You Know Me? — Make a Free Quiz',
+    title: 'How Well Do You Know Me Quiz Maker — Free & Shareable',
     description:
-      'Build a "how well do you know me?" quiz, share it with friends and partners, and watch their scores land on your private scoreboard. Free, no account.',
+      'Build a "how well do you know me?" quiz, share it with your partner, friends and family, and watch their scores land on your private scoreboard. Free, no account.',
     url: URL,
     type: 'website',
   },
@@ -38,6 +38,10 @@ const faqs = [
   {
     q: 'Can people who take my quiz see everyone else\'s scores?',
     a: 'No. People who take your quiz only see their own score. The full scoreboard of everyone\'s results is private to you, the creator, through your secret scoreboard link.',
+  },
+  {
+    q: 'Can I use this as a couples quiz or a quiz for my boyfriend or girlfriend?',
+    a: 'Yes. It works as a couples quiz, a boyfriend or girlfriend quiz, a best-friend quiz, or a family game — you write the questions, so you decide how well someone has to know you to score well. Add questions about your favourites, your habits and your shared memories, then send the link and compare scores.',
   },
   {
     q: 'Is my quiz private?',
@@ -86,11 +90,12 @@ export default function QuizHubPage() {
           <div className="text-5xl mb-5">❓💘</div>
           <h1 className="font-serif text-4xl md:text-5xl font-bold text-rose-900 mb-6 leading-tight">
             How well do you know me?
+            <span className="block text-2xl md:text-3xl text-rose-500 mt-2">A free quiz maker</span>
           </h1>
           <p className="text-rose-700/70 leading-relaxed mb-4 text-left sm:text-center">
             Build your own free &ldquo;how well do you know me?&rdquo; quiz in a couple of minutes, then share the link with
-            your partner, friends or family. As people take it, their scores land on a private scoreboard that only you can see —
-            ranked from who knows you best to who has some catching up to do.
+            your partner, boyfriend or girlfriend, friends or family. As people take it, their scores land on a private
+            scoreboard that only you can see — ranked from who knows you best to who has some catching up to do.
           </p>
           <p className="text-rose-700/70 leading-relaxed mb-8 text-left sm:text-center">
             It is the classic couple-and-friends game, made shareable. No account, nothing to install — just write your questions,

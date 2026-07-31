@@ -7,6 +7,7 @@ import AnniversaryGifts from './AnniversaryGifts'
 import Countdown from './Countdown'
 import ZodiacCompatibility from './ZodiacCompatibility'
 import CouplesQuestions from './CouplesQuestions'
+import LoveNote from './LoveNote'
 
 // `initial` is the decoded result state from a /tools/<slug>/r/<data> permalink,
 // or null on the plain (indexable) tool page.
@@ -28,6 +29,8 @@ export default function ToolWidget({ slug, initial = null }: { slug: string; ini
       return <ZodiacCompatibility initial={initial} />
     case 'couples-questions':
       return <CouplesQuestions initial={initial} />
+    case 'love-note':
+      return <LoveNote initial={initial} />
     default:
       return null
   }
