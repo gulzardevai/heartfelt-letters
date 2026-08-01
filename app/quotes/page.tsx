@@ -5,11 +5,31 @@ import Link from 'next/link'
 import toast from 'react-hot-toast'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import FaqBlock from '@/components/FaqBlock'
 import { QUOTES, QUOTE_CATEGORIES, QUOTE_CATEGORY_PAGES } from '@/lib/quotes'
 import { useAuth } from '@/components/AuthProvider'
 import { sendGAEvent } from '@next/third-parties/google'
 
 const FAVORITES_KEY = (userId: string) => `hl_favorites_${userId}`
+
+const QUOTES_FAQS = [
+  {
+    q: 'Can I use these love quotes for free?',
+    a: 'Yes. Every quote in the library is free to read, copy and use — no account, no payment and no attribution required. Sign in (also free) if you want to save your favourites and find them again later.',
+  },
+  {
+    q: 'How do I add a quote to my letter?',
+    a: 'Copy any quote with the Copy button, then open the free letter editor and paste it wherever you like — or tap Use on a quote to jump straight into /write with a matching letter type. From there you can make it your own with fonts, colours and photos.',
+  },
+  {
+    q: 'Can I copy these quotes to share elsewhere?',
+    a: 'Absolutely. The Copy button puts the quote and author on your clipboard so you can drop it into a letter, a card, a caption or a text. They are perfect for anniversaries, birthdays, long-distance notes or just a good-morning message.',
+  },
+  {
+    q: 'How many quotes are in the library?',
+    a: 'There are 700+ hand-picked quotes across love, friendship, family, gratitude, encouragement, apology and celebration — plus themed collections like missing you, thinking of you, good morning and long distance. Use the search box or category filters to find the perfect words fast.',
+  },
+]
 
 export default function QuotesPage() {
   const { user } = useAuth()
@@ -276,6 +296,8 @@ export default function QuotesPage() {
             </div>
           )}
         </div>
+
+        <FaqBlock faqs={QUOTES_FAQS} />
       </main>
 
       <Footer />

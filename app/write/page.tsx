@@ -14,6 +14,7 @@ import LetterTypeCard from '@/components/LetterTypeCard'
 import TemplateCard from '@/components/TemplateCard'
 import ShareModal from '@/components/ShareModal'
 import EmailModal from '@/components/EmailModal'
+import FaqBlock from '@/components/FaqBlock'
 import { useAuth } from '@/components/AuthProvider'
 import { sendGAEvent } from '@next/third-parties/google'
 
@@ -726,6 +727,29 @@ function WritePageInner() {
   )
 }
 
+const WRITE_FAQS = [
+  {
+    q: 'Is ShareLove Letters free?',
+    a: 'Yes — writing and sharing a letter is completely free. Every template, the editor, photo uploads, letter themes, scheduled delivery, bouquets and private links are included, with no coins, subscriptions or credit card required.',
+  },
+  {
+    q: 'Do I need an account to send a letter?',
+    a: 'No. You can write and share a letter as a guest with no sign-up at all. Creating a free account is optional — it lets you save up to 10 letters a month and manage them from a dashboard.',
+  },
+  {
+    q: 'Is my letter private and encrypted?',
+    a: 'Yes. Every letter is encrypted at rest with bank-grade AES-256, so it is unreadable even in our own database. Letters are never public, indexed or searchable, and you can add a password so only your recipient can open it.',
+  },
+  {
+    q: 'How does the recipient open the letter?',
+    a: 'When you publish, you get a private link to send however you like. Your recipient opens it to a sealed envelope with their name on it, and it unfolds with a gentle opening animation — no app and no account needed on their side.',
+  },
+  {
+    q: 'Can I send a love letter anonymously?',
+    a: 'Yes. You can write and share a letter without an account and without revealing who you are. Pair it with password protection for a truly private, secret letter that only reaches the person you intend.',
+  },
+]
+
 export default function WritePage() {
   return (
     <>
@@ -736,6 +760,12 @@ export default function WritePage() {
       <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="text-rose-400">Loading...</div></div>}>
         <WritePageInner />
       </Suspense>
+      {/* Rendered outside the Suspense boundary so the FAQ + FAQPage JSON-LD ship in
+          the initial server HTML (same guarantee as the H1 above). Sits below the
+          full-height compose tool, so it never interferes with the editor UX. */}
+      <div className="bg-gradient-to-br from-rose-50 to-pink-50 border-t border-rose-100 pt-16">
+        <FaqBlock faqs={WRITE_FAQS} />
+      </div>
     </>
   )
 }
