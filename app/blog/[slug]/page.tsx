@@ -11,6 +11,25 @@ interface Props {
   params: { slug: string }
 }
 
+// Extract Q&A pairs from the post's "Frequently Asked Questions" section so we can
+// emit FAQPage structured data (eligible for People-Also-Ask / rich results).
+function extractFaq(html: string): { q: string; a: string }[] {
+  const faqStart = html.search(/<h2[^>]*>\s*(Frequently Asked Questions|FAQ|FAQs)\b/i)
+  if (faqStart === -1) return []
+  const afterHeading = html.slice(faqStart).replace(/^<h2[^>]*>[\s\S]*?<\/h2>/i, '')
+  const nextH2 = afterHeading.search(/<h2[^>]*>/i)
+  const faqHtml = nextH2 === -1 ? afterHeading : afterHeading.slice(0, nextH2)
+  const items: { q: string; a: string }[] = []
+  const re = /<h3[^>]*>([\s\S]*?)<\/h3>([\s\S]*?)(?=<h3|$)/gi
+  let m: RegExpExecArray | null
+  while ((m = re.exec(faqHtml)) !== null) {
+    const q = m[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+    const a = m[2].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+    if (q && a) items.push({ q, a })
+  }
+  return items
+}
+
 export default async function BlogPostPage({ params }: Props) {
   const supabase = createSupabaseServerClient()
   const { data: post } = await supabase
@@ -68,11 +87,24 @@ export default async function BlogPostPage({ params }: Props) {
       { '@type': 'ListItem', position: 3, name: post.title, item: canonical },
     ],
   }
+  const faqItems = extractFaq(post.content as string)
+  const faqJsonLd = faqItems.length >= 2 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  } : null
 
   return (
     <div className="min-h-screen flex flex-col">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
+      {faqJsonLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
+      )}
       <Navbar />
       <main className="flex-1">
         <article className="max-w-3xl mx-auto px-6 py-16">
