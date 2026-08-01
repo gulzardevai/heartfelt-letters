@@ -62,5 +62,28 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // sitemap still serves static pages if DB is unreachable
   }
 
-  return [...staticPages, ...blogPages]
+  let quizPages: MetadataRoute.Sitemap = []
+  try {
+    const db = getSupabaseAdmin()
+    const { data: quizzes } = await db
+      .from('admin_quizzes')
+      .select('slug, updated_at')
+      .eq('published', true)
+
+    if (quizzes?.length) {
+      quizPages = [
+        { url: `${BASE}/quizzes`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
+        ...quizzes.map(q => ({
+          url: `${BASE}/quizzes/${q.slug}`,
+          lastModified: new Date(q.updated_at),
+          changeFrequency: 'monthly' as const,
+          priority: 0.6,
+        })),
+      ]
+    }
+  } catch {
+    // ignore — quizzes are optional in the sitemap
+  }
+
+  return [...staticPages, ...blogPages, ...quizPages]
 }
