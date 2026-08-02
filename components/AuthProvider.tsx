@@ -10,6 +10,7 @@ type Profile = {
   avatar_url: string | null
   plan: 'free' | 'pro'
   letter_count: number
+  welcome_sent_at: string | null
 }
 
 type AuthCtx = {
@@ -19,6 +20,9 @@ type AuthCtx = {
   signOut: () => Promise<void>
   refreshProfile: () => Promise<void>
 }
+
+// Module-level guard so the fallback welcome request fires at most once per page load
+let welcomeRequested = false
 
 const AuthContext = createContext<AuthCtx>({ user: null, profile: null, loading: true, signOut: async () => {}, refreshProfile: async () => {} })
 
@@ -30,7 +34,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const fetchProfile = async (uid: string) => {
     const { data } = await supabase.from('profiles').select('*').eq('id', uid).single()
-    if (data) setProfile(data as Profile)
+    if (data) {
+      setProfile(data as Profile)
+      // Fallback welcome-email trigger for signups that skip /auth/callback
+      // (e.g. email confirmation links). Server dedupes via welcome_sent_at.
+      if (!(data as Profile).welcome_sent_at && !welcomeRequested) {
+        welcomeRequested = true
+        fetch('/api/welcome', { method: 'POST' }).catch(() => {})
+      }
+    }
   }
 
   useEffect(() => {

@@ -1,6 +1,7 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
+import { sendWelcomeEmailIfNew } from '@/lib/email'
 
 export const dynamic = 'force-dynamic'
 
@@ -25,8 +26,11 @@ export async function GET(request: NextRequest) {
         },
       }
     )
-    const { error } = await supabase.auth.exchangeCodeForSession(code)
-    if (!error) return NextResponse.redirect(`${origin}${next}`)
+    const { data, error } = await supabase.auth.exchangeCodeForSession(code)
+    if (!error) {
+      if (data?.user) await sendWelcomeEmailIfNew(data.user.id)
+      return NextResponse.redirect(`${origin}${next}`)
+    }
   }
   return NextResponse.redirect(`${origin}/auth/login?error=auth`)
 }

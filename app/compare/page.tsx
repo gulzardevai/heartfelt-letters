@@ -81,6 +81,7 @@ const features = [
   { feature: 'Free love tools (love calculator, quizzes, counters)', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Shareable results & couple quizzes (send a link, unfurls as a card)', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: '"How well do you know me?" quiz — ready-made fun questions, zero writing, private scoreboard', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
+  { feature: 'Personal welcome & onboarding email on signup', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Anonymous writing', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Free to use', us: true, dll: false, paperless: false, hallmark: false, canva: true, docs: true },
 ]
