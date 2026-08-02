@@ -25,7 +25,7 @@ async function fetchData(id: string): Promise<{ quiz: Quiz | null; attempts: Qui
     if (!quiz) return { quiz: null, attempts: [] }
     const { data: attempts } = await db
       .from('quiz_attempts')
-      .select('id, taker_name, score, total, created_at')
+      .select('id, taker_name, email, score, total, created_at')
       .eq('quiz_id', id)
       .order('score', { ascending: false })
       .order('created_at', { ascending: true })
@@ -135,6 +135,11 @@ export default async function ScoreboardPage({
                       </span>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-semibold text-rose-900 truncate">{a.taker_name}</p>
+                        {a.email && (
+                          <p className="text-xs text-rose-500/80 truncate">
+                            <a href={`mailto:${a.email}`} className="hover:underline">{a.email}</a>
+                          </p>
+                        )}
                         <p className="text-xs text-rose-400">
                           {new Date(a.created_at).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                         </p>

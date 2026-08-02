@@ -80,7 +80,7 @@ const features = [
   { feature: '700+ quote library, browsable by category', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Free love tools (love calculator, quizzes, counters)', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Shareable results & couple quizzes (send a link, unfurls as a card)', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
-  { feature: '"How well do you know me?" quiz — ready-made fun questions, zero writing, private scoreboard', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
+  { feature: '"How well do you know me?" quiz — ready-made fun questions, zero writing, private scoreboard with optional taker emails', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Personal welcome & onboarding email on signup', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Anonymous writing', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Free to use', us: true, dll: false, paperless: false, hallmark: false, canva: true, docs: true },
@@ -186,7 +186,7 @@ export default function ComparePage() {
                 <li>✓ Four letter themes — vintage, midnight &amp; more</li>
                 <li>✓ Free love tools — love calculator, love language quiz, zodiac match &amp; more</li>
                 <li>✓ Shareable results — send a link, take a couple quiz together, save it as a Story card</li>
-                <li>✓ Make a &ldquo;how well do you know me?&rdquo; quiz in under a minute — tap your answers to ready-made questions, share, watch scores roll in on a private scoreboard</li>
+                <li>✓ Make a &ldquo;how well do you know me?&rdquo; quiz in under a minute — tap your answers to ready-made questions, share, watch scores (and optional emails, so you can reach your top scorers) roll in on a private scoreboard</li>
                 <li>✓ Write anonymously or with an account</li>
                 <li>✓ Free — no coins, no subscriptions</li>
               </ul>

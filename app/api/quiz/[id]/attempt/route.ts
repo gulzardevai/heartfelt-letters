@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getSupabaseAdmin } from '@/lib/supabase-admin'
-import { cleanText, scoreAttempt, QUIZ_LIMITS, type Quiz } from '@/lib/quiz'
+import { cleanEmail, cleanText, scoreAttempt, QUIZ_LIMITS, type Quiz } from '@/lib/quiz'
 
 export const dynamic = 'force-dynamic'
 
@@ -63,6 +63,8 @@ export async function POST(req: NextRequest, { params }: { params: { id: string 
     const { error } = await db.from('quiz_attempts').insert({
       quiz_id: quiz.id,
       taker_name,
+      // Optional — invalid/empty emails become null; never reject the attempt.
+      email: cleanEmail(b.email),
       answers,
       score,
       total,

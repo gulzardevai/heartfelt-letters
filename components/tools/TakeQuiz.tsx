@@ -72,6 +72,8 @@ function tier(pct: number, creator: string): { title: string; note: string } {
 
 export default function TakeQuiz({ quiz }: { quiz: PublicQuiz }) {
   const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [emailHint, setEmailHint] = useState(false)
   const [phase, setPhase] = useState<Phase>('intro')
   const [step, setStep] = useState(0)
   const [answers, setAnswers] = useState<number[]>(Array(quiz.questions.length).fill(-1))
@@ -86,6 +88,12 @@ export default function TakeQuiz({ quiz }: { quiz: PublicQuiz }) {
 
   const start = () => {
     if (!name.trim()) return toast.error('Enter your name to begin.')
+    // Email is optional: only stop for something that is clearly not an email.
+    const em = email.trim()
+    if (em && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) {
+      setEmailHint(true)
+      return
+    }
     setPhase('question')
   }
 
@@ -95,7 +103,7 @@ export default function TakeQuiz({ quiz }: { quiz: PublicQuiz }) {
       const res = await fetch(`/api/quiz/${quiz.id}/attempt`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ taker_name: name, answers: finalAnswers }),
+        body: JSON.stringify({ taker_name: name, email: email.trim() || undefined, answers: finalAnswers }),
       })
       const data = await res.json()
       if (!res.ok) {
@@ -276,6 +284,25 @@ export default function TakeQuiz({ quiz }: { quiz: PublicQuiz }) {
             placeholder="Your name"
             className="w-full max-w-xs mx-auto block rounded-xl border border-rose-200 px-4 py-2.5 text-base text-center mb-2 focus:outline-none focus:ring-2 focus:ring-rose-300"
           />
+          <input
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            value={email}
+            onChange={e => {
+              setEmail(e.target.value)
+              if (emailHint) setEmailHint(false)
+            }}
+            onKeyDown={e => e.key === 'Enter' && start()}
+            placeholder={`So ${quiz.creator_name} can reach you 💌`}
+            aria-label="Email (optional)"
+            className={`w-full max-w-xs mx-auto block rounded-xl border px-4 py-2.5 text-base text-center mb-1 focus:outline-none focus:ring-2 focus:ring-rose-300 ${
+              emailHint ? 'border-rose-400' : 'border-rose-200'
+            }`}
+          />
+          <p className={`text-[11px] mb-2 ${emailHint ? 'text-rose-500' : 'text-rose-400'}`}>
+            {emailHint ? 'That does not look like an email — fix it or leave it blank 💗' : 'Email (optional)'}
+          </p>
           <p className="text-[11px] text-rose-400 mb-6">
             Your name and score are shared with {quiz.creator_name} (the quiz creator).
           </p>
