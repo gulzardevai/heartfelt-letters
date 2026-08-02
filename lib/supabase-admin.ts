@@ -4,7 +4,14 @@ export function getSupabaseAdmin() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { autoRefreshToken: false, persistSession: false } }
+    {
+      auth: { autoRefreshToken: false, persistSession: false },
+      global: {
+        // Bypass Next's Data Cache — admin reads must always be fresh
+        // (e.g. unpublishing a quiz must 404 immediately).
+        fetch: (url, init) => fetch(url, { ...init, cache: 'no-store' }),
+      },
+    }
   )
 }
 
