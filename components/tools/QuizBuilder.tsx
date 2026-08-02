@@ -7,6 +7,17 @@ import { saveQuiz } from './quizStore'
 
 type Q = { q: string; options: string[]; correct: number }
 
+function track(event: string, params: Record<string, string> = {}) {
+  try {
+    const w = window as unknown as { gtag?: (...args: unknown[]) => void }
+    if (typeof w.gtag === 'function') w.gtag('event', event, params)
+  } catch {
+    /* analytics must never break the builder */
+  }
+}
+
+const CONFETTI_COLORS = ['#f43f5e', '#fb7185', '#fda4af', '#f5c26b', '#e8b04b', '#fecdd3']
+
 function blankQuestion(): Q {
   return { q: '', options: ['', ''], correct: 0 }
 }
@@ -95,6 +106,7 @@ export default function QuizBuilder() {
         ownerUrl: scoreboardLink(data.id, data.owner_token),
         createdAt: new Date().toISOString(),
       })
+      track('ugc_quiz_created')
       setCreated({ id: data.id, ownerToken: data.owner_token, title: finalTitle, creatorName: creatorName.trim() })
       if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' })
     } catch {
@@ -137,7 +149,7 @@ export default function QuizBuilder() {
 
       {/* Questions */}
       {questions.map((q, qi) => (
-        <div key={qi} className="bg-white rounded-3xl border border-rose-100 shadow-sm p-6">
+        <div key={qi} className="qz-row-in bg-white rounded-3xl border border-rose-100 shadow-sm p-6">
           <div className="flex items-center justify-between mb-3">
             <span className="text-sm font-semibold text-rose-900">Question {qi + 1}</span>
             {questions.length > QUIZ_LIMITS.minQuestions && (
@@ -211,9 +223,9 @@ export default function QuizBuilder() {
         <button
           onClick={submit}
           disabled={saving}
-          className="inline-block bg-rose-600 text-white px-10 py-3.5 rounded-full font-semibold text-sm hover:bg-rose-700 transition-colors shadow-md disabled:opacity-50"
+          className="cta-heartbeat inline-block bg-rose-600 text-white px-10 py-3.5 rounded-full font-semibold text-sm hover:bg-rose-700 transition-colors shadow-md disabled:opacity-50"
         >
-          {saving ? 'Creating…' : 'Create my quiz →'}
+          {saving ? 'Sealing your quiz… 💌' : 'Create my quiz →'}
         </button>
         <p className="text-xs text-rose-400 mt-3">
           Free, no account. You will get a share link and a private scoreboard.
@@ -237,6 +249,7 @@ function CreatedScreen({ created }: { created: Created }) {
   }
 
   const nativeShare = async () => {
+    track('ugc_quiz_shared', { channel: 'native' })
     const text = `${created.title} — take my quiz and see how well you really know me 💌`
     if (typeof navigator !== 'undefined' && navigator.share) {
       try {
@@ -250,11 +263,27 @@ function CreatedScreen({ created }: { created: Created }) {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="bg-white rounded-3xl border border-rose-100 shadow-sm p-8 text-center">
-        <div className="text-4xl mb-3">🎉</div>
-        <h2 className="font-serif text-2xl font-bold text-rose-900 mb-2">Your quiz is ready!</h2>
-        <p className="text-sm text-rose-700/70 mb-6">Send the share link to everyone. Watch their scores roll in on your private scoreboard.</p>
+    <div className="relative space-y-6">
+      {/* One-shot CSS confetti over the reveal */}
+      <div className="absolute inset-x-0 top-0 h-64 overflow-hidden pointer-events-none" aria-hidden="true">
+        {Array.from({ length: 18 }).map((_, i) => (
+          <span
+            key={i}
+            className="qz-confetti"
+            style={{
+              left: `${(i * 53) % 100}%`,
+              backgroundColor: CONFETTI_COLORS[i % CONFETTI_COLORS.length],
+              animationDelay: `${(i % 6) * 0.12}s`,
+              animationDuration: `${1.5 + (i % 4) * 0.25}s`,
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="qz-result-reveal bg-white rounded-3xl border border-rose-100 shadow-paper p-8 text-center">
+        <div className="qz-result-emoji text-5xl mb-3" aria-hidden="true">💌</div>
+        <h2 className="font-serif text-2xl font-bold text-rose-900 mb-2">Your quiz is sealed 💌 — share it</h2>
+        <p className="text-sm text-rose-700/70 mb-6">Send the link like a little gift. Watch the scores roll in on your private scoreboard.</p>
 
         {/* Share link */}
         <div className="text-left">
@@ -267,7 +296,10 @@ function CreatedScreen({ created }: { created: Created }) {
               className="flex-1 rounded-xl border border-rose-200 px-3.5 py-2.5 text-sm text-rose-700 bg-rose-50/40 min-w-0"
             />
             <button
-              onClick={() => copy(share, 'Share link copied')}
+              onClick={() => {
+                track('ugc_quiz_shared', { channel: 'copy' })
+                copy(share, 'Share link copied')
+              }}
               className="shrink-0 bg-white border border-rose-200 text-rose-700 px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-rose-50 transition-colors"
             >
               Copy
@@ -275,7 +307,7 @@ function CreatedScreen({ created }: { created: Created }) {
           </div>
           <button
             onClick={nativeShare}
-            className="w-full bg-rose-600 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-rose-700 transition-colors shadow-sm mb-6"
+            className="cta-heartbeat w-full bg-rose-600 text-white px-6 py-3 rounded-full text-sm font-semibold hover:bg-rose-700 transition-colors shadow-sm mb-6"
           >
             Share my quiz 💞
           </button>

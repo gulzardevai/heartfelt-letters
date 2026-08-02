@@ -18,7 +18,11 @@ export default function CreateQuizPage() {
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-rose-50 to-pink-50">
       <Navbar />
       <main className="flex-1">
-        <section className="max-w-2xl mx-auto px-6 pt-14 pb-6 text-center">
+        <section className="relative max-w-2xl mx-auto px-6 pt-14 pb-6 text-center">
+          <span className="qz-bg-sparkle" style={{ top: '18%', left: '8%', fontSize: 14 }} aria-hidden="true">💌</span>
+          <span className="qz-bg-sparkle" style={{ top: '30%', left: '88%', fontSize: 12, animationDelay: '1.4s' }} aria-hidden="true">✨</span>
+          <span className="qz-bg-sparkle" style={{ top: '75%', left: '5%', fontSize: 12, animationDelay: '2.8s' }} aria-hidden="true">✨</span>
+          <span className="qz-bg-sparkle" style={{ top: '68%', left: '92%', fontSize: 13, animationDelay: '0.9s' }} aria-hidden="true">💗</span>
           <nav className="text-xs text-rose-400 mb-6">
             <Link href="/" className="hover:text-rose-600 transition-colors">Home</Link>
             <span className="mx-2">›</span>
@@ -26,7 +30,7 @@ export default function CreateQuizPage() {
             <span className="mx-2">›</span>
             <span className="text-rose-500">Create</span>
           </nav>
-          <div className="text-5xl mb-5">✍️</div>
+          <div className="qz-float-emoji text-5xl mb-5" aria-hidden="true">✍️</div>
           <h1 className="font-serif text-3xl md:text-4xl font-bold text-rose-900 mb-3 leading-tight">
             Build your quiz
           </h1>

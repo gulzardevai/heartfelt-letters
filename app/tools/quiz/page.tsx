@@ -87,7 +87,7 @@ export default function QuizHubPage() {
             <span className="text-rose-500">Quiz</span>
           </nav>
 
-          <div className="text-5xl mb-5">❓💘</div>
+          <div className="qz-float-emoji text-5xl mb-5" aria-hidden="true">❓💘</div>
           <h1 className="font-serif text-4xl md:text-5xl font-bold text-rose-900 mb-6 leading-tight">
             How well do you know me?
             <span className="block text-2xl md:text-3xl text-rose-500 mt-2">A free quiz maker</span>

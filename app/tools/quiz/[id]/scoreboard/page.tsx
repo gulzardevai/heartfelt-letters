@@ -125,7 +125,11 @@ export default async function ScoreboardPage({
                 {attempts.map((a, i) => {
                   const pct = a.total ? Math.round((a.score / a.total) * 100) : 0
                   return (
-                    <li key={a.id} className="flex items-center gap-4 px-6 py-4 border-t border-rose-50 first:border-t-0">
+                    <li
+                      key={a.id}
+                      className="qz-row-in flex items-center gap-4 px-6 py-4 border-t border-rose-50 first:border-t-0"
+                      style={{ animationDelay: `${Math.min(i, 10) * 0.06}s` }}
+                    >
                       <span className={`w-8 text-center font-serif font-bold shrink-0 ${i === 0 ? 'text-rose-600 text-lg' : 'text-rose-300'}`}>
                         {i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : i + 1}
                       </span>

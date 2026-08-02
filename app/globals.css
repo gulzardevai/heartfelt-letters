@@ -537,13 +537,24 @@ body {
   100% { opacity: 0; transform: translateY(340px) rotate(300deg); }
 }
 
+/* Staggered row/card entrance (UGC quiz scoreboard + builder) */
+.qz-row-in {
+  opacity: 0;
+  animation: qz-row-in 0.45s ease-out forwards;
+}
+
+@keyframes qz-row-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .qz-float-emoji, .qz-bg-sparkle, .qz-seal-wiggle, .qz-result-emoji,
-  .qz-slide-in, .qz-slide-out, .qz-result-reveal,
+  .qz-slide-in, .qz-slide-out, .qz-result-reveal, .qz-row-in,
   .qz-option.qz-picked, .qz-burst-heart, .qz-track-envelope, .qz-track-fill {
     animation: none;
     transition: none;
   }
   .qz-bg-sparkle, .qz-burst-heart, .qz-confetti { display: none; }
-  .qz-slide-out { opacity: 1; transform: none; }
+  .qz-slide-out, .qz-row-in { opacity: 1; transform: none; }
 }
