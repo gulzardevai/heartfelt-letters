@@ -59,7 +59,7 @@ export default async function QuizPage({ params }: { params: { slug: string } })
         </section>
 
         <section className="max-w-2xl mx-auto px-6 pb-10">
-          <QuizPlayer slug={quiz.slug} questions={quiz.questions} results={quiz.results} />
+          <QuizPlayer slug={quiz.slug} title={quiz.title} questions={quiz.questions} results={quiz.results} />
         </section>
 
         <section className="max-w-2xl mx-auto px-6 pb-16">
