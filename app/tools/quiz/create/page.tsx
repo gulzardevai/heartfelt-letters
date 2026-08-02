@@ -35,7 +35,7 @@ export default function CreateQuizPage() {
             Build your quiz
           </h1>
           <p className="text-rose-700/70 leading-relaxed">
-            Add your name and your questions. Mark your own answer as the correct one — that is what friends will be scored against.
+            No writing needed — we hand you 10 fun questions about yourself. Tap your true answer on each (swap any you do not like), then share the link and see who really knows you.
           </p>
         </section>
 

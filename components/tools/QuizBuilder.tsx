@@ -3,9 +3,16 @@ import { useState } from 'react'
 import Link from 'next/link'
 import toast from 'react-hot-toast'
 import { QUIZ_LIMITS, shareLink, scoreboardLink } from '@/lib/quiz'
+import { QUIZ_BANK, pickRandomQuestions, type BankQuestion } from '@/lib/quiz-bank'
 import { saveQuiz } from './quizStore'
 
-type Q = { q: string; options: string[]; correct: number }
+// Bank-based builder: the creator never writes questions. They answer 10 random
+// predefined questions about themselves (their tap = the correct answer), can
+// swap any question for a fresh one, then seal + share.
+
+const QUESTION_COUNT = 10
+
+type Card = { question: BankQuestion; answer: number | null }
 
 function track(event: string, params: Record<string, string> = {}) {
   try {
@@ -18,65 +25,43 @@ function track(event: string, params: Record<string, string> = {}) {
 
 const CONFETTI_COLORS = ['#f43f5e', '#fb7185', '#fda4af', '#f5c26b', '#e8b04b', '#fecdd3']
 
-function blankQuestion(): Q {
-  return { q: '', options: ['', ''], correct: 0 }
-}
-
 type Created = { id: string; ownerToken: string; title: string; creatorName: string }
 
 export default function QuizBuilder() {
   const [creatorName, setCreatorName] = useState('')
   const [title, setTitle] = useState('')
-  const [questions, setQuestions] = useState<Q[]>([blankQuestion(), blankQuestion(), blankQuestion()])
+  const [cards, setCards] = useState<Card[] | null>(null)
   const [saving, setSaving] = useState(false)
   const [created, setCreated] = useState<Created | null>(null)
 
-  const setQ = (i: number, patch: Partial<Q>) =>
-    setQuestions(qs => qs.map((q, idx) => (idx === i ? { ...q, ...patch } : q)))
+  const begin = () => {
+    if (!creatorName.trim()) return toast.error('Add your name first.')
+    setCards(pickRandomQuestions(QUESTION_COUNT).map(question => ({ question, answer: null })))
+    track('ugc_quiz_started')
+  }
 
-  const setOption = (qi: number, oi: number, value: string) =>
-    setQuestions(qs =>
-      qs.map((q, idx) =>
-        idx === qi ? { ...q, options: q.options.map((o, j) => (j === oi ? value : o)) } : q
-      )
-    )
+  const pick = (ci: number, choice: number) =>
+    setCards(cs => cs && cs.map((c, i) => (i === ci ? { ...c, answer: choice } : c)))
 
-  const addQuestion = () =>
-    setQuestions(qs => (qs.length >= QUIZ_LIMITS.maxQuestions ? qs : [...qs, blankQuestion()]))
+  // Replace card ci with a random bank question not already on screen; its answer resets.
+  const swap = (ci: number) =>
+    setCards(cs => {
+      if (!cs) return cs
+      const used = new Set(cs.map(c => c.question.id))
+      const pool = QUIZ_BANK.filter(q => !used.has(q.id))
+      if (pool.length === 0) {
+        toast('You have seen every question in the bank! 🎉')
+        return cs
+      }
+      const next = pool[Math.floor(Math.random() * pool.length)]
+      return cs.map((c, i) => (i === ci ? { question: next, answer: null } : c))
+    })
 
-  const removeQuestion = (i: number) =>
-    setQuestions(qs => (qs.length <= QUIZ_LIMITS.minQuestions ? qs : qs.filter((_, idx) => idx !== i)))
-
-  const addOption = (qi: number) =>
-    setQuestions(qs =>
-      qs.map((q, idx) =>
-        idx === qi && q.options.length < QUIZ_LIMITS.maxOptions
-          ? { ...q, options: [...q.options, ''] }
-          : q
-      )
-    )
-
-  const removeOption = (qi: number, oi: number) =>
-    setQuestions(qs =>
-      qs.map((q, idx) => {
-        if (idx !== qi || q.options.length <= QUIZ_LIMITS.minOptions) return q
-        const options = q.options.filter((_, j) => j !== oi)
-        const correct = q.correct >= options.length ? options.length - 1 : q.correct
-        return { ...q, options, correct }
-      })
-    )
+  const answered = cards ? cards.filter(c => c.answer !== null).length : 0
+  const allAnswered = cards !== null && answered === cards.length
 
   const submit = async () => {
-    if (!creatorName.trim()) return toast.error('Add your name first.')
-    for (let i = 0; i < questions.length; i++) {
-      if (!questions[i].q.trim()) return toast.error(`Question ${i + 1} needs some text.`)
-      const filled = questions[i].options.filter(o => o.trim())
-      if (filled.length < QUIZ_LIMITS.minOptions)
-        return toast.error(`Question ${i + 1} needs at least ${QUIZ_LIMITS.minOptions} answers.`)
-      if (!questions[i].options[questions[i].correct]?.trim())
-        return toast.error(`Fill in the correct answer you marked for question ${i + 1}.`)
-    }
-
+    if (!cards || !allAnswered) return toast.error('Answer all the questions first — it is about you!')
     setSaving(true)
     try {
       const res = await fetch('/api/quiz', {
@@ -85,10 +70,11 @@ export default function QuizBuilder() {
         body: JSON.stringify({
           title,
           creator_name: creatorName,
-          questions: questions.map(q => ({
-            q: q.q,
-            options: q.options.filter(o => o.trim()),
-            correct_index: q.correct,
+          questions: cards.map(c => ({
+            q: c.question.question,
+            options: c.question.choices,
+            correct_index: c.answer,
+            emoji: c.question.emoji,
           })),
         }),
       })
@@ -120,17 +106,18 @@ export default function QuizBuilder() {
     return <CreatedScreen created={created} />
   }
 
-  return (
-    <div className="space-y-6">
-      {/* About you */}
+  // ===== Step 1: who is this quiz about? =====
+  if (!cards) {
+    return (
       <div className="bg-white rounded-3xl border border-rose-100 shadow-sm p-6 space-y-4">
         <div>
           <label className="block text-sm font-semibold text-rose-900 mb-1.5">Your name</label>
           <input
             value={creatorName}
             onChange={e => setCreatorName(e.target.value.slice(0, QUIZ_LIMITS.creatorName))}
+            onKeyDown={e => e.key === 'Enter' && begin()}
             placeholder="e.g. Sara"
-            className="w-full rounded-xl border border-rose-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300"
+            className="w-full rounded-xl border border-rose-200 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-rose-300"
           />
           <p className="text-xs text-rose-400 mt-1.5">The quiz is about you — this is who friends will be tested on.</p>
         </div>
@@ -141,91 +128,95 @@ export default function QuizBuilder() {
           <input
             value={title}
             onChange={e => setTitle(e.target.value.slice(0, QUIZ_LIMITS.title))}
+            onKeyDown={e => e.key === 'Enter' && begin()}
             placeholder={creatorName ? `How well do you know ${creatorName}?` : 'How well do you know me?'}
-            className="w-full rounded-xl border border-rose-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300"
+            className="w-full rounded-xl border border-rose-200 px-4 py-3 text-base focus:outline-none focus:ring-2 focus:ring-rose-300"
+          />
+        </div>
+        <div className="text-center pt-2">
+          <button
+            onClick={begin}
+            className="cta-heartbeat inline-block bg-rose-600 text-white px-10 py-3.5 rounded-full font-semibold text-sm hover:bg-rose-700 transition-colors shadow-md"
+          >
+            Get my 10 questions →
+          </button>
+          <p className="text-xs text-rose-400 mt-3">
+            We pick 10 fun questions — you tap your true answer, friends guess it. No writing needed.
+          </p>
+        </div>
+      </div>
+    )
+  }
+
+  // ===== Step 2: answer your 10 questions =====
+  return (
+    <div className="space-y-6">
+      {/* Sticky-ish progress */}
+      <div className="bg-white rounded-3xl border border-rose-100 shadow-sm px-6 py-4">
+        <div className="flex items-center justify-between text-xs text-rose-400 mb-2">
+          <span className="font-semibold text-rose-700">{answered}/{cards.length} answered</span>
+          <span>Tap your true answer on each card</span>
+        </div>
+        <div className="h-1.5 bg-rose-100 rounded-full overflow-hidden">
+          <div
+            className="qz-track-fill h-full bg-gradient-to-r from-rose-300 to-rose-500 rounded-full"
+            style={{ width: `${(answered / cards.length) * 100}%` }}
           />
         </div>
       </div>
 
-      {/* Questions */}
-      {questions.map((q, qi) => (
-        <div key={qi} className="qz-row-in bg-white rounded-3xl border border-rose-100 shadow-sm p-6">
-          <div className="flex items-center justify-between mb-3">
-            <span className="text-sm font-semibold text-rose-900">Question {qi + 1}</span>
-            {questions.length > QUIZ_LIMITS.minQuestions && (
-              <button
-                onClick={() => removeQuestion(qi)}
-                className="text-xs text-rose-400 hover:text-rose-600 transition-colors"
-              >
-                Remove
-              </button>
-            )}
-          </div>
-          <input
-            value={q.q}
-            onChange={e => setQ(qi, { q: e.target.value.slice(0, QUIZ_LIMITS.question) })}
-            placeholder="e.g. What's my go-to comfort food?"
-            className="w-full rounded-xl border border-rose-200 px-4 py-2.5 text-sm mb-3 focus:outline-none focus:ring-2 focus:ring-rose-300"
-          />
-          <p className="text-xs text-rose-400 mb-2">Tap the circle to mark the correct answer (your answer).</p>
-          <div className="space-y-2">
-            {q.options.map((o, oi) => (
-              <div key={oi} className="flex items-center gap-2.5">
-                <button
-                  type="button"
-                  onClick={() => setQ(qi, { correct: oi })}
-                  aria-label="Mark as correct answer"
-                  className={`w-6 h-6 rounded-full border-2 shrink-0 flex items-center justify-center transition-colors ${
-                    q.correct === oi ? 'bg-rose-600 border-rose-600 text-white' : 'border-rose-300 text-transparent hover:border-rose-400'
-                  }`}
-                >
-                  ✓
-                </button>
-                <input
-                  value={o}
-                  onChange={e => setOption(qi, oi, e.target.value.slice(0, QUIZ_LIMITS.option))}
-                  placeholder={`Answer ${oi + 1}`}
-                  className="flex-1 rounded-xl border border-rose-200 px-3.5 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-rose-300"
-                />
-                {q.options.length > QUIZ_LIMITS.minOptions && (
-                  <button
-                    onClick={() => removeOption(qi, oi)}
-                    aria-label="Remove option"
-                    className="text-rose-300 hover:text-rose-500 transition-colors text-lg leading-none px-1"
-                  >
-                    ×
-                  </button>
-                )}
+      {cards.map((card, ci) => (
+        <div key={card.question.id} className="qz-row-in bg-white rounded-3xl border border-rose-100 shadow-sm p-5 sm:p-6 overflow-hidden">
+          <div className="flex items-start justify-between gap-3 mb-4">
+            <div className="flex items-center gap-3 min-w-0">
+              <span className="qz-float-emoji text-4xl shrink-0" aria-hidden="true">{card.question.emoji}</span>
+              <div className="min-w-0">
+                <p className="text-[11px] font-semibold text-rose-400 uppercase tracking-wide">Question {ci + 1}</p>
+                <h3 className="font-serif text-lg font-bold text-rose-900 leading-snug break-words">{card.question.question}</h3>
               </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => swap(ci)}
+              className="shrink-0 min-h-[44px] px-3 rounded-full border border-rose-200 bg-white text-rose-500 text-xs font-semibold hover:bg-rose-50 hover:text-rose-700 transition-colors"
+              aria-label="Swap this question for another"
+            >
+              🔄 Swap
+            </button>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {card.question.choices.map((choice, oi) => (
+              <button
+                key={oi}
+                type="button"
+                onClick={() => pick(ci, oi)}
+                className={`qz-option relative w-full min-h-[44px] text-left px-4 py-3 rounded-2xl border text-sm text-rose-800 break-words ${
+                  card.answer === oi
+                    ? 'qz-picked bg-rose-50 border-rose-400 font-semibold'
+                    : 'border-rose-200 bg-white hover:bg-rose-50 hover:border-rose-300'
+                }`}
+              >
+                {choice}
+                {card.answer === oi && (
+                  <>
+                    <span className="qz-burst-heart" style={{ left: '30%', animationDelay: '0s' }} aria-hidden="true">💗</span>
+                    <span className="qz-burst-heart" style={{ left: '55%', animationDelay: '0.08s' }} aria-hidden="true">💕</span>
+                    <span className="qz-burst-heart" style={{ left: '75%', animationDelay: '0.15s' }} aria-hidden="true">💗</span>
+                  </>
+                )}
+              </button>
             ))}
           </div>
-          {q.options.length < QUIZ_LIMITS.maxOptions && (
-            <button
-              onClick={() => addOption(qi)}
-              className="text-xs text-rose-600 hover:text-rose-800 font-medium mt-3 transition-colors"
-            >
-              + Add answer option
-            </button>
-          )}
         </div>
       ))}
-
-      {questions.length < QUIZ_LIMITS.maxQuestions && (
-        <button
-          onClick={addQuestion}
-          className="w-full bg-white border border-dashed border-rose-300 text-rose-600 rounded-2xl py-3.5 text-sm font-semibold hover:bg-rose-50 transition-colors"
-        >
-          + Add question ({questions.length}/{QUIZ_LIMITS.maxQuestions})
-        </button>
-      )}
 
       <div className="text-center pt-2">
         <button
           onClick={submit}
-          disabled={saving}
-          className="cta-heartbeat inline-block bg-rose-600 text-white px-10 py-3.5 rounded-full font-semibold text-sm hover:bg-rose-700 transition-colors shadow-md disabled:opacity-50"
+          disabled={saving || !allAnswered}
+          className="cta-heartbeat inline-block bg-rose-600 text-white px-10 py-3.5 rounded-full font-semibold text-sm hover:bg-rose-700 transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {saving ? 'Sealing your quiz… 💌' : 'Create my quiz →'}
+          {saving ? 'Sealing your quiz… 💌' : allAnswered ? 'Create my quiz →' : `Answer ${cards.length - answered} more to create`}
         </button>
         <p className="text-xs text-rose-400 mt-3">
           Free, no account. You will get a share link and a private scoreboard.
@@ -288,19 +279,19 @@ function CreatedScreen({ created }: { created: Created }) {
         {/* Share link */}
         <div className="text-left">
           <p className="text-xs font-semibold text-rose-400 uppercase tracking-wide mb-2">Share this with friends</p>
-          <div className="flex items-center gap-2 mb-3">
+          <div className="flex flex-wrap items-center gap-2 mb-3">
             <input
               readOnly
               value={share}
               onFocus={e => e.target.select()}
-              className="flex-1 rounded-xl border border-rose-200 px-3.5 py-2.5 text-sm text-rose-700 bg-rose-50/40 min-w-0"
+              className="flex-1 rounded-xl border border-rose-200 px-3.5 py-2.5 text-base text-rose-700 bg-rose-50/40 min-w-0"
             />
             <button
               onClick={() => {
                 track('ugc_quiz_shared', { channel: 'copy' })
                 copy(share, 'Share link copied')
               }}
-              className="shrink-0 bg-white border border-rose-200 text-rose-700 px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-rose-50 transition-colors"
+              className="shrink-0 min-h-[44px] bg-white border border-rose-200 text-rose-700 px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-rose-50 transition-colors"
             >
               Copy
             </button>
@@ -320,16 +311,16 @@ function CreatedScreen({ created }: { created: Created }) {
             Keep this link safe — it is the <strong>only</strong> way to see who took your quiz and how they scored. We have
             saved it on this device, but bookmark it too.
           </p>
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2">
             <input
               readOnly
               value={owner}
               onFocus={e => e.target.select()}
-              className="flex-1 rounded-xl border border-rose-200 px-3.5 py-2.5 text-sm text-rose-700 bg-rose-50/40 min-w-0"
+              className="flex-1 rounded-xl border border-rose-200 px-3.5 py-2.5 text-base text-rose-700 bg-rose-50/40 min-w-0"
             />
             <button
               onClick={() => copy(owner, 'Scoreboard link copied — keep it safe')}
-              className="shrink-0 bg-white border border-rose-200 text-rose-700 px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-rose-50 transition-colors"
+              className="shrink-0 min-h-[44px] bg-white border border-rose-200 text-rose-700 px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-rose-50 transition-colors"
             >
               Copy
             </button>

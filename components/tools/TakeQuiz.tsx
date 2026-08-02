@@ -274,7 +274,7 @@ export default function TakeQuiz({ quiz }: { quiz: PublicQuiz }) {
             onChange={e => setName(e.target.value.slice(0, QUIZ_LIMITS.takerName))}
             onKeyDown={e => e.key === 'Enter' && start()}
             placeholder="Your name"
-            className="w-full max-w-xs mx-auto block rounded-xl border border-rose-200 px-4 py-2.5 text-sm text-center mb-2 focus:outline-none focus:ring-2 focus:ring-rose-300"
+            className="w-full max-w-xs mx-auto block rounded-xl border border-rose-200 px-4 py-2.5 text-base text-center mb-2 focus:outline-none focus:ring-2 focus:ring-rose-300"
           />
           <p className="text-[11px] text-rose-400 mb-6">
             Your name and score are shared with {quiz.creator_name} (the quiz creator).
@@ -317,7 +317,12 @@ export default function TakeQuiz({ quiz }: { quiz: PublicQuiz }) {
           </p>
 
           <div key={step} className={leaving ? 'qz-slide-out' : 'qz-slide-in'}>
-            <h3 className="font-serif text-xl text-rose-900 mb-5">{quiz.questions[step].q}</h3>
+            {quiz.questions[step].emoji && (
+              <div className="qz-float-emoji text-5xl text-center mb-3" aria-hidden="true">
+                {quiz.questions[step].emoji}
+              </div>
+            )}
+            <h3 className="font-serif text-xl text-rose-900 mb-5 break-words">{quiz.questions[step].q}</h3>
             <div className="space-y-3">
               {quiz.questions[step].options.map((o, oi) => (
                 <button
@@ -325,7 +330,7 @@ export default function TakeQuiz({ quiz }: { quiz: PublicQuiz }) {
                   type="button"
                   onClick={() => answer(oi)}
                   disabled={picked !== null}
-                  className={`qz-option relative w-full text-left px-5 py-4 rounded-2xl border text-rose-800 ${
+                  className={`qz-option relative w-full min-h-[44px] text-left px-5 py-4 rounded-2xl border text-rose-800 break-words ${
                     picked === oi
                       ? 'qz-picked bg-rose-50 border-rose-400'
                       : 'border-rose-200 bg-white hover:bg-rose-50 hover:border-rose-300'
