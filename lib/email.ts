@@ -112,7 +112,7 @@ export async function sendWelcomeEmailIfNew(userId: string): Promise<void> {
       const { Resend } = await import('resend')
       const resend = new Resend(process.env.RESEND_API_KEY)
       await resend.emails.send({
-        from: 'ShareLove Letters <hello@shareloveletters.com>',
+        from: 'Gulzar from ShareLove <hello@shareloveletters.com>',
         to: claimed.email,
         subject: '💌 Welcome to ShareLove Letters — your first letter awaits',
         html: welcomeEmailHtml(firstName),
