@@ -104,6 +104,9 @@ export default function AdminQuizzesTable({ quizzes }: { quizzes: QuizRow[] }) {
                         View ↗
                       </Link>
                     )}
+                    <Link href={`/admin/quizzes/${quiz.id}/attempts`} className="text-gray-500 hover:text-gray-800 text-xs">
+                      Attempts
+                    </Link>
                     <Link href={`/admin/quizzes/${quiz.id}`} className="text-rose-600 hover:text-rose-800 text-xs font-medium">
                       Edit
                     </Link>

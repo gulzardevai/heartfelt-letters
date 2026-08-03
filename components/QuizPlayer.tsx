@@ -45,6 +45,14 @@ const CONFETTI_COLORS = ['#f43f5e', '#fb7185', '#fda4af', '#f5c26b', '#e8b04b', 
 
 type Phase = 'intro' | 'question' | 'sealing' | 'result'
 
+// "Sara, you're a Die-Hard Fan!" — add an article unless the title already
+// reads as a full phrase (starts with a/an/the/new/your/…).
+function articleFor(title: string): string {
+  const first = title.replace(/^[^a-zA-Z]+/, '').split(/\s+/)[0]?.toLowerCase() ?? ''
+  if (['a', 'an', 'the', 'new', 'your', 'you', 'just', 'still'].includes(first)) return ''
+  return /^[aeiou]/.test(first) ? 'an ' : 'a '
+}
+
 export default function QuizPlayer({
   slug,
   title,
@@ -56,6 +64,9 @@ export default function QuizPlayer({
   questions: AdminQuizQuestion[]
   results: AdminQuizResult[]
 }) {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [emailHint, setEmailHint] = useState(false)
   const [phase, setPhase] = useState<Phase>('intro')
   const [step, setStep] = useState(0)
   const [tally, setTally] = useState<Record<string, number>>({})
@@ -68,6 +79,13 @@ export default function QuizPlayer({
   const progress = phase === 'question' ? step / questions.length : 1
 
   const start = () => {
+    if (!name.trim()) return
+    // Email is optional: only pause for something that is clearly not an email.
+    const em = email.trim()
+    if (em && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) {
+      setEmailHint(true)
+      return
+    }
     track('quiz_started', { quiz: slug })
     setPhase('question')
   }
@@ -76,11 +94,12 @@ export default function QuizPlayer({
     const topKey = Object.entries(finalTally).sort((a, b) => b[1] - a[1])[0][0]
     const top = results.find(r => r.key === topKey) ?? results[0]
     track('quiz_completed', { quiz: slug, result: top.key })
-    // Fire-and-forget completion counter — no PII, just a number.
+    // Fire-and-forget: bumps the completion counter and stores the attempt
+    // (name + optional email) server-side. Never blocks the reveal.
     fetch('/api/quizzes/complete', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ slug }),
+      body: JSON.stringify({ slug, name: name.trim(), email: email.trim() || undefined, result_key: top.key }),
     }).catch(() => {})
 
     if (prefersReducedMotion()) {
@@ -165,12 +184,40 @@ export default function QuizPlayer({
           ))}
           <div className="qz-float-emoji text-6xl mb-5" aria-hidden="true">💌</div>
           <h3 className="font-serif text-2xl font-bold text-rose-900 mb-3">{title}</h3>
-          <p className="text-sm text-rose-500 mb-8">
+          <p className="text-sm text-rose-500 mb-6">
             {questions.length} questions · takes ~1 min
+          </p>
+          <input
+            value={name}
+            onChange={e => setName(e.target.value.slice(0, 60))}
+            onKeyDown={e => e.key === 'Enter' && start()}
+            placeholder="Your name"
+            aria-label="Your name"
+            className="w-full max-w-xs mx-auto block rounded-xl border border-rose-200 px-4 py-2.5 text-base text-center mb-2 focus:outline-none focus:ring-2 focus:ring-rose-300"
+          />
+          <input
+            type="email"
+            inputMode="email"
+            autoComplete="email"
+            value={email}
+            onChange={e => {
+              setEmail(e.target.value)
+              if (emailHint) setEmailHint(false)
+            }}
+            onKeyDown={e => e.key === 'Enter' && start()}
+            placeholder="Email (optional)"
+            aria-label="Email (optional)"
+            className={`w-full max-w-xs mx-auto block rounded-xl border px-4 py-2.5 text-base text-center mb-1 focus:outline-none focus:ring-2 focus:ring-rose-300 ${
+              emailHint ? 'border-rose-400' : 'border-rose-200'
+            }`}
+          />
+          <p className={`text-[11px] mb-6 ${emailHint ? 'text-rose-500' : 'text-rose-400'}`}>
+            {emailHint ? 'That does not look like an email — fix it or leave it blank 💗' : 'Email (optional) — so we can send you your result'}
           </p>
           <button
             onClick={start}
-            className="cta-heartbeat bg-rose-600 text-white px-10 py-4 rounded-full font-semibold text-base hover:bg-rose-700 transition-colors shadow-md"
+            disabled={!name.trim()}
+            className="cta-heartbeat bg-rose-600 text-white px-10 py-4 rounded-full font-semibold text-base hover:bg-rose-700 transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Start the quiz →
           </button>
@@ -267,7 +314,9 @@ export default function QuizPlayer({
           >
             {winner.emoji && <div className="qz-result-emoji text-6xl mb-3">{winner.emoji}</div>}
             <p className="text-xs font-semibold text-rose-400 uppercase tracking-wide">Your result</p>
-            <h3 className="font-serif text-3xl font-bold text-rose-900 mt-1 mb-3">{winner.title}</h3>
+            <h3 className="font-serif text-3xl font-bold text-rose-900 mt-1 mb-3">
+              {name.trim() ? `${name.trim()}, you're ${articleFor(winner.title)}${winner.title}!` : winner.title}
+            </h3>
             <p className="text-sm text-rose-700/70 max-w-md mx-auto leading-relaxed">{winner.description}</p>
 
             <Link
