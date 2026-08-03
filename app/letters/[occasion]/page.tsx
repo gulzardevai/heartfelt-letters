@@ -77,6 +77,11 @@ export default function OccasionPage({ params }: Props) {
           <h1 className="font-serif text-4xl md:text-5xl font-bold text-rose-900 mb-6 leading-tight">
             {occasion.h1}
           </h1>
+          {occasion.subheading && (
+            <p className="text-rose-800/80 text-lg leading-relaxed mb-5 font-medium">
+              {occasion.subheading}
+            </p>
+          )}
           {occasion.intro.map((p, i) => (
             <p key={i} className="text-rose-700/70 leading-relaxed mb-4 text-left sm:text-center">
               {p}

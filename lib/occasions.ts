@@ -8,6 +8,7 @@ export type Occasion = {
   emoji: string
   name: string            // short label, used in lists and breadcrumbs
   h1: string
+  subheading?: string     // optional above-the-fold value-prop line under the H1
   metaTitle: string
   metaDescription: string
   intro: string[]         // 2 paragraphs
@@ -343,8 +344,9 @@ export const OCCASIONS: Occasion[] = [
     emoji: '🤝',
     name: 'Friendship',
     h1: 'Friendship Letter',
+    subheading: 'A free friendship letter template you can make your own — write it in the editor, seal it in an envelope, and share a private link.',
     metaTitle: 'Friendship Letter Template — Write a Letter to a Best Friend',
-    metaDescription: 'Free friendship letter templates. Write a heartfelt letter to your best friend and share it as a sealed envelope — free and private.',
+    metaDescription: 'Free friendship letter template. Write a heartfelt letter to your best friend and share it as a sealed envelope — free, private and no account needed.',
     intro: [
       'We tell partners and parents how we feel. Friends mostly get jokes. That is fine, until you realise your closest friend may have no idea what they mean to you.',
       'A friendship letter with no occasion attached is one of the most disarming things you can send, precisely because nothing prompted it.',
