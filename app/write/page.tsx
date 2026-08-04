@@ -727,6 +727,41 @@ function WritePageInner() {
   )
 }
 
+// Server-rendered explainer that ships in the initial HTML. The compose tool
+// above is entirely client-side behind a Suspense boundary, so without this the
+// site's primary conversion page has almost no readable content — for a crawler
+// or for anyone arriving cold and wondering what this is.
+const WRITE_GUIDE: { heading: string; body: string[] }[] = [
+  {
+    heading: 'How it works',
+    body: [
+      'You write the letter here, choose how it should look, and publish it. What you get back is a private link. Send that link however you like — message, email, a note with a QR code — and the person on the other end opens it to a sealed envelope with their name on it, which unfolds when they click. They need no app and no account.',
+      'Nothing is posted publicly. There is no feed, no profile, no archive of letters other people can browse. The link is the only way in, and you decide who has it.',
+    ],
+  },
+  {
+    heading: 'What you can add to a letter',
+    body: [
+      'A letter can carry more than text: a photograph, a theme that changes the paper and envelope, a bouquet that blooms when the envelope opens, and a song link that becomes a playable card underneath the letter. None of it is required, and a plain letter with nothing attached is still the most common thing people send.',
+      'You can also set an opening date. Until that moment arrives the link shows a sealed envelope and a live countdown, and the letter itself is never decrypted or served — which makes it work for an anniversary, a birthday, a graduation, or a letter to your own future self.',
+    ],
+  },
+  {
+    heading: 'Privacy, plainly',
+    body: [
+      'Every letter is encrypted at rest with AES-256, which means it is unreadable in our own database. Letters are never indexed by search engines and never appear in any public listing. You can add a password so that even someone who obtains the link cannot open it.',
+      'You do not need an account to write or send. An optional free account lets you keep track of letters you have sent and save drafts, but a guest letter is identical in every other respect — including the option to send it without revealing who you are.',
+    ],
+  },
+  {
+    heading: 'Not sure what to write?',
+    body: [
+      'The most common obstacle is the blank page rather than the feeling. Two things help: start with one specific memory instead of a statement of how you feel, and write to the person rather than about them. Feeling arrives on its own once a concrete detail is on the page; it rarely arrives if you begin by trying to summarise it.',
+      'If you want a structure, the templates in the editor give you an opening line for each kind of letter, and the <a href="/letters">letters by occasion</a> guides walk through what to say for anniversaries, apologies, thank-yous, farewells and the rest. If you are not sure which letter you owe someone, the <a href="/quizzes/what-letter-should-you-write">Which Letter Should You Write? quiz</a> takes about two minutes.',
+    ],
+  },
+]
+
 const WRITE_FAQS = [
   {
     q: 'Is ShareLove Letters free?',
@@ -764,6 +799,20 @@ export default function WritePage() {
           the initial server HTML (same guarantee as the H1 above). Sits below the
           full-height compose tool, so it never interferes with the editor UX. */}
       <div className="bg-gradient-to-br from-rose-50 to-pink-50 border-t border-rose-100 pt-16">
+        <div className="max-w-2xl mx-auto px-6 pb-4">
+          {WRITE_GUIDE.map(s => (
+            <section key={s.heading} className="pb-8">
+              <h2 className="font-serif text-2xl font-bold text-rose-900 mb-4">{s.heading}</h2>
+              {s.body.map((p, i) => (
+                <p
+                  key={i}
+                  className="text-rose-800/75 leading-relaxed mb-4 [&_a]:text-rose-600 [&_a]:underline hover:[&_a]:text-rose-700"
+                  dangerouslySetInnerHTML={{ __html: p }}
+                />
+              ))}
+            </section>
+          ))}
+        </div>
         <FaqBlock faqs={WRITE_FAQS} />
       </div>
     </>
