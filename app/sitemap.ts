@@ -9,39 +9,45 @@ export const fetchCache = 'force-no-store'
 
 const BASE = 'https://www.shareloveletters.com'
 
+// Static (non-DB-driven) pages must NOT report lastmod = "now" on every crawl —
+// a sitemap where every URL is always freshly modified trains Google to ignore
+// our lastmod values entirely, including the accurate ones on blog posts and
+// quizzes. Bump this constant whenever the static page copy is actually changed.
+const STATIC_LAST_MODIFIED = new Date('2026-08-04T00:00:00.000Z')
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
-    { url: BASE, lastModified: new Date(), changeFrequency: 'weekly', priority: 1 },
-    { url: `${BASE}/write`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE}/letters`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: BASE, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'weekly', priority: 1 },
+    { url: `${BASE}/write`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${BASE}/letters`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.9 },
     ...OCCASIONS.map(o => ({
       url: `${BASE}/letters/${o.slug}`,
-      lastModified: new Date(),
+      lastModified: STATIC_LAST_MODIFIED,
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     })),
-    { url: `${BASE}/letter-themes`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE}/tools`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE}/tools/quiz`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
+    { url: `${BASE}/letter-themes`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/tools`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/tools/quiz`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.6 },
     ...TOOLS.map(t => ({
       url: `${BASE}/tools/${t.slug}`,
-      lastModified: new Date(),
+      lastModified: STATIC_LAST_MODIFIED,
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })),
-    { url: `${BASE}/quotes`, lastModified: new Date(), changeFrequency: 'weekly', priority: 0.8 },
+    { url: `${BASE}/quotes`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'weekly', priority: 0.8 },
     ...QUOTE_CATEGORY_PAGES.map(c => ({
       url: `${BASE}/quotes/${c.slug}`,
-      lastModified: new Date(),
+      lastModified: STATIC_LAST_MODIFIED,
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     })),
-    { url: `${BASE}/blog`, lastModified: new Date(), changeFrequency: 'daily', priority: 0.8 },
-    { url: `${BASE}/compare`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE}/about`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.5 },
-    { url: `${BASE}/contact`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.4 },
-    { url: `${BASE}/privacy`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
-    { url: `${BASE}/terms`, lastModified: new Date(), changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${BASE}/blog`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'daily', priority: 0.8 },
+    { url: `${BASE}/compare`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${BASE}/about`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'yearly', priority: 0.5 },
+    { url: `${BASE}/contact`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'yearly', priority: 0.4 },
+    { url: `${BASE}/privacy`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${BASE}/terms`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'yearly', priority: 0.3 },
   ]
 
   let blogPages: MetadataRoute.Sitemap = []
@@ -72,7 +78,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     if (quizzes?.length) {
       quizPages = [
-        { url: `${BASE}/quizzes`, lastModified: new Date(), changeFrequency: 'monthly' as const, priority: 0.6 },
+        { url: `${BASE}/quizzes`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'monthly' as const, priority: 0.6 },
         ...quizzes.map(q => ({
           url: `${BASE}/quizzes/${q.slug}`,
           lastModified: new Date(q.updated_at),
