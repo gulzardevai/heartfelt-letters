@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
     title: `${quiz.title} — Free Quiz, Instant Result`,
     description: quiz.description,
     alternates: { canonical: url },
-    openGraph: { title: quiz.title, description: quiz.description, url, type: 'website' },
+    openGraph: { images: [{ url: '/opengraph-image.png', width: 1200, height: 630, alt: 'ShareLove Letters — write a letter they will keep' }], title: quiz.title, description: quiz.description, url, type: 'website' },
   }
 }
 

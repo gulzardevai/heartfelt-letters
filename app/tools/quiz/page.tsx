@@ -14,6 +14,7 @@ export const metadata: Metadata = {
     'Free "how well do you know me?" quiz maker: build a quiz, share the link, and see everyone\'s scores on a private scoreboard. Great for couples & friends.',
   alternates: { canonical: URL },
   openGraph: {
+    images: [{ url: '/opengraph-image.png', width: 1200, height: 630, alt: 'ShareLove Letters — write a letter they will keep' }],
     title: 'How Well Do You Know Me Quiz Maker — Free & Shareable',
     description:
       'Build a "how well do you know me?" quiz, share it with your partner, friends and family, and watch their scores land on your private scoreboard. Free, no account.',

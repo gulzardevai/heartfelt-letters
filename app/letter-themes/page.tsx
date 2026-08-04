@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     'Dress your letter in a beautiful theme. Choose a vintage love letter template, a moonlit midnight theme, soft blossom pink or timeless classic — each with a matching envelope. Free, no account needed.',
   alternates: { canonical: 'https://www.shareloveletters.com/letter-themes' },
   openGraph: {
+    images: [{ url: '/opengraph-image.png', width: 1200, height: 630, alt: 'ShareLove Letters — write a letter they will keep' }],
     title: 'Love Letter Themes — Vintage, Midnight & Aesthetic Letter Templates',
     description:
       'Choose a vintage, midnight, blossom or classic theme for your love letter — each with a matching sealed envelope. Free, private, no account needed.',

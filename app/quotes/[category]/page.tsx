@@ -27,6 +27,7 @@ export function generateMetadata({ params }: Props): Metadata {
     description: cat.metaDescription,
     alternates: { canonical: `https://www.shareloveletters.com/quotes/${cat.slug}` },
     openGraph: {
+      images: [{ url: '/opengraph-image.png', width: 1200, height: 630, alt: 'ShareLove Letters — write a letter they will keep' }],
       title: cat.metaTitle,
       description: cat.metaDescription,
       url: `https://www.shareloveletters.com/quotes/${cat.slug}`,

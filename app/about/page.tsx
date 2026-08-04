@@ -7,6 +7,7 @@ export const metadata = {
   description: 'The story behind ShareLove Letters: a free, encrypted letter-writing app built on the belief that meaningful words deserve a better home than a chat bubble.',
   alternates: { canonical: 'https://www.shareloveletters.com/about' },
   openGraph: {
+    images: [{ url: '/opengraph-image.png', width: 1200, height: 630, alt: 'ShareLove Letters — write a letter they will keep' }],
     type: 'website',
     title: 'About ShareLove Letters — Why We Built a Letter-Writing App',
     description: 'The story behind ShareLove Letters: a free, encrypted letter-writing app built on the belief that meaningful words deserve a better home than a chat bubble.',

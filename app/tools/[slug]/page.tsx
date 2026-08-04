@@ -21,6 +21,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
     description: tool.metaDescription,
     alternates: { canonical: url },
     openGraph: {
+      images: [{ url: '/opengraph-image.png', width: 1200, height: 630, alt: 'ShareLove Letters — write a letter they will keep' }],
       title: tool.metaTitle,
       description: tool.metaDescription,
       url,
