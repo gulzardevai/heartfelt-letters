@@ -30,15 +30,15 @@ export default function Navbar() {
           </span>
         </Link>
 
-        <div className="hidden md:flex items-center gap-6 text-sm font-medium text-rose-700">
-          <Link href="/" className="hover:text-rose-900 transition-colors">Home</Link>
+        {/* Content destinations only. Home is the logo, and About lives in the
+            footer and the mobile menu — eight items here overflowed the bar. */}
+        <div className="hidden md:flex items-center gap-5 lg:gap-6 text-sm font-medium text-rose-700">
           <Link href="/letters" className="hover:text-rose-900 transition-colors">Occasions</Link>
           <Link href="/quotes" className="hover:text-rose-900 transition-colors">Quotes</Link>
           <Link href="/tools" className="hover:text-rose-900 transition-colors">Tools</Link>
           <Link href="/quizzes" className="hover:text-rose-900 transition-colors">Quizzes</Link>
           <Link href="/blog" className="hover:text-rose-900 transition-colors">Blog</Link>
           <Link href="/compare" className="hover:text-rose-900 transition-colors">Why Us</Link>
-          <Link href="/about" className="hover:text-rose-900 transition-colors">About</Link>
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3">
