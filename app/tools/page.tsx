@@ -19,6 +19,31 @@ export const metadata: Metadata = {
   },
 }
 
+// The hub is otherwise a grid of cards. These give it something to say.
+const HUB_SECTIONS: { heading: string; body: string[] }[] = [
+  {
+    heading: 'What these tools are, honestly',
+    body: [
+      'Some of these calculate something real — days elapsed, a countdown to a date, an anniversary material for a given year. Others are games, and we say so on the pages themselves: a name-based compatibility score and a star-sign reading are not predictive of anything, and we would rather tell you that than let the number do work it cannot do.',
+      'They earn their place because they are useful in a narrow way. A game gives you permission to raise a subject you were circling. A counter finds a milestone you would otherwise have missed. Neither replaces saying the thing, which is the part that actually matters.',
+    ],
+  },
+  {
+    heading: 'Which one you probably want',
+    body: [
+      'For a date you are waiting on, the <a href="/tools/countdown">countdown</a>; for one already behind you, the <a href="/tools/days-together">days together counter</a>. For a gift you are stuck on, <a href="/tools/anniversary-gifts">anniversary gifts by year</a> narrows the field enough to think properly.',
+      'For a conversation rather than a number: the <a href="/tools/couples-questions">couples questions</a> break the logistics-only groove that long relationships fall into, and the <a href="/tools/love-language-quiz">love language quiz</a> gives two people a vocabulary for a mismatch they had both felt. If you just want to send one line, the <a href="/tools/love-note">love note reveal</a> wraps it in a small envelope.',
+    ],
+  },
+  {
+    heading: 'Free, and nothing leaves your browser',
+    body: [
+      'Every tool here is free with no account. They run client-side, which means the names, dates and answers you type are worked out on your own device and never sent to us or stored anywhere.',
+      'When you want to say the real thing, <a href="/write">writing a letter</a> is free too — encrypted, private, and with no account needed on either side.',
+    ],
+  },
+]
+
 export default function ToolsHubPage() {
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
@@ -98,6 +123,19 @@ export default function ToolsHubPage() {
             ))}
           </div>
         </section>
+
+        {HUB_SECTIONS.map(s => (
+          <section key={s.heading} className="max-w-2xl mx-auto px-6 pb-10">
+            <h2 className="font-serif text-2xl font-bold text-rose-900 mb-4">{s.heading}</h2>
+            {s.body.map((p, i) => (
+              <p
+                key={i}
+                className="text-rose-800/75 leading-relaxed mb-4 [&_a]:text-rose-600 [&_a]:underline hover:[&_a]:text-rose-700"
+                dangerouslySetInnerHTML={{ __html: p }}
+              />
+            ))}
+          </section>
+        ))}
 
         {/* Related */}
         <section className="max-w-3xl mx-auto px-6 pb-16 text-center">
