@@ -76,7 +76,9 @@ export default async function BlogPostPage({ params }: Props) {
     dateModified: new Date(post.updated_at ?? date).toISOString(),
     author: { '@type': 'Organization', name: 'ShareLove Letters Team', url: 'https://www.shareloveletters.com' },
     publisher,
-    ...(post.cover_image ? { image: [post.cover_image] } : {}),
+    // Google's Article rich results only accept .jpg/.png/.gif — every cover has a
+    // PNG twin alongside the SVG used for the on-page hero.
+    ...(post.cover_image ? { image: [post.cover_image.replace(/\.svg$/, '.png')] } : {}),
   }
   const breadcrumbJsonLd = {
     '@context': 'https://schema.org',
@@ -172,7 +174,13 @@ export async function generateMetadata({ params }: Props) {
   const url = `https://www.shareloveletters.com/blog/${params.slug}`
   const ogTitle = post.meta_title || post.title
   const ogDescription = post.meta_description || post.excerpt || ''
-  const images = post.cover_image ? [{ url: post.cover_image, width: 1200, height: 630, alt: post.title }] : undefined
+  // Social scrapers (Facebook, X, LinkedIn, Pinterest, WhatsApp) cannot render SVG
+  // og:images. Every cover is stored as both <name>.svg (used on-page) and <name>.png,
+  // so point the share image at the PNG twin and fall back to the site default.
+  const shareImage = post.cover_image
+    ? post.cover_image.replace(/\.svg$/, '.png')
+    : 'https://www.shareloveletters.com/opengraph-image.png'
+  const images = [{ url: shareImage, width: 1200, height: 630, alt: post.title }]
 
   return {
     title: post.meta_title || `${post.title} — ShareLove Letters Blog`,
@@ -188,10 +196,10 @@ export async function generateMetadata({ params }: Props) {
       images,
     },
     twitter: {
-      card: images ? 'summary_large_image' : 'summary',
+      card: 'summary_large_image',
       title: ogTitle,
       description: ogDescription,
-      images: post.cover_image ? [post.cover_image] : undefined,
+      images: [shareImage],
     },
   }
 }
