@@ -18,6 +18,9 @@ export type Tool = {
   metaDescription: string
   h1: string
   intro: string[] // 2 server-rendered paragraphs under the H1
+  // Editorial guidance rendered below the tool. The tools themselves are
+  // client-side, so this is most of what a crawler (or a reader who hasn't
+  // used the widget) actually gets from the page. Keyed by slug in TOOL_GUIDES.
   ctaLine: string // line above the "write a real letter" CTA
   writeType?: string // LETTER_TYPES id to deep-link the CTA (/write?type=...)
   related: ToolLink[] // internal links into /letters, /quotes, other tools

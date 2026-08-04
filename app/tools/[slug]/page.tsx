@@ -5,6 +5,7 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import ToolWidget from '@/components/tools/ToolWidget'
 import { TOOLS, getTool } from '@/lib/tools'
+import { getToolGuide } from '@/lib/tool-guides'
 
 export const dynamic = 'force-static'
 
@@ -35,6 +36,7 @@ export default function ToolPage({ params }: { params: { slug: string } }) {
   if (!tool) notFound()
 
   const writeHref = tool.writeType ? `/write?type=${tool.writeType}` : '/write'
+  const guide = getToolGuide(tool.slug)
 
   const faqJsonLd = {
     '@context': 'https://schema.org',
@@ -88,6 +90,21 @@ export default function ToolPage({ params }: { params: { slug: string } }) {
         <section className="max-w-2xl mx-auto px-6 pb-10">
           <ToolWidget slug={tool.slug} />
         </section>
+
+        {/* Editorial guidance — the widget above is client-side, so this is the
+            substance of the page for a crawler and for a first-time reader. */}
+        {guide?.sections.map(s => (
+          <section key={s.heading} className="max-w-2xl mx-auto px-6 pb-10">
+            <h2 className="font-serif text-2xl font-bold text-rose-900 mb-4">{s.heading}</h2>
+            {s.body.map((p, i) => (
+              <p
+                key={i}
+                className="text-rose-800/75 leading-relaxed mb-4 [&_a]:text-rose-600 [&_a]:underline hover:[&_a]:text-rose-700"
+                dangerouslySetInnerHTML={{ __html: p }}
+              />
+            ))}
+          </section>
+        ))}
 
         {/* Funnel CTA into /write */}
         <section className="max-w-2xl mx-auto px-6 pb-14">
