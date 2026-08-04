@@ -35,6 +35,7 @@ export default function Navbar() {
           <Link href="/letters" className="hover:text-rose-900 transition-colors">Occasions</Link>
           <Link href="/quotes" className="hover:text-rose-900 transition-colors">Quotes</Link>
           <Link href="/tools" className="hover:text-rose-900 transition-colors">Tools</Link>
+          <Link href="/quizzes" className="hover:text-rose-900 transition-colors">Quizzes</Link>
           <Link href="/blog" className="hover:text-rose-900 transition-colors">Blog</Link>
           <Link href="/compare" className="hover:text-rose-900 transition-colors">Why Us</Link>
           <Link href="/about" className="hover:text-rose-900 transition-colors">About</Link>
@@ -123,6 +124,7 @@ export default function Navbar() {
             <Link href="/letters" onClick={() => setMobileOpen(false)} className="py-2.5 border-b border-rose-50">Occasions</Link>
             <Link href="/quotes" onClick={() => setMobileOpen(false)} className="py-2.5 border-b border-rose-50">Quotes</Link>
             <Link href="/tools" onClick={() => setMobileOpen(false)} className="py-2.5 border-b border-rose-50">Tools</Link>
+            <Link href="/quizzes" onClick={() => setMobileOpen(false)} className="py-2.5 border-b border-rose-50">Quizzes</Link>
             <Link href="/blog" onClick={() => setMobileOpen(false)} className="py-2.5 border-b border-rose-50">Blog</Link>
             <Link href="/compare" onClick={() => setMobileOpen(false)} className="py-2.5 border-b border-rose-50">Why Us</Link>
             <Link href="/about" onClick={() => setMobileOpen(false)} className="py-2.5">About</Link>
