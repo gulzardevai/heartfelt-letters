@@ -6,6 +6,7 @@ import Footer from '@/components/Footer'
 import QuizPlayer from '@/components/QuizPlayer'
 import { getSupabaseAdmin } from '@/lib/supabase-admin'
 import type { AdminQuiz } from '@/lib/admin-quizzes'
+import { getQuizContent } from '@/lib/quiz-content'
 
 export const dynamic = 'force-dynamic'
 
@@ -50,8 +51,43 @@ export default async function QuizPage({ params }: { params: { slug: string } })
   const db = getSupabaseAdmin()
   await db.rpc('increment_admin_quiz_views', { quiz_slug: quiz.slug }).then(() => {}, () => {})
 
+  // Editorial copy lives in lib/quiz-content.ts. The quiz player is client-side,
+  // so without this the page has almost no crawlable text.
+  const content = getQuizContent(quiz.slug)
+  const url = `https://www.shareloveletters.com/quizzes/${quiz.slug}`
+
+  const jsonLd: object[] = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.shareloveletters.com' },
+        { '@type': 'ListItem', position: 2, name: 'Quizzes', item: 'https://www.shareloveletters.com/quizzes' },
+        { '@type': 'ListItem', position: 3, name: quiz.title, item: url },
+      ],
+    },
+  ]
+  if (content?.faq.length) {
+    jsonLd.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: content.faq.map(f => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    })
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-rose-50 to-pink-50">
+      {jsonLd.map((block, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(block) }}
+        />
+      ))}
       <Navbar />
       <main className="flex-1">
         <section className="max-w-2xl mx-auto px-6 pt-14 pb-8 text-center">
@@ -68,9 +104,81 @@ export default async function QuizPage({ params }: { params: { slug: string } })
           )}
         </section>
 
+        {content && (
+          <section className="max-w-2xl mx-auto px-6 pb-10">
+            {content.intro.map((p, i) => (
+              <p key={i} className="text-rose-800/75 leading-relaxed mb-4">{p}</p>
+            ))}
+          </section>
+        )}
+
         <section className="max-w-2xl mx-auto px-6 pb-10">
           <QuizPlayer slug={quiz.slug} title={quiz.title} questions={quiz.questions} results={quiz.results} />
         </section>
+
+        {content && (
+          <>
+            {/* Result guide — the player renders results client-side, so this is
+                the only place a crawler (or someone who hasn't played) can read them. */}
+            <section className="max-w-2xl mx-auto px-6 pb-12">
+              <h2 className="font-serif text-2xl font-bold text-rose-900 mb-3">
+                {content.resultGuide.heading}
+              </h2>
+              <p className="text-rose-800/75 leading-relaxed mb-6">{content.resultGuide.intro}</p>
+              <div className="space-y-4">
+                {content.resultGuide.bands.map(b => (
+                  <div key={b.label} className="bg-white rounded-2xl border border-rose-100 p-6">
+                    <h3 className="font-semibold text-rose-900 mb-2">{b.label}</h3>
+                    <p className="text-rose-800/75 leading-relaxed text-sm">{b.body}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            {content.sections.map(s => (
+              <section key={s.heading} className="max-w-2xl mx-auto px-6 pb-10">
+                <h2 className="font-serif text-2xl font-bold text-rose-900 mb-4">{s.heading}</h2>
+                {s.body.map((p, i) => (
+                  <p
+                    key={i}
+                    className="text-rose-800/75 leading-relaxed mb-4 [&_a]:text-rose-600 [&_a]:underline hover:[&_a]:text-rose-700"
+                    dangerouslySetInnerHTML={{ __html: p }}
+                  />
+                ))}
+              </section>
+            ))}
+
+            <section className="max-w-2xl mx-auto px-6 pb-12">
+              <h2 className="font-serif text-2xl font-bold text-rose-900 mb-5">
+                Frequently asked questions
+              </h2>
+              <div className="space-y-5">
+                {content.faq.map(f => (
+                  <div key={f.q}>
+                    <h3 className="font-semibold text-rose-900 mb-1.5">{f.q}</h3>
+                    <p className="text-rose-800/75 leading-relaxed text-sm">{f.a}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+
+            <section className="max-w-2xl mx-auto px-6 pb-12">
+              <h2 className="font-serif text-xl font-bold text-rose-900 mb-4">Keep going</h2>
+              <ul className="flex flex-wrap gap-2.5">
+                {content.related.map(r => (
+                  <li key={r.href}>
+                    <Link
+                      href={r.href}
+                      className="inline-block bg-white border border-rose-100 rounded-full px-4 py-2 text-sm text-rose-700 hover:border-rose-300 hover:text-rose-900 transition-colors"
+                    >
+                      {r.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          </>
+        )}
 
         <section className="max-w-2xl mx-auto px-6 pb-16">
           <div className="bg-white rounded-3xl border border-rose-100 shadow-sm p-8 text-center">
