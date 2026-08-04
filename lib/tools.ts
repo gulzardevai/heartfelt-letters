@@ -69,7 +69,7 @@ export const TOOLS: Tool[] = [
     keyword: 'Days together counter',
     metaTitle: 'Days Together Counter — How Long Have We Been Together?',
     metaDescription:
-      'Pick the day your relationship started and see exactly how many days, months and years you have been together — plus your next milestone. Free relationship counter.',
+      'Pick the day your relationship started and see how many days, months and years you have been together — plus your next milestone. Free, no sign-up.',
     h1: 'Days Together Counter',
     intro: [
       'Choose the day it all began and this counter tells you exactly how long you have been together — in days, months and years — and counts down to your next milestone worth celebrating.',

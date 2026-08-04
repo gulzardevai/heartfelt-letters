@@ -7,7 +7,7 @@ import { TOOLS } from '@/lib/tools'
 export const metadata: Metadata = {
   title: 'Free Love Tools — Love Calculator, Quizzes, Counters & More',
   description:
-    'A collection of free, playful love tools: a love calculator, love language quiz, zodiac compatibility, nickname generator, anniversary counters and couples questions. No sign-up.',
+    'Free, playful love tools: a love calculator, love language quiz, zodiac compatibility, nickname generator, anniversary counters and date-night questions.',
   alternates: { canonical: 'https://www.shareloveletters.com/tools' },
   openGraph: {
     images: [{ url: '/opengraph-image.png', width: 1200, height: 630, alt: 'ShareLove Letters — write a letter they will keep' }],

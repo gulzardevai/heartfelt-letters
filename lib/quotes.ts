@@ -187,7 +187,7 @@ export const QUOTE_CATEGORY_PAGES: QuoteCategoryPage[] = [
     name: 'Missing You',
     h1: 'Missing You Quotes for Letters & Messages',
     metaTitle: 'Missing You Quotes — 45 Free "I Miss You" Quotes to Copy',
-    metaDescription: 'Free "I miss you" quotes for him, her, or a long-distance love. Heartfelt lines to text, put in a card, or open a letter with. Copy any quote in one tap. Free, no account.',
+    metaDescription: 'Free "I miss you" quotes for him, her or a long-distance love. Heartfelt lines to text, put in a card, or open a letter with. Copy any quote in one tap.',
     intro: 'Missing someone is hard to put into words — until someone else already has. These are the lines for the nights the distance feels bigger than usual. Copy one for a message, or use it to open a letter to the person you wish were here.',
     writeType: 'love',
     related: ['thinking-of-you', 'long-distance', 'good-morning'],

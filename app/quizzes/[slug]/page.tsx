@@ -24,9 +24,19 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const quiz = await getQuiz(params.slug)
   if (!quiz) return {}
   const url = `https://www.shareloveletters.com/quizzes/${quiz.slug}`
+  // Keep the SERP title under ~60 chars: add the longest suffix that still fits.
+  const base = quiz.title
+  const title =
+    base.length + 28 <= 60
+      ? `${base} — Free Quiz, Instant Result`
+      : base.length + 13 <= 60
+        ? `${base} — Free Quiz`
+        : base
+  const description =
+    quiz.description.length > 158 ? `${quiz.description.slice(0, 155).trimEnd()}…` : quiz.description
   return {
-    title: `${quiz.title} — Free Quiz, Instant Result`,
-    description: quiz.description,
+    title,
+    description,
     alternates: { canonical: url },
     openGraph: { images: [{ url: '/opengraph-image.png', width: 1200, height: 630, alt: 'ShareLove Letters — write a letter they will keep' }], title: quiz.title, description: quiz.description, url, type: 'website' },
   }

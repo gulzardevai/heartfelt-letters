@@ -5,9 +5,9 @@ import Footer from '@/components/Footer'
 import { THEMES } from '@/lib/themes'
 
 export const metadata: Metadata = {
-  title: 'Love Letter Themes — Vintage, Midnight & Aesthetic Letter Templates',
+  title: 'Love Letter Themes — Vintage, Midnight & Aesthetic Templates',
   description:
-    'Dress your letter in a beautiful theme. Choose a vintage love letter template, a moonlit midnight theme, soft blossom pink or timeless classic — each with a matching envelope. Free, no account needed.',
+    'Dress your letter in a theme: a vintage love letter template, moonlit midnight, soft blossom or timeless classic — each with a matching envelope. Free.',
   alternates: { canonical: 'https://www.shareloveletters.com/letter-themes' },
   openGraph: {
     images: [{ url: '/opengraph-image.png', width: 1200, height: 630, alt: 'ShareLove Letters — write a letter they will keep' }],
