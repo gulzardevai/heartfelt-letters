@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import PrintButton from '@/components/PrintButton'
+import PrintableSheets from '@/components/PrintableSheets'
 import { breadcrumbLd } from '@/lib/schema'
 import { OCCASIONS, getOccasion } from '@/lib/occasions'
 import { getTemplatesForType, TEMPLATES } from '@/lib/templates'
@@ -205,48 +205,14 @@ export default function OccasionPage({ params }: Props) {
           </div>
         </section>
 
-        {/* Printable fill-in-the-blank template */}
+        {/* Printable template — fill-in-the-blank letter or prompt sheet */}
         <section id="printable" className="print-sheet max-w-3xl mx-auto px-6 pb-14 scroll-mt-20">
-          <div className="text-center mb-8 no-print">
-            <h2 className="font-serif text-2xl font-bold text-rose-900 mb-2">
-              Printable {occasion.name.toLowerCase()} letter template
-            </h2>
-            <p className="text-sm text-rose-700/60 max-w-xl mx-auto">
-              A fill-in-the-blank version. Print it and write by hand on the lines, or use the brackets
-              as prompts and type it online — either way, replace every bracket with something only you
-              would know.
-            </p>
-            <div className="flex flex-wrap justify-center gap-3 mt-6">
-              <PrintButton />
-              <Link
-                href={`/write?type=${occasion.type}`}
-                className="inline-block bg-rose-600 text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-rose-700 transition-colors shadow-sm"
-              >
-                Fill it in online instead →
-              </Link>
-            </div>
-          </div>
-
-          <div className="print-sheet-card bg-white rounded-3xl border border-rose-100 shadow-sm p-8 md:p-12">
-            <p className="font-serif text-lg font-bold text-rose-900 mb-1">
-              {occasion.emoji} {occasion.name} letter
-            </p>
-            <p className="text-xs text-rose-400 mb-8 pb-6 border-b border-rose-100">
-              Read each line, then write your own version on the lines below it. The brackets tell you
-              what to reach for — replace them with something only the two of you would know.
-            </p>
-            {occasion.fillIn.map((line, i) => (
-              <div key={i} className="mb-7">
-                <p className="font-serif text-[15px] text-rose-900/90 leading-relaxed">{line}</p>
-                <div className="print-rule mt-4 border-b border-rose-100" />
-                <div className="print-rule mt-7 border-b border-rose-100" />
-              </div>
-            ))}
-            <p className="text-[11px] text-rose-400 text-center pt-6 border-t border-rose-100">
-              shareloveletters.com — free letter templates. Write it online and they open a sealed
-              envelope with their name on it.
-            </p>
-          </div>
+          <PrintableSheets
+            name={occasion.name}
+            emoji={occasion.emoji}
+            type={occasion.type}
+            fillIn={occasion.fillIn}
+          />
         </section>
 
         {/* How it works */}

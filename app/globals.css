@@ -226,14 +226,21 @@ body {
   .print-rule { border-color: #9ca3af !important; }
   .occasion-page .print-sheet-card > p:first-child { font-size: 15px !important; }
 
-  /* One sheet, with writing lines you can actually fit handwriting between. */
-  .occasion-page .print-sheet-card > div {
+  /* Prompt sheet: writing lines you can actually fit handwriting between. */
+  .occasion-page .sheet-prompt > div {
     margin-bottom: 0 !important;
     break-inside: avoid;
     page-break-inside: avoid;
   }
-  .occasion-page .print-sheet-card > div > p { margin-bottom: 0 !important; }
-  .occasion-page .print-sheet-card > div > .print-rule { margin-top: 1.6rem !important; }
+  .occasion-page .sheet-prompt > div > p { margin-bottom: 0 !important; }
+  .occasion-page .sheet-prompt > div > .print-rule { margin-top: 1.6rem !important; }
+
+  /* Fill-in sheet: the blanks are where the pen goes, so they need to be
+     unmistakable on paper; the hint under each stays light and small. */
+  .occasion-page .sheet-fillin p { break-inside: avoid; page-break-inside: avoid; }
+  .occasion-page .fill-blank-rule { border-bottom: 1px solid #111 !important; }
+  .occasion-page .fill-blank-hint { color: #777 !important; font-size: 8.5pt !important; }
+
   @page { margin: 14mm; }
 
   /* /write: print the letter being composed, without the compose chrome.
