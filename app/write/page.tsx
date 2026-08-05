@@ -388,7 +388,7 @@ function WritePageInner() {
 
         {/* Anon banner */}
         {!user && (
-          <div className="mb-6 bg-white border border-rose-100 rounded-2xl px-5 py-3 text-sm flex items-center justify-between gap-4 shadow-sm">
+          <div className="no-print mb-6 bg-white border border-rose-100 rounded-2xl px-5 py-3 text-sm flex items-center justify-between gap-4 shadow-sm">
             <p className="text-rose-700/80">✍️ Writing as a guest — <strong>1 letter per day</strong>. Your letter expires in 7 days.</p>
             <div className="flex gap-2 shrink-0">
               <Link href="/auth/signup" className="text-xs bg-rose-600 text-white px-3 py-1.5 rounded-lg hover:bg-rose-700 transition-colors font-medium">Sign up free</Link>

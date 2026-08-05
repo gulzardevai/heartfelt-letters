@@ -90,7 +90,7 @@ export default function Editor({ content, onChange, paperColor, textColor }: Pro
   }
 
   return (
-    <div className="border border-rose-100 rounded-2xl overflow-hidden bg-white shadow-paper">
+    <div className="editor-shell border border-rose-100 rounded-2xl overflow-hidden bg-white shadow-paper">
       {/* Toolbar */}
       <div className="no-print flex flex-wrap gap-1 p-3 border-b border-rose-100 bg-rose-50/50">
 

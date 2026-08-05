@@ -232,7 +232,8 @@ export default function OccasionPage({ params }: Props) {
               {occasion.emoji} {occasion.name} letter
             </p>
             <p className="text-xs text-rose-400 mb-8 pb-6 border-b border-rose-100">
-              Fill in the brackets. Cross out anything that is not true of the two of you.
+              Read each line, then write your own version on the lines below it. The brackets tell you
+              what to reach for — replace them with something only the two of you would know.
             </p>
             {occasion.fillIn.map((line, i) => (
               <div key={i} className="mb-7">
