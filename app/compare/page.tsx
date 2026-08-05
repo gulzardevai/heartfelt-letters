@@ -14,7 +14,7 @@ const competitors = [
     name: 'Digital Love Letters',
     focus: 'Online love letters',
     price: 'Paid plans',
-    weakness: 'Focused almost entirely on romantic letters, requires an account to start writing, and premium features sit behind paid plans. No quote library, no anonymous writing.',
+    weakness: 'You have to sign up before you can write a word, and the site advertises "affordable plans" without publishing a price anywhere public. Its 14 occasions are all romance-framed — nothing for grief, friendship, illness or congratulations. No anonymous writing, no password protection, no quote library.',
   },
   {
     name: 'Paperless Post',
@@ -62,7 +62,7 @@ const competitors = [
 
 const features = [
   { feature: 'Purpose-built for letters', us: true, dll: true, paperless: false, hallmark: false, canva: false, docs: false },
-  { feature: 'All occasions, not just romance', us: true, dll: false, paperless: true, hallmark: true, canva: true, docs: true },
+  { feature: 'Occasions beyond romance — grief, friendship, get-well, congratulations', us: true, dll: false, paperless: true, hallmark: true, canva: true, docs: true },
   { feature: '33 letter templates by type', us: true, dll: false, paperless: false, hallmark: true, canva: false, docs: false },
   { feature: 'Occasion guides on what to actually say', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Rich text editor', us: true, dll: true, paperless: false, hallmark: false, canva: true, docs: true },

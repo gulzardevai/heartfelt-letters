@@ -343,7 +343,7 @@ export const OCCASIONS: Occasion[] = [
     type: 'friendship',
     emoji: '🤝',
     name: 'Friendship',
-    h1: 'Friendship Letter',
+    h1: 'Friendship Letter Template',
     subheading: 'A free friendship letter template you can make your own — write it in the editor, seal it in an envelope, and share a private link.',
     metaTitle: 'Friendship Letter Template — Write a Letter to a Best Friend',
     metaDescription: 'Free friendship letter template. Write a heartfelt letter to your best friend and share it as a sealed envelope — free, private and no account needed.',
