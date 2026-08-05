@@ -275,6 +275,32 @@ export default function ComparePage() {
           </div>
         </section>
 
+        {/* Further reading — gives the comparison content somewhere to go */}
+        <section className="max-w-3xl mx-auto px-6 pb-16">
+          <div className="bg-white rounded-2xl border border-rose-100 shadow-sm p-6">
+            <h2 className="font-serif text-2xl font-bold text-rose-900 mb-3">Still comparing?</h2>
+            <p className="text-sm text-rose-700/70 leading-relaxed mb-3">
+              We wrote a longer, deliberately honest round-up of{' '}
+              <Link href="/blog/best-online-love-letter-websites" className="text-rose-600 underline hover:text-rose-700">
+                the best online love letter websites
+              </Link>{' '}
+              — including the ones that beat us on specific things — so you can pick the tool that fits the
+              letter you actually want to send rather than the one with the loudest homepage.
+            </p>
+            <p className="text-sm text-rose-700/70 leading-relaxed">
+              If what you want is to say something without your name attached, the guide to sending an{' '}
+              <Link href="/blog/anonymous-love-letter-online" className="text-rose-600 underline hover:text-rose-700">
+                anonymous love letter online
+              </Link>{' '}
+              covers how to do it kindly, and{' '}
+              <Link href="/quizzes" className="text-rose-600 underline hover:text-rose-700">
+                our free love quizzes
+              </Link>{' '}
+              are a low-pressure way to work out what you have been meaning to say.
+            </p>
+          </div>
+        </section>
+
         {/* CTA */}
         <section className="max-w-2xl mx-auto px-6 pb-24 text-center">
           <h2 className="font-serif text-3xl font-bold text-rose-900 mb-4">Ready to write something real?</h2>
