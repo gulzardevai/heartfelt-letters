@@ -1,7 +1,7 @@
 'use client'
 
 // Triggers the browser print dialog. The print stylesheet in globals.css
-// (.print-sheet / .print-hide) strips the page chrome so only the letter
+// (.print-sheet / .no-print) strips the page chrome so only the letter
 // template lands on paper.
 export default function PrintButton({ label = 'Print this template' }: { label?: string }) {
   return (

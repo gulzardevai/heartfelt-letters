@@ -208,7 +208,28 @@ body {
     border-radius: 0 !important;
     padding: 0 !important;
   }
-  .print-rule { border-color: #d6d3d1 !important; }
+
+  /* Print in black ink, not brand rose — this is a sheet people write on. */
+  .occasion-page .print-sheet-card,
+  .occasion-page .print-sheet-card * {
+    color: #111 !important;
+    -webkit-print-color-adjust: economy;
+    print-color-adjust: economy;
+  }
+  .print-rule { border-color: #9ca3af !important; }
+  .occasion-page .print-sheet-card > p:first-child { font-size: 15px !important; }
+
+  /* Fit the whole template on one sheet: tighten the gap between prompts
+     and keep each prompt with its own writing lines. */
+  .occasion-page .print-sheet-card > div {
+    margin-bottom: 0.5rem !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .occasion-page .print-sheet-card > div > p { margin-bottom: 0 !important; }
+  .occasion-page .print-sheet-card > div > .print-rule:first-of-type { margin-top: 0.9rem !important; }
+  .occasion-page .print-sheet-card > div > .print-rule + .print-rule { margin-top: 1.15rem !important; }
+  @page { margin: 12mm; }
 
   /* /write: print the letter being composed, without the compose chrome. */
   .write-page .write-side { display: none !important; }

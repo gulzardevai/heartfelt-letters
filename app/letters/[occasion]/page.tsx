@@ -207,7 +207,7 @@ export default function OccasionPage({ params }: Props) {
 
         {/* Printable fill-in-the-blank template */}
         <section id="printable" className="print-sheet max-w-3xl mx-auto px-6 pb-14 scroll-mt-20">
-          <div className="text-center mb-8 print-hide">
+          <div className="text-center mb-8 no-print">
             <h2 className="font-serif text-2xl font-bold text-rose-900 mb-2">
               Printable {occasion.name.toLowerCase()} letter template
             </h2>
