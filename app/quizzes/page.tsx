@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { getSupabaseAdmin } from '@/lib/supabase-admin'
+import { breadcrumbLd, itemListLd } from '@/lib/schema'
 
 export const dynamic = 'force-dynamic'
 
@@ -50,8 +51,23 @@ export default async function QuizzesHubPage() {
   // No published quizzes yet — send visitors to the tools hub instead of a thin page.
   if (!quizzes?.length) redirect('/tools')
 
+  const jsonLd = [
+    breadcrumbLd([
+      { name: 'Home', path: '' },
+      { name: 'Quizzes', path: '/quizzes' },
+    ]),
+    itemListLd(
+      'Love and relationship quizzes',
+      quizzes.map(q => ({ name: q.title as string, path: `/quizzes/${q.slug}` }))
+    ),
+  ]
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-rose-50 to-pink-50">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
       <main className="flex-1 max-w-2xl mx-auto w-full px-6 pt-14 pb-16" id="quizzes-hub">
         <div className="text-center mb-10">

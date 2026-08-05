@@ -10,6 +10,7 @@ import Link from 'next/link'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import { breadcrumbLd, itemListLd } from '@/lib/schema'
 
 type BlogPost = {
   id: string
@@ -35,8 +36,23 @@ export default async function BlogPage() {
 
   const blogPosts = (posts as BlogPost[]) ?? []
 
+  const jsonLd = [
+    breadcrumbLd([
+      { name: 'Home', path: '' },
+      { name: 'Blog', path: '/blog' },
+    ]),
+    itemListLd(
+      'Letter-writing guides and examples',
+      blogPosts.map(post => ({ name: post.title, path: `/blog/${post.slug}` }))
+    ),
+  ]
+
   return (
     <div className="min-h-screen flex flex-col">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
       <main className="flex-1">
         <section className="bg-gradient-to-br from-rose-50 to-pink-50 py-16 px-6 text-center">

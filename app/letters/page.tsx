@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { OCCASIONS } from '@/lib/occasions'
+import { breadcrumbLd, itemListLd } from '@/lib/schema'
 
 export const metadata: Metadata = {
   title: 'Letter Templates by Occasion — Free Letters for Every Moment',
@@ -11,8 +12,23 @@ export const metadata: Metadata = {
 }
 
 export default function LettersIndexPage() {
+  const jsonLd = [
+    breadcrumbLd([
+      { name: 'Home', path: '' },
+      { name: 'Letters by occasion', path: '/letters' },
+    ]),
+    itemListLd(
+      'Letter templates by occasion',
+      OCCASIONS.map(o => ({ name: `${o.name} letter`, path: `/letters/${o.slug}` }))
+    ),
+  ]
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-rose-50 to-pink-50">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
 
       <main className="flex-1">

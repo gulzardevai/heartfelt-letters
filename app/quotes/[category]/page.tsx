@@ -9,6 +9,7 @@ import {
   getQuoteCategoryPage,
   getQuotesByCategory,
 } from '@/lib/quotes'
+import { breadcrumbLd } from '@/lib/schema'
 
 interface Props {
   params: { category: string }
@@ -43,8 +44,18 @@ export default function QuoteCategoryPage({ params }: Props) {
   const quotes = getQuotesByCategory(cat.category)
   const related = cat.related.map(getQuoteCategoryPage).filter(Boolean)
 
+  const jsonLd = breadcrumbLd([
+    { name: 'Home', path: '' },
+    { name: 'Quotes', path: '/quotes' },
+    { name: cat.name, path: `/quotes/${cat.slug}` },
+  ])
+
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-rose-50 to-pink-50">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
 
       <main className="flex-1">

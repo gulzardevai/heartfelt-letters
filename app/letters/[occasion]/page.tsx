@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import PrintButton from '@/components/PrintButton'
+import { breadcrumbLd } from '@/lib/schema'
 import { OCCASIONS, getOccasion } from '@/lib/occasions'
 import { getTemplatesForType, TEMPLATES } from '@/lib/templates'
 
@@ -46,6 +47,12 @@ export default function OccasionPage({ params }: Props) {
     : getTemplatesForType(occasion.type)
   const related = occasion.related.map(getOccasion).filter(Boolean)
 
+  const breadcrumbJsonLd = breadcrumbLd([
+    { name: 'Home', path: '' },
+    { name: 'Letters by occasion', path: '/letters' },
+    { name: occasion.name, path: `/letters/${occasion.slug}` },
+  ])
+
   const faqJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -60,7 +67,7 @@ export default function OccasionPage({ params }: Props) {
     <div className="occasion-page min-h-screen flex flex-col bg-gradient-to-br from-rose-50 to-pink-50">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify([breadcrumbJsonLd, faqJsonLd]) }}
       />
       <Navbar />
 
