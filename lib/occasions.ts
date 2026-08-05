@@ -11,10 +11,13 @@ export type Occasion = {
   subheading?: string     // optional above-the-fold value-prop line under the H1
   metaTitle: string
   metaDescription: string
-  intro: string[]         // 2 paragraphs
-  whatToSay: string[]     // 4 concrete prompts
+  intro: string[]         // 3 paragraphs
+  whatToSay: string[]     // 5-6 concrete prompts
+  openers: string[]       // 3 example opening lines the reader can steal
   avoid: string           // one honest "don't do this" line
-  faq: { q: string; a: string }[]
+  example: { generic: string; better: string; why: string } // occasion-specific before/after
+  faq: { q: string; a: string }[]  // 4-5 questions specific to this occasion
+  closing: string         // occasion-specific closing CTA copy
   related: string[]       // slugs
   moat?: { heading: string; body: string } // optional differentiator callout
   // Optional explicit template list (TEMPLATES ids). When present, the occasion
@@ -35,19 +38,35 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'An anniversary letter is the one gift that gets better with time. Flowers fade and dinners end, but a letter that names exactly what this year held — the hard month, the running joke, the ordinary Tuesday you would not trade — is something they will still have in ten years.',
       'You do not need to summarise your whole relationship. Pick this year. What changed, what held, what you noticed about them that you never got around to saying out loud.',
+      'There is a practical argument for it too. The dinner gets photographed and forgotten; the letter goes in a drawer and gets found again during a bad week two years later. Write one every anniversary and the stack turns into a record of the marriage — the year you moved, the year one of you was ill, the year nothing happened and it was lovely.',
     ],
     whatToSay: [
       'One specific memory from this year, told in detail — not "we had a great trip" but the moment on the trip you keep replaying.',
       'Something they did that you never properly thanked them for.',
       'A small habit of theirs you have quietly fallen in love with.',
+      'Something difficult you got through this year, and what they were like while you were in the middle of it.',
+      'A phrase or private joke from this year that would mean nothing to anybody else.',
       'What you are looking forward to in the year ahead, concretely.',
     ],
+    openers: [
+      'A year ago today I had no idea [the thing that happened] was coming, and no idea you would be this good at it.',
+      'The moment I keep coming back to from this year is not the holiday. It is [ordinary moment].',
+      'I want to tell you what I noticed about you this year, because I do not think I ever said it out loud.',
+    ],
     avoid: 'Avoid opening with "I can\'t believe it\'s been X years." Start with a moment instead — it earns attention in a way a milestone never does.',
+    example: {
+      generic: 'Happy anniversary. I can\'t believe it\'s been six years. I love you more every day.',
+      better: 'Six years, and the thing I keep coming back to is you in the hospital corridor in March with two bad coffees, refusing to go home.',
+      why: 'The first line could be printed on a card and posted to anybody. The second could only be written by one person, to one person, about one particular year — and that is the whole difference between a message and a letter.',
+    },
     faq: [
       { q: 'What should I write in an anniversary letter?', a: 'Lead with one specific memory from the past year, say what it showed you about them, thank them for something concrete, and end with what you are looking forward to. Specificity is what makes it feel like it could only have been written by you, to them.' },
       { q: 'How long should an anniversary letter be?', a: 'Between 200 and 500 words is plenty. A shorter letter with three real details beats a long one full of general praise.' },
+      { q: 'What do I write if this year was difficult?', a: 'Write about that. An anniversary letter that names the hard months and says you are still here is far more moving than one that pretends the year was smooth. Say what happened, say what they were like while it was happening, and say what you chose.' },
+      { q: 'Should I write a new letter every anniversary?', a: 'If you can. Keep each one short and it stays a pleasure rather than a chore, and re-reading last year\'s before you write this year\'s is half the value — you notice how much you both moved.' },
       { q: 'Can I schedule it to open on our anniversary?', a: 'Yes. Write it whenever you like, set the opening date, and the link stays sealed with a countdown until the day arrives.' },
     ],
+    closing: 'Write it tonight and schedule it to unlock in the morning. Being told something true before the day even starts is better than being told it over dessert.',
     related: ['valentines-day', 'wedding', 'long-distance', 'love'],
   },
   {
@@ -62,18 +81,34 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'A love letter is not a performance. The ones that land are rarely the most poetic — they are the most observed. They prove you have been paying attention.',
       'Start from a template if the blank page is intimidating, then replace the general lines with your own details. The template is scaffolding, not the building.',
+      'There is no correct length and no correct day. Love letters written on ordinary evenings, with nothing prompting them, are the ones people keep in a drawer for a decade — precisely because nothing obliged you to write them. If you are waiting for the right occasion, you are waiting for permission you already have.',
     ],
     whatToSay: [
       'The moment you realised how you felt — where you were, what they were doing.',
       'Something ordinary they do that undoes you completely.',
       'A way they have changed how you see yourself.',
+      'Something you were wrong about at the beginning, and what changed your mind.',
+      'The version of them nobody else gets to see.',
       'One promise you actually intend to keep.',
     ],
+    openers: [
+      'I have been trying to write this for [how long], which should tell you something.',
+      'You were [doing an ordinary thing] when I understood what I felt about you.',
+      'There is something you do that I am fairly sure you do not know you do.',
+    ],
     avoid: 'Avoid stacking adjectives. "You are amazing, beautiful, incredible" says less than one sentence about the way they hum while cooking.',
+    example: {
+      generic: 'You are the most amazing, beautiful person I have ever met and I am so lucky to have you.',
+      better: 'You sing to the dog when you think I am asleep. You have done it for two years and I have never said anything, because I did not want you to stop.',
+      why: 'Praise slides off people. Evidence does not. The second version proves you have been paying attention, which is the thing everybody actually wants to be told and almost nobody is.',
+    },
     faq: [
       { q: 'How do I start a love letter?', a: 'Skip the throat-clearing. Open in the middle of a memory: "You were standing in the kitchen doorway when I realised..." It pulls the reader straight in.' },
+      { q: 'What do I write if I am bad with words?', a: 'Write badly, but be specific. "I like that you laugh at your own jokes before you finish them" is not elegant and it is worth ten polished sentences. Nobody has ever re-read a love letter for its prose.' },
+      { q: 'Should a love letter be handwritten or typed?', a: 'Handwriting is slow and lovely. A typed letter arrives instantly, can be read on a phone in the middle of a workday, and can carry photos, a song and a sealed envelope — which matters more when you are apart. Write it here and copy it out by hand later if you want both.' },
       { q: 'Is it okay to send a love letter online?', a: 'Yes — and it arrives instantly. On ShareLove Letters your recipient opens a private link and finds a sealed envelope with their name on it, so the moment still feels like a moment.' },
     ],
+    closing: 'Do not wait for an occasion. The ordinary evening is the occasion, and it is the reason the letter works.',
     related: ['valentines-day', 'anniversary', 'just-because', 'romantic-surprise'],
   },
   {
@@ -88,18 +123,34 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       "The card aisle has already said everything in the most forgettable way possible. A Valentine's letter works because it does the one thing a bought card structurally cannot: it sounds like you.",
       "You have permission to be sincere on this day specifically. Use it. Say the thing you would normally soften with a joke.",
+      "If you have been together long enough that February 14th feels obligatory, that is an argument for the letter rather than against it. The couples who get bored of the day are usually the ones exchanging the same card and the same set menu. Three honest paragraphs cost nothing, take twenty minutes, and are remembered for years longer than the dinner.",
     ],
     whatToSay: [
       'What you would miss most about them if they were gone for a month.',
       'The most attractive thing about them that has nothing to do with how they look.',
       'A time they were kind to you when you did not deserve it.',
+      'Something about this year specifically — a Valentine letter goes stale the moment it could have been written any February.',
+      'One thing you want to do together before next Valentine\'s Day.',
       'What you want more of this year — together.',
     ],
+    openers: [
+      'I am not going to pretend I chose this card out of hundreds. I wrote you this instead.',
+      'Every February I think about [moment], and I have never told you why.',
+      'Here is what I say about you when you are not in the room.',
+    ],
     avoid: 'Avoid quoting a famous love poem in place of your own words. Borrow a line if you must, then immediately follow it with something only you could say.',
+    example: {
+      generic: 'Happy Valentine\'s Day to the love of my life. You mean absolutely everything to me.',
+      better: 'This February I want to tell you about the Tuesday in October when you rang me from a car park and said, very calmly, that you had quit.',
+      why: 'Valentine\'s language is the most heavily borrowed prose on earth, and it reads as borrowed. One dated, specific memory proves the letter was written this year, for this person, by somebody who was there.',
+    },
     faq: [
       { q: "What do you write in a Valentine's letter?", a: "One honest observation, one memory, one wish for the year ahead. That structure is short enough to finish and specific enough to matter." },
-      { q: "Can I send a Valentine's letter anonymously?", a: "Yes. You can write without an account, and a secret admirer letter is one of the few cases where leaving the sender name a mystery genuinely works." },
+      { q: "When should I give it to them?", a: "In the morning. A letter opened at 7am colours the whole day; one handed over after dinner is competing with an entire evening of other things. If you are sending it here, schedule it to unlock at breakfast." },
+      { q: "What if we have only been dating a few weeks?", a: "Keep it proportionate. One specific thing you like about them, one moment from the last few weeks, and nothing about the future. Warmth without weight is exactly right early on." },
+      { q: "Can I send a Valentine's letter anonymously?", a: "Yes. You can write without an account and leave the sender name off — a secret admirer letter is one of the few cases where the mystery genuinely improves it." },
     ],
+    closing: 'Write it now, while it is not the 14th yet, and schedule it to unlock at breakfast. Panic-writing at 11pm on the 13th is exactly how people end up buying a card.',
     related: ['love', 'anniversary', 'secret-letter', 'romantic-surprise'],
   },
   {
@@ -114,18 +165,34 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'Distance turns small updates into a lifeline. A letter does something a video call cannot: it can be re-read at 2am when the time difference is doing its worst.',
       'Write the mundane details. What the walk to work looked like, what you ate, what made you laugh. Closeness is built out of unremarkable information.',
+      'Time zones are the reason the form suits you. A message sent while you are awake usually lands while they are asleep and gets read half-conscious at 6am. A letter sits and waits — they pick the moment they open it, which means they get to read it properly, twice, with a coffee.',
     ],
     whatToSay: [
       'What your daily routine actually looks like right now, in detail.',
       'A moment this week you wished they had been there for.',
       'Something you are grateful they did despite the distance.',
+      'One thing about the distance you have made peace with, and one you have not.',
+      'A question you genuinely want answered, so the letter opens a conversation instead of closing one.',
       'The next date you will see each other — and one thing you want to do first.',
     ],
+    openers: [
+      'It is [time] here, which means you are probably [doing something ordinary].',
+      'Nothing happened today. I am going to tell you about it anyway.',
+      'I counted this morning: [number] days.',
+    ],
     avoid: 'Avoid only writing about how hard the distance is. Half the letter should be your actual life, or it reads as a complaint they cannot fix.',
+    example: {
+      generic: 'I miss you so much. This distance is so hard. I cannot wait until I see you again.',
+      better: 'It rained the entire walk to work and I kept thinking you would have made me take the bus. I bought the wrong bread again. Forty-one days.',
+      why: 'That you miss them is the one thing they already know. Ordinary detail is the thing a video call cannot deliver, and it is what makes the distance briefly stop existing.',
+    },
     faq: [
       { q: 'What should I write to my long distance partner?', a: 'Ordinary detail plus one piece of real feeling. Tell them what your days look like, then say the thing you have been carrying around all week.' },
-      { q: 'Can I schedule letters to arrive while we are apart?', a: 'Yes — write several at once and set each to open on a different future date, so something arrives even on the weeks you are busy.' },
+      { q: 'How often should I write?', a: 'Less often than you text and more often than feels natural. A letter every few weeks that carries real detail is worth more than a daily one that repeats "I miss you". Save the form for the things that do not fit in a message.' },
+      { q: 'Does this work for a deployment or a long trip away?', a: 'Yes, with one adjustment: if their connection is limited, keep it text-heavy rather than image-heavy. You can also write several letters at once and set each to unlock on a date you know they will be able to read it.' },
+      { q: 'Can I schedule letters to arrive while we are apart?', a: 'Yes — write several in one sitting and set each to open on a different future date, so something arrives even on the weeks you are too busy to write.' },
     ],
+    closing: 'Write it while the day is still in your head. The ordinary details go stale within about a day, and they are the part that actually closes the distance.',
     related: ['love', 'anniversary', 'valentines-day', 'friendship'],
   },
   {
@@ -140,18 +207,34 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'Most people can barely speak in the moment. A letter is the version of the proposal where you get to say everything properly, and the version they will still have long after the day blurs.',
       'Write it to be read slowly, either just before you ask or just after. Answer the real question underneath the question: why them, and why now.',
+      'Decide in advance which of those two it is. Read before, and the letter does the work your voice will not manage. Handed over after, it becomes the thing they read on the sofa at midnight when the adrenaline has drained and they want to go through the entire day again. Both are right; not deciding is what leaves the letter folded in a jacket pocket.',
     ],
     whatToSay: [
       'The moment you knew — not the day you decided to ask, the day you knew.',
       'What kind of life you are picturing, described concretely.',
+      'What you thought marriage was before them, and what you think it is now.',
+      'One ordinary Tuesday from your future that you are looking forward to — not the wedding, the Tuesday.',
       'What you promise to do when things are difficult, not when they are easy.',
       'Why you are certain, in plain language.',
     ],
+    openers: [
+      'By the time you read this I will have asked you something, or I will be about to.',
+      'It was [when] — not the day I bought the ring, the day I knew.',
+      'I am writing this down because I know exactly how well I speak when it matters.',
+    ],
     avoid: 'Avoid making it a list of their best qualities. A proposal letter is about a future, not a review.',
+    example: {
+      generic: 'You are my best friend and my soulmate and I want to spend the rest of my life with you.',
+      better: 'I decided on a Sunday in February, in the kitchen, while you argued with your sister on the phone and mouthed sorry at me. That was the moment, not the ring shop.',
+      why: 'A proposal letter has to answer why them and why now. Naming the exact hour you knew answers both at once, and it is the one sentence in the letter nobody else could have written.',
+    },
     faq: [
       { q: 'Should I write a letter for my proposal?', a: 'It helps enormously if you get nervous speaking. Many people read the letter aloud, or hand it over and let the other person read it while they gather themselves.' },
       { q: 'How long should a proposal letter be?', a: 'Around 300 to 600 words — long enough to say why, short enough to be read in the moment without the emotion draining out of it.' },
+      { q: 'Do I read it out loud or hand it over?', a: 'Handing it over is easier and usually better: it gives you both something to do with your hands and lets them read at their own pace. If you want to read it aloud, practise once on your own — the first read-through is where the crying happens.' },
+      { q: 'Should the letter mention the ring or the plan?', a: 'Barely. The logistics are the least interesting part and they will find out within the minute. Spend every word you have on why them.' },
     ],
+    closing: 'Write it a week early rather than the night before. This is one letter that should have been sat with for a few days.',
     related: ['love', 'wedding', 'anniversary', 'valentines-day'],
   },
   {
@@ -166,18 +249,34 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'The letter read on the morning of the wedding is often the part people remember best — before the photographs, the speeches and the schedule take over.',
       'It is also the last thing you will write to them as not-yet-married. That is worth saying out loud somewhere in the letter.',
+      'Consider writing two. One for the morning, and one sealed until your first anniversary — a letter from the person you were on the wedding day, opened by the person you are a year in. It costs ten extra minutes now and it is one of the very few wedding gifts that genuinely cannot be bought later.',
     ],
     whatToSay: [
       'What you are feeling this morning, honestly — including the nerves.',
       'The moment you first pictured this day with them in it.',
-      'What you want them to know before they walk into a room full of people.',
+      'A moment from your relationship that nobody at the wedding knows about.',
+      'What you will be thinking about while you wait for them to walk in.',
+      'What you want them to know before they step into a room full of people.',
       'A vow that is not in the ceremony, just for them.',
     ],
+    openers: [
+      'It is [time] and I can hear [something happening in the house].',
+      'This is the last thing I will ever write to you before you are my [wife / husband].',
+      'In a few hours we do this in front of everybody. Here is the private version.',
+    ],
     avoid: 'Avoid rehearsing your actual vows here. Let this letter be the private version — smaller, plainer, and only for them.',
+    example: {
+      generic: 'I cannot wait to marry you today. You look beautiful and I love you so much.',
+      better: 'It is 8am and your mother is crying in the kitchen about a napkin. I am about to marry you and I am not nervous, which has genuinely surprised me.',
+      why: 'This is the only letter in your life that can be written from inside the day itself. Use the room you are standing in — it is what makes it unrepeatable when you read it back at forty.',
+    },
     faq: [
       { q: 'What do you write in a wedding day letter?', a: 'Write how you feel this morning, one memory of how you got here, and one private promise. Keep it to something readable in a couple of minutes, because the day moves fast.' },
+      { q: 'Do both partners write one?', a: 'Usually, and it works best when you agree in advance so nobody is caught out holding an envelope with nothing to give back. Settle on a rough time and let whoever is getting ready with each of you hand it over.' },
+      { q: 'How do I make sure it reaches them on the morning?', a: 'Give the private link to whoever is with them while they get ready, or schedule the letter to unlock at a set time that morning so it arrives on its own and nobody has to remember.' },
       { q: 'When should they read it?', a: 'Most couples exchange letters while getting ready. You can also schedule one to open on your first anniversary — a letter from the day itself, opened a year later.' },
     ],
+    closing: 'Write it the week before, while you still have quiet hours. The days immediately before a wedding disappear, and this is not a thing to draft at midnight.',
     related: ['anniversary', 'proposal', 'love', 'congratulations'],
   },
   {
@@ -191,18 +290,34 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'Everybody gets messages on their birthday. Almost nobody gets a letter. That gap is the entire opportunity.',
       'The most memorable birthday letters tell the person something about themselves they cannot quite see — the effect they have on the people around them.',
+      'Let the age shape the letter. For a child, write down the things they will not remember about being this age. For a friend in their thirties, name what they have quietly got better at. For a parent, tell them something you understand now that you did not understand as a kid. A birthday letter that could have been sent to anyone of any age is the one that gets skimmed.',
     ],
     whatToSay: [
       'Something they did this year that you are still thinking about.',
       'The quality of theirs that other people underestimate.',
+      'What they were like this time last year, and what has changed since.',
+      'Something they once said to you that you have never forgotten.',
       'A memory from the year that made you glad to know them.',
       'One wish for their year ahead that is not generic.',
     ],
+    openers: [
+      'You are [age] today, which means it is [number] years since [thing you both remember].',
+      'Every year I say happy birthday. This year I want to say this instead.',
+      'Here is what I noticed about you in the last twelve months.',
+    ],
     avoid: 'Avoid "hope you have a great day" as the whole message. Say what you actually think of them — a birthday is a rare licence to be sincere without explanation.',
+    example: {
+      generic: 'Happy birthday! Hope you have an amazing day, you absolutely deserve the best.',
+      better: 'You are thirty-four today. This is the year you learned to say no to people, and I have watched you do it about six times, badly at first.',
+      why: 'A birthday message describes the day. A birthday letter describes the year. The second version tells somebody something about themselves they cannot see from inside their own life.',
+    },
     faq: [
       { q: 'What do you write in a birthday letter?', a: 'One specific memory from the past year, one thing you admire about them, and one wish for the year ahead. Three short paragraphs is enough.' },
+      { q: 'What do I write for a milestone birthday?', a: 'Milestones tempt people into summing up a whole life. Resist it. Write about the year just gone in real detail, then give one sentence to what the next decade might hold. Specific always beats momentous.' },
+      { q: 'Can I write a birthday letter for a child to read later?', a: 'Yes, and it is one of the best uses of scheduling there is. Write one every birthday and set it to open on their eighteenth. By then it is a stack of letters from a parent who was paying attention the whole time.' },
       { q: 'Can I schedule a birthday letter in advance?', a: 'Yes. Write it whenever you have the time and set it to open on their birthday — the link shows a countdown until then.' },
     ],
+    closing: 'Write it the night before and schedule it to unlock the moment they wake up, so it is the first thing they read rather than the fortieth.',
     related: ['friendship', 'thank-you', 'love', 'congratulations'],
   },
   {
@@ -216,18 +331,34 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'A real apology has three parts and only three: name what you did, show you understand the effect it had, and say what you will do differently. Everything else weakens it.',
       'Writing rather than speaking lets the other person read it without having to manage your face. That is a genuine kindness when you are the one who caused the hurt.',
+      'Timing matters more than people expect. A letter sent within hours can read as an attempt to close the subject before the other person has finished feeling it; one sent weeks later can read as an afterthought. If you have taken time, say so in the letter — "I waited because I wanted to understand it properly first" is an honest and legitimate sentence.',
     ],
     whatToSay: [
       'Exactly what you did — no euphemisms, no passive voice.',
       'What it cost them, in their terms rather than yours.',
       'What you now understand that you did not understand then.',
       'The specific change you are making, not a promise to "do better".',
+      'What you will actually do the next time you feel the same pull — the mechanism, not the intention.',
+      'That you are not asking for a reply, and they can take as long as they want.',
+    ],
+    openers: [
+      'I have written this four times. This is the version with the excuses taken out.',
+      'What I did was [name it plainly]. I am not going to soften that.',
+      'You do not owe me a reply to this.',
     ],
     avoid: 'Avoid the word "if". "I\'m sorry if you were hurt" undoes the entire letter. Also avoid explaining yourself before apologising — reasons read as excuses when they come first.',
+    example: {
+      generic: 'I\'m sorry if what I said upset you. That was never my intention, and you know how I get.',
+      better: 'I told your story at dinner after you asked me not to. You had to sit there while eight people laughed at something you are still ashamed of.',
+      why: 'The first version apologises for their reaction and quietly blames a temperament. The second names the act and what it cost, which is the only version another person can actually accept.',
+    },
     faq: [
       { q: 'How do I write a sincere apology letter?', a: 'Name the specific thing you did, acknowledge the impact without minimising it, take responsibility without listing reasons, and say what will be different. Do not ask for forgiveness in the same breath — let them arrive at that themselves.' },
+      { q: 'Should I explain why I did it?', a: 'Only if they have asked, and never in the first half of the letter. Context that arrives before accountability reads as defence. If you must include it, put it at the end and label it: "This is not an excuse, but you asked what was going on."' },
+      { q: 'What if they do not reply?', a: 'That is their right, and the letter still did its job. An apology conditional on being forgiven was never an apology. Send it, say plainly that you are not owed a response, and mean it.' },
       { q: 'Should I apologise in writing or in person?', a: 'A letter gives the other person space to react honestly and re-read it once the sting has faded. Many people send the letter first, then talk.' },
     ],
+    closing: 'Write it, leave it an hour, then delete every sentence that defends you. What is left is the letter.',
     related: ['love', 'friendship', 'thank-you', 'farewell'],
   },
   {
@@ -242,18 +373,34 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'Gratitude is easy to feel and strangely hard to deliver. Most of it gets compressed into "thanks so much!" and lost.',
       'A thank-you letter is worth writing precisely because it is slower. It tells the person that what they did stayed with you long enough to be written down.',
+      'There is a version of this letter for almost everyone: the teacher who noticed something in you, the manager who took a risk, the friend who drove four hours without being asked, the nurse who was kind at 3am. What they have in common is that the person on the other end has no idea it stayed with you. That fact is the whole content of the letter.',
     ],
     whatToSay: [
       'The specific thing they did, described as though they might have forgotten it.',
       'What was going on for you at the time.',
       'What difference it actually made, then and since.',
+      'The part you assume they have filed under "ordinary" — say it back to them in detail.',
+      'Whether you have done the same for somebody else since, and what happened.',
       'Something you have carried forward because of them.',
     ],
+    openers: [
+      'You almost certainly do not remember [the thing]. I have thought about it for [how long].',
+      'I have been meaning to write this since [when], which is faintly embarrassing.',
+      'This is a thank-you for something you probably filed under ordinary.',
+    ],
     avoid: 'Avoid making it about your inadequacy ("I could never repay you"). Keep the focus on what they did and what it changed.',
+    example: {
+      generic: 'Thank you so much for everything you did. I really appreciate it more than you know.',
+      better: 'You drove ninety minutes on a Wednesday to sit in a hospital corridor with me, and you brought a book so I would not feel watched.',
+      why: 'Vague thanks leaves the recipient guessing what they are being thanked for. Naming the act — especially the small part they assumed nobody noticed — is what makes gratitude land.',
+    },
     faq: [
       { q: 'How do I write a meaningful thank you letter?', a: 'Describe the specific act, explain what your situation was at the time, and say what changed as a result. The context is what turns thanks into something the person can actually feel.' },
+      { q: 'How do I write a thank you letter to a teacher or mentor?', a: 'Name the exact moment — the comment in the margin, the conversation after class, the day they told you the truth instead of the comfortable thing. Teachers and mentors handle thousands of interactions and remember almost none of them; being told which one landed is the entire gift.' },
+      { q: 'How long should a thank you letter be?', a: '150 to 300 words. Long enough to include the detail that proves you remember, short enough that the person is not obliged to compose a reply of equivalent length.' },
       { q: 'Is it too late to send a thank you letter?', a: 'Almost never. A thank-you that arrives years later is often more moving, because it proves the thing was not forgotten.' },
     ],
+    closing: 'Send it late rather than never. Almost nobody in history has regretted receiving a thank-you letter years after the fact.',
     related: ['mothers-day', 'fathers-day', 'friendship', 'birthday'],
   },
   {
@@ -268,19 +415,35 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'Most of what mothers do goes unremarked precisely because it is constant. A letter is a chance to remark on it — to name the specific things you only understood later.',
       'If your relationship is complicated, the letter can hold that too. Honest and warm beats perfect and hollow.',
+      'Write about her rather than about motherhood. Almost all Mother\'s Day copy describes a category — the sacrifices, the unconditional love — and a category is exactly what she is not. Two sentences about the way she answers the phone will do more work than a paragraph about what mothers are.',
     ],
     whatToSay: [
       'Something she did for you that you did not appreciate at the time.',
       'A phrase of hers you now hear coming out of your own mouth.',
+      'Something she gave up that you only recently worked out she gave up.',
       'A way she shaped how you treat other people.',
+      'A question about her life before you, whose answer you would genuinely like to hear.',
       'What you want her to know about how you are doing now.',
     ],
+    openers: [
+      'I understand [thing] completely differently at [age] than I did at ten.',
+      'You used to say [phrase]. I said it to somebody last week without thinking.',
+      'I have never asked you about [something from her own life], and I would like to.',
+    ],
     avoid: 'Avoid writing the version you think a mother is supposed to receive. Write the version that is true about your mother specifically.',
+    example: {
+      generic: 'Thank you for everything you have done for me, Mum. You are the best mother anyone could ask for.',
+      better: 'You did the weekly shop at 10pm so none of us ever saw you counting. I worked that out at about twenty-six and I have never once mentioned it.',
+      why: 'A tribute to motherhood in general could be addressed to anybody\'s mother. Something you only understood years later, about her specifically, could not.',
+    },
     faq: [
       { q: "What should I write in a Mother's Day letter?", a: "Pick one thing she did that you understand differently now that you are older, and tell her. That single shift in perspective is more moving than a list of thanks." },
+      { q: "When is Mother's Day?", a: "In the US, Australia and most of the world it falls on the second Sunday of May — May 10 in 2026. In the UK and Ireland, Mothering Sunday is three weeks before Easter, which is March 15 in 2026. Write it early and schedule the letter to open on the morning of the day." },
+      { q: "What do I write for a first Mother's Day?", a: "Write to the person, not the role. What you have watched her do in the last twelve months, what surprised you about her, and one thing you noticed at 4am that she has no idea you saw." },
       { q: "Can I send it if we live far apart?", a: "Yes — she opens a private link and finds a sealed envelope with her name on it, so it arrives instantly and still feels like something." },
       { q: "What if my mum and I have a difficult relationship?", a: "Write only what is true. You can thank her for one specific thing without pretending the rest was perfect — a narrow, honest letter is worth more than a broad one you do not mean, and it often opens more doors than it closes." },
     ],
+    closing: 'Write it in your own voice rather than the greeting-card one. She will know the difference by the end of the first sentence.',
     related: ['fathers-day', 'thank-you', 'birthday', 'love'],
   },
   {
@@ -295,19 +458,35 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'Plenty of fathers and children love each other fluently in every language except this one. A letter gets around that, because nobody has to hold eye contact.',
       'You do not need to become someone else to write it. Plain, specific and slightly understated is often exactly right for the relationship.',
+      'The form removes the part most fathers find hardest: responding in real time, out loud, with people in the room. He can read it twice, put it in a drawer, say nothing about it for a month — and still have read it twice. That is not a failure of the letter. That is the letter working.',
     ],
     whatToSay: [
       'A thing he taught you that you use constantly, however small.',
       'A memory of him that you have told other people about.',
+      'Something he did for you that you only recognised as effort once you were an adult.',
       'Something you have never said because it felt unnecessary.',
       'What you admire about how he handled something difficult.',
+      'One thing you would like to do together, with an actual date attached.',
+    ],
+    openers: [
+      'I have been using something you taught me all week.',
+      'You will not want a fuss made of this, so I will keep it short.',
+      'I told the [story] story again last month. They did not believe it.',
     ],
     avoid: 'Avoid grand declarations if that is not how you two talk. A true sentence in your normal register lands harder than borrowed sentiment.',
+    example: {
+      generic: 'Happy Father\'s Day, Dad. Thanks for always being there for me. Love you.',
+      better: 'You taught me to reverse into a space using the door handles as a marker. I use it every week, and I have explained it to four people as though I invented it.',
+      why: 'Fathers who do not deal in declarations still deal in specifics. One small, true, practical thing carries the whole affection without asking either of you to become someone else for a paragraph.',
+    },
     faq: [
       { q: "What do you write in a Father's Day letter?", a: "One thing he taught you, one memory you have repeated to other people, and one thing you have never said out loud. Keep it in your own voice." },
+      { q: "When is Father's Day?", a: "In the US, UK and most of Europe it is the third Sunday of June — June 21 in 2026. Australia and New Zealand mark it on the first Sunday of September. Write it early and schedule the letter to unlock on the morning." },
       { q: "What if we're not the emotional type?", a: "Then write it that way. Understatement is its own form of sincerity, and he will hear it." },
+      { q: "What do I write to a father I am not close to?", a: "One true thing. You do not have to resolve the whole relationship in a letter, and attempting it usually backfires. Thank him for something specific that genuinely happened, leave the rest alone, and let the narrowness of the letter be the honest part of it." },
       { q: "How long should a Father's Day letter be?", a: "Shorter than you think — 150 to 300 words. Fathers who are not fluent in this register tend to re-read a short, concrete letter many times; a long emotional one can feel like a performance he has to respond to." },
     ],
+    closing: 'Keep it short and true and send it in the morning. He will read it more than once, whatever he says about it afterwards.',
     related: ['mothers-day', 'thank-you', 'birthday', 'friendship'],
   },
   {
@@ -322,20 +501,35 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'Grandparents keep everything. The drawing from when you were six, the school photo, the postcard you barely remember sending. A letter to grandma or grandpa joins that collection immediately — and unlike a phone call, it can be re-read on the quiet afternoons.',
       'US National Grandparents Day falls on the first Sunday after Labor Day — September 13 in 2026 — and the UK marks its own Grandparents Day on the first Sunday of October. But this is one letter that needs no date at all. Whether you are nine or forty-nine, telling a grandparent what they gave you is never out of season.',
+      'Write more than you think is interesting. What you had for dinner, what your flat looks like, the name of the person you sit next to at work. Grandparents are usually the last to hear any of the ordinary detail, because everyone assumes they only want the headlines. They do not want the headlines. They want the Tuesday.',
     ],
     whatToSay: [
       'A memory from their house — the smell of the kitchen, the routine, the thing you were always allowed to do there and nowhere else.',
       'Something they taught you that you still use, even if they never called it teaching.',
       'A story of theirs you want them to know you remember — and want to hear again.',
+      'A question about their life at the age you are now: the job, the town, the person they were seeing.',
+      'A habit of theirs you have clearly inherited, and whether you are pleased about it.',
       'What your life looks like now, in real detail. Grandparents are starved for the ordinary specifics everyone else edits out.',
     ],
+    openers: [
+      'I was in [place] last week and it smelled exactly like your kitchen.',
+      'I have a question I should have asked you years ago.',
+      'Do you remember [thing]? I still do, in detail.',
+    ],
     avoid: 'Avoid writing as though you are summing up their life. A letter that says "here is one Tuesday at your house I never forgot" lands far better than one that reads like a farewell.',
+    example: {
+      generic: 'I hope you are keeping well. I think of you often and I hope to visit again soon.',
+      better: 'Your kitchen had a tin with a cottage painted on it, and I was allowed to open it without asking. I have not been allowed to do that anywhere since.',
+      why: 'Letters to grandparents drift towards politeness. One piece of sensory detail from their house proves you kept something, and that is worth far more to them than an update on your news.',
+    },
     faq: [
       { q: 'What should I write in a letter to my grandma?', a: 'Pick one memory from her house or her company and tell it in full detail — the room, the smell, what she said. Then tell her something true about your life right now. Those two things, memory and update, are exactly what a grandmother wants in a letter.' },
       { q: 'What do you write in a letter to grandpa?', a: 'Something he taught you and the moment you last used it, a story of his you remember, and a question that invites him to tell you another. Plain and specific beats sentimental — most grandfathers hear "I remember" more clearly than "I love you", though there is room for both.' },
       { q: 'When is Grandparents Day?', a: 'In the United States, National Grandparents Day is the first Sunday after Labor Day — September 13 in 2026. In the UK it is the first Sunday of October. You can write the letter early and schedule it to open on the day itself.' },
-      { q: 'Can grandparents open the letter easily?', a: 'Yes. They tap one private link and a sealed envelope opens with their name on it — no app to install, no account to create, and the text is large and readable. Many families send the link to a parent who opens it with them.' },
+      { q: 'Should I post it or send it online?', a: 'Both, if you can. A printed letter is an object for the sideboard; a private link arrives today and can carry photographs of the great-grandchildren at full size. Many families send the link to a parent who sits and opens it with them.' },
+      { q: 'Can grandparents open the letter easily?', a: 'Yes. They tap one private link and a sealed envelope opens with their name on it — no app to install, no account to create, and the text is large and readable.' },
     ],
+    closing: 'Send it this week rather than waiting for the day. There is no version of this particular letter that arrives at the wrong time.',
     related: ['thank-you', 'mothers-day', 'fathers-day', 'birthday'],
   },
   {
@@ -350,18 +544,34 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'We tell partners and parents how we feel. Friends mostly get jokes. That is fine, until you realise your closest friend may have no idea what they mean to you.',
       'A friendship letter with no occasion attached is one of the most disarming things you can send, precisely because nothing prompted it.',
+      'A friendship letter template can only take you so far. It gets you past the blank page and gives the thing a shape — but the part that makes your friend sit down halfway through is the part only you can supply: the specific night, the specific favour, the joke that would take three paragraphs to explain to anybody else. Use the structure below and then replace every general line with one of those.',
     ],
     whatToSay: [
       'The moment you went from acquaintances to actual friends.',
       'A time they showed up for you without being asked.',
       'The thing you would call them about before anyone else.',
+      'Something you envy about them, said generously.',
+      'A time you let them down, if it is still sitting there — friendships survive being named.',
       'What you hope is still true about the two of you in ten years.',
     ],
+    openers: [
+      'This is not about anything. I just wanted it written down somewhere.',
+      'I have told the [story] story to roughly nine people this year.',
+      'We met [how], which is a stupid way to meet the person I now call first.',
+    ],
     avoid: 'Avoid undercutting every sincere line with a joke. One joke is charming; four is a defence mechanism they will notice.',
+    example: {
+      generic: 'You are honestly the best friend anyone could ask for and I do not know what I would do without you.',
+      better: 'In 2019 you got a train to a city you dislike to sit in a pub for four hours while I said nothing useful.',
+      why: 'Friends deflect compliments; it is close to a reflex. A specific event is much harder to deflect, because it happened, and you both know exactly how it went.',
+    },
     faq: [
       { q: 'What do you write in a letter to your best friend?', a: 'Start with how you became friends, name a specific time they showed up for you, and say plainly what they mean to you. The lack of an occasion is what makes it hit.' },
+      { q: 'How long should a letter to a friend be?', a: '200 to 400 words. Long enough for two real memories, short enough that they do not feel they owe you an essay in return.' },
+      { q: 'What do I write to a friend I have drifted away from?', a: 'Name the drift in one sentence, do not apologise for it at length, then go straight into a memory. "We have not spoken properly in two years and I keep thinking about the summer we..." is the fastest route back into a friendship there is.' },
       { q: 'Is it weird to send a friend a letter?', a: 'Surprising, not weird. Nearly everyone reports that an unprompted letter from a friend is one of the nicest things they have received.' },
     ],
+    closing: 'There is no occasion for this one and there never will be. That is the argument for sending it today rather than eventually.',
     related: ['thank-you', 'birthday', 'long-distance', 'farewell'],
   },
   {
@@ -375,18 +585,34 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'Congratulations messages arrive in a flood and blur into one. A letter separates itself immediately by talking about the work rather than the result.',
       'The person already knows they achieved something. What they usually have not heard is that someone watched them get there.',
+      'The timing is a free advantage nobody uses. Everyone messages on day one; almost nobody says anything on day thirty, when the announcement has gone quiet and the person is privately wondering whether it was a big deal after all. A letter that lands a few weeks late has the entire field to itself.',
     ],
     whatToSay: [
       'What you saw them put in that other people did not see.',
+      'What you thought when they first mentioned they were going to try.',
       'A moment when it looked hard and they kept going anyway.',
+      'The thing they should be proud of that is not the headline.',
       'What this achievement says about who they are.',
       'What you expect them to do next — said as confidence, not pressure.',
     ],
+    openers: [
+      'I have been waiting to say this properly rather than in a group chat.',
+      'I remember when this was a thing you mentioned once and then changed the subject.',
+      'Everyone is going to tell you well done. I want to tell you what I watched you do.',
+    ],
     avoid: 'Avoid making it about your own pride alone. "I\'m so proud of you" is warmer when it follows evidence of what you noticed.',
+    example: {
+      generic: 'Congratulations on the new job! So well deserved. You are going to smash it.',
+      better: 'Congratulations. I remember the version of this where you rewrote the application on a Sunday night and told me you were not going to bother sending it.',
+      why: 'Everyone congratulates the outcome. Almost nobody mentions the part where it nearly did not happen, which is usually the part the person is quietly proudest of.',
+    },
     faq: [
       { q: 'What do you write in a congratulations letter?', a: 'Name the effort, not just the outcome. Mention a specific moment when it was difficult and they continued — that is what turns a generic message into something they keep.' },
-      { q: 'Does this work for graduations and new jobs?', a: 'Yes — the same structure fits graduations, promotions, new jobs, new homes and new babies. Change the specifics, keep the shape.' },
+      { q: 'What should I write in a graduation letter?', a: 'Write about the years, not the ceremony. The essay rewritten four times, the term they nearly stopped, the thing they got good at without noticing. Graduates are congratulated on the outcome all day; almost nobody names the process.' },
+      { q: 'What do you write for a new baby?', a: 'Congratulate the parents on something other than the baby. Say what you think they will be good at, and offer one concrete piece of help with a date on it. Their week is full of people admiring a newborn and nobody asking how they are.' },
+      { q: 'Does this work for promotions and new jobs?', a: 'Yes — the same structure fits graduations, promotions, new jobs, new homes and new babies. Change the specifics, keep the shape.' },
     ],
+    closing: 'Send it a fortnight late on purpose. The flood of messages will have stopped by then and yours will land in the silence.',
     related: ['birthday', 'friendship', 'thank-you', 'farewell'],
   },
   {
@@ -400,18 +626,34 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'Being unwell is boring and isolating in roughly equal measure. A letter helps with both, and unlike a visit it makes no demands on the person receiving it.',
       'Keep the pressure low. No advice, no forced brightness, no requirement to reply.',
+      'Write as though they will read it in bed with a short attention span, because they probably will. Short paragraphs, nothing that requires a decision, no questions they are obliged to answer. If you want to include news, make it the low-stakes kind: the neighbour\'s dog, the weather, what happened in the group chat.',
     ],
     whatToSay: [
       'That you are thinking of them, without asking for an update.',
       'Something light and ordinary from your own week — a distraction they can enjoy.',
+      'News from the world they are missing, told in unimportant detail.',
       'A concrete offer of help rather than "let me know if you need anything".',
+      'That you will still be around when the visitors and the casseroles stop, which is the part people underestimate.',
       'That there is no obligation to write back.',
     ],
+    openers: [
+      'No update required. I just wanted you to have something to read.',
+      'Here is everything you have missed, none of which was important.',
+      'I am not going to ask how you are feeling.',
+    ],
     avoid: 'Avoid health advice and silver linings. "Everything happens for a reason" is the least comforting sentence in the language.',
+    example: {
+      generic: 'Get well soon! Sending you healing thoughts. Let me know if you need anything at all.',
+      better: 'The lift at work has been broken nine days and there is now a petition. I am coming Thursday at four with soup; say no and I will come Friday instead.',
+      why: '\'Let me know if you need anything\' hands the work back to the ill person. Trivial news plus one dated offer asks nothing of them and still turns up at the door.',
+    },
     faq: [
       { q: 'What do you say to someone who is ill?', a: 'Say you are thinking of them, share something ordinary and light, offer one specific piece of help, and release them from replying. Presence without pressure is the goal.' },
+      { q: 'What do you write to someone with a long-term or serious illness?', a: 'Write to the person, not the diagnosis. Talk about ordinary life, make no predictions about recovery, and avoid the language of battles and fights. People who are ill for a long time lose themselves to the illness in most conversations; a letter that treats them as themselves is a relief.' },
+      { q: 'Should I send flowers or a letter?', a: 'Flowers last a week and often cannot be kept on a hospital ward. A letter gets read more than once. If you want both, a ShareLove letter can carry a virtual bouquet that blooms on screen when they open it.' },
       { q: 'What should I not say?', a: 'Avoid medical advice, comparisons to other people\'s illnesses, and forced positivity. Warmth and normality are what actually help.' },
     ],
+    closing: 'Send one now and say plainly that no reply is needed. Then send a second in ten days, when everybody else has moved on.',
     related: ['sympathy', 'friendship', 'thank-you', 'birthday'],
   },
   {
@@ -425,18 +667,34 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'Most people say nothing after a death because they are frightened of saying the wrong thing. Saying nothing is the wrong thing. Almost anything warm and specific is better than silence.',
       'You are not trying to fix anything. You are telling a grieving person that the one they lost mattered and was noticed.',
+      'Do not wait until you have found the right words, because you will not find them. Send the imperfect letter in the first fortnight, and then send something else — a memory, an offer, a message — in the second month, when the cards have stopped arriving and the house has gone quiet. The second letter is very often the one that matters most.',
     ],
     whatToSay: [
       'Name the person who died, and use their name.',
       'A specific memory of them, however small — grieving people are hungry for these.',
       'Something you admired about them that the family may not know.',
+      'Something they said or did that you have repeated to other people since.',
       'A concrete offer of help with a date attached.',
+      'Permission not to reply, stated plainly.',
+    ],
+    openers: [
+      'I am so sorry about [name]. I want to tell you about the time [they did something].',
+      'You do not need to write back to this.',
+      'I keep thinking about the way [name] used to [specific detail].',
     ],
     avoid: 'Avoid "they are in a better place" and "at least". Avoid asking the bereaved to reach out — they will not. Offer something specific instead.',
+    example: {
+      generic: 'I am so sorry for your loss. She was a wonderful woman and she is in a better place now.',
+      better: 'I am so sorry about Margaret. She once told me, with total seriousness, that my parking was a cry for help. I think about it every time I park.',
+      why: 'Bereaved families receive a great many condolences and very few new memories of the person. A story they have not heard is the one thing only you can give them.',
+    },
     faq: [
       { q: 'What do you write in a sympathy letter?', a: 'Use the person\'s name, share one specific memory of them, say what you admired, and make one concrete offer of help. Do not try to explain or soften the loss.' },
+      { q: 'What do you say if you did not know the person well?', a: 'Say that plainly and write about the bereaved instead: what you have seen of them these last weeks, what you are willing to do, and that you expect nothing back. "I only met your father twice, and both times he..." is a perfectly good letter.' },
+      { q: 'When should I send a condolence letter?', a: 'Within two weeks if you can, but late is genuinely fine. A letter that arrives three months later, once the support has thinned out, is often the one people remember. If you have been putting it off because you do not know what to say, send it now anyway.' },
       { q: 'Is a letter better than a card?', a: 'Usually, yes. Bereaved families often keep letters that contain memories of the person, because those memories are new to them.' },
     ],
+    closing: 'Use their name, tell one story, offer one specific thing. That is a complete condolence letter, and it is already more than most people manage.',
     related: ['get-well', 'friendship', 'thank-you', 'farewell'],
   },
   {
@@ -450,18 +708,34 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'Leaving is the one moment when it is completely normal to say what someone meant to you. It is a shame to waste it on "keep in touch".',
       'Whether you are the one going or the one staying, name the specific thing you will miss. Vague warmth is forgotten by the following week.',
+      'There are two versions of this letter and they are not interchangeable. The one you write to a whole team is public, generous and slightly formal. The one you write to the person you actually sat beside for four years is not. Write the second one separately, even if you write the first one first — the second is the one that gets kept.',
     ],
     whatToSay: [
       'What you will genuinely miss — a routine, a joke, a person\'s presence at a particular time of day.',
       'Something you learned from them.',
+      'The thing you will miss that you never mentioned at the time.',
       'A moment you are taking with you.',
-      'How you would actually like to stay in contact, specifically.',
+      'What you hope for them next, specifically rather than warmly.',
+      'How you would actually like to stay in contact, with a real suggestion attached.',
+    ],
+    openers: [
+      'Friday is my last day, and there are about four people I actually want to say something to.',
+      'We spent [how long] [doing what] and I never once told you [what].',
+      'I am not going to do the "keep in touch" thing. Here is an actual plan.',
     ],
     avoid: 'Avoid "let\'s definitely stay in touch" with no plan attached. Suggest something real, even if it is a message every few months.',
+    example: {
+      generic: 'It has been great working with you all. Let\'s definitely keep in touch. Best of luck for the future!',
+      better: 'I will miss the 4pm coffee where you told me what was actually going on in this company. First Thursday of the month, same cafe — I will be there whether you turn up or not.',
+      why: '\'Keep in touch\' is the phrase people use instead of keeping in touch. A named ritual with a standing invitation is the version that survives past the first month.',
+    },
     faq: [
       { q: 'What do you write in a farewell letter?', a: 'Name what you will miss, what you learned, and one memory you are keeping. Then propose a concrete way to stay in contact rather than a vague intention.' },
+      { q: 'What do you write in a goodbye letter to colleagues?', a: 'One paragraph of genuine thanks, one specific memory of the team, and where to find you afterwards. Skip the corporate register and the list of achievements — nobody has ever been moved by a leaving email that reads like a performance review.' },
+      { q: 'Should I write to a friend who is moving away?', a: 'Yes, and give it to them a day or two before they go rather than at the airport. They will read it during the move itself, which is exactly when they will need it.' },
       { q: 'Is this suitable for leaving a job?', a: 'Yes. It works for colleagues and teams as well as friends — keep the tone warm and specific, and skip the corporate register.' },
     ],
+    closing: 'Write it before the final week, while there is still time to mean it. Letters drafted at 4pm on the last Friday read exactly like letters drafted at 4pm on the last Friday.',
     related: ['friendship', 'thank-you', 'congratulations', 'long-distance'],
   },
   {
@@ -476,19 +750,34 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'Every other letter has a date attached to it. A birthday, an anniversary, an apology owed. A just-because letter has nothing behind it except the fact that you were thinking about someone on an ordinary Wednesday, and that is exactly why it lands harder than any of them.',
       'There is no occasion to live up to, which means there is no pressure to be profound. Tell them what made you think of them today. That is the whole assignment.',
+      'The absence of an occasion also removes the standard. Nobody has expectations of a Wednesday letter, so anything true you write exceeds them. Four sentences about a song you heard on the way home is a complete just-because letter. You do not need a theme, a structure, or a reason you could defend to somebody else.',
     ],
     whatToSay: [
       'The specific thing that made you think of them — a song, a street, a stranger who laughed like they do.',
       'Something about them you have noticed recently but never mentioned.',
+      'What you were doing when you decided to write this.',
       'What your life looks like with them in it, versus how you imagine it without.',
-      'Why you are sending this now, on a day when nothing is happening.',
+      'One thing about right now you are grateful for, before it turns into a memory.',
+      'Why you are sending this today, when nothing is happening.',
+    ],
+    openers: [
+      'Nothing is wrong. I am saying that first, because an unexpected letter makes people nervous.',
+      '[A song / a street / a smell] happened to me today and here we are.',
+      'It is a Wednesday and I was thinking about you.',
     ],
     avoid: 'Avoid apologising for sending it. "Sorry, this is random" tells them to take it less seriously than they should. Just start with the thought.',
+    example: {
+      generic: 'Just wanted to say I love you and that I am thinking about you. Hope you are having a good day!',
+      better: 'There was a man on the 8:40 who laughed exactly like you do — the one where you have to put your coffee down first. I nearly said something to him.',
+      why: 'The entire point of a no-occasion letter is that something small set it off. Naming that small thing is the letter; everything after it is decoration.',
+    },
     faq: [
       { q: 'What is a just because letter?', a: 'A letter sent with no occasion behind it — no birthday, no anniversary, no argument to fix. It exists only because you were thinking of someone and decided to tell them, which is precisely what makes it memorable.' },
       { q: 'Is it strange to send a letter for no reason?', a: 'It is surprising, not strange. Unprompted letters are consistently the ones people report keeping, because the absence of an occasion proves nothing obliged you to write it.' },
+      { q: 'Who can I send a just because letter to?', a: 'Anyone you would not normally write to: a partner, a sibling, a parent, an old friend, the person who trained you at your first job. The less expected the recipient, the more work the letter does.' },
       { q: 'What should I write if nothing has happened?', a: 'Write the ordinary. What you ate, what you thought about on the walk home, the moment they crossed your mind. Everyday detail is what makes closeness, and it is the hardest thing to fake.' },
     ],
+    closing: 'Send it on the least significant day you can find. That is the entire trick, and it is why it works.',
     related: ['love', 'romantic-surprise', 'friendship', 'long-distance'],
   },
   {
@@ -503,19 +792,34 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'The hours after a good first date are strange. You want to say something, texting feels too small for it, and saying too much feels like a risk. A short letter solves both problems: it is more deliberate than a text and it asks nothing of them in return.',
       'The rule here is proportion. Be warm, be specific, and stop before you get ahead of where the two of you actually are.',
+      'There is a strategic case too, if you want one. Everybody texts. A short, specific letter is unusual enough to be remembered and low-pressure enough to be safe, and it signals attention rather than availability — which is the entire difference between interesting and eager.',
     ],
     whatToSay: [
       'One moment from the evening you have kept replaying — the smaller the better.',
       'Something they said that you have been thinking about since.',
       'What surprised you about them, in a good way.',
+      'Something you were nervous about beforehand, admitted lightly.',
+      'One thing you would like to know about them, so there is a thread to pull next time.',
       'A clear, low-pressure suggestion for seeing them again.',
     ],
+    openers: [
+      'I got home about an hour ago and I am still thinking about [the thing they said].',
+      'You were right about [small thing]. I checked.',
+      'That was the fastest three hours I have had in a while.',
+    ],
     avoid: 'Avoid declaring anything permanent. "I think you might be the one" after three hours is a lot of weight to hand someone. Warmth is attractive; certainty this early is not.',
+    example: {
+      generic: 'I had such an amazing time last night! You are really great and I would love to see you again soon.',
+      better: 'You said you have never once finished a book you disliked, and I have been quietly appalled by that all day. Thursday, same place, and you can defend yourself.',
+      why: 'Enthusiasm is generic and faintly anxious. One thing they said, remembered accurately and handed back lightly, is the proof that you were listening rather than waiting to talk.',
+    },
     faq: [
       { q: 'What should I write after a first date?', a: 'Name one specific moment you enjoyed, mention something they said that stayed with you, and suggest seeing them again. Three or four sentences is genuinely enough — brevity reads as confidence.' },
       { q: 'Is a letter after a first date too much?', a: 'Not if it is short and specific. What tips a note into "too much" is length and intensity, not the fact that you wrote it. A brief, observant letter reads as thoughtful.' },
+      { q: 'What if they do not reply?', a: 'Then you sent somebody a warm, specific note about an evening you enjoyed, which is not a thing to regret. Keep it short enough that no reply is required and there is nothing awkward left behind either way.' },
       { q: 'When should I send it?', a: 'The next day is ideal. Same night can read as impulsive, and a week later loses the thread of the evening.' },
     ],
+    closing: 'Write it tonight while you can still hear the way they talk, then send it tomorrow. The detail fades faster than you think.',
     related: ['love', 'romantic-surprise', 'secret-letter', 'valentines-day'],
   },
   {
@@ -530,20 +834,35 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'Some things are easier to say when your name is not attached to them. A secret admirer letter, a confession you are not ready to own, a piece of praise you want someone to have without the awkwardness of being thanked for it.',
       'ShareLove Letters is built for exactly this. You can write without an account, leave the sender name off, protect the letter with a password only they know, and share a private link that is encrypted at rest and permanently hidden from search engines. Nothing you write is ever published anywhere public.',
+      'Be honest with yourself about which kind of secret this is. A letter meant to make someone\'s week — anonymous praise, a quiet thank-you, a confession you have no intention of acting on — is a gift. A letter meant to make them respond, or guess, or feel watched, is not. Write the first kind.',
     ],
     whatToSay: [
       'The thing you have never said out loud, said plainly — anonymity is only worth using if you actually use it.',
       'A specific detail that proves you know them, without identifying yourself.',
+      'Something generous you never told them because being thanked for it would have been awkward.',
       'How long you have been carrying this.',
+      'One line that would make them smile even if they never work out who sent it.',
       'Whether you want a reply, and how they could give you one — or that you genuinely do not need one.',
     ],
+    openers: [
+      'You will not know who this is from, and that is deliberate.',
+      'This does not need an answer. I just wanted you to know it.',
+      'There is something I have been meaning to say for [how long], and no good way to say it with my name on it.',
+    ],
     avoid: 'Avoid anything that would feel like surveillance if read back to them. Anonymity plus too many details about their movements reads as unsettling rather than romantic. Warm and vague beats precise and watched.',
+    example: {
+      generic: 'You do not know me, but I have admired you from afar for a long time and I think you are perfect.',
+      better: 'You will not find out who sent this. I only wanted you to know that the way you handled the meeting on Tuesday was the most decent thing I have seen at work all year.',
+      why: '\'Admired from afar\' unsettles people because it is about the writer. Anonymous praise for one specific thing they did is a gift, because it is about them and it asks for nothing back.',
+    },
     faq: [
       { q: 'Can I send a letter anonymously?', a: 'Yes. You can write without creating an account and leave the sender name off entirely, so the recipient sees only the letter. The link you share is private and never appears in search results.' },
       { q: 'How do I make sure only one person can read it?', a: 'Add a password when you publish. The letter stays sealed until that password is entered, so even if the link is forwarded or found, the content stays private.' },
+      { q: 'Is an anonymous letter ever a bad idea?', a: 'Yes — whenever the recipient would find it unsettling rather than warm. Anonymity suits praise, gratitude and a light confession. It does not suit anything that puts pressure on someone to react, and it is never right for someone who has asked you to leave them alone.' },
       { q: 'Is the letter really private?', a: 'The content is encrypted with AES-256 before it is stored, every letter page carries a permanent noindex so search engines never list it, and there is no public archive — unlike sites that publish letters for anyone to browse.' },
       { q: 'Can I schedule a secret letter for later?', a: 'Yes. Set the date it opens and the link shows a sealed envelope with a countdown until then. Useful when you want to say something on a specific day but write it while the nerve lasts.' },
     ],
+    closing: 'Write it without your name, add a password if only one person should ever open it, and send it. Nothing you write here is ever published anywhere public.',
     related: ['love', 'valentines-day', 'first-date', 'romantic-surprise'],
   },
   {
@@ -558,19 +877,34 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'A surprise works on timing more than content. The same letter that would be pleasant on a Sunday afternoon becomes something else entirely when it arrives at 7am on a day they were dreading, or unlocks at midnight on a date they had forgotten you remembered.',
       'You have three levers here: what the letter says, when it opens, and what arrives with it. Use all three and an ordinary Tuesday becomes a memory.',
+      'The other half of a good surprise is deniability beforehand. Set the letter to unlock on its own and you never have to hand somebody a phone and watch their face — no "what is this", no build-up, no risk of giving it away over dinner the night before. It simply arrives, on the day you chose, while you are pretending nothing is happening.',
     ],
     whatToSay: [
       'Why today, specifically — even if the answer is "no reason, and that is the point".',
       'One memory they do not know you kept.',
+      'What they were like on a day you have never told them you remember.',
       'Something you have planned for them, revealed at the end of the letter.',
+      'The one sentence you want them to be left with when they close it.',
       'A line they can come back to on a bad day.',
     ],
+    openers: [
+      'Do not ask me why today. Just read it.',
+      'You have no idea this is coming, which is my favourite part.',
+      'I have been sitting on this for [how long].',
+    ],
     avoid: 'Avoid burying the surprise in three paragraphs of build-up. Let the letter be warm the whole way through, so the reveal is a gift rather than the only reason to keep reading.',
+    example: {
+      generic: 'Surprise! Just wanted to remind you how much I love you, today and always.',
+      better: 'It is Thursday, you have the finance meeting at eleven, and by the time you read this there is a table booked for eight under your name.',
+      why: 'A surprise is a piece of timing wearing a letter. Naming the exact ordinary day it landed on, and what is waiting at the end of it, is what turns a Thursday into a memory.',
+    },
     faq: [
       { q: 'How do I surprise someone with a letter?', a: 'Write it, add a virtual bouquet and a photo or two, then set the date and time it opens. Send the link in advance and it stays sealed behind a countdown, so the moment lands exactly when you chose.' },
-      { q: 'Can I send virtual flowers with the letter?', a: 'Yes — pick one of six bouquets when you compose and it blooms full-screen for them after the envelope opens, then stays alongside the letter.' },
+      { q: 'What are some romantic surprise ideas that cost nothing?', a: 'Nearly all the good ones are free: a letter that unlocks while they are at work, a playlist with a paragraph about each song, a letter hidden in a book they are halfway through, a photo you never sent with a paragraph about the day it was taken. Money buys objects; timing and attention buy the moment.' },
+      { q: 'Can I add music or photos to the letter?', a: 'Yes. Add photos, choose a theme, attach a song and pick a bouquet — the whole thing opens as a sealed envelope with their name on it, so the surprise has a moment of arrival instead of just appearing on a screen.' },
       { q: 'What is a good romantic surprise for a long distance partner?', a: 'Schedule several letters at once for different future dates. Something arrives on the weeks you are busy, and they never know which day it will be.' },
     ],
+    closing: 'Pick the day, pick the hour, and write it now. The surprise lives in the timing, and the timing has to be decided in advance.',
     related: ['love', 'just-because', 'anniversary', 'valentines-day'],
   },
   {
@@ -584,20 +918,35 @@ export const OCCASIONS: Occasion[] = [
     intro: [
       'A letter to your future self is a time capsule made of words. You write down who you are right now — the worries, the plans, the things you have not said out loud — and seal it until a date you choose.',
       'The value is not in predicting anything. It is in the gap between the person writing and the person reading, and how much that gap tells you when you finally close it.',
+      'Write to a specific person rather than to "future me". Address it to yourself at a stated age or on a stated date — to me at thirty-five, on the morning of my birthday — and the writing changes immediately. You stop making general observations about life and start telling somebody something.',
     ],
     whatToSay: [
       'What your ordinary day looks like right now, in unglamorous detail.',
       'What you are most worried about, named honestly.',
+      'The people who are in your life this month, listed by name — this is the detail you will find hardest to reconstruct later.',
+      'Something you currently believe that you suspect you will have changed your mind about.',
       'A promise you are making to yourself, and a date by which you mean it.',
       'A question you genuinely want your future self to answer.',
     ],
+    openers: [
+      'It is [date] and I am [where], writing this at [time].',
+      'By the time you read this, [the thing you expect] has either happened or it has not.',
+      'Here is what I am afraid of today, so you can tell me whether I was right.',
+    ],
     avoid: 'Avoid writing only about goals. In five years the goals will be the least interesting part — the texture of your ordinary life is what you will actually want back.',
+    example: {
+      generic: 'Hi future me! I hope you achieved your goals and you are happy and successful. Never give up!',
+      better: 'It is 11 March and I am in the flat on Marsden Road with the boiler that clicks. I am afraid I have picked the wrong career and I have told nobody except this page.',
+      why: 'Encouragement ages badly and is embarrassing to open. An address, a date and an honest fear is a photograph of a person, and a photograph is what you are actually posting into the future.',
+    },
     faq: [
       { q: 'How do I write a letter to my future self?', a: 'Describe your life as it is today in specific detail, name what you are afraid of and hoping for, make one promise, and ask one question. Then set the date you want it to open.' },
+      { q: 'What should I not write in a letter to my future self?', a: 'Skip the pep talk. Letters that spend their length encouraging a future version of you are the ones people find embarrassing to open. Facts, names, worries and dates age well; motivational language does not.' },
       { q: 'Is it really free, and do I need an account?', a: 'It is free and you can write without an account. Your letter is encrypted with AES-256 and stays sealed behind a countdown until the date you chose — no email verification, and nothing is ever published publicly.' },
       { q: 'Can I write to my future self and to someone else?', a: 'Both. Any letter can be scheduled, so you can seal one for yourself in five years and another for your daughter\'s eighteenth birthday.' },
       { q: 'How far in the future can I schedule the letter?', a: 'As far as you like — a year, five years, a decade or more. Set any future date and time, and the letter stays sealed behind a live countdown until it arrives, then opens with the usual envelope animation.' },
     ],
+    closing: 'Set the date, write it in one sitting, and do not edit out the parts that feel too ordinary. Those are the exact parts you will want back.',
     related: ['love', 'birthday', 'anniversary', 'friendship'],
     moat: {
       heading: 'How ShareLove compares to FutureMe',

@@ -122,6 +122,48 @@ export default function OccasionPage({ params }: Props) {
           </div>
         </section>
 
+        {/* Generic vs specific */}
+        <section className="max-w-3xl mx-auto px-6 pb-14">
+          <h2 className="font-serif text-2xl font-bold text-rose-900 mb-2 text-center">
+            The difference one specific line makes
+          </h2>
+          <p className="text-sm text-rose-700/60 text-center mb-8">
+            Same sentiment, two ways of saying it in a {occasion.name.toLowerCase()} letter.
+          </p>
+          <div className="grid sm:grid-cols-2 gap-5 mb-5">
+            <div className="bg-white rounded-2xl border border-rose-100 p-6 shadow-sm">
+              <p className="text-xs font-semibold uppercase tracking-wide text-rose-400 mb-3">Most people write</p>
+              <p className="text-sm text-rose-700/60 italic leading-relaxed">&ldquo;{occasion.example.generic}&rdquo;</p>
+            </div>
+            <div className="bg-white rounded-2xl border border-rose-200 p-6 shadow-sm">
+              <p className="text-xs font-semibold uppercase tracking-wide text-rose-500 mb-3">Write this instead</p>
+              <p className="text-sm text-rose-900/90 italic leading-relaxed">&ldquo;{occasion.example.better}&rdquo;</p>
+            </div>
+          </div>
+          <div className="bg-rose-50/70 border border-rose-100 rounded-2xl px-5 py-4">
+            <p className="text-sm text-rose-800/80 leading-relaxed">
+              <strong className="text-rose-900">Why it works:</strong> {occasion.example.why}
+            </p>
+          </div>
+        </section>
+
+        {/* Opening lines */}
+        <section className="max-w-3xl mx-auto px-6 pb-14">
+          <h2 className="font-serif text-2xl font-bold text-rose-900 mb-2 text-center">
+            Three ways to open a {occasion.name.toLowerCase()} letter
+          </h2>
+          <p className="text-sm text-rose-700/60 text-center mb-8">
+            The first line is the hard part. Steal one of these and fill in the brackets.
+          </p>
+          <div className="space-y-4">
+            {occasion.openers.map((line, i) => (
+              <div key={i} className="bg-white rounded-2xl border border-rose-100 p-6 shadow-sm">
+                <p className="font-serif text-rose-900/90 leading-relaxed italic">&ldquo;{line}&rdquo;</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* Templates */}
         <section className="max-w-4xl mx-auto px-6 pb-14">
           <h2 className="font-serif text-2xl font-bold text-rose-900 mb-2 text-center">
@@ -157,21 +199,21 @@ export default function OccasionPage({ params }: Props) {
                 <div className="text-3xl mb-3">✍️</div>
                 <h3 className="font-semibold text-rose-900 text-sm mb-1.5">Write it</h3>
                 <p className="text-xs text-rose-700/70 leading-relaxed">
-                  Pick a template, change the words, choose a theme. Add photos, a bouquet and your song if you like.
+                  Edit a template, pick a theme, add photos or a song.
                 </p>
               </div>
               <div>
                 <div className="text-3xl mb-3">🔗</div>
                 <h3 className="font-semibold text-rose-900 text-sm mb-1.5">Share a private link</h3>
                 <p className="text-xs text-rose-700/70 leading-relaxed">
-                  Only people with the link can read it. Add a password, or schedule the date it opens.
+                  Password-protect it, or set the date it unlocks.
                 </p>
               </div>
               <div>
                 <div className="text-3xl mb-3">💌</div>
                 <h3 className="font-semibold text-rose-900 text-sm mb-1.5">They open an envelope</h3>
                 <p className="text-xs text-rose-700/70 leading-relaxed">
-                  A sealed envelope with their name on it, which opens into your letter.
+                  Sealed, with their name on it, opening into your {occasion.name.toLowerCase()} letter.
                 </p>
               </div>
             </div>
@@ -226,11 +268,9 @@ export default function OccasionPage({ params }: Props) {
         {/* CTA */}
         <section className="max-w-2xl mx-auto px-6 pb-24 text-center">
           <h2 className="font-serif text-3xl font-bold text-rose-900 mb-4">
-            Ready to write it?
+            Ready to write your {occasion.name.toLowerCase()} letter?
           </h2>
-          <p className="text-rose-700/70 mb-8">
-            It takes a few minutes and costs nothing. They will keep it far longer than that.
-          </p>
+          <p className="text-rose-700/70 mb-8">{occasion.closing}</p>
           <Link
             href={`/write?type=${occasion.type}`}
             className="inline-block bg-rose-600 text-white px-8 py-3.5 rounded-full font-semibold text-sm hover:bg-rose-700 transition-colors shadow-md"
