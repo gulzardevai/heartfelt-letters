@@ -92,7 +92,7 @@ export default function Editor({ content, onChange, paperColor, textColor }: Pro
   return (
     <div className="border border-rose-100 rounded-2xl overflow-hidden bg-white shadow-paper">
       {/* Toolbar */}
-      <div className="flex flex-wrap gap-1 p-3 border-b border-rose-100 bg-rose-50/50">
+      <div className="no-print flex flex-wrap gap-1 p-3 border-b border-rose-100 bg-rose-50/50">
 
         <ToolBtn onMouseDown={cmd(e => e.chain().focus().toggleBold().run())} active={editor.isActive('bold')} title="Bold">
           <strong>B</strong>

@@ -278,9 +278,9 @@ function WritePageInner() {
 
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 to-pink-50">
+    <div className="write-page min-h-screen bg-gradient-to-br from-rose-50 to-pink-50">
       {/* Nav */}
-      <nav className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-rose-100">
+      <nav className="no-print sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-rose-100">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex flex-wrap items-center justify-between gap-y-2">
           <Link href="/" className="flex items-center gap-2">
             <span className="text-xl">💌</span>
@@ -350,6 +350,13 @@ function WritePageInner() {
                   </Link>
                 </>
               )}
+              <button
+                onClick={() => window.print()}
+                className="text-xs sm:text-sm px-3 sm:px-4 py-2 border border-rose-200 text-rose-700 rounded-xl hover:bg-rose-50 transition-colors whitespace-nowrap"
+                title="Print this letter"
+              >
+                🖨️ Print
+              </button>
               <button
                 onClick={handleSave}
                 disabled={isSaving}
@@ -490,7 +497,7 @@ function WritePageInner() {
             <div className="flex flex-col gap-4 lg:grid lg:grid-cols-3 lg:gap-6">
               {/* Left: Meta fields. `contents` on mobile so each card is a flex
                   item that can be ordered around the single editor instance. */}
-              <div className="contents lg:block lg:col-span-1 lg:space-y-4">
+              <div className="write-side contents lg:block lg:col-span-1 lg:space-y-4">
                 <div className="bg-white rounded-2xl p-5 shadow-paper border border-rose-100 order-1 lg:order-none">
                   <h3 className="font-serif font-semibold text-rose-900 mb-4 flex items-center gap-2">
                     {selectedTypeData?.emoji} Letter Details
@@ -798,7 +805,7 @@ export default function WritePage() {
       {/* Rendered outside the Suspense boundary so the FAQ + FAQPage JSON-LD ship in
           the initial server HTML (same guarantee as the H1 above). Sits below the
           full-height compose tool, so it never interferes with the editor UX. */}
-      <div className="bg-gradient-to-br from-rose-50 to-pink-50 border-t border-rose-100 pt-16">
+      <div className="no-print bg-gradient-to-br from-rose-50 to-pink-50 border-t border-rose-100 pt-16">
         <div className="max-w-2xl mx-auto px-6 pb-4">
           {WRITE_GUIDE.map(s => (
             <section key={s.heading} className="pb-8">

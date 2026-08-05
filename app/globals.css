@@ -193,6 +193,31 @@ body {
     box-shadow: none !important;
     border: 1px solid #fecdd3;
   }
+
+  /* Occasion pages: print only the fill-in-the-blank template sheet —
+     no nav, no footer, no marketing sections. */
+  .occasion-page > *:not(main) { display: none !important; }
+  .occasion-page main > section:not(.print-sheet) { display: none !important; }
+  .occasion-page .print-sheet {
+    max-width: none !important;
+    padding: 0 !important;
+  }
+  .occasion-page .print-sheet-card {
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+  }
+  .print-rule { border-color: #d6d3d1 !important; }
+
+  /* /write: print the letter being composed, without the compose chrome. */
+  .write-page .write-side { display: none !important; }
+  .write-page .tiptap-editor {
+    max-height: none !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
 }
 
 /* ===== Blog mobile CTA ===== */

@@ -65,6 +65,8 @@ const features = [
   { feature: 'Occasions beyond romance — grief, friendship, get-well, congratulations', us: true, dll: false, paperless: true, hallmark: true, canva: true, docs: true },
   { feature: '33 letter templates by type', us: true, dll: false, paperless: false, hallmark: true, canva: false, docs: false },
   { feature: '22 occasion guides: what to say, opening lines to steal, worked before/after examples', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
+  { feature: 'Printable fill-in-the-blank templates for every occasion', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
+  { feature: 'Print the letter on clean paper, no chrome (write online or by hand)', us: true, dll: false, paperless: false, hallmark: true, canva: true, docs: true },
   { feature: 'Rich text editor', us: true, dll: true, paperless: false, hallmark: false, canva: true, docs: true },
   { feature: 'Share via private link', us: true, dll: true, paperless: true, hallmark: false, canva: false, docs: true },
   { feature: 'Password protection', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: true },
