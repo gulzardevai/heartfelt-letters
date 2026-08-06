@@ -213,6 +213,13 @@ export default function OccasionPage({ params }: Props) {
             type={occasion.type}
             fillIn={occasion.fillIn}
           />
+          <p className="no-print text-center text-sm text-rose-700/60 mt-8">
+            Need a different one?{' '}
+            <Link href="/printable-letter-templates" className="text-rose-600 underline hover:text-rose-800">
+              Browse all free printable letter templates
+            </Link>
+            .
+          </p>
         </section>
 
         {/* How it works */}

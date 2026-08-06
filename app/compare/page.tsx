@@ -66,7 +66,7 @@ const features = [
   { feature: '49 letter templates by type', us: true, dll: false, paperless: false, hallmark: true, canva: false, docs: false },
   { feature: '24 occasion guides: what to say, opening lines to steal, worked before/after examples', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Seasonal guides — Christmas card wording, letters to Santa, Thanksgiving gratitude letters', us: true, dll: false, paperless: false, hallmark: true, canva: true, docs: false },
-  { feature: 'Printable fill-in-the-blank templates for every occasion', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
+  { feature: 'Free printable fill-in-the-blank letter templates — no PDF to buy, no watermark', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Print the letter on clean paper, no chrome (write online or by hand)', us: true, dll: false, paperless: false, hallmark: true, canva: true, docs: true },
   { feature: 'Rich text editor', us: true, dll: true, paperless: false, hallmark: false, canva: true, docs: true },
   { feature: 'Share via private link', us: true, dll: true, paperless: true, hallmark: false, canva: false, docs: true },
@@ -179,6 +179,7 @@ export default function ComparePage() {
                 <li>✓ Built only for writing letters — nothing else</li>
                 <li>✓ 49 templates across 12 emotional categories</li>
                 <li>✓ Occasion-by-occasion guides on what to say — and what to skip</li>
+                <li>✓ Free printable fill-in-the-blank letters — print, fill the blanks in pen, done</li>
                 <li>✓ Beautiful presentation for whoever receives it</li>
                 <li>✓ AES-256 encrypted — unreadable even in our database</li>
                 <li>✓ Share via private link, optionally with a password</li>

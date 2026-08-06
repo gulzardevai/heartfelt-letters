@@ -40,6 +40,13 @@ export default function LettersIndexPage() {
             Pick the moment you are writing for. Each guide covers what to say, what to skip,
             and gives you templates that open straight into the editor — all free, no account needed.
           </p>
+          <p className="text-sm text-rose-700/60 mt-5">
+            Writing it by hand?{' '}
+            <Link href="/printable-letter-templates" className="text-rose-600 underline hover:text-rose-800">
+              Print a free fill-in-the-blank letter template
+            </Link>{' '}
+            instead.
+          </p>
         </section>
 
         <section className="max-w-5xl mx-auto px-6 pb-20">

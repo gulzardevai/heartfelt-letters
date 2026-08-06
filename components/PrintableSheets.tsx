@@ -9,7 +9,9 @@ type Mode = 'fillin' | 'prompt'
 interface Props {
   name: string
   emoji: string
-  type: string
+  // LETTER_TYPES id to preselect in the editor. Omitted on the printables hub,
+  // where the sheet is not tied to one occasion.
+  type?: string
   fillIn: string[]
 }
 
@@ -103,7 +105,7 @@ export default function PrintableSheets({ name, emoji, type, fillIn }: Props) {
         <div className="flex flex-wrap justify-center gap-3">
           <PrintButton />
           <Link
-            href={`/write?type=${type}`}
+            href={type ? `/write?type=${type}` : '/write'}
             className="inline-block bg-rose-600 text-white px-5 py-2.5 rounded-full text-sm font-medium hover:bg-rose-700 transition-colors shadow-sm"
           >
             Fill it in online instead →

@@ -38,6 +38,7 @@ export default function Footer() {
               <li><Link href="/about" className="hover:text-rose-800 transition-colors">About</Link></li>
               <li><Link href="/letters" className="hover:text-rose-800 transition-colors">Letters by Occasion</Link></li>
               <li><Link href="/letter-themes" className="hover:text-rose-800 transition-colors">Letter Themes</Link></li>
+              <li><Link href="/printable-letter-templates" className="hover:text-rose-800 transition-colors">Printable Templates</Link></li>
               <li><Link href="/blog" className="hover:text-rose-800 transition-colors">Blog</Link></li>
               <li><Link href="/quotes" className="hover:text-rose-800 transition-colors">Quotes</Link></li>
               <li><Link href="/tools" className="hover:text-rose-800 transition-colors">Love Tools</Link></li>
