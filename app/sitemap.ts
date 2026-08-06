@@ -13,7 +13,7 @@ const BASE = 'https://www.shareloveletters.com'
 // a sitemap where every URL is always freshly modified trains Google to ignore
 // our lastmod values entirely, including the accurate ones on blog posts and
 // quizzes. Bump this constant whenever the static page copy is actually changed.
-const STATIC_LAST_MODIFIED = new Date('2026-08-04T00:00:00.000Z')
+const STATIC_LAST_MODIFIED = new Date('2026-08-06T00:00:00.000Z')
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [

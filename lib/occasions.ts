@@ -21,6 +21,13 @@ export type Occasion = {
   closing: string         // occasion-specific closing CTA copy
   related: string[]       // slugs
   moat?: { heading: string; body: string } // optional differentiator callout
+  // Optional "when is it?" block for occasions whose date moves, or differs by
+  // country (Grandparents Day is September in the US and October in the UK).
+  dates?: {
+    heading: string
+    rows: { region: string; date: string; rule: string }[]
+    note?: string
+  }
   // Optional explicit template list (TEMPLATES ids). When present, the occasion
   // page shows ONLY these templates instead of every template of `type` —
   // keeps occasion pages that share a letter type from duplicating each other.
@@ -488,7 +495,116 @@ export const OCCASIONS: Occasion[] = [
       { q: 'Is it too late to send a thank you letter?', a: 'Almost never. A thank-you that arrives years later is often more moving, because it proves the thing was not forgotten.' },
     ],
     closing: 'Send it late rather than never. Almost nobody in history has regretted receiving a thank-you letter years after the fact.',
-    related: ['mothers-day', 'fathers-day', 'friendship', 'birthday'],
+    related: ['gratitude', 'mothers-day', 'fathers-day', 'friendship'],
+  },
+  {
+    slug: 'gratitude',
+    type: 'thank_you',
+    templateIds: ['thank_you-gratitude', 'thank_you-thanksgiving', 'thank_you-gratitude-late'],
+    emoji: '🍂',
+    name: 'Gratitude',
+    h1: 'Gratitude Letter',
+    subheading: 'The one letter that reliably makes both people happier — the person who reads it and the person who wrote it.',
+    metaTitle: 'Gratitude Letter Template — Write a Free Gratitude Letter',
+    metaDescription: 'Free gratitude letter templates and prompts. Write a gratitude letter to family, a friend or a mentor — a Thanksgiving letter that says the thing you never got round to saying.',
+    intro: [
+      'A gratitude letter is different from a thank-you note. A thank-you note settles a debt: you did a thing, here is my acknowledgement, we are square. A gratitude letter does the opposite — it reopens something, on purpose, and tells a person that what they did is still working on you years later.',
+      'This is the single best-evidenced letter you can write. In the research on gratitude the effect on the writer is larger and longer-lasting than almost any other small intervention, and the effect on the reader is not subtle either: most people receiving one badly underestimate how much it will land, which is exactly why so few of these letters get written.',
+      'Thanksgiving is the obvious excuse, and around the table everyone gets one sentence and nobody says the real thing in time. Write the long version instead. It works just as well in March, to a nurse, a manager, a teacher, or the friend who drove four hours without being asked.',
+    ],
+    whatToSay: [
+      'The specific thing they did — described in enough detail that they can picture the day.',
+      'What was actually going on for you at the time, including the part you did not tell them.',
+      'The moment you realised it had stuck with you.',
+      'What is different now because of it — a habit, a job, a relationship, a way of handling something.',
+      'The part they almost certainly filed under "nothing", said back to them in full.',
+      'Whether you have passed it on to somebody else since, and what happened when you did.',
+    ],
+    openers: [
+      'I have been keeping a list of things I am grateful for, and you keep turning up on it in places you would not expect.',
+      'This is years late, and I decided late was better than never.',
+      'Around the table we get one sentence each. Here is the version I never manage to say in time.',
+    ],
+    avoid: 'Avoid the round-up format — "thank you for everything you do" covers so much ground it lands on nothing. One act, described properly, outperforms a list every time.',
+    example: {
+      generic: 'I am so grateful for you and everything you have done for me over the years. Thank you for always being there.',
+      better: 'You told me, in the car park after that meeting in 2019, that I was allowed to want a different job. I resigned eleven weeks later. You have never mentioned it since and I have thought about it roughly monthly.',
+      why: 'The first version is gratitude as a category — pleasant, forgettable, applicable to anyone. The second gives the person a date, a place, a sentence they said and a consequence they never knew about. That is what people re-read.',
+    },
+    fillIn: [
+      'Dear [their name],',
+      'I have been meaning to write this since [when], which is faintly embarrassing.',
+      'The thing I am grateful for is [the specific act] — you were [what they were doing].',
+      'What was actually going on for me at the time was [your situation].',
+      'What you almost certainly filed under nothing was [the small detail].',
+      'What is different now because of it is [the change].',
+      'Since then I have [passed it on / carried it forward] by [what you did].',
+      'Thank you. [Your name]',
+    ],
+    faq: [
+      { q: 'What is a gratitude letter?', a: 'A gratitude letter is a letter written to someone who did something that mattered to you, telling them exactly what it was and what it changed. Unlike a thank-you note it is not tied to a gift or a recent favour — it is usually about something they have long forgotten and you never have.' },
+      { q: 'How do I write a gratitude letter?', a: 'Pick one person and one act. Describe the act in enough detail that they can picture the day, say what was going on for you at the time, and then say what is different now because of it. Three paragraphs is plenty. Do not try to thank them for everything — the whole power of the letter is in the narrowness.' },
+      { q: 'What should I write in a Thanksgiving letter to my family?', a: 'Write the long version of what you would say around the table. One thing from this specific year, one thing about the person rather than the role, and one honest line about what you want from next year. Families notice immediately when a letter is about them rather than about family in general.' },
+      { q: 'Does a gratitude letter really make a difference?', a: 'Consistently, yes — and to both sides. Studies on gratitude letters find the writer\'s mood lifts for weeks, and receivers routinely report being far more moved than the sender predicted. Most people never send theirs because they assume it will be awkward. It almost never is.' },
+      { q: 'Is it weird to send a gratitude letter years later?', a: 'It is the opposite of weird — the delay is the proof. A letter that arrives years afterwards demonstrates the thing was never forgotten, which is precisely what makes it land harder than a same-week thank-you.' },
+      { q: 'Do I need an account to send one?', a: 'No. Write it here, share a private link, and they open a sealed envelope with their name on it. Free, encrypted, no sign-up — or print the fill-in-the-blank version and hand it over on paper.' },
+    ],
+    closing: 'Pick the person whose name came to mind while you were reading this. That is the letter. Write it now, before the feeling files itself away again.',
+    related: ['thank-you', 'christmas', 'grandparents', 'friendship'],
+  },
+  {
+    slug: 'christmas',
+    type: 'christmas',
+    templateIds: ['christmas-1', 'christmas-2', 'christmas-santa'],
+    emoji: '🎄',
+    name: 'Christmas',
+    h1: 'Christmas Letter',
+    subheading: 'What to write in a Christmas card when "Merry Christmas, love from all of us" is not quite enough.',
+    metaTitle: 'Christmas Letter Template — What to Write in a Christmas Card',
+    metaDescription: 'Free Christmas letter and card templates: what to write in a Christmas card, a family Christmas letter, and a printable letter to Santa. No account needed.',
+    intro: [
+      'Almost every Christmas card in circulation says the same eleven words, and the person opening it knows it. That is not a failure of effort — it is a failure of prompt. Nobody has ever been given anything useful to write in the space under the printed greeting.',
+      'The fix is one specific sentence about this particular year. Not a summary of the year, and definitely not a round-robin newsletter about the extension and the exam results — one moment involving the two of you, written in a way that could not be copied into anyone else\'s card.',
+      'And if you are here on behalf of a six-year-old: the letter to Santa is below, printable, with blanks in it. It is genuinely the best writing exercise a small child gets all year, and it is the one they will find in a box in twenty years.',
+    ],
+    whatToSay: [
+      'One moment from this specific year that involved both of you — dated, if you can manage it.',
+      'Something you noticed them do this year that they would not expect anyone to have noticed.',
+      'The honest state of your year, in one line, including the difficult part if there was one.',
+      'What you actually hope for them in the year ahead, phrased as something concrete rather than "all the best".',
+      'For family far away: one piece of ordinary detail about your daily life. It is what they are missing most.',
+      'For a child\'s letter to Santa: their name, their age, the good thing they did that nobody told them to do, and one realistic wish.',
+    ],
+    openers: [
+      'Before the day itself swallows everything, I wanted to write you something that is not shouted across a kitchen.',
+      'The thing I keep thinking about from this year is [moment], and it is not the one you would guess.',
+      'Merry Christmas. Here is the part I would never say out loud with everyone in the room.',
+    ],
+    avoid: 'Avoid the family newsletter voice — the third-person round-up of achievements. Write to one person, about one year, in the voice you use on the phone.',
+    example: {
+      generic: 'Merry Christmas and a Happy New Year! Wishing you all the best for 2027. Love from all of us.',
+      better: 'Merry Christmas. This is the year you drove over on a Sunday without being asked, sat in my kitchen and did not once suggest I cheer up. I have thought about that more than you would believe.',
+      why: 'A Christmas card that could be posted to anyone gets read once and stood on a shelf. A card that names one thing the recipient did this year gets kept in a drawer, and often gets mentioned back to you years later.',
+    },
+    fillIn: [
+      'Dear [their name],',
+      'Merry Christmas from [where you are / who is here].',
+      'The moment from this year I keep coming back to is [the moment].',
+      'Something I noticed you do this year that you would not expect anyone to notice: [what].',
+      'Honestly, my year has been [one true line about your year].',
+      'What I actually hope for you next year is [something concrete].',
+      'Save me a seat / see you [when]. [Your name]',
+    ],
+    faq: [
+      { q: 'What should I write in a Christmas card?', a: 'One specific thing from this year involving the person you are writing to, one line about how your own year actually went, and one concrete hope for theirs. Three sentences beats a paragraph of general good wishes, and it takes about ninety seconds.' },
+      { q: 'What do you write in a Christmas card to family you rarely see?', a: 'Ordinary detail. What your week looks like, what is in the flat, the name of the person you sit next to at work. Relatives who see you once a year are given headlines by everybody; the daily texture is the thing they are actually short of.' },
+      { q: 'How do I write a Christmas letter to my family?', a: 'Write to one person at a time rather than to the household. Name a moment from this year, say what you noticed about them, and be honest about your own year including the hard parts. Families can tell instantly when a letter is about them rather than about Christmas.' },
+      { q: 'How do you write a letter to Santa?', a: 'Start with the child\'s name, age and where they live, add the good thing they did this year that nobody made them do, then one main wish and one smaller one. Finish with what they will leave out on Christmas Eve. Print the fill-in-the-blank version on this page and let them write it themselves — the handwriting is the whole point.' },
+      { q: 'When should I send a Christmas letter?', a: 'Earlier than you think. Mid-December beats Christmas Eve, because a letter that arrives in the quiet week before gets read properly rather than in the middle of the unwrapping. If you write it now, you can schedule the link to unlock on Christmas morning.' },
+      { q: 'Can I send a Christmas letter online for free?', a: 'Yes. Write it here, share a private link, and they open a sealed envelope with their name on it — free, encrypted, no account needed. You can also add photos of the year and set it to open on Christmas Day itself.' },
+    ],
+    closing: 'Write it in the second week of December, schedule it to unlock on Christmas morning, and let it be the one thing that day that nobody has to tidy up afterwards.',
+    related: ['gratitude', 'thank-you', 'grandparents', 'long-distance'],
   },
   {
     slug: 'mothers-day',

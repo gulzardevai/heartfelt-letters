@@ -17,7 +17,7 @@ interface Props {
 const TYPE_EMOJI: Record<string, string> = {
   love: '💕', birthday: '🎂', anniversary: '💍', thank_you: '🙏',
   apology: '💙', friendship: '🤝', condolence: '🕊️', get_well: '🌸',
-  congratulations: '🎉', farewell: '👋', future_self: '🕰️',
+  congratulations: '🎉', farewell: '👋', christmas: '🎄', future_self: '🕰️',
 }
 
 const TYPE_LABEL: Record<string, string> = {
@@ -25,7 +25,7 @@ const TYPE_LABEL: Record<string, string> = {
   thank_you: 'Thank You', apology: 'Apology', friendship: 'Friendship Letter',
   condolence: 'Condolence', get_well: 'Get Well Soon',
   congratulations: 'Congratulations', farewell: 'Farewell Letter',
-  future_self: 'Letter to My Future Self',
+  christmas: 'Christmas Letter', future_self: 'Letter to My Future Self',
 }
 
 export default function LetterView({ letter, unlockPassword }: Props) {

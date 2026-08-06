@@ -25,6 +25,7 @@ export const LETTER_TYPES: LetterType[] = [
   { id: 'get_well', label: 'Get Well Soon', emoji: '🌸', color: 'text-pink-700', bgColor: 'bg-pink-50 border-pink-200' },
   { id: 'congratulations', label: 'Congratulations', emoji: '🎉', color: 'text-orange-700', bgColor: 'bg-orange-50 border-orange-200' },
   { id: 'farewell', label: 'Farewell', emoji: '👋', color: 'text-teal-700', bgColor: 'bg-teal-50 border-teal-200' },
+  { id: 'christmas', label: 'Christmas', emoji: '🎄', color: 'text-emerald-700', bgColor: 'bg-emerald-50 border-emerald-200' },
   { id: 'future_self', label: 'Future Self', emoji: '🕰️', color: 'text-indigo-700', bgColor: 'bg-indigo-50 border-indigo-200' },
 ]
 
@@ -169,6 +170,27 @@ export const TEMPLATES: Template[] = [
     preview: 'You never made speeches. You just showed up, every single time...',
     content: '<p>Dear Dad,</p><p>You never made speeches. You just showed up — every practice, every breakdown on the side of the road, every time I said I was fine and clearly wasn\'t. I used to think that was normal. I know better now.</p><p>Half the things I do well, I learned by standing next to you while you did them. You never once called it a lesson, which is probably why it stuck.</p><p>We are not big on saying this kind of thing out loud, so I am writing it instead: I noticed all of it. I am grateful for all of it. And when people say I remind them of you, I take it as a compliment every time.</p><p>Your kid,</p>',
   },
+  {
+    id: 'thank_you-gratitude',
+    type: 'thank_you',
+    name: 'A Gratitude Letter',
+    preview: 'I have been keeping a list of things I am grateful for, and you keep appearing on it...',
+    content: '<p>Dear [Name],</p><p>I have been keeping a mental list of the things I am grateful for this year, and your name keeps appearing on it in places you would not expect. Not the obvious moments — the small ones. The message you sent at exactly the right hour. The thing you remembered that I only mentioned once.</p><p>Gratitude is a strange thing to sit on. It builds up quietly and then it feels awkward to say out loud, so most of it never gets said at all. I decided to stop doing that, starting with you.</p><p>So: thank you. For [the specific thing], and for the general fact of you being in my life while all of this was going on.</p><p>With real gratitude,</p>',
+  },
+  {
+    id: 'thank_you-thanksgiving',
+    type: 'thank_you',
+    name: 'Thanksgiving to Family',
+    preview: 'Around the table we say what we are thankful for in one sentence. Here is the long version...',
+    content: '<p>Dear [Name],</p><p>Around the table we each get one sentence to say what we are thankful for, and I never manage to say the true thing in time. So here is the long version, written down where I cannot be interrupted by the potatoes.</p><p>I am thankful that you are the person who [what they do]. I am thankful for the year we just had, including the parts of it I would not choose again, because you were there for those too.</p><p>I know families are complicated and ours is no exception. That is exactly why I want this on paper: whatever else is true, I am glad you are mine.</p><p>Happy Thanksgiving. Save me a seat.</p><p>With love,</p>',
+  },
+  {
+    id: 'thank_you-gratitude-late',
+    type: 'thank_you',
+    name: 'The Thank You I Owe You',
+    preview: 'This is years late, and I decided late was better than never...',
+    content: '<p>Dear [Name],</p><p>This is years late. I thought about that for a while and decided late was still much better than never.</p><p>You probably do not remember [the thing you did]. You were not making a grand gesture — you were just being who you are on an ordinary day. But it landed, and it stayed, and it has quietly shaped how I have handled things ever since.</p><p>I have wondered a few times whether you know. I assume you do not, because people rarely do. So consider this the correction: it mattered, it is still mattering, and I have carried it further than you would guess.</p><p>Thank you, belatedly and completely,</p>',
+  },
 
   // APOLOGY (3)
   {
@@ -214,6 +236,27 @@ export const TEMPLATES: Template[] = [
     name: 'Through It All',
     preview: 'We have seen each other through a lot, you and I...',
     content: '<p>Dear [Name],</p><p>We have seen each other through a lot, you and I. Good years, hard years, the ones we do not talk about and the ones we will never stop laughing about. Through all of it, you have been a constant.</p><p>I think there is something really rare about a friendship that can hold all of that — the joy and the mess and everything in between — and still come out stronger on the other side. That is what we have.</p><p>Thank you for sticking around. Thank you for being you. I cannot imagine this life without you in it.</p><p>Always your friend,</p>',
+  },
+  {
+    id: 'friendship-sister',
+    type: 'friendship',
+    name: 'To My Sister',
+    preview: 'Nobody else remembers our childhood from the inside except you...',
+    content: '<p>Dear [Name],</p><p>There is exactly one other person alive who remembers our childhood from the inside, and it is you. That is a strange kind of intimacy — you were there for the version of me nobody else met, and you have never once let me rewrite it.</p><p>I do not think I have ever properly said what watching you become who you are has been like. You handled [the hard thing] in a way I am not sure I could have. I have told other people about it more than once.</p><p>We do the sibling thing where affection arrives disguised as insults, and I like that we do. This letter is me dropping the disguise for one page: I am lucky you are my sister, and I would pick you even if we had not been assigned to each other.</p><p>Love,</p>',
+  },
+  {
+    id: 'friendship-brother',
+    type: 'friendship',
+    name: 'To My Brother',
+    preview: 'We are not the kind of brothers who say this out loud, so I am writing it down...',
+    content: '<p>Dear [Name],</p><p>We are not really the kind of siblings who say this sort of thing out loud, which is precisely why I am writing it down instead. You can read it once and never mention it again — that is allowed.</p><p>I have been thinking about [the memory]. You were [what he was doing], and I have never told you that it changed how I saw the whole thing.</p><p>You are better at [the thing] than you give yourself credit for, and worse at [the other thing] than you think, and I say both with total affection. Whatever happens, you have got a brother in your corner permanently. No conditions on it.</p><p>Talk soon,</p>',
+  },
+  {
+    id: 'friendship-sibling-distance',
+    type: 'friendship',
+    name: 'The Sibling You Drifted From',
+    preview: 'We did not fall out. We just stopped being in the same room...',
+    content: '<p>Dear [Name],</p><p>We did not fall out. Nothing dramatic happened. We just stopped being in the same rooms, and then we stopped knowing the small things, and now I find out about your life in updates from other people.</p><p>I am not writing this to assign blame — most of the distance is just adulthood, and some of it is mine. I am writing because I noticed it, and noticing something and doing nothing has never worked out for me.</p><p>Here is the truthful part: I miss you. Not the idea of a sibling — you specifically, the one who [the specific thing]. If you wanted to fix a date and actually keep it, I would be there.</p><p>Whenever you are ready,</p>',
   },
 
   // CONDOLENCE (3)
@@ -306,6 +349,29 @@ export const TEMPLATES: Template[] = [
     name: 'Until We Meet Again',
     preview: 'Distance is just a number when the connection is real...',
     content: '<p>Dear [Name],</p><p>Distance is just a number when the connection is real. And what we have built — this friendship, this bond — is real enough to survive any miles between us.</p><p>You are taking a piece of my heart with you as you go. And that is okay, because you have always known how to take care of the things that matter.</p><p>Go and live beautifully. Come back and tell me everything. And know that no matter how much time passes, you will always have a home here — in this place and in my heart.</p><p>Until we meet again,</p>',
+  },
+
+  // CHRISTMAS (3)
+  {
+    id: 'christmas-1',
+    type: 'christmas',
+    name: 'Christmas Letter to Family',
+    preview: 'Before the day itself swallows everything, I wanted to write you something...',
+    content: '<p>Dear [Name],</p><p>Before the day itself swallows everything — the cooking, the visitors, the two hours of unwrapping — I wanted to write you something that is not shouted across a kitchen.</p><p>This year with you had [the good part] in it, and [the harder part] too. I would not want to have done either one without you. That is the whole of what I mean when I say Merry Christmas, and it is more than a card has room for.</p><p>What I want for next year is simple and I will say it plainly: more of the ordinary time with you. Not the big occasions. The Tuesdays.</p><p>Merry Christmas. I love you.</p>',
+  },
+  {
+    id: 'christmas-2',
+    type: 'christmas',
+    name: 'What to Write in a Christmas Card',
+    preview: 'A short, warm Christmas message that still sounds like a real person...',
+    content: '<p>Dear [Name],</p><p>Merry Christmas from all of us here.</p><p>The thing I keep thinking about from this year is [one specific moment with them]. It was small and I have brought it up three times since, which is how I know it mattered.</p><p>I hope your Christmas is a slow one — good food, nowhere urgent to be, and the people you actually like in the room. If the year ahead brings you [what you wish for them], I will be very pleased about it.</p><p>Thinking of you at Christmas and meaning it,</p>',
+  },
+  {
+    id: 'christmas-santa',
+    type: 'christmas',
+    name: 'Letter to Santa',
+    preview: 'Dear Santa, my name is... — a letter a child can fill in and send...',
+    content: '<p>Dear Santa,</p><p>My name is [your name] and I am [your age] years old. I live in [where you live], and this year I have been [mostly good / trying very hard].</p><p>Here is the good thing I did that nobody made me do: [what you did].</p><p>If you have room on the sleigh, what I would really like is [what you would like]. If that is too big, [something smaller] would be brilliant too.</p><p>I will leave out [what you will leave for Santa] for you and something for the reindeer as well. Please tell them thank you from me — I know it is a long way.</p><p>Merry Christmas, Santa.</p><p>Love, [your name]</p>',
   },
 
   // FUTURE SELF (3)

@@ -17,6 +17,7 @@ const LETTER_TYPE_EMOJIS: Record<string, string> = {
   anniversary: '💍',
   congratulations: '🎉',
   sympathy: '🕊️',
+  christmas: '🎄',
   future_self: '🕰️',
 }
 
