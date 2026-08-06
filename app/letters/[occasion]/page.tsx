@@ -113,6 +113,33 @@ export default function OccasionPage({ params }: Props) {
           </p>
         </section>
 
+        {/* When is it? — only for occasions whose date moves or differs by country */}
+        {occasion.dates && (
+          <section className="max-w-3xl mx-auto px-6 pb-14">
+            <div className="bg-white rounded-3xl border border-rose-100 shadow-sm p-8 md:p-10">
+              <h2 className="font-serif text-2xl font-bold text-rose-900 mb-6">
+                {occasion.dates.heading}
+              </h2>
+              <dl className="divide-y divide-rose-100">
+                {occasion.dates.rows.map(row => (
+                  <div key={row.region} className="py-3.5 flex flex-wrap items-baseline gap-x-3">
+                    <dt className="font-semibold text-rose-900 text-sm w-36 shrink-0">{row.region}</dt>
+                    <dd className="text-sm text-rose-800/80">
+                      {row.date}
+                      <span className="text-rose-700/50"> — {row.rule}</span>
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+              {occasion.dates.note && (
+                <div className="bg-rose-50/70 border border-rose-100 rounded-2xl px-5 py-4 mt-6">
+                  <p className="text-sm text-rose-800/80 leading-relaxed">{occasion.dates.note}</p>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
         {/* What to say */}
         <section className="max-w-3xl mx-auto px-6 pb-14">
           <div className="bg-white rounded-3xl border border-rose-100 shadow-sm p-8 md:p-10">

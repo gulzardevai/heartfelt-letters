@@ -64,7 +64,7 @@ const features = [
   { feature: 'Purpose-built for letters', us: true, dll: true, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Occasions beyond romance — grief, friendship, get-well, congratulations', us: true, dll: false, paperless: true, hallmark: true, canva: true, docs: true },
   { feature: '49 letter templates by type', us: true, dll: false, paperless: false, hallmark: true, canva: false, docs: false },
-  { feature: '24 occasion guides: what to say, opening lines to steal, worked before/after examples', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
+  { feature: '25 occasion guides: what to say, opening lines to steal, worked before/after examples', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Seasonal guides — Christmas card wording, letters to Santa, Thanksgiving gratitude letters', us: true, dll: false, paperless: false, hallmark: true, canva: true, docs: false },
   { feature: 'Free printable fill-in-the-blank letter templates — no PDF to buy, no watermark', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Print the letter on clean paper, no chrome (write online or by hand)', us: true, dll: false, paperless: false, hallmark: true, canva: true, docs: true },
