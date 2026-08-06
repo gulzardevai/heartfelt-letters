@@ -495,7 +495,7 @@ export const OCCASIONS: Occasion[] = [
       { q: 'Is it too late to send a thank you letter?', a: 'Almost never. A thank-you that arrives years later is often more moving, because it proves the thing was not forgotten.' },
     ],
     closing: 'Send it late rather than never. Almost nobody in history has regretted receiving a thank-you letter years after the fact.',
-    related: ['gratitude', 'mothers-day', 'fathers-day', 'friendship'],
+    related: ['gratitude', 'christmas', 'mothers-day', 'fathers-day'],
   },
   {
     slug: 'gratitude',
