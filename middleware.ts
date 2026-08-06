@@ -60,6 +60,20 @@ padding:13px 30px;border-radius:9999px;font-weight:600;font-size:14px}
 </div></body></html>`
 
 export async function middleware(request: NextRequest) {
+  // Only the production host may be indexed. Every Vercel deployment exposes
+  // the full site on throwaway hosts (<project>-<hash>.vercel.app, branch
+  // aliases, <project>.vercel.app); Google clusters them with production and
+  // sometimes elects one as canonical ("Duplicate, Google chose different
+  // canonical"). Any response served from a non-production host gets
+  // X-Robots-Tag: noindex, nofollow.
+  const PROD_HOST = 'www.shareloveletters.com'
+  const host = (request.headers.get('host') || '').toLowerCase().split(':')[0]
+  const isProdHost = host === PROD_HOST
+  const stamp = <T extends NextResponse>(res: T): T => {
+    if (!isProdHost) res.headers.set('X-Robots-Tag', 'noindex, nofollow')
+    return res
+  }
+
   let supabaseResponse = NextResponse.next({ request })
 
   const supabase = createServerClient(
@@ -90,7 +104,7 @@ export async function middleware(request: NextRequest) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/login'
     url.searchParams.set('redirectTo', pathname)
-    return NextResponse.redirect(url)
+    return stamp(NextResponse.redirect(url))
   }
 
   // Unpublished quizzes: 410 Gone (see note above). Only single-segment
@@ -118,7 +132,7 @@ export async function middleware(request: NextRequest) {
   const isToolResult = /^\/tools\/[^/]+\/r\//.test(pathname)
   if (isToolResult) {
     supabaseResponse.headers.set('X-Robots-Tag', 'noindex, follow')
-    return supabaseResponse
+    return stamp(supabaseResponse)
   }
 
   // User-generated quiz instances (/tools/quiz/<id>, its /scoreboard and /card,
@@ -129,7 +143,7 @@ export async function middleware(request: NextRequest) {
   const isQuizInstance = /^\/tools\/quiz\/.+/.test(pathname)
   if (isQuizInstance) {
     supabaseResponse.headers.set('X-Robots-Tag', 'noindex, follow')
-    return supabaseResponse
+    return stamp(supabaseResponse)
   }
 
   // Emit a self-referencing HTTP canonical header on public marketing pages.
@@ -143,7 +157,7 @@ export async function middleware(request: NextRequest) {
     supabaseResponse.headers.set('Link', `<${canonicalUrl}>; rel="canonical"`)
   }
 
-  return supabaseResponse
+  return stamp(supabaseResponse)
 }
 
 export const config = {
