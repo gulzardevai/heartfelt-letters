@@ -15,6 +15,17 @@ const BASE = 'https://www.shareloveletters.com'
 // quizzes. Bump this constant whenever the static page copy is actually changed.
 const STATIC_LAST_MODIFIED = new Date('2026-08-06T00:00:00.000Z')
 
+// Report the most recent real edit, never now(): a content refresh must move
+// lastmod (that is the only re-crawl signal Google gets), but an untouched post
+// must keep reporting its original date.
+function lastEditedAt(...candidates: (string | null | undefined)[]): Date {
+  const times = candidates
+    .filter((c): c is string => Boolean(c))
+    .map(c => new Date(c).getTime())
+    .filter(t => !Number.isNaN(t))
+  return times.length ? new Date(Math.max(...times)) : STATIC_LAST_MODIFIED
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticPages: MetadataRoute.Sitemap = [
     { url: BASE, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'weekly', priority: 1 },
@@ -56,12 +67,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const db = getSupabaseAdmin()
     const { data: posts } = await db
       .from('blog_posts')
-      .select('slug, published_at, created_at')
+      .select('slug, published_at, updated_at, created_at')
       .eq('published', true)
 
     blogPages = (posts ?? []).map(p => ({
       url: `${BASE}/blog/${p.slug}`,
-      lastModified: new Date(p.published_at ?? p.created_at),
+      lastModified: lastEditedAt(p.updated_at, p.published_at, p.created_at),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
     }))
