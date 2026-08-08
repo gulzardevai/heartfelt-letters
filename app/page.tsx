@@ -9,7 +9,7 @@ const faqJsonLd = {
   '@type': 'FAQPage',
   mainEntity: [
     { '@type': 'Question', name: 'Is ShareLove Letters really free?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Writing and sharing letters is completely free — templates, the editor, photo uploads, private links, and password protection included. No credit card, and you can even write without an account.' } },
-    { '@type': 'Question', name: 'Can I write a love letter without signing up?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Guests can write and share one letter per day with no account. Sign up free to save up to 10 letters a month.' } },
+    { '@type': 'Question', name: 'Can I write a love letter without signing up?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Guests can write and share a letter with no account at all. A guest link expires after 7 days; a free account keeps the letter for 30 days and shows you when it was opened and any replies it received. You can sign up after sending and keep the letter you just wrote.' } },
     { '@type': 'Question', name: 'How does the recipient open my letter?', acceptedAnswer: { '@type': 'Answer', text: 'You share a private link. The recipient sees a sealed envelope with their name on it — they tap to break the wax seal and the letter unfolds with a beautiful animation.' } },
     { '@type': 'Question', name: 'Are my letters private and secure?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. Every letter is encrypted at rest with AES-256 encryption. You can also add a password so only your recipient can open it. Letters are never public, indexed, or searchable.' } },
   ],
@@ -168,7 +168,7 @@ export default function Home() {
             <h3 className="font-serif text-xl font-bold text-rose-900 text-center mb-6">Frequently asked questions</h3>
             {[
               { q: 'Is ShareLove Letters really free?', a: 'Yes. Writing and sharing letters is completely free — templates, the editor, photo uploads, private links, and password protection included. No credit card, and you can even write without an account.' },
-              { q: 'Can I write a love letter without signing up?', a: 'Yes. Guests can write and share one letter per day with no account. Sign up free to save up to 10 letters a month and manage them from your dashboard.' },
+              { q: 'Can I write a love letter without signing up?', a: 'Yes. Guests can write and share a letter with no account at all. A guest link expires after 7 days; a free account keeps the letter for 30 days and shows you when it was opened and any replies it received. You can sign up after sending and keep the letter you just wrote.' },
               { q: 'How does the recipient open my letter?', a: 'You share a private link. When your recipient opens it, they see a sealed envelope with their name on it — they tap to break the wax seal and the letter unfolds with a beautiful animation.' },
               { q: 'Are my letters private and secure?', a: 'Yes. Every letter is encrypted at rest with AES-256 encryption — the same standard banks use — so no one can read it in storage. You can also add a password so only your recipient can open it. Letters are never public, indexed, or searchable.' },
             ].map(item => (

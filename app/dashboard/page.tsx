@@ -1,8 +1,11 @@
 'use client'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import toast from 'react-hot-toast'
+import { sendGAEvent } from '@next/third-parties/google'
 import { useAuth } from '@/components/AuthProvider'
 import { createSupabaseBrowserClient } from '@/lib/supabase-browser'
+import { takePendingClaim } from '@/lib/claim'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
@@ -31,13 +34,36 @@ type Letter = {
   expires_at: string | null
   open_at: string | null
   is_deleted: boolean
+  view_count: number | null
 }
 
 export default function DashboardPage() {
   const { user, profile, loading } = useAuth()
   const [letters, setLetters] = useState<Letter[]>([])
+  const [replyCounts, setReplyCounts] = useState<Record<string, number>>({})
   const [fetching, setFetching] = useState(true)
   const [copiedId, setCopiedId] = useState<string | null>(null)
+  const [claimTick, setClaimTick] = useState(0)
+
+  // Redeem a letter the user wrote as a guest before signing up. Runs before
+  // the fetch below re-runs, so the claimed letter appears on first paint.
+  useEffect(() => {
+    if (!user) return
+    const shareId = takePendingClaim()
+    if (!shareId) return
+    fetch(`/api/letters/${shareId}/claim`, { method: 'POST' })
+      .then(res => res.json().then(data => ({ ok: res.ok, data })))
+      .then(({ ok, data }) => {
+        if (ok && data.claimed && !data.alreadyOwned) {
+          toast.success('Your letter is saved to your account 💌')
+          sendGAEvent('event', 'letter_claimed')
+          setClaimTick(t => t + 1)
+        }
+      })
+      .catch(() => {
+        // The account still exists and the letter still works from its link.
+      })
+  }, [user])
 
   useEffect(() => {
     if (!user) return
@@ -49,10 +75,27 @@ export default function DashboardPage() {
       .eq('is_deleted', false)
       .order('created_at', { ascending: false })
       .then(({ data }) => {
-        setLetters((data as Letter[]) ?? [])
+        const rows = (data as Letter[]) ?? []
+        setLetters(rows)
         setFetching(false)
+
+        // Best-effort: if replies are not readable from the browser the cards
+        // simply omit the count rather than failing the whole dashboard.
+        if (rows.length === 0) return
+        supabase
+          .from('letter_replies')
+          .select('letter_id')
+          .in('letter_id', rows.map(l => l.id))
+          .then(({ data: replies }) => {
+            if (!replies) return
+            const counts: Record<string, number> = {}
+            for (const r of replies as { letter_id: string }[]) {
+              counts[r.letter_id] = (counts[r.letter_id] ?? 0) + 1
+            }
+            setReplyCounts(counts)
+          })
       })
-  }, [user])
+  }, [user, claimTick])
 
   const handleCopyLink = (shareId: string) => {
     navigator.clipboard.writeText(`${window.location.origin}/letter/${shareId}`)
@@ -149,6 +192,26 @@ export default function DashboardPage() {
                       ⏳ Opens {new Date(letter.open_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
                     </p>
                   )}
+                  {/* What the account is actually for: knowing what happened next */}
+                  <div className="flex items-center gap-2 mb-3">
+                    <span
+                      className={`inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full border ${
+                        (letter.view_count ?? 0) > 0
+                          ? 'bg-green-50 text-green-700 border-green-200'
+                          : 'bg-rose-50 text-rose-500 border-rose-100'
+                      }`}
+                    >
+                      {(letter.view_count ?? 0) > 0
+                        ? `👀 Opened ${letter.view_count}${letter.view_count === 1 ? ' time' : ' times'}`
+                        : '✉️ Not opened yet'}
+                    </span>
+                    {(replyCounts[letter.id] ?? 0) > 0 && (
+                      <span className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 rounded-full bg-rose-100 text-rose-700 border border-rose-200">
+                        💬 {replyCounts[letter.id]} {replyCounts[letter.id] === 1 ? 'reply' : 'replies'}
+                      </span>
+                    )}
+                  </div>
+
                   <div className="text-xs text-rose-400 mb-4">
                     <div>Created {new Date(letter.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}</div>
                     {letter.expires_at && (

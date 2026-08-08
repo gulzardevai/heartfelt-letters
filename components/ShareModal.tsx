@@ -1,8 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { sendGAEvent } from '@next/third-parties/google'
+import { useAuth } from '@/components/AuthProvider'
+import { setPendingClaim } from '@/lib/claim'
 
 interface Props {
   shareId: string
@@ -13,9 +15,19 @@ interface Props {
 }
 
 export default function ShareModal({ shareId, onClose, showPasswordSetup = false, initialHasPassword = false, senderName }: Props) {
+  const { user, loading: authLoading } = useAuth()
   const shareUrl = typeof window !== 'undefined'
     ? `${window.location.origin}/letter/${shareId}`
     : `/letter/${shareId}`
+
+  // Offer the account only after the letter exists and only to guests. Nothing
+  // is gated: the link above already works forever. The account buys the one
+  // thing a guest sender genuinely cannot have — knowing what happened next.
+  const showAccountOffer = !authLoading && !user
+
+  useEffect(() => {
+    if (showAccountOffer) sendGAEvent('event', 'account_offer_shown', { placement: 'share_modal' })
+  }, [showAccountOffer])
 
   const [copied, setCopied] = useState(false)
   const [hasPassword, setHasPassword] = useState(initialHasPassword)
@@ -190,6 +202,32 @@ export default function ShareModal({ shareId, onClose, showPasswordSetup = false
                 </button>
               </div>
             )}
+          </div>
+        )}
+
+        {/* Account offer — guests only, after the letter is already sent */}
+        {showAccountOffer && (
+          <div className="border border-rose-200 bg-rose-50/60 rounded-2xl p-4 mb-4">
+            <p className="text-sm font-semibold text-rose-900 mb-1">
+              This link expires in 7 days
+            </p>
+            <p className="text-xs text-rose-700/70 leading-relaxed mb-3">
+              Create a free account and this letter is yours to keep for 30 days — plus you&apos;ll
+              see when it&apos;s opened and read any replies. Guests never find out.
+            </p>
+            <a
+              href="/auth/signup"
+              onClick={() => {
+                setPendingClaim(shareId)
+                sendGAEvent('event', 'account_offer_clicked', { placement: 'share_modal' })
+              }}
+              className="block w-full text-center bg-rose-600 text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-rose-700 transition-colors shadow-sm"
+            >
+              Keep this letter — it&apos;s free
+            </a>
+            <p className="text-[11px] text-rose-400 text-center mt-2">
+              Your letter is already sent. This just keeps it.
+            </p>
           </div>
         )}
 
