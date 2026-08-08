@@ -16,6 +16,8 @@ import ShareModal from '@/components/ShareModal'
 import EmailModal from '@/components/EmailModal'
 import FaqBlock from '@/components/FaqBlock'
 import { useAuth } from '@/components/AuthProvider'
+import FinishingTouchesGate from '@/components/FinishingTouchesGate'
+import { setPendingDraft, takePendingDraft } from '@/lib/claim'
 import { sendGAEvent } from '@next/third-parties/google'
 
 const Editor = dynamic(() => import('@/components/Editor'), {
@@ -115,11 +117,44 @@ function WritePageInner() {
 
   const [showShareModal, setShowShareModal] = useState(false)
   const [showEmailModal, setShowEmailModal] = useState(false)
+  const [showTouchesGate, setShowTouchesGate] = useState(false)
   const [editLoading, setEditLoading] = useState(false)
+
+  // Extras a guest can compose with but not publish. Bouquet and song fall back
+  // harmlessly to "publish without them"; scheduling is blocked at the toggle
+  // instead, because silently sending a letter now that was meant for a future
+  // date is not a fallback, it is the wrong outcome.
+  const guestExtras: string[] = []
+  if (!authLoading && !user) {
+    if (selectedBouquet) guestExtras.push('your bouquet')
+    if (songUrl.trim()) guestExtras.push('your song')
+    if (scheduled && openAt) guestExtras.push('your delivery date')
+  }
 
   const editId = searchParams.get('edit')
   const replyTo = searchParams.get('replyTo')
   const replyToName = searchParams.get('to') || ''
+
+  // Returning from a signup that was triggered by the finishing-touches gate:
+  // put the letter back exactly as it was, extras included. Only for a signed-in
+  // user, and never over an edit of an existing letter.
+  useEffect(() => {
+    if (authLoading || !user || editId) return
+    const draft = takePendingDraft()
+    if (!draft) return
+    setSelectedType(draft.selectedType)
+    setContent(draft.content)
+    setTitle(draft.title)
+    setRecipientName(draft.recipientName)
+    setSenderName(draft.senderName)
+    setSelectedTheme(draft.selectedTheme)
+    setSelectedBouquet(draft.selectedBouquet)
+    setSongUrl(draft.songUrl)
+    setScheduled(draft.scheduled)
+    setOpenAt(draft.openAt)
+    toast.success('Your letter is back — finishing touches included 💐')
+    sendGAEvent('event', 'finishing_touches_draft_restored')
+  }, [authLoading, user, editId])
 
   useEffect(() => {
     if (!editId && replyTo) {
@@ -193,7 +228,8 @@ function WritePageInner() {
     setStep('write')
   }
 
-  const handleSave = async () => {
+  const handleSave = async (opts?: { dropExtras?: boolean }) => {
+    const dropExtras = opts?.dropExtras === true
     if (!selectedType) {
       toast.error('Please select a letter type')
       return
@@ -218,6 +254,15 @@ function WritePageInner() {
       toast.error('Song link must be from Spotify, Apple Music or YouTube')
       return
     }
+    // The letter is written and valid — this is the moment of highest
+    // commitment and the only place a guest is asked for an account. They can
+    // always publish without the extras, so this can never cost us a letter.
+    if (!dropExtras && guestExtras.length > 0 && !savedShareId) {
+      sendGAEvent('event', 'finishing_touches_gate_shown', { extras: guestExtras.join(',') })
+      setShowTouchesGate(true)
+      return
+    }
+
     setIsSaving(true)
     try {
       const isUpdate = !!savedShareId
@@ -232,9 +277,9 @@ function WritePageInner() {
           recipient_name: recipientName || null,
           sender_name: senderName || null,
           theme: selectedTheme,
-          open_at: scheduled && openAt ? new Date(openAt).toISOString() : null,
-          bouquet: selectedBouquet,
-          song_url: songUrl.trim() || null,
+          open_at: !dropExtras && scheduled && openAt ? new Date(openAt).toISOString() : null,
+          bouquet: dropExtras ? null : selectedBouquet,
+          song_url: dropExtras ? null : (songUrl.trim() || null),
         }),
       })
       if (!res.ok) {
@@ -358,7 +403,7 @@ function WritePageInner() {
                 🖨️ Print
               </button>
               <button
-                onClick={handleSave}
+                onClick={() => handleSave()}
                 disabled={isSaving}
                 className="text-xs sm:text-sm px-4 sm:px-5 py-2 bg-rose-600 text-white rounded-xl hover:bg-rose-700 transition-colors disabled:opacity-50 font-medium whitespace-nowrap"
               >
@@ -628,6 +673,7 @@ function WritePageInner() {
                     <input
                       type="checkbox"
                       checked={scheduled}
+                      disabled={!authLoading && !user}
                       onChange={e => {
                         setScheduled(e.target.checked)
                         if (e.target.checked && !openAt) {
@@ -638,11 +684,29 @@ function WritePageInner() {
                         }
                         if (e.target.checked) sendGAEvent('event', 'schedule_enabled')
                       }}
-                      className="w-4 h-4 accent-rose-600"
+                      className="w-4 h-4 accent-rose-600 disabled:opacity-40"
                     />
-                    <span className="text-sm text-rose-800">Schedule this letter</span>
+                    <span className={`text-sm ${!authLoading && !user ? 'text-rose-800/50' : 'text-rose-800'}`}>
+                      Schedule this letter
+                    </span>
                   </label>
-                  {scheduled && (
+                  {/* Blocked at the toggle rather than at publish: a guest link
+                      expires 7 days out, so a letter scheduled for months away
+                      could not survive to be delivered. */}
+                  {!authLoading && !user && (
+                    <p className="text-xs text-rose-500 leading-relaxed">
+                      Scheduling needs a free account — it&apos;s how we keep the letter alive until
+                      its date and tell you when it lands.{' '}
+                      <a
+                        href="/auth/signup"
+                        onClick={() => sendGAEvent('event', 'schedule_gate_clicked')}
+                        className="underline font-medium hover:text-rose-700"
+                      >
+                        Create one free
+                      </a>
+                    </p>
+                  )}
+                  {scheduled && user && (
                     <input
                       type="datetime-local"
                       value={openAt}
@@ -723,6 +787,31 @@ function WritePageInner() {
           </div>
         )}
       </div>
+
+      {showTouchesGate && (
+        <FinishingTouchesGate
+          extras={guestExtras}
+          onClose={() => setShowTouchesGate(false)}
+          onPublishWithout={() => {
+            setShowTouchesGate(false)
+            handleSave({ dropExtras: true })
+          }}
+          onBeforeSignup={() =>
+            setPendingDraft({
+              selectedType,
+              content,
+              title,
+              recipientName,
+              senderName,
+              selectedTheme,
+              selectedBouquet,
+              songUrl,
+              scheduled,
+              openAt,
+            })
+          }
+        />
+      )}
 
       {showShareModal && savedShareId && (
         <ShareModal shareId={savedShareId} onClose={() => setShowShareModal(false)} showPasswordSetup initialHasPassword={letterHasPassword} senderName={senderName} />
