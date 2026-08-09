@@ -3,6 +3,7 @@ import { getSupabaseAdmin } from '@/lib/supabase-admin'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
 import bcrypt from 'bcryptjs'
 import { encryptContent, decryptContent } from '@/lib/crypto'
+import { notifyLetterReply } from '@/lib/email'
 
 export const dynamic = 'force-dynamic'
 
@@ -141,6 +142,10 @@ export async function POST(
       .single()
 
     if (insertError) throw insertError
+
+    // Tell the author they have a reply. Resolves on every path, so a mail
+    // failure can never turn a saved reply into an error for the reader.
+    await notifyLetterReply(letter.id, authorName, user?.id || null)
 
     return NextResponse.json({
       reply: {

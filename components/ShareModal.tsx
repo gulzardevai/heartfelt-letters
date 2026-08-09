@@ -212,8 +212,8 @@ export default function ShareModal({ shareId, onClose, showPasswordSetup = false
               This link expires in 7 days
             </p>
             <p className="text-xs text-rose-700/70 leading-relaxed mb-3">
-              Create a free account and this letter is yours to keep for 30 days — plus you&apos;ll
-              see when it&apos;s opened and read any replies. Guests never find out.
+              Create a free account and this letter is yours to keep for 30 days — plus we&apos;ll
+              email you the moment it&apos;s opened, and again if they reply. Guests never find out.
             </p>
             <a
               href="/auth/signup"

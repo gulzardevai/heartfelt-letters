@@ -75,6 +75,7 @@ const features = [
   { feature: 'Envelope opening animation', us: true, dll: false, paperless: true, hallmark: false, canva: false, docs: false },
   { feature: 'Letter themes (vintage, midnight...)', us: true, dll: false, paperless: true, hallmark: true, canva: true, docs: false },
   { feature: 'Recipients can reply on the letter', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
+  { feature: 'Emails you when your letter is opened — and when someone replies', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Schedule a letter to open on a future date', us: true, dll: false, paperless: true, hallmark: true, canva: false, docs: false },
   { feature: 'Virtual flower bouquet with the letter', us: true, dll: true, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Attach a song (Spotify, Apple Music, YouTube)', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
@@ -184,6 +185,7 @@ export default function ComparePage() {
                 <li>✓ AES-256 encrypted — unreadable even in our database</li>
                 <li>✓ Share via private link, optionally with a password</li>
                 <li>✓ Recipients can reply right on the letter</li>
+                <li>✓ With a free account, we email you the moment your letter is opened — and again whenever a reply comes in</li>
                 <li>✓ Schedule any letter to unseal on a future date — to someone else or your future self</li>
                 <li>✓ Send a virtual bouquet with it — six styles, free, never wilts</li>
                 <li>✓ Attach your song — Spotify, Apple Music or YouTube, playable under the letter</li>
