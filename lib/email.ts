@@ -4,6 +4,16 @@ import { createSupabaseServerClient } from '@/lib/supabase-server'
 const SITE = 'https://www.shareloveletters.com'
 const FROM = 'Gulzar from ShareLove <hello@shareloveletters.com>'
 
+// GLOBAL EMAIL KILL SWITCH — every outbound email in the app funnels through
+// emailsEnabled(). Email is deliberately OFF until we launch it: set the Vercel
+// env var EMAILS_ENABLED=true to turn the whole system on. Nothing else needs
+// to change. While it is off, senders no-op silently and callers still behave
+// normally (send claims are released, so nobody is permanently marked as
+// "already emailed").
+export function emailsEnabled(): boolean {
+  return process.env.EMAILS_ENABLED === 'true'
+}
+
 function welcomeEmailHtml(firstName: string) {
   const features: Array<[string, string, string, string]> = [
     ['✍️', 'Write your first letter', 'Ten beautiful letter types, handwriting fonts, and templates to get you started.', `${SITE}/write`],
@@ -228,6 +238,7 @@ async function runNotifyLetterOpened(shareId: string, userAgent: string | null):
  * never blocks the caller for more than NOTIFY_TIMEOUT_MS.
  */
 export function notifyLetterOpened(shareId: string, userAgent: string | null): Promise<void> {
+  if (!emailsEnabled()) return Promise.resolve()
   return withTimeout(
     runNotifyLetterOpened(shareId, userAgent).catch(err => {
       console.error('[letter-opened-email] Unexpected error:', err)
@@ -276,6 +287,7 @@ export function notifyLetterReply(
   authorName: string | null,
   authorUserId: string | null
 ): Promise<void> {
+  if (!emailsEnabled()) return Promise.resolve()
   return withTimeout(
     runNotifyLetterReply(letterId, authorName, authorUserId).catch(err => {
       console.error('[letter-reply-email] Unexpected error:', err)
@@ -290,6 +302,10 @@ export function notifyLetterReply(
  */
 export async function sendWelcomeEmailIfNew(userId: string): Promise<void> {
   try {
+    // Checked BEFORE the welcome_sent_at claim: while email is paused nobody
+    // gets silently marked as already-welcomed, so everyone still receives
+    // their welcome email when we launch it.
+    if (!emailsEnabled()) return
     if (!process.env.RESEND_API_KEY) {
       console.log('[welcome-email] RESEND_API_KEY not set — skipping welcome email')
       return
