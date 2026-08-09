@@ -184,6 +184,7 @@ async function runNotifyLetterOpened(shareId: string, userAgent: string | null):
     .eq('share_id', shareId)
     .is('opened_notified_at', null)
     .not('user_id', 'is', null)
+    .not('is_deleted', 'is', true)
     .select('id, user_id, recipient_name')
     .maybeSingle()
 
