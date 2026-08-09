@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { Resend } from 'resend'
-import { emailsEnabled } from '@/lib/email'
+import { letterDeliveryEmailsEnabled } from '@/lib/email'
 
 export const dynamic = 'force-dynamic'
 
@@ -10,10 +10,10 @@ export async function POST(
   { params }: { params: { id: string } }
 ) {
   try {
-    // Email delivery is paused until we launch it (EMAILS_ENABLED env var).
+    // Paused until launch (LETTER_DELIVERY_EMAILS_ENABLED env var).
     // 503 so the UI can say "not available yet" rather than reporting success
     // for a letter that was never actually sent.
-    if (!emailsEnabled()) {
+    if (!letterDeliveryEmailsEnabled()) {
       return NextResponse.json(
         { error: 'Email delivery is not available yet.', code: 'EMAIL_DISABLED' },
         { status: 503 }

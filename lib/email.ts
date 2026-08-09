@@ -4,14 +4,25 @@ import { createSupabaseServerClient } from '@/lib/supabase-server'
 const SITE = 'https://www.shareloveletters.com'
 const FROM = 'Gulzar from ShareLove <hello@shareloveletters.com>'
 
-// GLOBAL EMAIL KILL SWITCH — every outbound email in the app funnels through
-// emailsEnabled(). Email is deliberately OFF until we launch it: set the Vercel
-// env var EMAILS_ENABLED=true to turn the whole system on. Nothing else needs
-// to change. While it is off, senders no-op silently and callers still behave
-// normally (send claims are released, so nobody is permanently marked as
-// "already emailed").
-export function emailsEnabled(): boolean {
-  return process.env.EMAILS_ENABLED === 'true'
+// EMAIL SWITCHES — every outbound email funnels through one of these.
+//
+// Welcome email is LIVE: a new signup should hear from us immediately, and it
+// is a single one-off send per person rather than ongoing noise.
+// Set WELCOME_EMAILS_ENABLED=false to pause it.
+export function welcomeEmailsEnabled(): boolean {
+  return process.env.WELCOME_EMAILS_ENABLED !== 'false'
+}
+
+// Activity notifications (letter opened, someone replied) stay OFF until we
+// deliberately launch them: set ACTIVITY_EMAILS_ENABLED=true.
+export function activityEmailsEnabled(): boolean {
+  return process.env.ACTIVITY_EMAILS_ENABLED === 'true'
+}
+
+// "Email this letter to the recipient" delivery stays OFF until launch:
+// set LETTER_DELIVERY_EMAILS_ENABLED=true.
+export function letterDeliveryEmailsEnabled(): boolean {
+  return process.env.LETTER_DELIVERY_EMAILS_ENABLED === 'true'
 }
 
 function welcomeEmailHtml(firstName: string) {
@@ -20,7 +31,9 @@ function welcomeEmailHtml(firstName: string) {
     ['✉️', 'Sealed with a wax seal', 'Every letter arrives as a real envelope your reader opens — wax seal, paper, and all.', `${SITE}/write`],
     ['🔐', 'Private by design', 'AES-256 encryption at rest, optional password, and hidden from search engines.', `${SITE}/letters/secret-letter`],
     ['⏰', 'Send a letter to the future', 'Schedule a letter to unlock on a birthday, an anniversary — or years from now.', `${SITE}/letters/future-self`],
-    ['🔔', 'Know the moment it lands', 'We email you the first time your letter is opened, and whenever someone replies to it.', `${SITE}/dashboard`],
+    // NOTE: no "we email you when it's opened" promise here — activity emails
+    // are switched off (activityEmailsEnabled). Re-add that row when they launch.
+    ['🔔', 'Track every letter you send', 'See when your letters are opened and read every reply from your dashboard.', `${SITE}/dashboard`],
     ['💐', 'Bouquets & songs', 'Attach a virtual flower bouquet or a song so your letter arrives with music.', `${SITE}/write`],
     ['🧠', '"How well do you know me?" quiz', 'Build a playful quiz and see how well they really know you.', `${SITE}/tools/quiz/create`],
     ['💬', '700+ quotes', 'Stuck for words? Browse hundreds of love, gratitude, and friendship quotes.', `${SITE}/quotes`],
@@ -238,7 +251,7 @@ async function runNotifyLetterOpened(shareId: string, userAgent: string | null):
  * never blocks the caller for more than NOTIFY_TIMEOUT_MS.
  */
 export function notifyLetterOpened(shareId: string, userAgent: string | null): Promise<void> {
-  if (!emailsEnabled()) return Promise.resolve()
+  if (!activityEmailsEnabled()) return Promise.resolve()
   return withTimeout(
     runNotifyLetterOpened(shareId, userAgent).catch(err => {
       console.error('[letter-opened-email] Unexpected error:', err)
@@ -287,7 +300,7 @@ export function notifyLetterReply(
   authorName: string | null,
   authorUserId: string | null
 ): Promise<void> {
-  if (!emailsEnabled()) return Promise.resolve()
+  if (!activityEmailsEnabled()) return Promise.resolve()
   return withTimeout(
     runNotifyLetterReply(letterId, authorName, authorUserId).catch(err => {
       console.error('[letter-reply-email] Unexpected error:', err)
@@ -302,10 +315,10 @@ export function notifyLetterReply(
  */
 export async function sendWelcomeEmailIfNew(userId: string): Promise<void> {
   try {
-    // Checked BEFORE the welcome_sent_at claim: while email is paused nobody
-    // gets silently marked as already-welcomed, so everyone still receives
-    // their welcome email when we launch it.
-    if (!emailsEnabled()) return
+    // Checked BEFORE the welcome_sent_at claim: if welcome email is ever
+    // paused, nobody gets silently marked as already-welcomed, so everyone
+    // still receives theirs when it is switched back on.
+    if (!welcomeEmailsEnabled()) return
     if (!process.env.RESEND_API_KEY) {
       console.log('[welcome-email] RESEND_API_KEY not set — skipping welcome email')
       return
