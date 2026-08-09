@@ -3,7 +3,6 @@ import { getSupabaseAdmin } from '@/lib/supabase-admin'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
 import bcrypt from 'bcryptjs'
 import { decryptContent } from '@/lib/crypto'
-import { notifyLetterOpened } from '@/lib/email'
 
 export const dynamic = 'force-dynamic'
 
@@ -52,10 +51,6 @@ export async function GET(
       const valid = await bcrypt.compare(password, letter.password_hash!)
       if (!valid) {
         return NextResponse.json({ error: 'Incorrect password' }, { status: 401 })
-      }
-      // The unlock is the real "opened" moment for a protected letter.
-      if (letter.user_id && !letter.opened_notified_at) {
-        await notifyLetterOpened(params.id, req.headers.get('user-agent'))
       }
     }
 

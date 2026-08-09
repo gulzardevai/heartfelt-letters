@@ -167,13 +167,13 @@ async function runNotifyLetterOpened(shareId: string, userAgent: string | null):
   if (!process.env.RESEND_API_KEY) return
   if (userAgent && BOT_UA.test(userAgent)) return
 
-  const viewerId = await getViewerId()
   const admin = getSupabaseAdmin()
 
-  // Claim the send: only the request whose conditional update actually
+  // Claim the send first: only the request whose conditional update actually
   // matches a row (user_id set, opened_notified_at still NULL) sends. This is
-  // what makes it one email per letter rather than one per view, and it is
-  // race-safe across concurrent opens.
+  // what makes it one email per letter rather than one per view, it is
+  // race-safe across concurrent opens, and it means a guest letter or an
+  // already-notified one costs exactly one query and nothing else.
   const { data: claimed } = await admin
     .from('letters')
     .update({ opened_notified_at: new Date().toISOString() })
@@ -186,6 +186,7 @@ async function runNotifyLetterOpened(shareId: string, userAgent: string | null):
   if (!claimed?.user_id) return
 
   // The author checking their own link is not an open.
+  const viewerId = await getViewerId()
   if (viewerId && viewerId === claimed.user_id) {
     await admin.from('letters').update({ opened_notified_at: null }).eq('id', claimed.id)
     return

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Letter } from '@/lib/supabase'
 import LetterView from '@/components/LetterView'
 import BouquetReveal from '@/components/BouquetReveal'
@@ -18,6 +18,7 @@ type Stage = 'closed' | 'opening' | 'bouquet' | 'open'
 
 export default function EnvelopeReveal({ letter, unlockPassword }: { letter: Letter; unlockPassword?: string }) {
   const [stage, setStage] = useState<Stage>('closed')
+  const notified = useRef(false)
   const emoji = TYPE_EMOJI[letter.type] || '💌'
   const theme = getTheme(letter.theme)
   const themed = theme.id !== 'classic'
@@ -27,6 +28,14 @@ export default function EnvelopeReveal({ letter, unlockPassword }: { letter: Let
     if (stage !== 'closed') return
     setStage('opening')
     sendGAEvent('event', 'envelope_opened', { letter_type: letter.type })
+    // Tell the author their letter was opened. Breaking the seal is the
+    // truest signal — a link preview or a page load that never gets clicked
+    // is not an open. Background and best-effort: the endpoint sends at most
+    // one email per letter and stays quiet about the author's own opens.
+    if (!notified.current) {
+      notified.current = true
+      fetch(`/api/letters/${letter.share_id}/opened`, { method: 'POST' }).catch(() => {})
+    }
     setTimeout(() => setStage(bouquet ? 'bouquet' : 'open'), 1900)
   }
 

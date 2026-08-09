@@ -1,9 +1,7 @@
 export const dynamic = 'force-dynamic'
 
 import { notFound } from 'next/navigation'
-import { headers } from 'next/headers'
 import { supabase } from '@/lib/supabase'
-import { notifyLetterOpened } from '@/lib/email'
 import EnvelopeReveal from '@/components/EnvelopeReveal'
 import { decryptContent } from '@/lib/crypto'
 import PasswordGateWrapper from './PasswordGateWrapper'
@@ -65,16 +63,7 @@ export default async function LetterPage({ params }: Props) {
     .then(() => {})
 
   if (letter.has_password) {
-    // A password wall is not an open — the notification fires from
-    // GET /api/letters/[id] once the password actually checks out.
     return <PasswordGateWrapper shareId={params.id} />
-  }
-
-  // First open of a letter that belongs to an account: tell its author.
-  // Guarded on the row we already have so an unowned or already-notified
-  // letter costs nothing, and the helper never throws or stalls the render.
-  if (letter.user_id && !letter.opened_notified_at) {
-    await notifyLetterOpened(params.id, headers().get('user-agent'))
   }
 
   return <EnvelopeReveal letter={{ ...letter, content: decryptContent(letter.content), password_hash: null }} />
