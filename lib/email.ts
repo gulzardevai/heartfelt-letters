@@ -131,13 +131,17 @@ function personalEmailHtml(paragraphs: string[]): string {
 async function sendPersonalEmail(to: string, subject: string, paragraphs: string[]): Promise<void> {
   const { Resend } = await import('resend')
   const resend = new Resend(process.env.RESEND_API_KEY)
-  await resend.emails.send({
+  const { error } = await resend.emails.send({
     from: FROM,
     to,
     subject,
     text: paragraphs.join('\n\n'),
     html: personalEmailHtml(paragraphs),
   })
+  // The SDK reports API failures in `error` rather than throwing, so without
+  // this a rejected send would look like a delivered one — and the "already
+  // notified" claim would be kept for an email nobody ever received.
+  if (error) throw new Error(`Resend refused the send: ${error.name} — ${error.message}`)
 }
 
 async function getOwnerContact(userId: string): Promise<{ email: string; firstName: string } | null> {
