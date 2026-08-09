@@ -41,7 +41,7 @@ export const OCCASIONS: Occasion[] = [
     emoji: '💍',
     name: 'Anniversary',
     h1: 'Anniversary Letter',
-    metaTitle: 'Anniversary Letter Template — Write a Free Anniversary Letter',
+    metaTitle: 'Anniversary Letter Template — Write a Free Letter Online',
     metaDescription: 'Free anniversary letter templates. Write a heartfelt anniversary letter to your husband, wife or partner and share it as a sealed envelope — no account needed.',
     intro: [
       'An anniversary letter is the one gift that gets better with time. Flowers fade and dinners end, but a letter that names exactly what this year held — the hard month, the running joke, the ordinary Tuesday you would not trade — is something they will still have in ten years.',

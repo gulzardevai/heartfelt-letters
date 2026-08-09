@@ -9,7 +9,7 @@ import { OCCASIONS } from '@/lib/occasions'
 export const metadata: Metadata = {
   title: 'Printable Letter Templates — Free Fill-in-the-Blank Letters',
   description:
-    'Free printable letter templates for every occasion. Fill in the blanks and the page becomes the letter — love, thank you, Christmas, gratitude and more. No account, no watermark, no payment.',
+    'Free printable letter templates for every occasion — love, thank you, Christmas, gratitude and more. Fill in the blanks and print. No account, no watermark.',
   alternates: { canonical: 'https://www.shareloveletters.com/printable-letter-templates' },
   openGraph: {
     title: 'Printable Letter Templates — Free Fill-in-the-Blank Letters',
