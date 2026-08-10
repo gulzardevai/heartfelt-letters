@@ -32,6 +32,13 @@ export type Occasion = {
   // page shows ONLY these templates instead of every template of `type` —
   // keeps occasion pages that share a letter type from duplicating each other.
   templateIds?: string[]
+  // Optional full-text template library (TEMPLATES ids that carry a `body`).
+  // Rendered in full, high on the page, with copy buttons — for occasions whose
+  // searchers want the actual letter, not a description of one.
+  templateLibrary?: { heading: string; intro: string; ids: string[] }
+  // Optional contextual in-prose link to a related page, rendered as a body
+  // paragraph under the intro. Used for internal linking with exact anchors.
+  proseLink?: { before: string; anchor: string; href: string; after: string }
 }
 
 export const OCCASIONS: Occasion[] = [
@@ -48,6 +55,12 @@ export const OCCASIONS: Occasion[] = [
       'You do not need to summarise your whole relationship. Pick this year. What changed, what held, what you noticed about them that you never got around to saying out loud.',
       'There is a practical argument for it too. The dinner gets photographed and forgotten; the letter goes in a drawer and gets found again during a bad week two years later. Write one every anniversary and the stack turns into a record of the marriage — the year you moved, the year one of you was ill, the year nothing happened and it was lovely.',
     ],
+    proseLink: {
+      before: 'An anniversary letter is a love letter with a date attached, so if you want more romantic starting points than the three below, our ',
+      anchor: 'love letter templates',
+      href: '/letters/love',
+      after: ' are eight complete fill-in-the-blank letters, including one written specifically for an anniversary.',
+    },
     whatToSay: [
       'One specific memory from this year, told in detail — not "we had a great trip" but the moment on the trip you keep replaying.',
       'Something they did that you never properly thanked them for.',
@@ -93,12 +106,27 @@ export const OCCASIONS: Occasion[] = [
     templateIds: ['love-1', 'love-2', 'love-3'],
     emoji: '💕',
     name: 'Love Letter',
-    h1: 'Love Letter',
-    metaTitle: 'Love Letter Template — Write a Free Love Letter Online',
-    metaDescription: 'Free love letter templates for him and her. Write a romantic love letter online and share it as a sealed envelope, privately and free.',
+    h1: 'Love Letter Templates',
+    subheading: 'Eight complete love letter templates you can copy, fill in and send — short, long, long-distance, anniversary, first "I love you", sorry, for him and for her.',
+    metaTitle: '8 Free Love Letter Templates You Can Copy Tonight',
+    metaDescription: 'Eight free love letter templates to copy and fill in: short, long, long-distance, anniversary, first I love you, sorry, for him and for her. No account.',
+    templateLibrary: {
+      heading: 'Eight free love letter templates',
+      intro: 'Every one of these is a finished letter with the personal parts left as brackets. Copy it, replace the brackets, done — or open it in the editor and share it as a sealed envelope.',
+      ids: [
+        'love-short',
+        'love-long',
+        'love-long-distance',
+        'love-anniversary',
+        'love-first',
+        'love-sorry',
+        'love-for-her',
+        'love-for-him',
+      ],
+    },
     intro: [
       'A love letter is not a performance. The ones that land are rarely the most poetic — they are the most observed. They prove you have been paying attention.',
-      'Start from a template if the blank page is intimidating, then replace the general lines with your own details. The template is scaffolding, not the building.',
+      'A love letter template can only take you so far, and it is worth being honest about where that is. It gets you past the blank page, gives the letter a shape and tells you what belongs in each paragraph. The part that makes someone sit down halfway through is the part only you can supply: the specific evening, the habit nobody else has noticed, the thing you were wrong about at the start. Take the structure below and replace every bracket with one of those.',
       'There is no correct length and no correct day. Love letters written on ordinary evenings, with nothing prompting them, are the ones people keep in a drawer for a decade — precisely because nothing obliged you to write them. If you are waiting for the right occasion, you are waiting for permission you already have.',
     ],
     whatToSay: [
@@ -131,6 +159,8 @@ export const OCCASIONS: Occasion[] = [
       'Love, [your name]',
     ],
     faq: [
+      { q: 'What should a love letter template include?', a: 'A usable love letter template gives you five things: an opening that starts inside a memory rather than with a greeting, one specific moment described in detail, something you noticed that they think nobody notices, an honest line about what they changed in you, and a closing promise small enough to keep. Every template on this page follows that order, with the personal parts left as brackets for you to fill in.' },
+      { q: 'Are these love letter templates free?', a: 'Yes — all eight, with no account, no email address, no watermark and nothing to pay for. Copy the text straight off this page, or press "Write this one" to open it in the editor, add photos or a song, and share it as a sealed envelope on a private link.' },
       { q: 'How do I start a love letter?', a: 'Skip the throat-clearing. Open in the middle of a memory: "You were standing in the kitchen doorway when I realised..." It pulls the reader straight in.' },
       { q: 'What do I write if I am bad with words?', a: 'Write badly, but be specific. "I like that you laugh at your own jokes before you finish them" is not elegant and it is worth ten polished sentences. Nobody has ever re-read a love letter for its prose.' },
       { q: 'Should a love letter be handwritten or typed?', a: 'Handwriting is slow and lovely. A typed letter arrives instantly, can be read on a phone in the middle of a workday, and can carry photos, a song and a sealed envelope — which matters more when you are apart. Write it here and copy it out by hand later if you want both.' },
@@ -204,6 +234,12 @@ export const OCCASIONS: Occasion[] = [
       'Write the mundane details. What the walk to work looked like, what you ate, what made you laugh. Closeness is built out of unremarkable information.',
       'Time zones are the reason the form suits you. A message sent while you are awake usually lands while they are asleep and gets read half-conscious at 6am. A letter sits and waits — they pick the moment they open it, which means they get to read it properly, twice, with a coffee.',
     ],
+    proseLink: {
+      before: 'Distance changes the details, not the shape of the letter, so if you want the full structure written out for you, our ',
+      anchor: 'love letter templates',
+      href: '/letters/love',
+      after: ' include a complete long-distance version alongside seven others you can copy and fill in.',
+    },
     whatToSay: [
       'What your daily routine actually looks like right now, in detail.',
       'A moment this week you wished they had been there for.',

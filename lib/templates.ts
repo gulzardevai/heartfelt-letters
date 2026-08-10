@@ -12,6 +12,11 @@ export type Template = {
   name: string
   preview: string
   content: string
+  // Optional extras used by the on-page template library (see LOVE_LIBRARY).
+  // `body` is the same letter as plain-text paragraphs so an occasion page can
+  // render it in full and offer a one-click copy without parsing HTML.
+  when?: string
+  body?: string[]
 }
 
 export const LETTER_TYPES: LetterType[] = [
@@ -29,7 +34,153 @@ export const LETTER_TYPES: LetterType[] = [
   { id: 'future_self', label: 'Future Self', emoji: '🕰️', color: 'text-indigo-700', bgColor: 'bg-indigo-50 border-indigo-200' },
 ]
 
+// The love letter template library rendered in full on /letters/love.
+// Every letter here is complete and fill-in-the-blank: the sentences are
+// written, the personal parts are bracketed prompts. Kept as plain ASCII so a
+// copy-paste into any app, phone or card stays clean.
+type LibrarySeed = { id: string; name: string; when: string; preview: string; body: string[] }
+
+const LOVE_LIBRARY_SEED: LibrarySeed[] = [
+  {
+    id: 'love-short',
+    name: 'Short love letter template',
+    when: 'You want to say something true tonight without writing an essay. Under a hundred words and it still lands.',
+    preview: 'This one is short on purpose. I did not want to wait until I had something clever...',
+    body: [
+      'Dear [their name],',
+      'This one is short on purpose. I did not want to wait until I had something clever to say, because that is how [how long] has already gone by without me saying it.',
+      'I love [one specific thing they do]. Not the big obvious thing. That one.',
+      'That is the whole letter. You were thought about today, on an ordinary [day of the week], by someone who is not going anywhere.',
+      'Love, [your name]',
+    ],
+  },
+  {
+    id: 'love-long',
+    name: 'Long love letter template',
+    when: 'An anniversary, a birthday, or the night you finally write the letter you have been rehearsing for a year.',
+    preview: 'I have been trying to write this for a while, which should probably tell you something...',
+    body: [
+      'Dear [their name],',
+      'I have been trying to write this for [how long], which should probably tell you something about how badly I want to get it right.',
+      'Here is where I want to start. [Where you were], on [when], and you were [what they were doing]. Nothing about that day was supposed to matter. It is the one I keep coming back to, because that was the moment I stopped wondering how I felt about you.',
+      'There is a thing you do that I am fairly sure you do not know you do. [The small habit.] I have watched you do it for [how long] and never mentioned it, partly because I did not want you to stop.',
+      'Before you, I believed [what you used to think about love, or about yourself]. You never argued me out of it. You just kept [what they did], quietly, until one day I noticed I did not believe it any more.',
+      'The hardest stretch we have had so far was [the difficult time]. What I remember is not the difficulty. It is that you [what they did while it was happening]. I have never properly thanked you for that, so: thank you.',
+      'What I promise you is [one promise you actually intend to keep]. Not a grand one. One I can hand you again next year and still mean.',
+      'Love, [your name]',
+    ],
+  },
+  {
+    id: 'love-long-distance',
+    name: 'Long-distance love letter template',
+    when: 'Different cities, different time zones, and a countdown to the next time you are in the same room.',
+    preview: 'It is late here, which means it is the middle of your afternoon, which means you are probably...',
+    body: [
+      'Dear [their name],',
+      'It is [the time] here, which means it is [their time] there, which means you are probably [what they are doing right now]. I like knowing that. It is the closest thing I get to being in the room.',
+      'The distance is hardest at [the specific moment: the end of the day, Sunday mornings, the second something good happens and you cannot turn and tell them]. Not the big occasions. That part surprised me.',
+      'Here is what happened this week that I would have told you across a table: [the small story]. It is not important. That is exactly why I want you to have it.',
+      'I keep [the object or habit that stands in for them] where I can see it, because [why].',
+      '[Number] days until [the next time you see each other]. I have counted more than once, and I will count again after I send this.',
+      'Until then: I am here, I am not tired of this, and I would rather have you at [the distance] than anyone else at arm\'s length.',
+      'Love, [your name]',
+    ],
+  },
+  {
+    id: 'love-anniversary',
+    name: 'Anniversary love letter template',
+    when: 'One year or thirty. Write about this year specifically instead of summarising all of them.',
+    preview: 'Years today. I am not going to write about all of them, only about this one...',
+    body: [
+      'Dear [their name],',
+      '[Number] years today. I am not going to try to write about all of them. Only this one.',
+      'The moment I keep coming back to from this year is not [the obvious highlight]. It is [the ordinary moment] - you were [what they were doing], and I remember thinking [what you thought].',
+      'This year you did something I never properly thanked you for: [the thing]. I noticed it at the time and said nothing, which is a habit I would like to break, starting here.',
+      'Then [the hard part of the year] happened, and you were [how they were] the whole way through it. That is the part of this year I will still be telling people about in ten years.',
+      'The small thing I have quietly fallen in love with is [the habit]. You have no idea you do it.',
+      'Next year I want us to [something concrete and small enough to actually happen].',
+      'Happy anniversary. I would do all [number] again, including the parts we do not talk about.',
+      'Love, [your name]',
+    ],
+  },
+  {
+    id: 'love-first',
+    name: 'First "I love you" letter template',
+    when: 'You want to say it properly, in one piece, without losing your nerve halfway through.',
+    preview: 'I am writing this rather than saying it because I want to get it out in one piece...',
+    body: [
+      'Dear [their name],',
+      'I am writing this rather than saying it out loud, because I want to get it out in one piece and I know myself well enough to know I would not.',
+      'I love you.',
+      'I have known since [when], which is longer than I have let on. It was not a dramatic moment. It was [what was happening] - you were [what they were doing] - and something in me went quiet and certain about it.',
+      'I am not asking you for anything back today. This is not a test and there is no correct reply. If you need time, take it. I promise not to be strange about it.',
+      'What I do want you to know is that this is not a word I use lightly, and I sat with it for [how long] before I wrote it down.',
+      'I love you. I would like to keep saying it.',
+      '[Your name]',
+    ],
+  },
+  {
+    id: 'love-sorry',
+    name: 'Sorry love letter template',
+    when: 'You were wrong, you know exactly how, and you want to apologise without it turning into an argument.',
+    preview: 'I am sorry for what I did. Not for how it came across - for the thing itself...',
+    body: [
+      'Dear [their name],',
+      'I am sorry for [exactly what you did]. Not for how it came across, not for the misunderstanding. For the thing itself.',
+      'Here is what I understand now that I did not understand then: [what it actually cost you]. You told me at the time and I defended myself instead of listening, and that is a second thing to be sorry for.',
+      'I am not going to explain why I did it. There is a reason, it is not a good enough one, and putting it in this letter would only turn an apology into an argument.',
+      'What I am changing is [the specific, checkable thing]. Not "I will do better" - [the actual concrete change]. You are allowed to hold me to it, and you are allowed to be unconvinced for a while.',
+      'I am not asking you to be over it by the time you finish reading this. I am asking you to believe that I know what I did.',
+      'I am sorry. I love you.',
+      '[Your name]',
+    ],
+  },
+  {
+    id: 'love-for-her',
+    name: 'Love letter template for her',
+    when: 'You want to name the thing she does that she is certain nobody notices.',
+    preview: 'I want to tell you something I am fairly sure you think nobody has noticed...',
+    body: [
+      'Dear [her name],',
+      'I want to tell you something I am fairly sure you think nobody has noticed.',
+      '[The thing she does that goes unthanked: the way she checks on people, the thing she carries for everyone, how she is with her family.] I have watched you do it for [how long]. You never announce it and nobody thanks you for it, so I am thanking you for it here, in writing, where you can keep it.',
+      'The version of you I love most is not the one everyone else gets. It is [the private version: first thing in the morning, halfway through a story, the second you forget to perform].',
+      'You changed how I see [what]. I used to think [what you thought]. Now I think [what you think], and that is entirely your doing.',
+      'I am not going anywhere. [One specific promise you mean.]',
+      'Love, [your name]',
+    ],
+  },
+  {
+    id: 'love-for-him',
+    name: 'Love letter template for him',
+    when: 'He gets thanked for what he does and almost never told what you think of him.',
+    preview: 'There is something men do not get told often enough, so I am putting it in writing...',
+    body: [
+      'Dear [his name],',
+      'There is something men do not get told nearly often enough, so I am putting it in writing where you can read it twice.',
+      'I am proud of you. Not for [the obvious achievement] - for [the unglamorous thing: the shift you took, the call you made, the way you kept going when stopping would have been easier]. I saw it. I have described it to other people when you were not in the room.',
+      'You do not have to hold it together in here. Whatever it costs you to be the person who has it handled, I would rather you put it down with me than carry it neatly.',
+      'The small thing I love, which you probably think is nothing: [the habit].',
+      'You are [what he is to you], and I would pick you again on the ordinary days, not only the good ones.',
+      'Love, [your name]',
+    ],
+  },
+]
+
+const LOVE_LIBRARY: Template[] = LOVE_LIBRARY_SEED.map(s => ({
+  id: s.id,
+  type: 'love',
+  name: s.name,
+  when: s.when,
+  preview: s.preview,
+  body: s.body,
+  content: s.body.map(p => `<p>${p}</p>`).join(''),
+}))
+
 export const TEMPLATES: Template[] = [
+  // LOVE — the fill-in-the-blank library shown in full on /letters/love
+  ...LOVE_LIBRARY,
+
   // LOVE (3)
   {
     id: 'love-1',
@@ -400,4 +551,11 @@ export const TEMPLATES: Template[] = [
 
 export function getTemplatesForType(type: string): Template[] {
   return TEMPLATES.filter((t) => t.type === type)
+}
+
+// Full templates (with `body`) for the on-page library, in the order requested.
+export function getTemplateLibrary(ids: string[]): Template[] {
+  return ids
+    .map(id => TEMPLATES.find(t => t.id === id))
+    .filter((t): t is Template => Boolean(t?.body))
 }

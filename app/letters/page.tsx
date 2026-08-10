@@ -39,6 +39,11 @@ export default function LettersIndexPage() {
           <p className="text-rose-700/70 text-lg leading-relaxed">
             Pick the moment you are writing for. Each guide covers what to say, what to skip,
             and gives you templates that open straight into the editor — all free, no account needed.
+            The most-used set is the{' '}
+            <Link href="/letters/love" className="text-rose-600 underline hover:text-rose-800">
+              love letter templates
+            </Link>
+            : eight complete letters, written out in full with the personal parts left blank.
           </p>
           <p className="text-sm text-rose-700/60 mt-5">
             Writing it by hand?{' '}

@@ -123,6 +123,14 @@ export default function PrintableLetterTemplatesPage() {
             Everything here is free and instant. No account, no email address, no watermark, no
             checkout. Print as many as you want, for yourself or for a whole classroom.
           </p>
+          <p className="text-rose-700/70 leading-relaxed mb-4 text-left sm:text-center">
+            This page is for paper. If you would rather read the whole letter on screen and send it
+            without a printer, our{' '}
+            <Link href="/letters/love" className="text-rose-600 underline hover:text-rose-800">
+              love letter templates
+            </Link>{' '}
+            are eight complete romantic letters written out in full, each one copyable in a click.
+          </p>
 
           <a
             href="#occasions"

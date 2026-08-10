@@ -63,7 +63,8 @@ const competitors = [
 const features = [
   { feature: 'Purpose-built for letters', us: true, dll: true, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Occasions beyond romance — grief, friendship, get-well, congratulations', us: true, dll: false, paperless: true, hallmark: true, canva: true, docs: true },
-  { feature: '49 letter templates by type', us: true, dll: false, paperless: false, hallmark: true, canva: false, docs: false },
+  { feature: '57 letter templates by type', us: true, dll: false, paperless: false, hallmark: true, canva: false, docs: false },
+  { feature: 'Eight full love letter templates written out on the page — copy them, no sign-up, no paywall', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: '25 occasion guides: what to say, opening lines to steal, worked before/after examples', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Seasonal guides — Christmas card wording, letters to Santa, Thanksgiving gratitude letters', us: true, dll: false, paperless: false, hallmark: true, canva: true, docs: false },
   { feature: 'Free printable fill-in-the-blank letter templates — no PDF to buy, no watermark', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
@@ -93,7 +94,7 @@ const features = [
 const faqs = [
   {
     q: 'What is the best free online love letter website?',
-    a: 'ShareLove Letters is a free, purpose-built love letter website: 49 templates, a rich-text editor, photo uploads, private shareable links and a real envelope-opening experience — with no account required to start and no paid tiers. Unlike design tools or e-card sites, it is built for one thing: writing meaningful, long-form letters to the people you love.',
+    a: 'ShareLove Letters is a free, purpose-built love letter website: 57 templates, including eight full fill-in-the-blank love letter templates you can copy straight off the page, a rich-text editor, photo uploads, private shareable links and a real envelope-opening experience — with no account required to start and no paid tiers. Unlike design tools or e-card sites, it is built for one thing: writing meaningful, long-form letters to the people you love.',
   },
   {
     q: 'Is ShareLove Letters really free?',
@@ -178,7 +179,7 @@ export default function ComparePage() {
               <p className="text-xs text-rose-200 mb-3 font-medium uppercase tracking-wide">Purpose-built letter writing</p>
               <ul className="text-sm text-rose-100 space-y-1.5 leading-relaxed">
                 <li>✓ Built only for writing letters — nothing else</li>
-                <li>✓ 49 templates across 12 emotional categories</li>
+                <li>✓ 57 templates across 12 emotional categories, including 8 copyable love letter templates</li>
                 <li>✓ Occasion-by-occasion guides on what to say — and what to skip</li>
                 <li>✓ Free printable fill-in-the-blank letters — print, fill the blanks in pen, done</li>
                 <li>✓ Beautiful presentation for whoever receives it</li>

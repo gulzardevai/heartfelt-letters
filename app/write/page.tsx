@@ -480,8 +480,10 @@ function WritePageInner() {
               <p className="text-sm text-rose-700/60 leading-relaxed mb-3">
                 Whether you need a romantic love letter for her or him, a heartfelt birthday letter,
                 an anniversary letter, a sincere apology, or a thank-you note for a friend or parent —
-                start from one of our 33 free templates and make it your own with custom fonts, colors,
-                and photos.
+                start from one of our {TEMPLATES.length} free templates and make it your own with custom fonts, colors,
+                and photos. For romance specifically, the{' '}
+                <Link href="/letters/love" className="text-rose-600 underline hover:text-rose-800">love letter templates</Link>{' '}
+                are written out in full as fill-in-the-blank letters you can copy.
               </p>
               <p className="text-sm text-rose-700/60 leading-relaxed">
                 Every letter is free to write and share: your recipient opens a private link and finds a

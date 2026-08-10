@@ -5,13 +5,13 @@ import Footer from '@/components/Footer'
 import { THEMES } from '@/lib/themes'
 
 export const metadata: Metadata = {
-  title: 'Love Letter Themes — Vintage, Midnight & Aesthetic Templates',
+  title: 'Love Letter Themes — Vintage, Midnight & Aesthetic Paper',
   description:
-    'Dress your letter in a theme: a vintage love letter template, moonlit midnight, soft blossom or timeless classic — each with a matching envelope. Free.',
+    'Dress your letter in a theme: aged vintage parchment, moonlit midnight, soft blossom or timeless classic — each with a matching sealed envelope. Free.',
   alternates: { canonical: 'https://www.shareloveletters.com/letter-themes' },
   openGraph: {
     images: [{ url: '/opengraph-image.png', width: 1200, height: 630, alt: 'ShareLove Letters — write a letter they will keep' }],
-    title: 'Love Letter Themes — Vintage, Midnight & Aesthetic Letter Templates',
+    title: 'Love Letter Themes — Vintage, Midnight & Aesthetic Paper',
     description:
       'Choose a vintage, midnight, blossom or classic theme for your love letter — each with a matching sealed envelope. Free, private, no account needed.',
     url: 'https://www.shareloveletters.com/letter-themes',
@@ -108,6 +108,15 @@ export default function LetterThemesPage() {
           <p className="text-rose-700/70 leading-relaxed mb-4 text-left sm:text-center">
             Every theme is free, works without an account, and keeps your letter privately encrypted.
             Pick one below to open the editor with it already applied.
+          </p>
+          <p className="text-rose-700/70 leading-relaxed mb-4 text-left sm:text-center">
+            A theme decides how the letter looks, not what it says. If the words are the part you are
+            stuck on, start from one of our{' '}
+            <Link href="/letters/love" className="text-rose-600 underline hover:text-rose-800">
+              love letter templates
+            </Link>{' '}
+            — eight complete fill-in-the-blank letters — and then come back and dress it in whichever
+            theme suits the two of you.
           </p>
         </section>
 

@@ -4,9 +4,10 @@ import type { Metadata } from 'next'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import PrintableSheets from '@/components/PrintableSheets'
+import TemplateLibrary from '@/components/TemplateLibrary'
 import { breadcrumbLd } from '@/lib/schema'
 import { OCCASIONS, getOccasion } from '@/lib/occasions'
-import { getTemplatesForType, TEMPLATES } from '@/lib/templates'
+import { getTemplateLibrary, getTemplatesForType, TEMPLATES } from '@/lib/templates'
 
 interface Props {
   params: { occasion: string }
@@ -45,6 +46,12 @@ export default function OccasionPage({ params }: Props) {
         .map(id => TEMPLATES.find(t => t.id === id))
         .filter((t): t is NonNullable<typeof t> => Boolean(t))
     : getTemplatesForType(occasion.type)
+  // Some occasion names already end in "letter" (Love Letter, Secret Letter);
+  // appending another one gives "love letter letter". Build the phrase once.
+  const lower = occasion.name.toLowerCase()
+  const subject = lower.endsWith('letter') ? lower : `${lower} letter`
+  const Subject = subject.charAt(0).toUpperCase() + subject.slice(1)
+  const library = occasion.templateLibrary ? getTemplateLibrary(occasion.templateLibrary.ids) : []
   const related = occasion.related.map(getOccasion).filter(Boolean)
 
   const breadcrumbJsonLd = breadcrumbLd([
@@ -96,12 +103,21 @@ export default function OccasionPage({ params }: Props) {
               {p}
             </p>
           ))}
+          {occasion.proseLink && (
+            <p className="text-rose-700/70 leading-relaxed mb-4 text-left sm:text-center">
+              {occasion.proseLink.before}
+              <Link href={occasion.proseLink.href} className="text-rose-600 underline hover:text-rose-800">
+                {occasion.proseLink.anchor}
+              </Link>
+              {occasion.proseLink.after}
+            </p>
+          )}
 
           <Link
             href={`/write?type=${occasion.type}`}
             className="inline-block mt-6 bg-rose-600 text-white px-8 py-3.5 rounded-full font-semibold text-sm hover:bg-rose-700 transition-colors shadow-md"
           >
-            Write your {occasion.name.toLowerCase()} letter — free
+            Write your {subject} — free
           </Link>
           <p className="text-xs text-rose-400 mt-3">No account needed • Free • Encrypted</p>
           <p className="text-sm text-rose-700/60 mt-4">
@@ -112,6 +128,30 @@ export default function OccasionPage({ params }: Props) {
             and write it by hand.
           </p>
         </section>
+
+        {/* Full template library — the templates themselves, high on the page */}
+        {occasion.templateLibrary && library.length > 0 && (
+          <section id="templates" className="max-w-3xl mx-auto px-6 pb-14 scroll-mt-20">
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-rose-900 mb-2 text-center">
+              {occasion.templateLibrary.heading}
+            </h2>
+            <p className="text-sm text-rose-700/60 text-center mb-8 max-w-xl mx-auto">
+              {occasion.templateLibrary.intro}
+            </p>
+            <nav className="flex flex-wrap justify-center gap-2.5 mb-10">
+              {library.map(t => (
+                <a
+                  key={t.id}
+                  href={`#${t.id}`}
+                  className="bg-white border border-rose-100 rounded-full px-4 py-2 text-xs text-rose-700 hover:border-rose-300 hover:text-rose-900 transition-colors shadow-sm"
+                >
+                  {t.name}
+                </a>
+              ))}
+            </nav>
+            <TemplateLibrary templates={library} />
+          </section>
+        )}
 
         {/* When is it? — only for occasions whose date moves or differs by country */}
         {occasion.dates && (
@@ -144,7 +184,7 @@ export default function OccasionPage({ params }: Props) {
         <section className="max-w-3xl mx-auto px-6 pb-14">
           <div className="bg-white rounded-3xl border border-rose-100 shadow-sm p-8 md:p-10">
             <h2 className="font-serif text-2xl font-bold text-rose-900 mb-6">
-              What to say in a {occasion.name.toLowerCase()} letter
+              What to say in a {subject}
             </h2>
             <ul className="space-y-4 mb-8">
               {occasion.whatToSay.map((point, i) => (
@@ -170,7 +210,7 @@ export default function OccasionPage({ params }: Props) {
             The difference one specific line makes
           </h2>
           <p className="text-sm text-rose-700/60 text-center mb-8">
-            Same sentiment, two ways of saying it in a {occasion.name.toLowerCase()} letter.
+            Same sentiment, two ways of saying it in a {subject}.
           </p>
           <div className="grid sm:grid-cols-2 gap-5 mb-5">
             <div className="bg-white rounded-2xl border border-rose-100 p-6 shadow-sm">
@@ -192,7 +232,7 @@ export default function OccasionPage({ params }: Props) {
         {/* Opening lines */}
         <section className="max-w-3xl mx-auto px-6 pb-14">
           <h2 className="font-serif text-2xl font-bold text-rose-900 mb-2 text-center">
-            Three ways to open a {occasion.name.toLowerCase()} letter
+            Three ways to open a {subject}
           </h2>
           <p className="text-sm text-rose-700/60 text-center mb-8">
             The first line is the hard part. Steal one of these and fill in the brackets.
@@ -209,10 +249,14 @@ export default function OccasionPage({ params }: Props) {
         {/* Templates */}
         <section className="max-w-4xl mx-auto px-6 pb-14">
           <h2 className="font-serif text-2xl font-bold text-rose-900 mb-2 text-center">
-            {occasion.name} letter templates
+            {occasion.templateLibrary
+              ? `Ready-to-send ${subject} templates`
+              : `${Subject} templates`}
           </h2>
           <p className="text-sm text-rose-700/60 text-center mb-8">
-            Start from one of these and make it yours — they open straight into the editor.
+            {occasion.templateLibrary
+              ? 'Already written, with no blanks to fill in — pick one, edit the parts you want and send it.'
+              : 'Start from one of these and make it yours — they open straight into the editor.'}
           </p>
           <div className="grid md:grid-cols-3 gap-5">
             {templates.map(t => (
@@ -272,7 +316,7 @@ export default function OccasionPage({ params }: Props) {
                 <div className="text-3xl mb-3">💌</div>
                 <h3 className="font-semibold text-rose-900 text-sm mb-1.5">They open an envelope</h3>
                 <p className="text-xs text-rose-700/70 leading-relaxed">
-                  Sealed, with their name on it, opening into your {occasion.name.toLowerCase()} letter.
+                  Sealed, with their name on it, opening into your {subject}.
                 </p>
               </div>
             </div>
@@ -327,14 +371,14 @@ export default function OccasionPage({ params }: Props) {
         {/* CTA */}
         <section className="max-w-2xl mx-auto px-6 pb-24 text-center">
           <h2 className="font-serif text-3xl font-bold text-rose-900 mb-4">
-            Ready to write your {occasion.name.toLowerCase()} letter?
+            Ready to write your {subject}?
           </h2>
           <p className="text-rose-700/70 mb-8">{occasion.closing}</p>
           <Link
             href={`/write?type=${occasion.type}`}
             className="inline-block bg-rose-600 text-white px-8 py-3.5 rounded-full font-semibold text-sm hover:bg-rose-700 transition-colors shadow-md"
           >
-            Start your {occasion.name.toLowerCase()} letter
+            Start your {subject}
           </Link>
         </section>
       </main>

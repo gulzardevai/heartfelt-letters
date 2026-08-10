@@ -55,13 +55,17 @@ export default function PrintableSheets({ name, emoji, type, fillIn }: Props) {
     if (q === 'prompt' || q === 'fillin') setMode(q)
   }, [])
 
-  const lower = name.toLowerCase()
+  // Names that already end in "letter" (Love Letter, Secret Letter) must not
+  // gain a second one — "printable love letter letter template".
+  const raw = name.toLowerCase()
+  const lower = raw.endsWith('letter') ? raw : `${raw} letter`
+  const heading = raw.endsWith('letter') ? name : `${name} letter`
 
   return (
     <>
       <div className="text-center mb-8 no-print">
         <h2 className="font-serif text-2xl font-bold text-rose-900 mb-2">
-          Printable {lower} letter template
+          Printable {lower} template
         </h2>
         <p className="text-sm text-rose-700/60 max-w-xl mx-auto">
           Two ways to print it. Fill in the blanks and the page itself becomes the letter, or take
@@ -115,7 +119,7 @@ export default function PrintableSheets({ name, emoji, type, fillIn }: Props) {
 
       <div className="print-sheet-card bg-white rounded-3xl border border-rose-100 shadow-sm p-8 md:p-12">
         <p className="font-serif text-lg font-bold text-rose-900 mb-1">
-          {emoji} {name} letter
+          {emoji} {heading}
         </p>
         <p className="text-xs text-rose-400 mb-8 pb-6 border-b border-rose-100">
           {mode === 'fillin'
