@@ -6,6 +6,13 @@ import PrintableSheets from '@/components/PrintableSheets'
 import { breadcrumbLd, itemListLd } from '@/lib/schema'
 import { OCCASIONS } from '@/lib/occasions'
 
+// "Love Letter" and "Secret Letter" already end in the word, so appending
+// another gives "printable love letter letter".
+const phrase = (name: string) => {
+  const l = name.toLowerCase()
+  return l.endsWith('letter') ? l : `${l} letter`
+}
+
 export const metadata: Metadata = {
   title: 'Printable Letter Templates — Free Fill-in-the-Blank Letters',
   description:
@@ -70,7 +77,7 @@ export default function PrintableLetterTemplatesPage() {
     itemListLd(
       'Printable fill-in-the-blank letter templates',
       OCCASIONS.map(o => ({
-        name: `Printable ${o.name.toLowerCase()} letter template`,
+        name: `Printable ${phrase(o.name)} template`,
         path: `/letters/${o.slug}#printable`,
       }))
     ),
@@ -209,7 +216,7 @@ export default function PrintableLetterTemplatesPage() {
               >
                 <div className="text-3xl mb-3">{o.emoji}</div>
                 <h3 className="font-serif font-semibold text-rose-900 mb-2">
-                  Printable {o.name.toLowerCase()} letter
+                  Printable {phrase(o.name)}
                 </h3>
                 <p className="text-sm text-rose-700/60 leading-relaxed mb-5 flex-1 italic">
                   &ldquo;{o.fillIn[1]}&rdquo;
