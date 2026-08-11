@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
 import { getSupabaseAdmin } from '@/lib/supabase-admin'
+import { submitToIndexNow, blogIndexNowUrls } from '@/lib/indexnow'
 
 export const dynamic = 'force-dynamic'
 
@@ -50,5 +51,9 @@ export async function POST(req: NextRequest) {
     .single()
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+  // Only announce a URL that is actually live and indexable.
+  if (published) await submitToIndexNow(blogIndexNowUrls(slug))
+
   return NextResponse.json(data, { status: 201 })
 }

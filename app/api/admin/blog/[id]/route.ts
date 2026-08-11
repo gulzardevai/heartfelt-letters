@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createSupabaseServerClient } from '@/lib/supabase-server'
 import { getSupabaseAdmin } from '@/lib/supabase-admin'
+import { submitToIndexNow, blogIndexNowUrls } from '@/lib/indexnow'
 
 export const dynamic = 'force-dynamic'
 
@@ -51,6 +52,11 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     .single()
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+  // An edit that leaves the post published changes a live URL; an unpublish
+  // must never be announced.
+  if (published) await submitToIndexNow(blogIndexNowUrls(slug))
+
   return NextResponse.json(data)
 }
 
@@ -65,7 +71,7 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   }
 
   const db = getSupabaseAdmin()
-  const existing = await db.from('blog_posts').select('published, published_at').eq('id', params.id).single()
+  const existing = await db.from('blog_posts').select('slug, published, published_at').eq('id', params.id).single()
   if (existing.error) return NextResponse.json({ error: existing.error.message }, { status: 404 })
 
   const publishedAt = !existing.data.published && published
@@ -78,6 +84,9 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
     .eq('id', params.id)
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+  if (published && existing.data.slug) await submitToIndexNow(blogIndexNowUrls(existing.data.slug))
+
   return NextResponse.json({ success: true })
 }
 
