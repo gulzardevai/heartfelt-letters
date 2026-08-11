@@ -856,6 +856,7 @@ const WRITE_GUIDE: { heading: string; body: string[] }[] = [
     body: [
       'The most common obstacle is the blank page rather than the feeling. Two things help: start with one specific memory instead of a statement of how you feel, and write to the person rather than about them. Feeling arrives on its own once a concrete detail is on the page; it rarely arrives if you begin by trying to summarise it.',
       'If you want a structure, the templates in the editor give you an opening line for each kind of letter, and the <a href="/letters">letters by occasion</a> guides walk through what to say for anniversaries, apologies, thank-yous, farewells and the rest. If you are not sure which letter you owe someone, the <a href="/quizzes/what-letter-should-you-write">Which Letter Should You Write? quiz</a> takes about two minutes.',
+      'For romance specifically, the <a href="/letters/love">love letter templates</a> are written out in full as fill-in-the-blank letters you can copy and edit. If you would rather borrow a line than invent one, there are <a href="/quotes">700+ free quotes</a> to open or close with, and the <a href="/blog">letter-writing guides</a> go deeper on tone, length, and what to do when the feeling is there but the words are not.',
     ],
   },
 ]
