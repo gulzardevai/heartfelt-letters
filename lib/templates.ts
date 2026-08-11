@@ -167,9 +167,114 @@ const LOVE_LIBRARY_SEED: LibrarySeed[] = [
   },
 ]
 
+// The friendship letter library rendered in full on /letters/friendship.
+// Same contract as LOVE_LIBRARY_SEED: complete letters, personal parts left as
+// bracketed prompts, plain ASCII so a copy-paste stays clean. These are written
+// for a FRIEND specifically - the sibling letters live on /letters/sibling and
+// are deliberately not repeated here.
+const FRIENDSHIP_LIBRARY_SEED: LibrarySeed[] = [
+  {
+    id: 'friend-short',
+    name: 'Short letter to a friend',
+    when: 'You want to send something today and you are not going to write an essay. Under a hundred words and it still does the job.',
+    preview: 'This is not about anything. That is sort of the point...',
+    body: [
+      'Dear [their name],',
+      'This is not about anything. That is sort of the point - nothing prompted it, I just wanted it written down somewhere other than my head.',
+      'You are the person I would call first about [what]. I do not think I have ever said that out loud.',
+      'That is the whole letter. Go about your day.',
+      '[your name]',
+    ],
+  },
+  {
+    id: 'friend-best-friend',
+    name: 'Letter to your best friend',
+    when: 'The full one. For a birthday, a leaving do, or an ordinary week when it finally occurs to you that they do not know.',
+    preview: 'We went from acquaintances to actual friends on [the day], and I doubt you remember it...',
+    body: [
+      'Dear [their name],',
+      'We went from acquaintances to actual friends on [the day or the moment], and I doubt you remember it the way I do. I remember [the specific detail - what was said, where you were, what was funny about it].',
+      'Since then you have shown up for me without being asked more times than is reasonable. The one I keep coming back to is [what happened]. You [what they actually did - the practical, unglamorous version]. I have told that story to other people. I have never told it to you.',
+      'The thing I envy about you, and I mean this generously, is [what]. I have watched you do it for years and I still do not know how.',
+      'If it is still sitting there: I am sorry about [the time you let them down]. I am not going to write four paragraphs about it. I just did not want it to go unsaid in a letter like this one.',
+      'In ten years I hope we are still [what you hope]. I think we will be.',
+      '[your name]',
+    ],
+  },
+  {
+    id: 'friend-drifted',
+    name: 'Letter to a friend you have drifted from',
+    when: 'Nothing went wrong. You just stopped being in the same rooms, and now it feels too late to text.',
+    preview: 'We did not fall out. We just stopped being in the same rooms...',
+    body: [
+      'Dear [their name],',
+      'We did not fall out. Nothing happened. We just stopped being in the same rooms, and then I stopped knowing the small things, and now I find out about your life from [how you hear about them].',
+      'I am not writing to assign blame. Most of the distance is just adulthood and a decent share of it is mine.',
+      'I am writing because I keep thinking about [the specific memory - the summer, the flat, the drive, the running joke]. It came back to me [when], and it struck me that the person it belongs to has not heard from me in [how long].',
+      'That is it. No ask, no guilt. If you ever wanted to fix a date and actually keep it, I am there.',
+      '[your name]',
+    ],
+  },
+  {
+    id: 'friend-long-distance',
+    name: 'Letter to a long-distance friend',
+    when: 'Different cities, different time zones, and the group chat has quietly become the whole friendship.',
+    preview: 'The time difference has turned us into people who send each other links...',
+    body: [
+      'Dear [their name],',
+      'The time difference has quietly turned us into people who send each other links. I wanted to send something that takes longer than that.',
+      'Here is what you have missed: [one honest paragraph about your actual life - not the highlights, the texture of it].',
+      'Here is what I miss: [the specific thing you did together that you cannot do from here]. Not the idea of you. That.',
+      'Distance has not touched the thing itself, which I think is the rare part. We pick up mid-sentence after [how long] and it costs us nothing.',
+      'Say something back whenever it suits your time zone.',
+      '[your name]',
+    ],
+  },
+  {
+    id: 'friend-thank-you',
+    name: 'Thank-you letter to a friend',
+    when: 'They did something for you and "thanks so much!!" in a message did not come close to covering it.',
+    preview: 'I said thank you at the time and it did not come close to covering it...',
+    body: [
+      'Dear [their name],',
+      'I said thank you at the time. It did not come close to covering it, so this is the version with the detail in.',
+      'You [exactly what they did], on [when], which cost you [what it actually cost them - the time, the drive, the day off, the awkward conversation they had on your behalf].',
+      'What it meant on my end was [what it changed for you]. You could not have known that part, which is why I am writing it down.',
+      'You did not make it a favour and you have not mentioned it since. I noticed that too.',
+      'Thank you. Properly this time.',
+      '[your name]',
+    ],
+  },
+  {
+    id: 'friend-sorry',
+    name: 'Letter to a friend you hurt',
+    when: 'You were in the wrong, they know it, and a message is not the right container for it.',
+    preview: 'I am not going to explain myself. I am going to say the thing plainly...',
+    body: [
+      'Dear [their name],',
+      'I am not going to explain myself, because an explanation would just be an excuse wearing a better coat.',
+      'What I did was [name it plainly, in one sentence, without softening it].',
+      'What it did to you was [the impact, as best you understand it]. I have had [how long] to think about that and it does not look better with time.',
+      'I am not asking you to reply, and I am not asking you to be fine about it. If you want to tell me how it landed, I will listen to all of it without defending myself.',
+      'I am sorry. You deserved better from me and you have been a good friend for [how long].',
+      '[your name]',
+    ],
+  },
+]
+
 const LOVE_LIBRARY: Template[] = LOVE_LIBRARY_SEED.map(s => ({
   id: s.id,
   type: 'love',
+  name: s.name,
+  when: s.when,
+  preview: s.preview,
+  body: s.body,
+  content: s.body.map(p => `<p>${p}</p>`).join(''),
+}))
+
+const FRIENDSHIP_LIBRARY: Template[] = FRIENDSHIP_LIBRARY_SEED.map(s => ({
+  id: s.id,
+  type: 'friendship',
   name: s.name,
   when: s.when,
   preview: s.preview,
@@ -365,6 +470,9 @@ export const TEMPLATES: Template[] = [
     preview: 'No excuses, no explanations — just an honest and overdue apology...',
     content: '<p>Dear [Name],</p><p>No excuses, no explanations — just an honest and overdue apology.</p><p>I was wrong. I handled things badly and I hurt you in the process. That was never my intention, but intentions do not erase impact, and I understand that.</p><p>I am sorry. I hope, in time, you will be able to forgive me. And regardless of what happens between us, I want you to know that I care about you and I respect you enough to own my mistakes.</p><p>With genuine remorse,</p>',
   },
+
+  // FRIENDSHIP — the fill-in-the-blank library shown in full on /letters/friendship
+  ...FRIENDSHIP_LIBRARY,
 
   // FRIENDSHIP (3)
   {

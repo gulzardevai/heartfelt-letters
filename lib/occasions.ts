@@ -39,6 +39,14 @@ export type Occasion = {
   // Optional contextual in-prose link to a related page, rendered as a body
   // paragraph under the intro. Used for internal linking with exact anchors.
   proseLink?: { before: string; anchor: string; href: string; after: string }
+  // Optional "how to lay the letter out" block, for occasions whose searchers
+  // ask for the FORMAT of the letter and not only for examples of one.
+  format?: {
+    heading: string
+    intro: string
+    steps: { label: string; body: string }[]
+    note?: string
+  }
 }
 
 export const OCCASIONS: Occasion[] = [
@@ -394,6 +402,12 @@ export const OCCASIONS: Occasion[] = [
       'The most memorable birthday letters tell the person something about themselves they cannot quite see — the effect they have on the people around them.',
       'Let the age shape the letter. For a child, write down the things they will not remember about being this age. For a friend in their thirties, name what they have quietly got better at. For a parent, tell them something you understand now that you did not understand as a kid. A birthday letter that could have been sent to anyone of any age is the one that gets skimmed.',
     ],
+    proseLink: {
+      before: 'Writing to a friend on their birthday is a slightly different job from writing to a partner or a child — if that is the letter you need, our ',
+      anchor: 'letter to a friend examples',
+      href: '/letters/friendship',
+      after: ' give you six complete ones you can date and send.',
+    },
     whatToSay: [
       'Something they did this year that you are still thinking about.',
       'The quality of theirs that other people underestimate.',
@@ -496,6 +510,12 @@ export const OCCASIONS: Occasion[] = [
       'A thank-you letter is worth writing precisely because it is slower. It tells the person that what they did stayed with you long enough to be written down.',
       'There is a version of this letter for almost everyone: the teacher who noticed something in you, the manager who took a risk, the friend who drove four hours without being asked, the nurse who was kind at 3am. What they have in common is that the person on the other end has no idea it stayed with you. That fact is the whole content of the letter.',
     ],
+    proseLink: {
+      before: 'The hardest one on that list is usually the friend, because friends deflect gratitude by reflex. If that is who you are writing to, our ',
+      anchor: 'letter to a friend examples',
+      href: '/letters/friendship',
+      after: ' include a thank-you letter written specifically to get past the deflection.',
+    },
     whatToSay: [
       'The specific thing they did, described as though they might have forgotten it.',
       'What was going on for you at the time.',
@@ -827,6 +847,12 @@ export const OCCASIONS: Occasion[] = [
       'That shared history is exactly why the letter is hard to write. Siblings develop a dialect where affection is delivered as an insult, and stepping outside it for a page feels exposing. Do it anyway. The strangeness is temporary; the letter is not.',
       'You do not need an occasion. National Sibling Day is 10 April, and it is a perfectly good excuse, but the letters that land hardest are the ones that arrive on no particular day at all — because nothing obliged you to write them.',
     ],
+    proseLink: {
+      before: 'If the person you are writing to is a friend rather than a brother or sister, the shared-history angle does not apply and the letter needs a different opening — our ',
+      anchor: 'letter to a friend examples',
+      href: '/letters/friendship',
+      after: ' cover that version, including the one for a friend you have drifted away from.',
+    },
     whatToSay: [
       'A memory from childhood that only the two of you have — bonus points if your parents remember it differently.',
       'Something you have watched them do as an adult that genuinely impressed you.',
@@ -872,14 +898,60 @@ export const OCCASIONS: Occasion[] = [
     emoji: '🤝',
     name: 'Friendship',
     h1: 'Friendship Letter Template',
-    subheading: 'A free friendship letter template you can make your own — write it in the editor, seal it in an envelope, and share a private link.',
-    metaTitle: 'Friendship Letter Template — Write a Letter to a Best Friend',
-    metaDescription: 'Free friendship letter template. Write a heartfelt letter to your best friend and share it as a sealed envelope — free, private and no account needed.',
+    subheading: 'Six complete letters to a friend you can copy and fill in — write yours in the editor, seal it in an envelope, and share a private link.',
+    metaTitle: 'Letter to a Friend: 6 Free Examples You Can Copy Today',
+    metaDescription: 'Six complete letter-to-a-friend examples to copy and fill in, plus the format that works. Write it online, seal it in an envelope, send a private link. Free.',
     intro: [
       'We tell partners and parents how we feel. Friends mostly get jokes. That is fine, until you realise your closest friend may have no idea what they mean to you.',
       'A friendship letter with no occasion attached is one of the most disarming things you can send, precisely because nothing prompted it.',
       'A friendship letter template can only take you so far. It gets you past the blank page and gives the thing a shape — but the part that makes your friend sit down halfway through is the part only you can supply: the specific night, the specific favour, the joke that would take three paragraphs to explain to anybody else. Use the structure below and then replace every general line with one of those.',
     ],
+    proseLink: {
+      before: 'Writing to a brother or a sister rather than a friend? The tone is different enough to be worth its own page — our ',
+      anchor: 'letter to a sibling templates',
+      href: '/letters/sibling',
+      after: ' cover the sister, brother and drifted-apart versions.',
+    },
+    templateIds: ['friendship-1', 'friendship-2', 'friendship-3'],
+    templateLibrary: {
+      heading: 'Six letters to a friend, written for you to finish',
+      intro: 'Every letter below is complete. The sentences are written; the parts in [brackets] are the ones only you can fill in. Copy one, replace the brackets, send it.',
+      ids: [
+        'friend-short',
+        'friend-best-friend',
+        'friend-drifted',
+        'friend-long-distance',
+        'friend-thank-you',
+        'friend-sorry',
+      ],
+    },
+    format: {
+      heading: 'The format of a letter to a friend',
+      intro: 'A letter to a friend is an informal letter, so there is no address block, no reference line and no "Dear Sir or Madam". It has five parts, and the only one people reliably get wrong is the second.',
+      steps: [
+        {
+          label: 'The greeting',
+          body: '"Dear [name]," works, and so does just their name on its own line. Skip surnames and skip "To whom it may concern" — this is the one letter where formality actively hurts you.',
+        },
+        {
+          label: 'Why you are writing',
+          body: 'One sentence, first line, no throat-clearing. "This is not about anything, I just wanted it written down" is a complete and excellent opening. What does not work is a paragraph apologising for not writing sooner — it makes the reader do emotional admin before they have got to the point.',
+        },
+        {
+          label: 'The specific memory',
+          body: 'One event, told in detail: where you were, what they did, what it cost them. This is the paragraph that does the work. A general compliment can be deflected; a thing that happened cannot.',
+        },
+        {
+          label: 'The thing you actually mean',
+          body: 'Say it plainly and only once. "You are the person I would call first" needs no decoration, and decorating it is how sincerity turns into a greetings card.',
+        },
+        {
+          label: 'The sign-off',
+          body: 'Match the register you have used all the way through. "Love," is fine between friends. So is your name on its own. Anything that sounds like the end of a work email will undo the four paragraphs above it.',
+        },
+      ],
+      note: 'Length: 200 to 400 words is the sweet spot. Long enough to hold two real memories, short enough that your friend does not feel they owe you an essay in return.',
+    },
     whatToSay: [
       'The moment you went from acquaintances to actual friends.',
       'A time they showed up for you without being asked.',
@@ -914,6 +986,8 @@ export const OCCASIONS: Occasion[] = [
       { q: 'How long should a letter to a friend be?', a: '200 to 400 words. Long enough for two real memories, short enough that they do not feel they owe you an essay in return.' },
       { q: 'What do I write to a friend I have drifted away from?', a: 'Name the drift in one sentence, do not apologise for it at length, then go straight into a memory. "We have not spoken properly in two years and I keep thinking about the summer we..." is the fastest route back into a friendship there is.' },
       { q: 'Is it weird to send a friend a letter?', a: 'Surprising, not weird. Nearly everyone reports that an unprompted letter from a friend is one of the nicest things they have received.' },
+      { q: 'What is the correct format for a letter to a friend?', a: 'An informal one: a greeting on its own line, one sentence saying why you are writing, a specific memory told in detail, the thing you actually mean said plainly once, and a sign-off that matches the rest. No address block, no reference line, no "Dear Sir or Madam" — those belong in a formal letter and will make a letter to a friend read as a joke.' },
+      { q: 'How do you start a letter to a friend?', a: 'With the reason, in one sentence, on the first line. "This is not about anything, I just wanted it written down somewhere" is a complete opening. Avoid starting with an apology for not writing sooner — it asks your friend to do emotional admin before they have reached the point.' },
     ],
     closing: 'There is no occasion for this one and there never will be. That is the argument for sending it today rather than eventually.',
     related: ['thank-you', 'birthday', 'long-distance', 'farewell'],
@@ -1084,6 +1158,12 @@ export const OCCASIONS: Occasion[] = [
       'Whether you are the one going or the one staying, name the specific thing you will miss. Vague warmth is forgotten by the following week.',
       'There are two versions of this letter and they are not interchangeable. The one you write to a whole team is public, generous and slightly formal. The one you write to the person you actually sat beside for four years is not. Write the second one separately, even if you write the first one first — the second is the one that gets kept.',
     ],
+    proseLink: {
+      before: 'If you are leaving one person rather than a whole team, a farewell letter is really a friendship letter with a date on it — our ',
+      anchor: 'letter to a friend examples',
+      href: '/letters/friendship',
+      after: ' give you six complete ones to start from, including a long-distance version for after you have gone.',
+    },
     whatToSay: [
       'What you will genuinely miss — a routine, a joke, a person\'s presence at a particular time of day.',
       'Something you learned from them.',
@@ -1136,6 +1216,12 @@ export const OCCASIONS: Occasion[] = [
       'There is no occasion to live up to, which means there is no pressure to be profound. Tell them what made you think of them today. That is the whole assignment.',
       'The absence of an occasion also removes the standard. Nobody has expectations of a Wednesday letter, so anything true you write exceeds them. Four sentences about a song you heard on the way home is a complete just-because letter. You do not need a theme, a structure, or a reason you could defend to somebody else.',
     ],
+    proseLink: {
+      before: 'The no-occasion letter lands hardest of all on a friend, precisely because nobody writes to their friends — our ',
+      anchor: 'letter to a friend examples',
+      href: '/letters/friendship',
+      after: ' open with exactly that move: this is not about anything, I just wanted it written down.',
+    },
     whatToSay: [
       'The specific thing that made you think of them — a song, a street, a stranger who laughed like they do.',
       'Something about them you have noticed recently but never mentioned.',

@@ -180,6 +180,36 @@ export default function OccasionPage({ params }: Props) {
           </section>
         )}
 
+        {/* How to lay the letter out — only where searchers ask for the format */}
+        {occasion.format && (
+          <section className="max-w-3xl mx-auto px-6 pb-14">
+            <div className="bg-white rounded-3xl border border-rose-100 shadow-sm p-8 md:p-10">
+              <h2 className="font-serif text-2xl font-bold text-rose-900 mb-4">
+                {occasion.format.heading}
+              </h2>
+              <p className="text-sm text-rose-800/80 leading-relaxed mb-7">{occasion.format.intro}</p>
+              <ol className="space-y-5">
+                {occasion.format.steps.map((step, i) => (
+                  <li key={i} className="flex gap-4">
+                    <span className="shrink-0 w-7 h-7 rounded-full bg-rose-100 text-rose-600 text-xs font-semibold flex items-center justify-center mt-0.5">
+                      {i + 1}
+                    </span>
+                    <div>
+                      <h3 className="font-semibold text-rose-900 text-sm mb-1.5">{step.label}</h3>
+                      <p className="text-sm text-rose-800/80 leading-relaxed">{step.body}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+              {occasion.format.note && (
+                <div className="bg-rose-50/70 border border-rose-100 rounded-2xl px-5 py-4 mt-7">
+                  <p className="text-sm text-rose-800/80 leading-relaxed">{occasion.format.note}</p>
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
         {/* What to say */}
         <section className="max-w-3xl mx-auto px-6 pb-14">
           <div className="bg-white rounded-3xl border border-rose-100 shadow-sm p-8 md:p-10">
