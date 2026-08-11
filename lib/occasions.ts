@@ -39,6 +39,11 @@ export type Occasion = {
   // Optional contextual in-prose link to a related page, rendered as a body
   // paragraph under the intro. Used for internal linking with exact anchors.
   proseLink?: { before: string; anchor: string; href: string; after: string }
+  // ISO date of the last SUBSTANTIAL rewrite of this page, used as the sitemap
+  // lastmod. Set it only for a real content change (an upgrade-day rewrite),
+  // never for a typo fix — otherwise the freshness signal stops meaning
+  // anything. Pages without one fall back to the shared static date.
+  updatedAt?: string
   // Optional "how to lay the letter out" block, for occasions whose searchers
   // ask for the FORMAT of the letter and not only for examples of one.
   format?: {
@@ -110,6 +115,7 @@ export const OCCASIONS: Occasion[] = [
   },
   {
     slug: 'love',
+    updatedAt: '2026-08-10T00:00:00.000Z',
     type: 'love',
     templateIds: ['love-1', 'love-2', 'love-3'],
     emoji: '💕',
@@ -894,6 +900,7 @@ export const OCCASIONS: Occasion[] = [
   },
   {
     slug: 'friendship',
+    updatedAt: '2026-08-11T00:00:00.000Z',
     type: 'friendship',
     emoji: '🤝',
     name: 'Friendship',

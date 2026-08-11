@@ -31,9 +31,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: BASE, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'weekly', priority: 1 },
     { url: `${BASE}/write`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE}/letters`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.9 },
+    // An occasion page that has been substantially rewritten carries its own
+    // date, so an upgrade actually signals freshness instead of inheriting the
+    // shared static one and telling Google nothing changed.
     ...OCCASIONS.map(o => ({
       url: `${BASE}/letters/${o.slug}`,
-      lastModified: STATIC_LAST_MODIFIED,
+      lastModified: o.updatedAt ? new Date(o.updatedAt) : STATIC_LAST_MODIFIED,
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     })),
