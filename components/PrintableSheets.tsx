@@ -9,6 +9,8 @@ type Mode = 'fillin' | 'prompt'
 interface Props {
   name: string
   emoji: string
+  // Occasion slug (or GENERAL_SLUG on the hub) — the PDF download route key.
+  slug: string
   // LETTER_TYPES id to preselect in the editor. Omitted on the printables hub,
   // where the sheet is not tied to one occasion.
   type?: string
@@ -45,7 +47,7 @@ function Blank({ hint }: { hint: string }) {
   )
 }
 
-export default function PrintableSheets({ name, emoji, type, fillIn }: Props) {
+export default function PrintableSheets({ name, emoji, slug, type, fillIn }: Props) {
   const [mode, setMode] = useState<Mode>('fillin')
 
   // Deep-link straight to either sheet (?sheet=prompt). Read after mount so
@@ -107,6 +109,14 @@ export default function PrintableSheets({ name, emoji, type, fillIn }: Props) {
         </p>
 
         <div className="flex flex-wrap justify-center gap-3">
+          <a
+            href={`/printables/${slug}/${mode === 'fillin' ? 'fill-in' : 'prompt'}.pdf`}
+            download
+            className="inline-flex items-center gap-2 bg-white border border-rose-200 text-rose-700 px-5 py-2.5 rounded-full text-sm font-medium hover:border-rose-300 hover:text-rose-900 transition-colors shadow-sm"
+          >
+            <span aria-hidden="true">⬇️</span>
+            Download the PDF
+          </a>
           <PrintButton />
           <Link
             href={type ? `/write?type=${type}` : '/write'}
@@ -115,6 +125,9 @@ export default function PrintableSheets({ name, emoji, type, fillIn }: Props) {
             Fill it in online instead →
           </Link>
         </div>
+        <p className="text-xs text-rose-400 mt-4">
+          Free PDF, A4 — no email address, no account, no watermark.
+        </p>
       </div>
 
       <div className="print-sheet-card bg-white rounded-3xl border border-rose-100 shadow-sm p-8 md:p-12">

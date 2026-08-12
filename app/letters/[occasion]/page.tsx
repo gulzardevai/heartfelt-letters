@@ -311,6 +311,7 @@ export default function OccasionPage({ params }: Props) {
           <PrintableSheets
             name={occasion.name}
             emoji={occasion.emoji}
+            slug={occasion.slug}
             type={occasion.type}
             fillIn={occasion.fillIn}
           />

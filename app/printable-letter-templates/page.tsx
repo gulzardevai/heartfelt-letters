@@ -5,6 +5,7 @@ import Footer from '@/components/Footer'
 import PrintableSheets from '@/components/PrintableSheets'
 import { breadcrumbLd, itemListLd } from '@/lib/schema'
 import { OCCASIONS } from '@/lib/occasions'
+import { GENERAL_FILL_IN, GENERAL_SLUG } from '@/lib/printables'
 
 // "Love Letter" and "Secret Letter" already end in the word, so appending
 // another gives "printable love letter letter".
@@ -16,7 +17,7 @@ const phrase = (name: string) => {
 export const metadata: Metadata = {
   title: 'Printable Letter Templates — Free Fill-in-the-Blank Letters',
   description:
-    'Free printable letter templates for every occasion — love, thank you, Christmas, gratitude and more. Fill in the blanks and print. No account, no watermark.',
+    'Free printable letter templates for every occasion — love, thank you, Christmas, gratitude and more. Download the PDF or print it. No account, no watermark.',
   alternates: { canonical: 'https://www.shareloveletters.com/printable-letter-templates' },
   openGraph: {
     title: 'Printable Letter Templates — Free Fill-in-the-Blank Letters',
@@ -28,18 +29,8 @@ export const metadata: Metadata = {
   },
 }
 
-// A deliberately occasion-agnostic sheet so the hub itself is printable, not
-// just a directory of links to other pages.
-const GENERAL_FILL_IN = [
-  'Dear [their name],',
-  'I have been meaning to write this since [when].',
-  'The thing I keep coming back to is [the moment] — you were [what they were doing].',
-  'What I have never told you about it is [the part you kept to yourself].',
-  'Something you do without thinking that I notice every time: [the small habit].',
-  'What is different in my life because of you is [the change].',
-  'What I want you to know is [the one true line].',
-  '[Your name]',
-]
+// The occasion-agnostic sheet (so the hub itself is printable, not just a
+// directory of links) lives in lib/printables.ts, shared with the PDF route.
 
 const faqs = [
   {
@@ -48,11 +39,15 @@ const faqs = [
   },
   {
     q: 'Are these printable letter templates really free?',
-    a: 'Yes. Every printable on this page is free, with no account, no email address, no watermark and no PDF to pay for. Open the occasion you want, press Print, and write on it.',
+    a: 'Yes. Every printable on this page is free, with no account, no email address, no watermark and no PDF to pay for. Open the occasion you want, download the PDF or press Print, and write on it.',
+  },
+  {
+    q: 'Can I download these as a PDF?',
+    a: 'Yes — every sheet has a "Download the PDF" button next to the Print button, and both formats have their own file. The PDF is a real A4 document with the blanks, the ruled lines and the small prompts already on it, so you can keep it, email it to someone, or print it from a phone. Nothing is gated: no sign-up, no email address, no watermark across the page.',
   },
   {
     q: 'How do I print one?',
-    a: 'Open any occasion below and press the Print button in the printable section. The page prints as a clean sheet in black ink — no navigation, no colours, no marketing around the edges — sized for A4 or US Letter. To save it as a file instead, choose "Save as PDF" in your printer dialog.',
+    a: 'Open any occasion below and press the Print button in the printable section. The page prints as a clean sheet in black ink — no navigation, no colours, no marketing around the edges — sized for A4 or US Letter. If you would rather have the file first, use the Download the PDF button and print that instead.',
   },
   {
     q: 'What is the difference between the fill-in sheet and the prompt sheet?',
@@ -127,8 +122,9 @@ export default function PrintableLetterTemplatesPage() {
             it — a moment, a habit, the thing you never said.
           </p>
           <p className="text-rose-700/70 leading-relaxed mb-4 text-left sm:text-center">
-            Everything here is free and instant. No account, no email address, no watermark, no
-            checkout. Print as many as you want, for yourself or for a whole classroom.
+            Everything here is free and instant. Download the PDF or print straight from the page —
+            no account, no email address, no watermark, no checkout. Take as many copies as you
+            want, for yourself or for a whole classroom.
           </p>
           <p className="text-rose-700/70 leading-relaxed mb-4 text-left sm:text-center">
             This page is for paper. If you would rather read the whole letter on screen and send it
@@ -145,7 +141,9 @@ export default function PrintableLetterTemplatesPage() {
           >
             Pick your occasion
           </a>
-          <p className="text-xs text-rose-400 mt-3">Free • No account • Prints in black ink</p>
+          <p className="text-xs text-rose-400 mt-3">
+            Free • No account • Download the PDF or print in black ink
+          </p>
         </section>
 
         {/* How it works */}
@@ -157,9 +155,10 @@ export default function PrintableLetterTemplatesPage() {
             <div className="grid sm:grid-cols-3 gap-6 text-center mb-8">
               <div>
                 <div className="text-3xl mb-3">📄</div>
-                <h3 className="font-semibold text-rose-900 text-sm mb-1.5">1. Print it</h3>
+                <h3 className="font-semibold text-rose-900 text-sm mb-1.5">1. Download or print</h3>
                 <p className="text-xs text-rose-700/70 leading-relaxed">
-                  The sheet prints on its own — no navigation, no colour, no logos. A4 or US Letter.
+                  Take the A4 PDF, or print straight from the page — no navigation, no colour, no
+                  logos.
                 </p>
               </div>
               <div>
@@ -195,6 +194,7 @@ export default function PrintableLetterTemplatesPage() {
           <PrintableSheets
             name="Any occasion"
             emoji="💌"
+            slug={GENERAL_SLUG}
             fillIn={GENERAL_FILL_IN}
           />
         </section>
@@ -227,12 +227,22 @@ export default function PrintableLetterTemplatesPage() {
                 >
                   Open the printable →
                 </Link>
-                <Link
-                  href={`/letters/${o.slug}?sheet=prompt#printable`}
-                  className="text-xs text-center text-rose-500 hover:text-rose-700 transition-colors mt-2.5"
-                >
-                  or print the prompt sheet
-                </Link>
+                <p className="text-xs text-center text-rose-500 mt-2.5">
+                  <a
+                    href={`/printables/${o.slug}/fill-in.pdf`}
+                    download
+                    className="hover:text-rose-700 transition-colors underline"
+                  >
+                    download the PDF
+                  </a>
+                  <span className="mx-1.5 text-rose-300">·</span>
+                  <Link
+                    href={`/letters/${o.slug}?sheet=prompt#printable`}
+                    className="hover:text-rose-700 transition-colors"
+                  >
+                    prompt sheet
+                  </Link>
+                </p>
               </div>
             ))}
           </div>
