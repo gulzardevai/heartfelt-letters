@@ -10,6 +10,19 @@ const nextConfig = {
         destination: 'https://www.shareloveletters.com/:path*',
         permanent: true,
       },
+      // Consolidated 2026-08-13: four pages were competing for one
+      // anonymous-letter intent and neither of these two had ever been
+      // crawled. Their unique content was folded into the survivors first.
+      {
+        source: '/blog/anonymous-love-letter-online',
+        destination: '/blog/how-to-send-an-anonymous-letter-to-someone',
+        permanent: true,
+      },
+      {
+        source: '/blog/best-online-love-letter-websites',
+        destination: '/compare',
+        permanent: true,
+      },
     ]
   },
   async headers() {

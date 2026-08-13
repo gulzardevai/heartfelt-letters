@@ -58,6 +58,45 @@ const competitors = [
     price: 'Free',
     weakness: 'Your letter is posted to a public wall for strangers to read — the person it was written for never actually receives it. No private delivery to a recipient, no password protection.',
   },
+  {
+    name: 'Letters by Heart',
+    focus: 'Interactive romantic cards',
+    price: 'Free tier / paid',
+    weakness: 'A genuinely pretty animated-envelope product, but the free tier has edges — check which feature you actually want is included before you invest the emotional energy. Romance-only, and it publishes no encryption or no-index guarantee.',
+  },
+  {
+    name: 'Emocia',
+    focus: 'Multimedia love pages',
+    price: 'Free / paid tiers',
+    weakness: 'Built for spectacle — animated text, photo galleries, music, effects. The right pick if the message is secondary to the show; the wrong one if you want to say something true in plain words and keep it private.',
+  },
+  {
+    name: 'Gifft.me',
+    focus: 'Virtual gift pages',
+    price: 'Free / paid gifts',
+    weakness: 'Fast and friendly for a cheerful surprise: write, add a photo, share the link. Privacy controls are light, so it is not where you would put words you would never want anyone else to read.',
+  },
+]
+
+// The four questions a real person asks before typing their heart into a
+// stranger's website — the criteria this whole page is ranked on.
+const criteria = [
+  {
+    q: 'Is it free — really free?',
+    a: 'Not "free to write, then paywalled the moment you hit send". Several tools let you compose a whole letter and only reveal the charge at the sharing step, which is the worst possible moment to find a price tag.',
+  },
+  {
+    q: 'Do I need an account?',
+    a: 'Forcing a signup before someone can send a two-minute note is the single biggest reason people abandon these tools mid-letter.',
+  },
+  {
+    q: 'Is it private?',
+    a: 'A love letter is the most personal text most people ever type online. Encryption, password protection and a link kept out of Google are not luxuries here — they are the whole point.',
+  },
+  {
+    q: 'Does the reveal feel special?',
+    a: 'Plain text in a browser tab is forgettable. An envelope that opens, a moment of anticipation — that is the difference between a message and a keepsake.',
+  },
 ]
 
 const features = [
@@ -113,6 +152,14 @@ const faqs = [
     q: 'Can I send a love letter anonymously?',
     a: 'Yes. You can write and share a letter without an account and without revealing who you are — no competitor on this list offers true anonymous send. Pair it with password protection for a private, secret letter that only reaches the person you intend.',
   },
+  {
+    q: 'Are online love letters private and secure?',
+    a: 'It depends entirely on the tool. Some store your text unencrypted behind a link search engines can crawl. The privacy-first choice is a service that encrypts letters at rest with AES-256, offers password protection, and keeps the share link out of Google — so your letter is readable only by the person holding it. That is the criterion almost nobody else in this category ranks on, and it is the one that matters most once the letter is sent.',
+  },
+  {
+    q: 'Which website makes the letter feel most special to open?',
+    a: 'The reveal is subjective, but the tools people remember use an animation — an envelope that opens or a card that unfolds — rather than dropping plain text into a tab. ShareLove, Digital Love Letters and Letters by Heart all do this well; Emocia goes furthest with full multimedia if spectacle is what you are after.',
+  },
 ]
 
 const faqJsonLd = {
@@ -154,6 +201,29 @@ export default function ComparePage() {
           <p className="text-rose-700/70 text-lg leading-relaxed max-w-2xl mx-auto">
             Looking for the best digital love letter website? There are plenty of tools for sending cards and documents, but none of them were built specifically for writing meaningful, long-form letters to the people you love. We were — free, encrypted, and no account needed.
           </p>
+          <p className="text-rose-700/60 text-sm leading-relaxed max-w-2xl mx-auto mt-5">
+            Almost every &ldquo;best love letter website&rdquo; round-up is written by one of the sites being ranked,
+            conveniently placing itself at number one. This one is too — we build ShareLove. So instead of asking you
+            to trust the ranking, we have published the criteria, the competitors&apos; genuine strengths, and the
+            cases where another tool suits you better.
+          </p>
+        </section>
+
+        {/* How we judged — the criteria the ranking below is built on */}
+        <section className="max-w-4xl mx-auto px-6 pb-16">
+          <h2 className="font-serif text-2xl font-bold text-rose-900 mb-3 text-center">How we judged them</h2>
+          <p className="text-sm text-rose-700/60 text-center max-w-2xl mx-auto mb-8 leading-relaxed">
+            Most round-ups rank on vibes. These are the four questions a real person actually asks before typing
+            their heart into a stranger&apos;s website.
+          </p>
+          <div className="grid md:grid-cols-2 gap-5">
+            {criteria.map((c) => (
+              <div key={c.q} className="bg-white rounded-2xl border border-rose-100 shadow-sm p-6">
+                <h3 className="font-semibold text-rose-900 mb-2">{c.q}</h3>
+                <p className="text-sm text-rose-700/70 leading-relaxed">{c.a}</p>
+              </div>
+            ))}
+          </div>
         </section>
 
         {/* Competitor breakdown */}
@@ -239,6 +309,44 @@ export default function ComparePage() {
           </div>
         </section>
 
+        {/* Quick verdict — the honest "another tool might suit you better" answer */}
+        <section className="max-w-3xl mx-auto px-6 pb-16">
+          <div className="bg-white rounded-2xl border border-rose-100 shadow-sm p-6 md:p-8">
+            <h2 className="font-serif text-2xl font-bold text-rose-900 mb-4">Quick verdict, by what you need</h2>
+            <ul className="text-sm text-rose-700/70 space-y-2.5 leading-relaxed">
+              <li>
+                <strong className="text-rose-900">Free, private, no signup:</strong> ShareLove Letters — that is
+                exactly the gap it was built to fill.
+              </li>
+              <li>
+                <strong className="text-rose-900">The most established romance-only brand, and you do not mind
+                paying:</strong> Digital Love Letters.
+              </li>
+              <li>
+                <strong className="text-rose-900">A multimedia spectacle:</strong> Emocia.
+              </li>
+              <li>
+                <strong className="text-rose-900">A fast, gifty surprise:</strong> Gifft.me.
+              </li>
+              <li>
+                <strong className="text-rose-900">A physical card in the post:</strong> Hallmark.
+              </li>
+            </ul>
+            <p className="text-sm text-rose-700/60 leading-relaxed mt-5">
+              Whichever you pick, the tool matters far less than the words — a plain letter that tells the truth will
+              always beat a fancy one that says nothing. If the words are the hard part, our guide on{' '}
+              <Link href="/blog/how-to-write-a-love-letter-to-your-boyfriend-or-girlfriend" className="text-rose-600 underline hover:text-rose-700">
+                how to write a love letter
+              </Link>{' '}
+              walks it through line by line, and the{' '}
+              <Link href="/blog/paragraphs-for-her" className="text-rose-600 underline hover:text-rose-700">
+                copy-and-paste paragraphs
+              </Link>{' '}
+              give you a running start.
+            </p>
+          </div>
+        </section>
+
         {/* The real difference */}
         <section className="max-w-4xl mx-auto px-6 pb-20">
           <div className="bg-white rounded-3xl border border-rose-100 shadow-sm p-10 md:p-14">
@@ -288,19 +396,26 @@ export default function ComparePage() {
           <div className="bg-white rounded-2xl border border-rose-100 shadow-sm p-6">
             <h2 className="font-serif text-2xl font-bold text-rose-900 mb-3">Still comparing?</h2>
             <p className="text-sm text-rose-700/70 leading-relaxed mb-3">
-              We wrote a longer, deliberately honest round-up of{' '}
-              <Link href="/blog/best-online-love-letter-websites" className="text-rose-600 underline hover:text-rose-700">
-                the best online love letter websites
+              If you already know what you want to send, the{' '}
+              <Link href="/letters/love" className="text-rose-600 underline hover:text-rose-700">
+                love letter templates
               </Link>{' '}
-              — including the ones that beat us on specific things — so you can pick the tool that fits the
-              letter you actually want to send rather than the one with the loudest homepage.
+              are written out in full so you can copy one straight off the page, and the{' '}
+              <Link href="/letters" className="text-rose-600 underline hover:text-rose-700">
+                occasion guides
+              </Link>{' '}
+              cover the other twenty-four reasons people write.
             </p>
             <p className="text-sm text-rose-700/70 leading-relaxed">
-              If what you want is to say something without your name attached, the guide to sending an{' '}
-              <Link href="/blog/anonymous-love-letter-online" className="text-rose-600 underline hover:text-rose-700">
-                anonymous love letter online
+              If what you want is to say something without your name attached, our guide to{' '}
+              <Link href="/blog/how-to-send-an-anonymous-letter-to-someone" className="text-rose-600 underline hover:text-rose-700">
+                sending an anonymous letter
               </Link>{' '}
-              covers how to do it kindly, and{' '}
+              covers how to do it kindly (including a full anonymous love letter to copy), the{' '}
+              <Link href="/letters/secret-letter" className="text-rose-600 underline hover:text-rose-700">
+                secret letter templates
+              </Link>{' '}
+              give you a starting point, and{' '}
               <Link href="/quizzes" className="text-rose-600 underline hover:text-rose-700">
                 our free love quizzes
               </Link>{' '}
