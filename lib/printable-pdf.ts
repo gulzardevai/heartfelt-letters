@@ -127,8 +127,8 @@ export async function buildSheetPdf({ name, fillIn, sheet }: SheetSpec): Promise
   const heading = sheetHeading(name)
   const intro =
     sheet === 'fill-in'
-      ? 'Write in the blanks. The small words under each line tell you what to reach for — cross out any line that is not true of the two of you.'
-      : 'Read each line, then write your own version on the lines below it. The brackets tell you what to reach for — replace them with something only the two of you would know.'
+      ? 'Write in the blanks. The small words under each line tell you what to reach for — cross out any line that does not fit.'
+      : 'Read each line, then write your own version on the lines below it. The brackets tell you what to reach for — replace them with a detail only you could write.'
 
   doc.setTitle(`Printable ${heading.toLowerCase()} template`)
   doc.setAuthor('ShareLove Letters')

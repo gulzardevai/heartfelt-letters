@@ -848,7 +848,7 @@ const WRITE_GUIDE: { heading: string; body: string[] }[] = [
     heading: 'Privacy, plainly',
     body: [
       'Every letter is encrypted at rest with AES-256, which means it is unreadable in our own database. Letters are never indexed by search engines and never appear in any public listing. You can add a password so that even someone who obtains the link cannot open it.',
-      'You do not need an account to write or send, and you can still send without revealing who you are. The one real difference is what happens afterwards: a guest link stays live for 7 days and then expires, and a guest never finds out whether the letter was opened. With a free account the letter is kept for 30 days, your dashboard shows when it was opened and any replies it received, and we email you the first time it is opened and whenever a reply arrives.',
+      'You do not need an account to write or send, and you can still send without revealing who you are. The one real difference is what happens afterwards: a guest link stays live for 7 days and then expires, and a guest never finds out whether the letter was opened. With a free account the letter is kept for 30 days and stays in your dashboard, where you can see whether it has been opened, how many times, and every reply it received.',
     ],
   },
   {
@@ -868,7 +868,7 @@ const WRITE_FAQS = [
   },
   {
     q: 'Do I need an account to send a letter?',
-    a: 'No. You can write and share a letter as a guest with no sign-up at all. An account is optional and only changes what happens after you send: a guest link expires after 7 days, while a free account keeps the letter for 30 days and emails you when it is opened and when a reply arrives. You can create one after sending and keep the letter you just wrote.',
+    a: 'No. You can write and share a letter as a guest with no sign-up at all. An account is optional and only changes what happens after you send: a guest link expires after 7 days and a guest never learns whether it was opened, while a free account keeps the letter for 30 days and shows you in your dashboard when it was opened and any replies it received. You can create one after sending and keep the letter you just wrote.',
   },
   {
     q: 'Is my letter private and encrypted?',

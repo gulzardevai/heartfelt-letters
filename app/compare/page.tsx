@@ -68,7 +68,7 @@ const features = [
   { feature: '25 occasion guides: what to say, opening lines to steal, worked before/after examples', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Seasonal guides — Christmas card wording, letters to Santa, Thanksgiving gratitude letters', us: true, dll: false, paperless: false, hallmark: true, canva: true, docs: false },
   { feature: 'Free printable fill-in-the-blank letter templates — no PDF to buy, no watermark', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
-  { feature: 'Download every printable as a ready-made PDF — no sign-up, no email address, no watermark', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
+  { feature: 'Download the printable PDF without creating an account or giving an email address', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Print the letter on clean paper, no chrome (write online or by hand)', us: true, dll: false, paperless: false, hallmark: true, canva: true, docs: true },
   { feature: 'Rich text editor', us: true, dll: true, paperless: false, hallmark: false, canva: true, docs: true },
   { feature: 'Share via private link', us: true, dll: true, paperless: true, hallmark: false, canva: false, docs: true },
@@ -77,7 +77,7 @@ const features = [
   { feature: 'Envelope opening animation', us: true, dll: false, paperless: true, hallmark: false, canva: false, docs: false },
   { feature: 'Letter themes (vintage, midnight...)', us: true, dll: false, paperless: true, hallmark: true, canva: true, docs: false },
   { feature: 'Recipients can reply on the letter', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
-  { feature: 'Emails you when your letter is opened — and when someone replies', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
+  { feature: 'See whether your letter was opened, how many times, and every reply — from your dashboard', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Schedule a letter to open on a future date', us: true, dll: false, paperless: true, hallmark: true, canva: false, docs: false },
   { feature: 'Virtual flower bouquet with the letter', us: true, dll: true, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Attach a song (Spotify, Apple Music, YouTube)', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
@@ -187,7 +187,7 @@ export default function ComparePage() {
                 <li>✓ AES-256 encrypted — unreadable even in our database</li>
                 <li>✓ Share via private link, optionally with a password</li>
                 <li>✓ Recipients can reply right on the letter</li>
-                <li>✓ With a free account, we email you the moment your letter is opened — and again whenever a reply comes in</li>
+                <li>✓ With a free account, your dashboard shows whether each letter was opened, how many times, and every reply</li>
                 <li>✓ Schedule any letter to unseal on a future date — to someone else or your future self</li>
                 <li>✓ Send a virtual bouquet with it — six styles, free, never wilts</li>
                 <li>✓ Attach your song — Spotify, Apple Music or YouTube, playable under the letter</li>

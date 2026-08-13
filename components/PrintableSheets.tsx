@@ -136,8 +136,8 @@ export default function PrintableSheets({ name, emoji, slug, type, fillIn }: Pro
         </p>
         <p className="text-xs text-rose-400 mb-8 pb-6 border-b border-rose-100">
           {mode === 'fillin'
-            ? 'Write in the blanks. The small words under each line tell you what to reach for — cross out any line that is not true of the two of you.'
-            : 'Read each line, then write your own version on the lines below it. The brackets tell you what to reach for — replace them with something only the two of you would know.'}
+            ? 'Write in the blanks. The small words under each line tell you what to reach for — cross out any line that does not fit.'
+            : 'Read each line, then write your own version on the lines below it. The brackets tell you what to reach for — replace them with a detail only you could write.'}
         </p>
 
         {mode === 'fillin' ? (
