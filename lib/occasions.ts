@@ -7,6 +7,10 @@ export type Occasion = {
   type: string            // LETTER_TYPES id
   emoji: string
   name: string            // short label, used in lists and breadcrumbs
+  // The noun phrase the page uses in running copy ("what to say in a <subject>").
+  // Defaults to "<name> letter"; set it where that reads badly ("virtual flowers
+  // letter").
+  subject?: string
   h1: string
   subheading?: string     // optional above-the-fold value-prop line under the H1
   metaTitle: string
@@ -44,6 +48,10 @@ export type Occasion = {
   // never for a typo fix — otherwise the freshness signal stops meaning
   // anything. Pages without one fall back to the shared static date.
   updatedAt?: string
+  // Optional gallery of the virtual bouquets that can ride along with the
+  // letter, drawn as SVG. Only the flowers page uses it — a searcher looking
+  // for virtual flowers wants to see them, not read a description of them.
+  bouquetGallery?: { heading: string; intro: string; note: string }
   // Optional "how to lay the letter out" block, for occasions whose searchers
   // ask for the FORMAT of the letter and not only for examples of one.
   format?: {
@@ -719,7 +727,7 @@ export const OCCASIONS: Occasion[] = [
       { q: "What if my mum and I have a difficult relationship?", a: "Write only what is true. You can thank her for one specific thing without pretending the rest was perfect — a narrow, honest letter is worth more than a broad one you do not mean, and it often opens more doors than it closes." },
     ],
     closing: 'Write it in your own voice rather than the greeting-card one. She will know the difference by the end of the first sentence.',
-    related: ['fathers-day', 'thank-you', 'birthday', 'love'],
+    related: ['fathers-day', 'thank-you', 'birthday', 'flowers'],
   },
   {
     slug: 'fathers-day',
@@ -1099,7 +1107,7 @@ export const OCCASIONS: Occasion[] = [
       { q: 'What should I not say?', a: 'Avoid medical advice, comparisons to other people\'s illnesses, and forced positivity. Warmth and normality are what actually help.' },
     ],
     closing: 'Send one now and say plainly that no reply is needed. Then send a second in ten days, when everybody else has moved on.',
-    related: ['sympathy', 'friendship', 'thank-you', 'birthday'],
+    related: ['sympathy', 'friendship', 'thank-you', 'flowers'],
   },
   {
     slug: 'sympathy',
@@ -1150,7 +1158,7 @@ export const OCCASIONS: Occasion[] = [
       { q: 'Is a letter better than a card?', a: 'Usually, yes. Bereaved families often keep letters that contain memories of the person, because those memories are new to them.' },
     ],
     closing: 'Use their name, tell one story, offer one specific thing. That is a complete condolence letter, and it is already more than most people manage.',
-    related: ['get-well', 'friendship', 'thank-you', 'farewell'],
+    related: ['get-well', 'friendship', 'thank-you', 'flowers'],
   },
   {
     slug: 'farewell',
@@ -1420,7 +1428,7 @@ export const OCCASIONS: Occasion[] = [
       { q: 'What is a good romantic surprise for a long distance partner?', a: 'Schedule several letters at once for different future dates. Something arrives on the weeks you are busy, and they never know which day it will be.' },
     ],
     closing: 'Pick the day, pick the hour, and write it now. The surprise lives in the timing, and the timing has to be decided in advance.',
-    related: ['love', 'just-because', 'anniversary', 'valentines-day'],
+    related: ['love', 'just-because', 'anniversary', 'flowers'],
   },
   {
     slug: 'future-self',
@@ -1477,6 +1485,73 @@ export const OCCASIONS: Occasion[] = [
       heading: 'How ShareLove compares to FutureMe',
       body: 'This works because every letter on ShareLove can be sealed until a future date you choose: pick the day it opens and the private link shows a sealed envelope with a live countdown until then. Unlike FutureMe, it is completely free with no upsell, needs no account and no email verification, the content is encrypted with AES-256 at rest, and nothing is ever added to a public archive for strangers to browse. And where FutureMe only sends to yourself by email, a ShareLove letter can be addressed to someone else — your future self today, your child on their eighteenth birthday tomorrow.',
     },
+  },
+  {
+    slug: 'flowers',
+    updatedAt: '2026-08-14T00:00:00.000Z',
+    type: 'love',
+    templateIds: ['love-3', 'love-4'],
+    emoji: '💐',
+    name: 'Virtual Flowers',
+    subject: 'flower message',
+    h1: 'Send Virtual Flowers With a Message',
+    subheading: 'Pick a bouquet, write the thing you actually meant to say, and send both in one private link. Free, and nothing is dead by Friday.',
+    metaTitle: 'Send Virtual Flowers With a Message — Free Bouquets',
+    metaDescription: 'Send virtual flowers free, with a real message inside. Choose one of six bouquets, write the letter, and share a private link they open like an envelope.',
+    intro: [
+      'Flowers are what people send when they want to say something and cannot find the sentence. The flowers arrive, go in a vase, and the card says "thinking of you" in a florist\'s handwriting. Sending a bouquet on screen with a letter behind it fixes the half that usually goes missing — the part where you say the thing.',
+      'Here the bouquet is the wrapping and the letter is the gift. Choose one of six arrangements, write what you meant, and send them together as one private link: they open an envelope, the flowers bloom on screen, and your words are underneath.',
+      'It costs nothing, arrives the second you send it, and needs no address — which makes it the right move at eleven at night, from another country, or for someone whose street you have never known. And unlike the real thing, they can open it again in March.',
+    ],
+    proseLink: {
+      before: 'Flowers go most often to someone who is unwell, and that is the hardest note of the lot to get right — our ',
+      anchor: 'get well soon letter guide',
+      href: '/letters/get-well',
+      after: ' has the lines that help and the ones that quietly do not.',
+    },
+    bouquetGallery: {
+      heading: 'The six bouquets',
+      intro: 'Every one is drawn rather than photographed, so it stays sharp on any screen. Pick one and it blooms full-screen the moment they open the envelope, then stays beside the letter afterwards.',
+      note: 'Writing and sending a letter is free and needs no account. Attaching a bouquet needs a free account — it takes about ten seconds, and the letter you have already written is waiting for you when you come back.',
+    },
+    whatToSay: [
+      'Why these particular flowers, if there is a reason — her grandmother grew peonies, he called the sunflowers ridiculous and then bought two.',
+      'What set this off. A bouquet with no occasion behind it needs its trigger named in the first line, or they will spend the day wondering what you have done.',
+      'The thing the flowers are standing in for — "I am sorry", "I am proud of you", "I have thought about you every day this week" — written out in words as well.',
+      'One detail that proves you were paying attention: something they said, something they are dreading, what is happening to them on Thursday.',
+      'What you are not asking of them. Someone having a hard week needs telling that no reply is owed.',
+      'How to reach you, if the flowers are an opening rather than a full stop.',
+    ],
+    openers: [
+      'I saw these and thought of you, which is a cliche until I tell you why.',
+      'These are not an apology. They are just flowers, and here is what I actually wanted to say.',
+      'You cannot put these in water, which means they will still be here on Thursday.',
+    ],
+    avoid: 'Avoid letting the bouquet do all the talking. "Thinking of you" under a picture of flowers is a text message with decoration. The flowers are the envelope; the letter is the part they keep.',
+    example: {
+      generic: 'Sending you flowers! Thinking of you today and hoping these brighten your day.',
+      better: 'Sunflowers, because you called them aggressively cheerful in the shop in June and then bought two anyway. It has been a rough fortnight and I wanted something loud on your table.',
+      why: 'The first could be sent by anyone to anyone. The second explains the choice of flower, quotes something they said, and names what is going on in their life right now — three separate pieces of proof that these were picked for them.',
+    },
+    fillIn: [
+      'Dear [their name],',
+      'I am sending you [which flowers] because [why those ones].',
+      'What set this off: [the trigger — a phone call, a date on the calendar, a thought on the walk home].',
+      'What the flowers are standing in for is this: [the thing you actually want to say].',
+      'I have been thinking about [the specific thing happening in their life].',
+      'You do not have to reply to this. [What you would like, if anything.]',
+      'They will not wilt, so open them again whenever you want to.',
+      '[Your name]',
+    ],
+    faq: [
+      { q: 'How do I send virtual flowers with a message for free?', a: 'Write the message, choose one of six bouquets, and share the link. The bouquet blooms on screen when your recipient opens the envelope and your letter sits underneath it. Writing and sending is free with no account; attaching a bouquet needs a free account, which takes about ten seconds and costs nothing.' },
+      { q: 'Do virtual flowers cost anything?', a: 'No. All six bouquets are free, there is no delivery fee, no coins to buy and no card details to enter. A free account is what unlocks the bouquet, not a payment.' },
+      { q: 'Which bouquet should I send?', a: 'Red roses for romance, pink peonies for warmth without a declaration, sunflowers for good news and hard weeks, white lilies for sympathy, lavender for someone who needs rest, wildflowers when none of the above is quite it. If you are stuck, send the ones you would actually have bought them.' },
+      { q: 'Are virtual flowers a real substitute for a delivery?', a: 'Not always, and it is worth being honest about it. For a funeral or a hospital room, a physical object in the room is part of the point. Virtual flowers are better than a delivery when the person is far away, when you have no address, when it is late at night, and when what matters most is what you have to say rather than what turns up at the door.' },
+      { q: 'Can I schedule the flowers to arrive on a particular day?', a: 'Yes. Set the date it unlocks and the link stays sealed behind a countdown until then — useful for a birthday, an anniversary, or the morning of something they are dreading.' },
+    ],
+    closing: 'Choose the bouquet first if it helps. Deciding which flowers you would have bought is often the thing that tells you what you wanted to say.',
+    related: ['get-well', 'sympathy', 'mothers-day', 'romantic-surprise'],
   },
 ]
 

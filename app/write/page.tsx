@@ -170,6 +170,11 @@ function WritePageInner() {
     if (!editId) {
       const themeParam = searchParams.get('theme')
       if (themeParam && THEMES.some(t => t.id === themeParam)) setSelectedTheme(themeParam)
+      // Deep link from /letters/flowers: ?bouquet=red_roses arrives with the
+      // bouquet already attached, so picking the flowers can happen before the
+      // writing rather than after it.
+      const bouquetParam = searchParams.get('bouquet')
+      if (bouquetParam && BOUQUETS.some(b => b.id === bouquetParam)) setSelectedBouquet(bouquetParam)
     }
     if (editId) {
       setEditLoading(true)

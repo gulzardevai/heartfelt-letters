@@ -6,6 +6,8 @@ import Footer from '@/components/Footer'
 import PrintableSheets from '@/components/PrintableSheets'
 import TemplateLibrary from '@/components/TemplateLibrary'
 import { breadcrumbLd } from '@/lib/schema'
+import BouquetArt from '@/components/BouquetArt'
+import { BOUQUETS } from '@/lib/bouquets'
 import { OCCASIONS, getOccasion } from '@/lib/occasions'
 import { getTemplateLibrary, getTemplatesForType, TEMPLATES } from '@/lib/templates'
 
@@ -49,7 +51,7 @@ export default function OccasionPage({ params }: Props) {
   // Some occasion names already end in "letter" (Love Letter, Secret Letter);
   // appending another one gives "love letter letter". Build the phrase once.
   const lower = occasion.name.toLowerCase()
-  const subject = lower.endsWith('letter') ? lower : `${lower} letter`
+  const subject = occasion.subject ?? (lower.endsWith('letter') ? lower : `${lower} letter`)
   const Subject = subject.charAt(0).toUpperCase() + subject.slice(1)
   const library = occasion.templateLibrary ? getTemplateLibrary(occasion.templateLibrary.ids) : []
   const related = occasion.related.map(getOccasion).filter(Boolean)
@@ -128,6 +130,39 @@ export default function OccasionPage({ params }: Props) {
             and write it by hand.
           </p>
         </section>
+
+        {/* Bouquet gallery — for the page whose searcher wants to see the flowers */}
+        {occasion.bouquetGallery && (
+          <section id="bouquets" className="max-w-4xl mx-auto px-6 pb-14 scroll-mt-20">
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-rose-900 mb-2 text-center">
+              {occasion.bouquetGallery.heading}
+            </h2>
+            <p className="text-sm text-rose-700/60 text-center mb-8 max-w-xl mx-auto">
+              {occasion.bouquetGallery.intro}
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-5">
+              {BOUQUETS.map(b => (
+                <div
+                  key={b.id}
+                  className="bg-white rounded-2xl border border-rose-100 p-5 shadow-sm flex flex-col text-center"
+                >
+                  <BouquetArt bouquet={b} className="h-32 w-auto mx-auto mb-4" />
+                  <h3 className="font-serif font-semibold text-rose-900 text-sm mb-1.5">{b.label}</h3>
+                  <p className="text-xs text-rose-700/60 leading-relaxed mb-4 flex-1">{b.note}</p>
+                  <Link
+                    href={`/write?bouquet=${b.id}`}
+                    className="text-sm text-center bg-rose-50 text-rose-700 px-4 py-2.5 rounded-xl hover:bg-rose-100 transition-colors font-medium"
+                  >
+                    Send these →
+                  </Link>
+                </div>
+              ))}
+            </div>
+            <div className="bg-rose-50/70 border border-rose-100 rounded-2xl px-5 py-4 mt-6">
+              <p className="text-sm text-rose-800/80 leading-relaxed">{occasion.bouquetGallery.note}</p>
+            </div>
+          </section>
+        )}
 
         {/* Full template library — the templates themselves, high on the page */}
         {occasion.templateLibrary && library.length > 0 && (
