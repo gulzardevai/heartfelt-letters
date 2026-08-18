@@ -1,7 +1,6 @@
 import { MetadataRoute } from 'next'
 import { getSupabaseAdmin } from '@/lib/supabase-admin'
 import { OCCASIONS } from '@/lib/occasions'
-import { QUOTE_CATEGORY_PAGES } from '@/lib/quotes'
 import { TOOLS } from '@/lib/tools'
 
 export const dynamic = 'force-dynamic'
@@ -50,13 +49,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     })),
-    { url: `${BASE}/quotes`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'weekly', priority: 0.8 },
-    ...QUOTE_CATEGORY_PAGES.map(c => ({
-      url: `${BASE}/quotes/${c.slug}`,
-      lastModified: STATIC_LAST_MODIFIED,
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    })),
+    // /quotes and /quotes/[category] are deliberately absent — the section is
+    // noindex as of 2026-08-18 (see app/quotes/layout.tsx for why). A noindex
+    // page must not be advertised in the sitemap; the two would contradict.
     { url: `${BASE}/blog`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'daily', priority: 0.8 },
     { url: `${BASE}/compare`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/about`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'yearly', priority: 0.5 },
