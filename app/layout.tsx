@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
-import Script from 'next/script'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import { Playfair_Display, Inter, Dancing_Script } from 'next/font/google'
 import './globals.css'
 import { Toaster } from 'react-hot-toast'
+import AdSenseScript from '@/components/AdSenseScript'
 import { AuthProvider } from '@/components/AuthProvider'
 
 const playfair = Playfair_Display({
@@ -49,12 +49,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable} ${dancing.variable}`}>
       <body className="min-h-screen bg-cream">
-        <Script
-          async
-          strategy="lazyOnload"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1228680334439068"
-          crossOrigin="anonymous"
-        />
+        <AdSenseScript />
         <AuthProvider>
           {children}
         </AuthProvider>
