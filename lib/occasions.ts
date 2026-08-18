@@ -52,6 +52,15 @@ export type Occasion = {
   // letter, drawn as SVG. Only the flowers page uses it — a searcher looking
   // for virtual flowers wants to see them, not read a description of them.
   bouquetGallery?: { heading: string; intro: string; note: string }
+  // Optional worked example: one complete letter shown line by line, each line
+  // with a note on why it is written that way. For occasions whose searchers
+  // ask for an EXAMPLE of the letter rather than a blank template.
+  annotated?: {
+    heading: string
+    intro: string
+    lines: { text: string; note: string }[]
+    note?: string
+  }
   // Optional "how to lay the letter out" block, for occasions whose searchers
   // ask for the FORMAT of the letter and not only for examples of one.
   format?: {
@@ -908,14 +917,14 @@ export const OCCASIONS: Occasion[] = [
   },
   {
     slug: 'friendship',
-    updatedAt: '2026-08-11T00:00:00.000Z',
+    updatedAt: '2026-08-18T00:00:00.000Z',
     type: 'friendship',
     emoji: '🤝',
     name: 'Friendship',
     h1: 'Friendship Letter Template',
     subheading: 'Six complete letters to a friend you can copy and fill in — write yours in the editor, seal it in an envelope, and share a private link.',
-    metaTitle: 'Letter to a Friend: 6 Free Examples You Can Copy Today',
-    metaDescription: 'Six complete letter-to-a-friend examples to copy and fill in, plus the format that works. Write it online, seal it in an envelope, send a private link. Free.',
+    metaTitle: 'Friendship Letter Template \u2014 6 Letter to a Friend Examples',
+    metaDescription: 'Six complete friendship letter examples to copy and fill in, plus the format for a letter to a friend. Write it free online and send it as a private link.',
     intro: [
       'We tell partners and parents how we feel. Friends mostly get jokes. That is fine, until you realise your closest friend may have no idea what they mean to you.',
       'A friendship letter with no occasion attached is one of the most disarming things you can send, precisely because nothing prompted it.',
@@ -929,8 +938,8 @@ export const OCCASIONS: Occasion[] = [
     },
     templateIds: ['friendship-1', 'friendship-2', 'friendship-3'],
     templateLibrary: {
-      heading: 'Six letters to a friend, written for you to finish',
-      intro: 'Every letter below is complete. The sentences are written; the parts in [brackets] are the ones only you can fill in. Copy one, replace the brackets, send it.',
+      heading: 'Six friendship letter examples, written for you to finish',
+      intro: 'Every example below is a complete letter for a friend. The sentences are written; the parts in [brackets] are the ones only you can fill in. Copy one, replace the brackets, send it.',
       ids: [
         'friend-short',
         'friend-best-friend',
@@ -939,6 +948,41 @@ export const OCCASIONS: Occasion[] = [
         'friend-thank-you',
         'friend-sorry',
       ],
+    },
+    annotated: {
+      heading: 'An example of a letter to a friend, line by line',
+      intro: 'This is one complete friendship letter, about 190 words. Under each line is the reason it is written that way, so you can swap in your own details without losing the thing that makes it work.',
+      lines: [
+        {
+          text: 'Ren,',
+          note: 'Their name on its own line. No "Dear", no surname. This is the one letter where formality actively hurts you \u2014 an opening that sounds like a bank letter will make the next five lines read as a joke.',
+        },
+        {
+          text: 'This is not about anything. I just wanted it written down somewhere that is not a group chat.',
+          note: 'The reason, in the first line, with no apology for not writing sooner. An apology up front asks your friend to do emotional admin before they have reached the point.',
+        },
+        {
+          text: 'We met because you were the only person at that induction week who admitted they had not done the reading. Eleven years ago now, which I have checked twice because it does not seem right.',
+          note: 'How you became friends, told as an event rather than a summary. The detail that dates it \u2014 eleven years, checked twice \u2014 does more work than any adjective would.',
+        },
+        {
+          text: 'In 2019 you got a train to a city you dislike and sat in a pub with me for four hours while I said almost nothing useful. You never once mentioned it afterwards, which is somehow the part I think about.',
+          note: 'One specific time they showed up. A general compliment can be deflected; a thing that happened cannot. The second sentence is the best line in the letter, and it is only there because it is true.',
+        },
+        {
+          text: 'You are the person I would call first. I do not think I have ever said that out loud.',
+          note: 'The thing you actually mean, said plainly and exactly once. Decorating it is how sincerity turns into a greetings card.',
+        },
+        {
+          text: 'In ten years I would like us to still be the people who can go three months without speaking and pick it up mid-sentence.',
+          note: 'One forward-looking line. Without it a letter that lists everything someone has done for you starts to read like a eulogy, which is the most common way this letter goes wrong.',
+        },
+        {
+          text: 'Love, Sam',
+          note: '"Love," is fine between friends, and so is your name on its own. Anything that sounds like the end of a work email will undo the six lines above it.',
+        },
+      ],
+      note: 'Notice how little of this is about friendship in general and how much of it is about one induction week, one train and one pub. That ratio is the whole technique. Keep the shape, replace every detail.',
     },
     format: {
       heading: 'The format of a letter to a friend',

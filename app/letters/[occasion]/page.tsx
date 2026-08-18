@@ -215,6 +215,42 @@ export default function OccasionPage({ params }: Props) {
           </section>
         )}
 
+        {/* Worked example — one complete letter, annotated line by line */}
+        {occasion.annotated && (
+          <section id="example" className="max-w-3xl mx-auto px-6 pb-14 scroll-mt-20">
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-rose-900 mb-2 text-center">
+              {occasion.annotated.heading}
+            </h2>
+            <p className="text-sm text-rose-700/60 text-center mb-8 max-w-xl mx-auto">
+              {occasion.annotated.intro}
+            </p>
+            <ol className="space-y-4">
+              {occasion.annotated.lines.map((line, i) => (
+                <li key={i} className="bg-white rounded-2xl border border-rose-100 p-6 shadow-sm">
+                  <p className="font-serif text-rose-900 leading-relaxed mb-3">{line.text}</p>
+                  <p className="text-sm text-rose-700/70 leading-relaxed border-t border-rose-50 pt-3">
+                    <strong className="text-rose-800 font-semibold">Why: </strong>
+                    {line.note}
+                  </p>
+                </li>
+              ))}
+            </ol>
+            {occasion.annotated.note && (
+              <div className="bg-rose-50/70 border border-rose-100 rounded-2xl px-5 py-4 mt-6">
+                <p className="text-sm text-rose-800/80 leading-relaxed">{occasion.annotated.note}</p>
+              </div>
+            )}
+            <div className="text-center mt-7">
+              <Link
+                href={`/write?type=${occasion.type}`}
+                className="inline-block bg-rose-600 text-white px-7 py-3 rounded-full font-semibold text-sm hover:bg-rose-700 transition-colors shadow-md"
+              >
+                Start yours from this example — free
+              </Link>
+            </div>
+          </section>
+        )}
+
         {/* How to lay the letter out — only where searchers ask for the format */}
         {occasion.format && (
           <section className="max-w-3xl mx-auto px-6 pb-14">
