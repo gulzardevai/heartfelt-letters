@@ -8,18 +8,41 @@
 
 export type ToolGuide = {
   slug: string
+  // Rendered as a numbered "how it works" strip directly under the widget.
+  steps?: { title: string; text: string }[]
   sections: { heading: string; body: string[] }[]
 }
 
 export const TOOL_GUIDES: ToolGuide[] = [
   {
     slug: 'love-calculator',
+    steps: [
+      {
+        title: 'Type both names',
+        text: 'First names are enough. Nicknames and spellings change the result, so pick one version of each name and stay with it if you want a score you can compare later.',
+      },
+      {
+        title: 'Read the score',
+        text: 'You get a percentage and a short line describing it. There is no randomness involved, so refreshing the page will not improve your number — which is most of the fun.',
+      },
+      {
+        title: 'Send it, then say something real',
+        text: 'Screenshot it for the laugh. Then follow it with one sentence that is actually about them, because the number on its own tells the other person nothing.',
+      },
+    ],
     sections: [
       {
         heading: 'What a love calculator can and cannot tell you',
         body: [
           'A name-based compatibility score is a game, and it is worth being straightforward about that: the letters in two names carry no information about whether two people are good for each other. What the calculator does reliably is produce the same score for the same pair every time, which is what makes it shareable — you and your friend get the same number, so there is something to argue about.',
           'The reason these have survived since the paper-and-pencil playground version is not that anyone believes them. It is that they give you permission to raise the subject. Typing two names into a box is a much lower-stakes way of asking "are we a thing?" than asking directly, which is precisely why it has outlived every more sophisticated version of the idea.',
+        ],
+      },
+      {
+        heading: 'Why the same names always give the same score',
+        body: [
+          'The calculation is deterministic. Every letter in the two names is converted to a number, the numbers are combined in a fixed way, and the result is reduced to a value between 0 and 100. Nothing is random and nothing is stored, so the same pair of names typed on a different day, on a different phone, by a different person returns exactly the same figure.',
+          'That is the property that makes it worth playing with. A random number would be meaningless the moment two people compared results; a stable one behaves like a fact you can send to someone. It also means the score is sensitive to spelling in ways people find funny — the full name and the shortened one give different results, as do a maiden name and a married one. None of it means anything, and everyone knows it, which is why nobody minds.',
         ],
       },
       {
@@ -40,12 +63,33 @@ export const TOOL_GUIDES: ToolGuide[] = [
   },
   {
     slug: 'days-together',
+    steps: [
+      {
+        title: 'Choose the day it started',
+        text: 'Your first date, the day you made it official, the day you met — any origin works. The counter measures from whatever date you give it.',
+      },
+      {
+        title: 'Read the totals',
+        text: 'You get the exact number of days alongside the equivalent in months and years, plus how far it is to the next round milestone.',
+      },
+      {
+        title: 'Put the next milestone in a calendar',
+        text: 'The useful output is the date ahead of you, not the number behind you. Set a reminder a week early so there is time to do something with it.',
+      },
+    ],
     sections: [
       {
         heading: 'Why day counts land harder than year counts',
         body: [
           'Anniversaries are annual and therefore expected, which quietly drains them of impact — everybody knows the date is coming, and the marking of it becomes an obligation as much as a celebration. A day count does something different. Four years reads as a category; 1,514 days reads as an accumulation, and accumulation is closer to what a relationship actually feels like from the inside.',
           'This is also why day counts make unusually good surprises. Nobody is braced for day 1,000. Arriving with something on a date that carries no social obligation is one of the few remaining ways to mark a relationship without the marking being anticipated.',
+        ],
+      },
+      {
+        heading: 'Choosing a start date when there is no obvious one',
+        body: [
+          'Plenty of relationships have a fuzzy beginning: a long stretch of ambiguity, a friendship that shifted, a first date nobody would have called a date at the time. If you cannot identify a single day, the practical answer is to pick the first one either of you can name precisely and treat it as the official origin. A slightly arbitrary date you both agree on is far more useful than an accurate one neither of you can remember.',
+          'Couples who genuinely disagree — one counts from the first kiss, the other from the day they stopped seeing other people — often end up keeping both, which is not a problem. Run the counter twice and you have two milestones a few weeks apart instead of one, and the second is arguably the better surprise because nobody is expecting it.',
         ],
       },
       {
@@ -66,6 +110,20 @@ export const TOOL_GUIDES: ToolGuide[] = [
   },
   {
     slug: 'nickname-generator',
+    steps: [
+      {
+        title: 'Pick a vibe',
+        text: 'Sweet and classic, playful and silly, cute and soft, or deeply romantic. The category matters more than the individual names — most people find what they want by noticing which group they keep returning to.',
+      },
+      {
+        title: 'Generate until something snags',
+        text: 'Six names come up at a time and you can keep drawing. You are not looking for the perfect one so much as the one that makes you laugh or wince — both are information.',
+      },
+      {
+        title: 'Test it in private first',
+        text: 'Use it once, quietly, and watch the reaction. A pet name that survives a week of ordinary use has been accepted; one that gets no reply has not.',
+      },
+    ],
     sections: [
       {
         heading: 'What makes a pet name stick',
@@ -82,6 +140,13 @@ export const TOOL_GUIDES: ToolGuide[] = [
         ],
       },
       {
+        heading: 'The nicknames that age badly',
+        body: [
+          'A few categories reliably cause trouble later. Anything referencing a body — height, weight, a feature — is affectionate at the start of a relationship and a liability during an argument five years in, because it hands the other person a permanent sore point. Anything you used with a previous partner should be retired entirely; it will surface eventually and it will not be received well.',
+          'The other one people underestimate is scale. Baby-talk names that work between two people can be genuinely uncomfortable in front of colleagues, in-laws or children, and the person being called it is often the last to say so. A good test is whether you would use it in a voice note they might play out loud. If the answer is no, keep it, but keep it private — and be sure they know that is the arrangement rather than assuming it.',
+        ],
+      },
+      {
         heading: 'Where nicknames belong in writing',
         body: [
           'A pet name at the top of a letter does a specific job: it establishes immediately that this is private correspondence rather than a message that could have been sent to anyone. It is the fastest available signal of intimacy, which is why it works so well as an opening.',
@@ -92,6 +157,20 @@ export const TOOL_GUIDES: ToolGuide[] = [
   },
   {
     slug: 'love-language-quiz',
+    steps: [
+      {
+        title: 'Answer for how you receive, not how you give',
+        text: 'Six questions, and each one asks which gesture would make you feel loved — not which one you tend to offer. People routinely give in one language and receive in another.',
+      },
+      {
+        title: 'Take the first answer',
+        text: 'Go with instinct rather than the answer you think describes the person you would like to be. Deliberating produces a tidier result and a less accurate one.',
+      },
+      {
+        title: 'Compare, then ask one question',
+        text: 'Have your partner take it separately. Then ask each other what you actually noticed in the past month — the gap between the results and that answer is the whole point.',
+      },
+    ],
     sections: [
       {
         heading: 'What the five love languages are actually claiming',
@@ -108,6 +187,13 @@ export const TOOL_GUIDES: ToolGuide[] = [
         ],
       },
       {
+        heading: 'Why your result can change',
+        body: [
+          'People take this expecting a fixed trait and are unsettled when a retake a year later comes out differently. It usually should. What registers as love is shaped by what is currently scarce: couples in the same house rarely name quality time, and couples six months into a long-distance stretch name almost nothing else. New parents frequently shift toward acts of service for a while, then shift back.',
+          'So treat the result as a reading of where you are now rather than a permanent classification, and retake it when circumstances change rather than trying to reconcile the new answer with the old one. The version that matters is the one that describes this year — that is the one your partner has to work with.',
+        ],
+      },
+      {
         heading: 'Using your result well',
         body: [
           'Take it as a description of where you are currently tuned rather than a fixed trait. The genuinely useful step is comparing results with your partner and asking one question: what did I do in the last month that you actually registered? The answers are frequently surprising, and more informative than either quiz result.',
@@ -118,6 +204,20 @@ export const TOOL_GUIDES: ToolGuide[] = [
   },
   {
     slug: 'anniversary-gifts',
+    steps: [
+      {
+        title: 'Enter the year',
+        text: 'Any year from the first upward. The tool returns the traditional material and the modern equivalent side by side rather than making you choose a list first.',
+      },
+      {
+        title: 'Read the material as a category',
+        text: 'Paper, cotton, leather and the rest are prompts. The useful step is asking what that material means to the two of you, not what shop sells it.',
+      },
+      {
+        title: 'Write the card before you buy the thing',
+        text: 'It is the part they will still have in ten years, and doing it first tends to change what you buy.',
+      },
+    ],
     sections: [
       {
         heading: 'Where the traditional list came from',
@@ -134,6 +234,13 @@ export const TOOL_GUIDES: ToolGuide[] = [
         ],
       },
       {
+        heading: 'When the two lists disagree',
+        body: [
+          'For most years the traditional and modern materials have nothing to do with each other — year eight is bronze traditionally and linen or lace in the modern list, and there is no reconciling them. There is no authority to appeal to here, so the sensible approach is to look at both, notice which one suggests something specific about your partner, and ignore the other completely.',
+          'The lists also assume a wedding, which increasingly does not apply. Unmarried couples, friendships and the anniversary of the day you met all borrow the same materials perfectly well, because the sequence has no legal content — it is just an escalating series of prompts that happens to start with paper. If you are counting from something other than a wedding, our <a href="/tools/days-together">days together counter</a> will tell you which year you are actually in.',
+        ],
+      },
+      {
         heading: 'The part of the gift that gets remembered',
         body: [
           'Gifts are recalled poorly and the accompanying note is recalled well, which is close to the reverse of how most people allocate effort. Almost everyone can quote something written to them years ago; far fewer can list what came with it.',
@@ -144,6 +251,20 @@ export const TOOL_GUIDES: ToolGuide[] = [
   },
   {
     slug: 'countdown',
+    steps: [
+      {
+        title: 'Pick the date and time',
+        text: 'Add a time if the moment is specific — a landing, a ceremony, midnight. The countdown starts immediately and updates every second.',
+      },
+      {
+        title: 'Keep the link somewhere you will see it',
+        text: 'Your date is encoded into the share link, so bookmarking it or sending it to the person you are waiting for reopens the same countdown rather than a blank one.',
+      },
+      {
+        title: 'Decide what happens at zero',
+        text: 'The number reaching zero is an anticlimax on its own. Plan something small to land at the same moment — that is what the countdown has been pointing at.',
+      },
+    ],
     sections: [
       {
         heading: 'Why waiting for something feels better than having it',
@@ -160,6 +281,13 @@ export const TOOL_GUIDES: ToolGuide[] = [
         ],
       },
       {
+        heading: 'Time zones, and the last week',
+        body: [
+          'If the two of you are in different countries, agree whose clock the countdown is set to before you both start watching it, because a six-hour offset means one of you hits zero on the wrong evening. The usual convention is to set it to the time zone where the event physically happens — the airport, the venue, the front door.',
+          'The other thing to expect is that the final week behaves differently from the rest. A countdown measured in months is soothing; the same countdown measured in hours tends to sharpen the wait rather than ease it, which is the point at which people start checking it compulsively. If that is happening, the honest move is to stop looking and go and do something, and let the day arrive on its own.',
+        ],
+      },
+      {
         heading: 'Pairing a countdown with something that arrives',
         body: [
           'A countdown creates a moment but does not fill it — the number reaches zero and there is nothing at the bottom of it. The natural completion is something timed to arrive exactly then.',
@@ -170,6 +298,20 @@ export const TOOL_GUIDES: ToolGuide[] = [
   },
   {
     slug: 'zodiac-compatibility',
+    steps: [
+      {
+        title: 'Pick both star signs',
+        text: 'These are sun signs, taken from the birth date. If a birthday falls on the boundary between two signs, try both — the readings differ and the contrast is often the interesting part.',
+      },
+      {
+        title: 'Read the score and the element note',
+        text: 'The score comes from how the two elements — fire, earth, air, water — traditionally interact. The short read explains what that pairing is usually said to mean.',
+      },
+      {
+        title: 'Use it as a prompt, not a verdict',
+        text: 'The useful bit is the description of the contrast between two temperaments. Take that to a conversation and leave the score behind.',
+      },
+    ],
     sections: [
       {
         heading: 'How to read a compatibility result',
@@ -186,6 +328,13 @@ export const TOOL_GUIDES: ToolGuide[] = [
         ],
       },
       {
+        heading: 'A sun sign is only part of a chart',
+        body: [
+          'What this tool uses is the sun sign — the one you get from a birth date alone, and the only one most people know. Within astrology itself that is a deliberately shallow reading. A full chart also places the moon, which is said to govern how someone handles feeling, and the rising sign, which covers how they come across before anyone knows them, and both require a birth time and place to calculate.',
+          'This matters mostly because it explains the common complaint that a reading does not sound like you at all. Two people born under the same sun sign can be described very differently once the rest of the chart is involved, which is why serious practitioners treat sun-sign compatibility as a party trick. We use it here for the same reason: it needs one piece of information each, it produces a recognisable sketch, and nobody has to hand over their birth certificate.',
+        ],
+      },
+      {
         heading: 'The better question underneath',
         body: [
           'Whatever the reading says, the useful question it points at is how each of you handles conflict, distance and repair — which is a conversation you can have directly and which no chart will answer for you.',
@@ -196,6 +345,20 @@ export const TOOL_GUIDES: ToolGuide[] = [
   },
   {
     slug: 'couples-questions',
+    steps: [
+      {
+        title: 'Choose a category',
+        text: 'Deep for the ones that open something, fun for a lighter evening, date night for questions that keep a table conversation moving.',
+      },
+      {
+        title: 'Both of you answer',
+        text: 'Take turns on every question. One-sided questioning turns into an interview within about four questions and people start managing their answers.',
+      },
+      {
+        title: 'Follow up once, then move on',
+        text: 'Ask one more question about whatever they said before drawing the next card. The first answer is usually rehearsed; the second is where something real appears.',
+      },
+    ],
     sections: [
       {
         heading: 'Why prepared questions work better than they should',
@@ -212,6 +375,13 @@ export const TOOL_GUIDES: ToolGuide[] = [
         ],
       },
       {
+        heading: 'When a question opens something you were not expecting',
+        body: [
+          'Occasionally one of these lands on a genuine sore point — an old resentment, a fear about the future, something one of you has been carrying quietly. This is not a failure of the exercise, but it does change what the evening is, and the useful thing is to notice that and stop drawing cards. Continuing down the list after something real has surfaced is a way of avoiding it while appearing to be having a deep conversation.',
+          'The other half of the rule is what you do with an answer. Nothing said during one of these evenings should be repeated to other people, and nothing should be produced as evidence in an argument three weeks later. Questions like these are only safe to ask because both people assume that; the first time the assumption is broken, the honest answers stop and they do not come back easily.',
+        ],
+      },
+      {
         heading: 'What to do with a good answer',
         body: [
           'The best answers from these evenings are almost always lost, because they arrive in conversation and conversation does not persist. If something lands — a memory you had never heard, a fear neither of you had named — write it down that week.',
@@ -222,6 +392,20 @@ export const TOOL_GUIDES: ToolGuide[] = [
   },
   {
     slug: 'love-note',
+    steps: [
+      {
+        title: 'Write one line',
+        text: 'A sentence or two is the format. Anything longer belongs in a letter, where it has room to be read properly.',
+      },
+      {
+        title: 'Copy the link',
+        text: 'Your words are encoded into the link itself in your own browser. Nothing is uploaded, which also means the link is the only copy.',
+      },
+      {
+        title: 'Send it and say nothing else',
+        text: 'Paste it into a message on its own. Explaining what is in the link before they open it removes the entire reason for wrapping it in one.',
+      },
+    ],
     sections: [
       {
         heading: 'When a note beats a letter',
@@ -235,6 +419,13 @@ export const TOOL_GUIDES: ToolGuide[] = [
         body: [
           'The constraint of short writing is that there is nowhere to hide, and the failure mode is reaching for a phrase that could have been sent to anyone. "Thinking of you" is fine; "thinking about you sitting on the stairs putting your shoes on this morning" is a note only you could have written.',
           'One specific detail beats any amount of general warmth. If the note is an apology, name the thing rather than gesturing at it. If it is encouragement, name what they are walking into. Specificity is most of what makes short writing work.',
+        ],
+      },
+      {
+        heading: 'What actually happens to your note',
+        body: [
+          'The words are encoded into the link in your browser and never sent to us, which has two consequences worth knowing. Your note is not sitting in a database anywhere and cannot be read by us or handed to anyone else. It also cannot be edited or withdrawn after you send it, because there is no server-side copy to change — a new note means a new link.',
+          'The practical read on privacy is that the link is the secret. It is never listed or indexed and will not surface in search, but anyone holding it can open the note, so it behaves like a sealed envelope left on a desk rather than a locked box. That is right for a surprise and wrong for anything genuinely sensitive; for that, a <a href="/write">letter with a password on it</a> is the tool you want.',
         ],
       },
       {

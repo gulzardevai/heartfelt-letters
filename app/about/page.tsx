@@ -77,8 +77,26 @@ export default function AboutPage() {
           </div>
         </section>
 
-        {/* Privacy stance */}
+        {/* Who runs it — E-E-A-T */}
         <section className="py-20 px-6">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="font-serif text-3xl font-bold text-rose-900 mb-6">Who Makes ShareLove Letters</h2>
+            <div className="prose prose-rose max-w-none text-rose-800/80 leading-relaxed space-y-4">
+              <p>
+                ShareLove Letters is an independent project. It is not owned by a larger company, it did not raise money to exist, and there is no growth team somewhere deciding what you should be nudged into next. It is built and maintained by the same very small group of people who answer the email — write to <a href="mailto:hello@shareloveletters.com" className="text-rose-600 underline">hello@shareloveletters.com</a> and it reaches someone who works on the site, not a support queue.
+              </p>
+              <p>
+                That matters mostly because of what it rules out. We cannot make money from reading what you write, because letters are encrypted before they reach our database and we genuinely cannot read them. We do not sell or share letter content, we do not place advertising inside the letters themselves, and we do not harvest the addresses of people who open a letter you sent them. Those are not policies we could quietly change later — the encryption is the architecture, not a setting.
+              </p>
+              <p>
+                We are also not therapists, counsellors or relationship professionals, and nothing on this site should be read as clinical advice. What we do have is a close working knowledge of one narrow thing — what makes a letter land — built from writing and rewriting every template here, and from the questions people send us when they are stuck halfway through. That is the only expertise we claim, and where a guide leans on research rather than on that, we say so in the guide.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Privacy stance */}
+        <section className="py-20 px-6 bg-white/40">
           <div className="max-w-3xl mx-auto">
             <h2 className="font-serif text-3xl font-bold text-rose-900 mb-6">Why Privacy Comes First</h2>
             <div className="prose prose-rose max-w-none text-rose-800/80 leading-relaxed space-y-4">
@@ -93,7 +111,7 @@ export default function AboutPage() {
         </section>
 
         {/* How it works */}
-        <section className="py-20 px-6 bg-white/40">
+        <section className="py-20 px-6">
           <div className="max-w-3xl mx-auto">
             <h2 className="font-serif text-3xl font-bold text-rose-900 mb-6">How It Works</h2>
             <div className="prose prose-rose max-w-none text-rose-800/80 leading-relaxed space-y-4">
@@ -102,6 +120,24 @@ export default function AboutPage() {
               </p>
               <p>
                 When you publish, you get a private link. Your recipient opens it and finds a sealed envelope with their name on it — they tap to break the wax seal, the letter unfolds, and they can even write a reply right on the page. No app to install, no account to create, nothing between your words and the person they&apos;re for.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Editorial standards */}
+        <section className="py-20 px-6 bg-white/40">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="font-serif text-3xl font-bold text-rose-900 mb-6">How We Write Everything Else</h2>
+            <div className="prose prose-rose max-w-none text-rose-800/80 leading-relaxed space-y-4">
+              <p>
+                Around the letter writing there is a fair amount of other material: <Link href="/letters" className="text-rose-600 underline">templates for around thirty occasions</Link>, a <Link href="/blog" className="text-rose-600 underline">blog about writing to people</Link>, a quote library, and a set of <Link href="/tools" className="text-rose-600 underline">free tools and quizzes</Link>. All of it is written by us rather than generated and published unread, and all of it is meant to be usable by someone who has no intention of ever writing a letter here.
+              </p>
+              <p>
+                Two rules govern it. First, we say what something is: a love calculator is a game, star-sign compatibility is not a prediction, and a personality quiz is a description rather than a diagnosis. Every one of those pages says so on the page itself, because a tool that lets you believe it is doing more than it is has stopped being a bit of fun. Second, we would rather leave a section out than pad it — if a page has three useful things to say about a subject, it says three things and stops.
+              </p>
+              <p>
+                We change our minds in public too. When a template or a guide turns out to give bad advice, or a feature makes the writing harder rather than easier, we rewrite or remove it rather than leaving it up because it ranks. If you think something here is wrong, <Link href="/contact" className="text-rose-600 underline">tell us</Link> — corrections are the most useful mail we get.
               </p>
             </div>
           </div>

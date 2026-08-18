@@ -91,6 +91,23 @@ export default function ToolPage({ params }: { params: { slug: string } }) {
           <ToolWidget slug={tool.slug} />
         </section>
 
+        {/* How to use it — the widget is client-side, so the steps are also the
+            only server-rendered explanation of what the thing actually does. */}
+        {guide?.steps && (
+          <section className="max-w-2xl mx-auto px-6 pb-12">
+            <h2 className="font-serif text-2xl font-bold text-rose-900 mb-6 text-center">How it works</h2>
+            <div className="grid sm:grid-cols-3 gap-4">
+              {guide.steps.map((s, i) => (
+                <div key={s.title} className="bg-white rounded-2xl border border-rose-100 p-5 shadow-sm text-center">
+                  <div className="w-9 h-9 rounded-full bg-rose-600 text-white font-bold flex items-center justify-center mx-auto mb-3">{i + 1}</div>
+                  <h3 className="font-semibold text-rose-900 mb-1.5 text-sm">{s.title}</h3>
+                  <p className="text-xs text-rose-700/70 leading-relaxed">{s.text}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Editorial guidance — the widget above is client-side, so this is the
             substance of the page for a crawler and for a first-time reader. */}
         {guide?.sections.map(s => (

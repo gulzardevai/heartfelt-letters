@@ -125,6 +125,7 @@ const features = [
   { feature: 'Image uploads', us: true, dll: true, paperless: true, hallmark: false, canva: true, docs: true },
   { feature: '700+ quote library, browsable by category', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Free love tools (love calculator, quizzes, counters)', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
+  { feature: 'Every tool explained — how it works, what the result actually means, and where it is only a game', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Shareable results & couple quizzes (send a link, unfurls as a card)', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: '"How well do you know me?" quiz — ready-made fun questions, zero writing, private scoreboard with optional taker emails', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Personal welcome & onboarding email on signup', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },

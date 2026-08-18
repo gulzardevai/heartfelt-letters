@@ -36,6 +36,13 @@ const HUB_SECTIONS: { heading: string; body: string[] }[] = [
     ],
   },
   {
+    heading: 'How the tools are meant to be used',
+    body: [
+      'Almost all of them take under a minute, and none of them asks for anything before showing you a result — no email, no account, no page of adverts between you and the answer. Type what the tool needs, read what it says, and leave. Most people are here for one number or one list, and the pages are built on that assumption rather than trying to hold you.',
+      'Every result also has a share link. The link carries your inputs inside it, which is how you can send a countdown to the person you are counting down with, or reopen a compatibility read tomorrow without setting it up again. It also means there is nothing on our side to delete — if you never send the link, the result existed only in your browser.',
+    ],
+  },
+  {
     heading: 'Free, and nothing leaves your browser',
     body: [
       'Every tool here is free with no account. They run client-side, which means the names, dates and answers you type are worked out on your own device and never sent to us or stored anywhere.',
@@ -117,6 +124,7 @@ export default function ToolsHubPage() {
                     {tool.name}
                   </span>
                   <span className="block text-sm text-rose-700/70 mt-1 leading-relaxed">{tool.hubTagline}</span>
+                  <span className="block text-sm text-rose-700/60 mt-2 leading-relaxed">{tool.hubBlurb}</span>
                 </span>
                 <span className="text-rose-300 group-hover:text-rose-500 transition-colors mt-1">→</span>
               </Link>

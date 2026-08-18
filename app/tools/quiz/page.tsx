@@ -50,6 +50,32 @@ const faqs = [
   },
 ]
 
+// The builder is client-side, so these sections are the substance of the page
+// for a crawler and for anyone deciding whether it is worth two minutes.
+const SECTIONS: { heading: string; body: string[] }[] = [
+  {
+    heading: 'What makes a good question',
+    body: [
+      'The instinct is to write questions that are hard, and hard questions make a worse quiz. If nobody can score above three, the result is not funny and there is nothing to compare — the interesting spread comes from a mix where roughly half the questions are gettable by anyone who pays attention and the rest separate the people who really know you.',
+      'The best-performing questions are specific and slightly mundane: which side of the bed, the order you do things in the morning, the one food you will not eat, the film you have watched most times. Avoid anything that turns on a single conversation you had once, because that tests memory of an event rather than knowledge of a person, and avoid anything with two defensible answers — you will spend the rest of the evening arguing about the marking rather than the scores.',
+    ],
+  },
+  {
+    heading: 'Couples, friends and family all play it differently',
+    body: [
+      'As a couples quiz it works best when the questions are ordinary rather than romantic. "What did I order the first time we went out" is a better question than "when did you know", because the second one is a test of sentiment and the first is a test of attention, and attention is what people actually want to be measured on.',
+      'With friends and family, the same quiz becomes a competition, and the scoreboard is doing most of the work. Send one link to a group chat and the ranking generates its own conversation — siblings comparing scores, someone insisting a question was unfair. For a group, ten to twelve questions is about right; for one person, six is plenty.',
+    ],
+  },
+  {
+    heading: 'Why the scoreboard is private',
+    body: [
+      'Takers see only their own score, and the full ranking is visible to you alone through a separate secret link. That split is deliberate. People answer honestly when a low score is between them and you, and start guessing strategically the moment they know everyone will see the number.',
+      'The scoreboard link is the only route to those results, so treat it like a key: it is saved on the device you built the quiz on, and it is worth sending yourself a copy. Anyone you forward it to can see every score, which is fine if you meant to and awkward if you did not.',
+    ],
+  },
+]
+
 const faqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
@@ -132,6 +158,17 @@ export default function QuizHubPage() {
             ))}
           </div>
         </section>
+
+        {/* Editorial guidance — the builder is client-side, so this is what a
+            crawler and a first-time reader actually get from the page. */}
+        {SECTIONS.map(s => (
+          <section key={s.heading} className="max-w-2xl mx-auto px-6 pb-10">
+            <h2 className="font-serif text-2xl font-bold text-rose-900 mb-4">{s.heading}</h2>
+            {s.body.map((p, i) => (
+              <p key={i} className="text-rose-800/75 leading-relaxed mb-4">{p}</p>
+            ))}
+          </section>
+        ))}
 
         {/* Funnel CTA into /write */}
         <section className="max-w-2xl mx-auto px-6 pb-14">

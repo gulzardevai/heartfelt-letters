@@ -32,11 +32,62 @@ const HUB_SECTIONS: { heading: string; body: string[] }[] = [
     ],
   },
   {
+    heading: 'Answer quickly, and answer honestly',
+    body: [
+      'Every quiz here is eight or nine multiple-choice questions and takes about a minute, which is deliberate. Long questionnaires invite you to deliberate, and deliberating produces the answer that describes the person you would like to be rather than the one you are. The first option you reach for is nearly always the more accurate one.',
+      'The other thing worth knowing is that none of these are scored against a norm. There is no right result and nothing is being diagnosed — you get a description, and the value of it is whether you recognise yourself in it. If a result feels wrong, that reaction is itself useful information, and it is usually the fastest route to working out what you actually think.',
+    ],
+  },
+  {
     heading: 'Free, and nothing is stored',
     body: [
       'Every quiz is free with no account and no sign-up. They run entirely in your browser — your individual answers are never stored against you or sold to anyone, and we count only how many people started and finished each quiz.',
       'If a result points at something worth saying, you can <a href="/write">write and send a real letter</a> free, encrypted and without an account on either side.',
     ],
+  },
+]
+
+// One line under each quiz card saying who it is actually for. Keyed by slug;
+// a quiz with no entry simply shows its own description.
+const QUIZ_BLURBS: Record<string, string> = {
+  'what-letter-should-you-write':
+    'For the vague sense that you owe someone something and no idea which someone. Sorts it into one of four specific letters you could write this evening.',
+  'how-romantic-are-you':
+    'For anyone who suspects they are either far more or far less romantic than their partner. Describes your style rather than scoring it out of ten.',
+  'apology-style-quiz':
+    'For when something needs repairing and previous attempts have not landed. Most bad apologies are the right sentiment delivered in the wrong shape.',
+  'long-distance-relationship-quiz':
+    'For couples in different cities or time zones. Identifies what you are already doing well, which is usually the thing worth protecting when it gets hard.',
+  'best-friend-test':
+    'For the friendship nobody has ever formally acknowledged. Take it together — comparing answers is most of the fun and occasionally the point.',
+}
+
+const STEPS = [
+  { t: 'Pick one', d: 'Each quiz is eight or nine multiple-choice questions and takes about a minute. Nothing to install, no email step.' },
+  { t: 'Answer on instinct', d: 'Take the first option you reach for. Deliberating gives you a tidier result and a less accurate one.' },
+  { t: 'Compare with someone', d: 'Send the same quiz to your partner or best friend and read both results. The gap between them is the useful part.' },
+]
+
+const FAQS = [
+  {
+    q: 'Are these love quizzes free?',
+    a: 'Yes — every quiz is free, with no sign-up, no email and no result page to unlock. You answer the questions and the result appears immediately.',
+  },
+  {
+    q: 'How long does each quiz take?',
+    a: 'About a minute. Each one is eight or nine multiple-choice questions, deliberately short so you answer on instinct rather than deliberating your way to a flattering result.',
+  },
+  {
+    q: 'Are my answers saved or shared?',
+    a: 'No. The quizzes run in your browser and your individual answers are never stored against you or sold to anyone. We count only how many people started and finished each quiz, which tells us which ones are worth improving.',
+  },
+  {
+    q: 'Can I take a quiz with my partner or a friend?',
+    a: 'That is the best way to use them. Take the same quiz separately, then compare results and talk about where they differ — a described mismatch is far easier to discuss than an argument about the same thing.',
+  },
+  {
+    q: 'Are these quizzes scientifically accurate?',
+    a: 'No, and we would rather say so plainly. They are not diagnostic instruments and nothing here is validated research. What a good quiz does is give you a vocabulary for something you had already noticed, which is genuinely useful even when the categories are approximate.',
   },
 ]
 
@@ -60,6 +111,15 @@ export default async function QuizzesHubPage() {
       'Love and relationship quizzes',
       quizzes.map(q => ({ name: q.title as string, path: `/quizzes/${q.slug}` }))
     ),
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: FAQS.map(f => ({
+        '@type': 'Question',
+        name: f.q,
+        acceptedAnswer: { '@type': 'Answer', text: f.a },
+      })),
+    },
   ]
 
   return (
@@ -78,6 +138,16 @@ export default async function QuizzesHubPage() {
           </p>
         </div>
 
+        <div className="grid sm:grid-cols-3 gap-4 mb-10">
+          {STEPS.map((s, i) => (
+            <div key={s.t} className="bg-white rounded-2xl border border-rose-100 p-5 shadow-sm text-center">
+              <div className="w-9 h-9 rounded-full bg-rose-600 text-white font-bold flex items-center justify-center mx-auto mb-3">{i + 1}</div>
+              <h2 className="font-semibold text-rose-900 mb-1.5 text-sm">{s.t}</h2>
+              <p className="text-xs text-rose-700/70 leading-relaxed">{s.d}</p>
+            </div>
+          ))}
+        </div>
+
         <div className="space-y-4">
           {quizzes.map(q => (
             <Link
@@ -87,6 +157,9 @@ export default async function QuizzesHubPage() {
             >
               <h2 className="font-serif text-xl font-bold text-rose-900 mb-1.5">{q.title}</h2>
               <p className="text-sm text-rose-700/70 leading-relaxed">{q.description}</p>
+              {QUIZ_BLURBS[q.slug as string] && (
+                <p className="text-sm text-rose-700/60 leading-relaxed mt-2">{QUIZ_BLURBS[q.slug as string]}</p>
+              )}
               <p className="text-xs text-rose-400 mt-3">
                 {Array.isArray(q.questions) ? q.questions.length : 0} questions · takes about a minute →
               </p>
@@ -106,6 +179,18 @@ export default async function QuizzesHubPage() {
             ))}
           </section>
         ))}
+
+        <section className="mt-12">
+          <h2 className="font-serif text-2xl font-bold text-rose-900 mb-6">Questions people ask</h2>
+          <div className="space-y-4">
+            {FAQS.map(f => (
+              <div key={f.q} className="bg-white rounded-2xl border border-rose-100 p-6 shadow-sm">
+                <h3 className="font-semibold text-rose-900 mb-2 text-sm">{f.q}</h3>
+                <p className="text-sm text-rose-700/70 leading-relaxed">{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
 
         <div className="text-center mt-10">
           <Link href="/tools" className="text-sm bg-white border border-rose-100 text-rose-700 px-4 py-2 rounded-full hover:bg-rose-50 transition-colors">

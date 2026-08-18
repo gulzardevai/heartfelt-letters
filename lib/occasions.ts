@@ -585,7 +585,7 @@ export const OCCASIONS: Occasion[] = [
     h1: 'Gratitude Letter',
     subheading: 'The one letter that reliably makes both people happier — the person who reads it and the person who wrote it.',
     metaTitle: 'Gratitude Letter Template — Write a Free Gratitude Letter',
-    metaDescription: 'Free gratitude letter templates and prompts. Write a gratitude letter to family, a friend or a mentor — a Thanksgiving letter that says the thing you never got round to saying.',
+    metaDescription: 'Free gratitude letter templates and prompts. Write to family, a friend or a mentor — and say the thing you never got round to saying. Free, no account.',
     intro: [
       'A gratitude letter is different from a thank-you note. A thank-you note settles a debt: you did a thing, here is my acknowledgement, we are square. A gratitude letter does the opposite — it reopens something, on purpose, and tells a person that what they did is still working on you years later.',
       'This is the single best-evidenced letter you can write. In the research on gratitude the effect on the writer is larger and longer-lasting than almost any other small intervention, and the effect on the reader is not subtle either: most people receiving one badly underestimate how much it will land, which is exactly why so few of these letters get written.',
@@ -639,7 +639,7 @@ export const OCCASIONS: Occasion[] = [
     name: 'Christmas',
     h1: 'Christmas Letter',
     subheading: 'What to write in a Christmas card when "Merry Christmas, love from all of us" is not quite enough.',
-    metaTitle: 'Christmas Letter Template — What to Write in a Christmas Card',
+    metaTitle: 'What to Write in a Christmas Card — Free Letter Templates',
     metaDescription: 'Free Christmas letter and card templates: what to write in a Christmas card, a family Christmas letter, and a printable letter to Santa. No account needed.',
     intro: [
       'Almost every Christmas card in circulation says the same eleven words, and the person opening it knows it. That is not a failure of effort — it is a failure of prompt. Nobody has ever been given anything useful to write in the space under the printed greeting.',
@@ -863,7 +863,7 @@ export const OCCASIONS: Occasion[] = [
     name: 'Sibling',
     h1: 'Letter to a Sibling',
     subheading: 'A letter to your sister or brother — the one person who remembers your childhood from the inside.',
-    metaTitle: 'Letter to My Sister or Brother — Free Sibling Letter Template',
+    metaTitle: 'Letter to My Sister or Brother — Free Sibling Templates',
     metaDescription: 'Free templates for a letter to your sister or brother. What to say, opening lines to steal and a printable fill-in-the-blank sibling letter — no account needed.',
     intro: [
       'A sibling is the only person who will ever have been there for the whole thing. Parents remember you as a child; friends met you already assembled. Your sister or brother watched the entire construction from the inside, including the parts you have since quietly edited out.',
@@ -1378,7 +1378,7 @@ export const OCCASIONS: Occasion[] = [
     emoji: '🤫',
     name: 'Secret Letter',
     h1: 'Secret Letter',
-    metaTitle: 'Send a Secret Letter Anonymously — Free, Encrypted, No Account',
+    metaTitle: 'Send a Secret Letter Anonymously — Free and Encrypted',
     metaDescription: 'Send a secret letter anonymously and privately. Password-protect it, encrypt it, and share a link only they can open — free, no account, nothing public.',
     intro: [
       'Some things are easier to say when your name is not attached to them. A secret admirer letter, a confession you are not ready to own, a piece of praise you want someone to have without the awkwardness of being thanked for it.',
