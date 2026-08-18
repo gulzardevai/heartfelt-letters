@@ -951,7 +951,7 @@ export const OCCASIONS: Occasion[] = [
     },
     annotated: {
       heading: 'An example of a letter to a friend, line by line',
-      intro: 'This is one complete friendship letter, about 190 words. Under each line is the reason it is written that way, so you can swap in your own details without losing the thing that makes it work.',
+      intro: 'This is one complete friendship letter, 140 words. Under each line is the reason it is written that way, so you can swap in your own details without losing the thing that makes it work.',
       lines: [
         {
           text: 'Ren,',
@@ -982,7 +982,7 @@ export const OCCASIONS: Occasion[] = [
           note: '"Love," is fine between friends, and so is your name on its own. Anything that sounds like the end of a work email will undo the six lines above it.',
         },
       ],
-      note: 'Notice how little of this is about friendship in general and how much of it is about one induction week, one train and one pub. That ratio is the whole technique. Keep the shape, replace every detail.',
+      note: 'Notice how little of this is about friendship in general and how much of it is about one induction week, one train and one pub. That ratio is the whole technique \u2014 keep the shape, replace every detail. At 140 words it also sits under the 200-to-400 range suggested below, which is deliberate: it carries one memory. If you want the longer version, add a second memory in the same style rather than stretching the sentences you already have.',
     },
     format: {
       heading: 'The format of a letter to a friend',
