@@ -117,8 +117,11 @@ function welcomeEmailHtml(firstName: string) {
 // reply. They are deliberately NOT branded template emails — a short note
 // from a person lands in Gmail's Primary tab, a marketing layout does not.
 //
-// The letter itself is never quoted. Content is AES-256 encrypted at rest
-// precisely so we cannot read it; these emails only ever link to the site.
+// The letter itself is never quoted. Content is AES-256 encrypted at rest, so
+// keeping it out of outbound mail is what stops a plaintext copy of the letter
+// existing in the sender's and recipient's inboxes; these emails only ever link
+// to the site. (Encryption at rest is not end-to-end — the server holds the key
+// and decrypts on every view — so "we cannot read it" is NOT the reason here.)
 
 // Link previews (WhatsApp, iMessage, Slack, Discord...) fetch the letter URL
 // the moment the sender pastes it. That is not somebody opening the letter,
