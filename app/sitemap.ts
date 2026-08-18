@@ -12,7 +12,7 @@ const BASE = 'https://www.shareloveletters.com'
 // a sitemap where every URL is always freshly modified trains Google to ignore
 // our lastmod values entirely, including the accurate ones on blog posts and
 // quizzes. Bump this constant whenever the static page copy is actually changed.
-const STATIC_LAST_MODIFIED = new Date('2026-08-14T00:00:00.000Z')
+const STATIC_LAST_MODIFIED = new Date('2026-08-19T00:00:00.000Z')
 
 // Report the most recent real edit, never now(): a content refresh must move
 // lastmod (that is the only re-crawl signal Google gets), but an untouched post
@@ -55,6 +55,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${BASE}/blog`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'daily', priority: 0.8 },
     { url: `${BASE}/compare`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${BASE}/about`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'yearly', priority: 0.5 },
+    { url: `${BASE}/write-for-us`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${BASE}/contact`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'yearly', priority: 0.4 },
     { url: `${BASE}/privacy`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'yearly', priority: 0.3 },
     { url: `${BASE}/terms`, lastModified: STATIC_LAST_MODIFIED, changeFrequency: 'yearly', priority: 0.3 },
