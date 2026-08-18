@@ -41,6 +41,36 @@ export const metadata: Metadata = {
   },
 }
 
+// Sitewide entity graph. AI answer engines resolve a brand as an ENTITY before
+// they will cite it, and until 2026-08-18 the only Organization node on the site
+// was on /about — effectively invisible. The @id values are stable URIs so other
+// schema on the site can reference this node rather than redeclaring it.
+const siteJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': 'https://www.shareloveletters.com/#organization',
+    name: 'ShareLove Letters',
+    url: 'https://www.shareloveletters.com',
+    description:
+      'A free, encrypted letter-writing app for sending heartfelt letters via a private link — opened like a real envelope.',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://www.shareloveletters.com/opengraph-image.png',
+    },
+    email: 'hello@shareloveletters.com',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': 'https://www.shareloveletters.com/#website',
+    name: 'ShareLove Letters',
+    url: 'https://www.shareloveletters.com',
+    publisher: { '@id': 'https://www.shareloveletters.com/#organization' },
+    inLanguage: 'en',
+  },
+]
+
 export default function RootLayout({
   children,
 }: {
@@ -49,6 +79,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable} ${dancing.variable}`}>
       <body className="min-h-screen bg-cream">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
+        />
         <AdSenseScript />
         <AuthProvider>
           {children}
