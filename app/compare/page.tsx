@@ -14,7 +14,7 @@ const competitors = [
     name: 'Digital Love Letters',
     focus: 'Online love letters',
     price: '$5/yr or $8 once',
-    weakness: 'You can type a letter without an account, but you have to sign in before you can send it — and the free tier caps a letter at 100 characters with no photos, so a real letter means paying: $5.00/year or $8.00 one-time, both discounted under a countdown timer (prices checked on their public pricing page, 19 Aug 2026). Its occasions are all romance-framed — nothing for grief, friendship, illness or congratulations. No anonymous writing, no password protection, no quote library.',
+    weakness: 'You can write the whole letter and attach a photo without an account, but pressing Publish sends you straight to a sign-in page — and a plan costs $5.00/year or $8.00 one-time, both discounted under a countdown timer (checked on their public pricing page, 19 Aug 2026). Its 14 occasions skew romantic — nothing for grief, friendship, illness or congratulations. No anonymous writing, no password protection, no quote library.',
   },
   {
     name: 'Paperless Post',
@@ -110,7 +110,6 @@ const features = [
   { feature: 'Download the printable PDF without creating an account or giving an email address', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Print the letter on clean paper, no chrome (write online or by hand)', us: true, dll: false, paperless: false, hallmark: true, canva: true, docs: true },
   { feature: 'Rich text editor', us: true, dll: true, paperless: false, hallmark: false, canva: true, docs: true },
-  { feature: 'Write a full-length letter for free — no character cap on the free tier', us: true, dll: false, paperless: true, hallmark: true, canva: true, docs: true },
   { feature: 'Share via private link', us: true, dll: true, paperless: true, hallmark: false, canva: false, docs: true },
   { feature: 'Password protection', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: true },
   { feature: 'AES-256 encrypted letters', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
