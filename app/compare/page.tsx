@@ -13,8 +13,8 @@ const competitors = [
   {
     name: 'Digital Love Letters',
     focus: 'Online love letters',
-    price: 'Paid plans',
-    weakness: 'You have to sign up before you can write a word, and the site advertises "affordable plans" without publishing a price anywhere public. Its 14 occasions are all romance-framed — nothing for grief, friendship, illness or congratulations. No anonymous writing, no password protection, no quote library.',
+    price: '$5/yr or $8 once',
+    weakness: 'You can type a letter without an account, but you have to sign in before you can send it — and the free tier caps a letter at 100 characters with no photos, so a real letter means paying: $5.00/year or $8.00 one-time, both discounted under a countdown timer (prices checked on their public pricing page, 19 Aug 2026). Its occasions are all romance-framed — nothing for grief, friendship, illness or congratulations. No anonymous writing, no password protection, no quote library.',
   },
   {
     name: 'Paperless Post',
@@ -110,6 +110,7 @@ const features = [
   { feature: 'Download the printable PDF without creating an account or giving an email address', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Print the letter on clean paper, no chrome (write online or by hand)', us: true, dll: false, paperless: false, hallmark: true, canva: true, docs: true },
   { feature: 'Rich text editor', us: true, dll: true, paperless: false, hallmark: false, canva: true, docs: true },
+  { feature: 'Write a full-length letter for free — no character cap on the free tier', us: true, dll: false, paperless: true, hallmark: true, canva: true, docs: true },
   { feature: 'Share via private link', us: true, dll: true, paperless: true, hallmark: false, canva: false, docs: true },
   { feature: 'Password protection', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: true },
   { feature: 'AES-256 encrypted letters', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
@@ -121,7 +122,7 @@ const features = [
   { feature: 'Virtual flower bouquet with the letter', us: true, dll: true, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Send that bouquet with a sympathy, get-well or thank-you letter, not only a love letter', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Attach a song (Spotify, Apple Music, YouTube)', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
-  { feature: 'No account needed to start', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
+  { feature: 'No account needed to send the letter', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Image uploads', us: true, dll: true, paperless: true, hallmark: false, canva: true, docs: true },
   { feature: '700+ quote library, browsable by category', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },
   { feature: 'Free love tools (love calculator, quizzes, counters)', us: true, dll: false, paperless: false, hallmark: false, canva: false, docs: false },

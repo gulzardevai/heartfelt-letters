@@ -11,6 +11,36 @@ interface Props {
   params: { slug: string }
 }
 
+// Post content is stored entity-escaped, so stripping tags alone leaves literal
+// "&mdash;" sequences in the JSON-LD Google reads. Decode them (&amp; last, so
+// "&amp;mdash;" survives as text rather than double-decoding into an em dash).
+const ENTITIES: Record<string, string> = {
+  '&lt;': '<',
+  '&gt;': '>',
+  '&quot;': '"',
+  '&#39;': "'",
+  '&apos;': "'",
+  '&mdash;': '—',
+  '&ndash;': '–',
+  '&nbsp;': ' ',
+  '&eacute;': 'é',
+  '&hellip;': '…',
+  '&rsquo;': '’',
+  '&lsquo;': '‘',
+  '&ldquo;': '“',
+  '&rdquo;': '”',
+}
+
+function decodeEntities(text: string): string {
+  return text
+    .replace(/&(?:lt|gt|quot|#39|apos|mdash|ndash|nbsp|eacute|hellip|rsquo|lsquo|ldquo|rdquo);/g, (e) => ENTITIES[e] ?? e)
+    .replace(/&#(\d+);/g, (_, code) => String.fromCodePoint(Number(code)))
+    .replace(/&#x([0-9a-f]+);/gi, (_, code) => String.fromCodePoint(parseInt(code, 16)))
+    .replace(/&amp;/g, '&')
+    .replace(/\s+/g, ' ')
+    .trim()
+}
+
 // Extract Q&A pairs from the post's "Frequently Asked Questions" section so we can
 // emit FAQPage structured data (eligible for People-Also-Ask / rich results).
 function extractFaq(html: string): { q: string; a: string }[] {
@@ -23,8 +53,8 @@ function extractFaq(html: string): { q: string; a: string }[] {
   const re = /<h3[^>]*>([\s\S]*?)<\/h3>([\s\S]*?)(?=<h3|$)/gi
   let m: RegExpExecArray | null
   while ((m = re.exec(faqHtml)) !== null) {
-    const q = m[1].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
-    const a = m[2].replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()
+    const q = decodeEntities(m[1].replace(/<[^>]+>/g, ' '))
+    const a = decodeEntities(m[2].replace(/<[^>]+>/g, ' '))
     if (q && a) items.push({ q, a })
   }
   return items
