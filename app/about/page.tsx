@@ -101,7 +101,7 @@ export default function AboutPage() {
             <h2 className="font-serif text-3xl font-bold text-rose-900 mb-6">Why Privacy Comes First</h2>
             <div className="prose prose-rose max-w-none text-rose-800/80 leading-relaxed space-y-4">
               <p>
-                A letter is one of the most intimate things a person can write, so we treat every letter accordingly. Each one is encrypted with AES-256 — the same standard banks use — before it ever touches our database, which means your words are unreadable in storage, even to us. Letters are never public, never indexed by search engines, and never used for anything except being delivered to the person you chose.
+                A letter is one of the most intimate things a person can write, so we treat every letter accordingly. Each one is encrypted with AES-256 — the same standard banks use — before it ever touches our database, so what is stored is ciphertext rather than your words. Letters are never public, never indexed by search engines, and never used for anything except being delivered to the person you chose.
               </p>
               <p>
                 You can add a password so only your recipient can open a letter, write anonymously without creating an account, or seal a letter until a date in the future — it stays encrypted and undeliverable until the day arrives. We built these protections not as premium features but as defaults, because trust is the whole point of a letter.

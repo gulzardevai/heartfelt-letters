@@ -852,7 +852,7 @@ const WRITE_GUIDE: { heading: string; body: string[] }[] = [
   {
     heading: 'Privacy, plainly',
     body: [
-      'Every letter is encrypted at rest with AES-256, which means it is unreadable in our own database. Letters are never indexed by search engines and never appear in any public listing. You can add a password so that even someone who obtains the link cannot open it.',
+      'Every letter is encrypted at rest with AES-256, so the database holds only ciphertext. Letters are never indexed by search engines and never appear in any public listing. You can add a password so that even someone who obtains the link cannot open it.',
       'You do not need an account to write or send, and you can still send without revealing who you are. The one real difference is what happens afterwards: a guest link stays live for 7 days and then expires, and a guest never finds out whether the letter was opened. With a free account the letter is kept for 30 days and stays in your dashboard, where you can see whether it has been opened, how many times, and every reply it received.',
     ],
   },
@@ -877,7 +877,7 @@ const WRITE_FAQS = [
   },
   {
     q: 'Is my letter private and encrypted?',
-    a: 'Yes. Every letter is encrypted at rest with bank-grade AES-256, so it is unreadable even in our own database. Letters are never public, indexed or searchable, and you can add a password so only your recipient can open it.',
+    a: 'Yes. Every letter is encrypted at rest with bank-grade AES-256, so the database holds only ciphertext. Letters are never public, indexed or searchable, and you can add a password so only your recipient can open it.',
   },
   {
     q: 'How does the recipient open the letter?',

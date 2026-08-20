@@ -149,7 +149,7 @@ const faqs = [
   },
   {
     q: 'Are the letters private and encrypted?',
-    a: 'Yes. Every letter is encrypted at rest with bank-grade AES-256 encryption, so it is unreadable even in our own database. Letters are never public, indexed or searchable, and you can add a password so only your recipient can open it.',
+    a: 'Yes. Every letter is encrypted at rest with bank-grade AES-256, so the database holds only ciphertext rather than your words. That is encryption at rest, not end-to-end encryption — we hold the key, because the letter has to be decrypted to show it to the person you sent it to, and we explain exactly what that does and does not protect on our About page. Letters are never public, indexed or searchable, and you can add a password so only your recipient can open it.',
   },
   {
     q: 'Can I send a love letter anonymously?',
@@ -258,7 +258,7 @@ export default function ComparePage() {
                 <li>✓ Free printable fill-in-the-blank letters — download the PDF or print it, fill the blanks in pen, done</li>
                 <li>✓ A QR code for every letter you send — show it, print it, tape it to a gift — and one on every printable PDF that opens the online version of that same letter</li>
                 <li>✓ Beautiful presentation for whoever receives it</li>
-                <li>✓ AES-256 encrypted — unreadable even in our database</li>
+                <li>✓ AES-256 encrypted at rest — the database holds ciphertext, not your words</li>
                 <li>✓ Share via private link, optionally with a password</li>
                 <li>✓ Recipients can reply right on the letter</li>
                 <li>✓ With a free account, your dashboard shows whether each letter was opened, how many times, and every reply</li>
@@ -374,8 +374,12 @@ export default function ComparePage() {
                 <div className="text-4xl mb-4">🔒</div>
                 <h3 className="font-semibold text-rose-900 mb-2">Private by design</h3>
                 <p className="text-sm text-rose-700/70 leading-relaxed">
-                  Every letter is encrypted with bank-grade AES-256 — unreadable even in our own database.
-                  Password protect any letter, write anonymously, and know your words go only where you intend.
+                  Every letter is encrypted with bank-grade AES-256 at rest, so the database holds only
+                  ciphertext — never plaintext behind a link a search engine can crawl. Password protect any
+                  letter, write anonymously, and know your words go only where you intend.{' '}
+                  <a href="/about" className="text-rose-600 underline">
+                    Exactly what our encryption does and does not protect
+                  </a>.
                 </p>
               </div>
             </div>
