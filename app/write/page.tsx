@@ -838,7 +838,7 @@ const WRITE_GUIDE: { heading: string; body: string[] }[] = [
   {
     heading: 'How it works',
     body: [
-      'You write the letter here, choose how it should look, and publish it. What you get back is a private link. Send that link however you like — message, email, a note with a QR code — and the person on the other end opens it to a sealed envelope with their name on it, which unfolds when they click. They need no app and no account.',
+      'You write the letter here, choose how it should look, and publish it. What you get back is a private link. Send that link however you like — message, email, or the QR code we generate for it, printed on a note — and the person on the other end opens it to a sealed envelope with their name on it, which unfolds when they click. They need no app and no account.',
       'Nothing is posted publicly. There is no feed, no profile, no archive of letters other people can browse. The link is the only way in, and you decide who has it.',
     ],
   },

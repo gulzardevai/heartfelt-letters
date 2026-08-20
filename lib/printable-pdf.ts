@@ -5,6 +5,7 @@
 
 import { PDFDocument, PDFFont, PDFPage, StandardFonts, rgb } from 'pdf-lib'
 import { sheetHeading, type SheetMode } from './printables'
+import { qrCode, qrRuns } from './qr'
 
 const PAGE_W = 595.28 // A4
 const PAGE_H = 841.89
@@ -19,6 +20,9 @@ const PROMPT_LEADING = 15
 const PROMPT_GAP = 30 // between one prompt's writing lines and the next prompt
 const MIN_PROMPT_GAP = 12
 const FOOTER_Y = 26
+const QR_SIZE = 84 // ~30mm printed, so a phone camera picks it up at arm's length
+const QR_GAP = 16
+const QR_CAPTION_SIZE = 6.5
 const BODY_BOTTOM = FOOTER_Y + 22
 
 const INK = rgb(0.07, 0.07, 0.07) // #111, as the print stylesheet forces
@@ -114,9 +118,11 @@ export type SheetSpec = {
   name: string
   fillIn: string[]
   sheet: SheetMode
+  // Where the QR code in the top corner leads — see printableWriteUrl().
+  qrUrl: string
 }
 
-export async function buildSheetPdf({ name, fillIn, sheet }: SheetSpec): Promise<Uint8Array> {
+export async function buildSheetPdf({ name, fillIn, sheet, qrUrl }: SheetSpec): Promise<Uint8Array> {
   const doc = await PDFDocument.create()
   const fonts: PdfFonts = {
     body: await doc.embedFont(StandardFonts.TimesRoman),
@@ -154,6 +160,39 @@ export async function buildSheetPdf({ name, fillIn, sheet }: SheetSpec): Promise
     })
   }
 
+  // The join between the two halves of the product: whoever is handed the
+  // printed sheet can scan it and write the same letter online, with a photo,
+  // a theme and a song. Returns the y the caption ends at.
+  const drawQr = (): number => {
+    const qr = qrCode(qrUrl)
+    const unit = QR_SIZE / qr.span
+    const left = PAGE_W - MARGIN - QR_SIZE
+    const top = PAGE_H - MARGIN + 2
+    for (const run of qrRuns(qr)) {
+      page.drawRectangle({
+        x: left + run.x * unit,
+        y: top - (run.y + 1) * unit,
+        width: run.w * unit,
+        height: unit,
+        color: INK,
+      })
+    }
+    let cy = top - QR_SIZE - 3
+    const caption = 'Scan to write this letter online — free, no account.'
+    for (const line of wrapPlain(caption, fonts.italic, QR_CAPTION_SIZE, QR_SIZE)) {
+      const w = fonts.italic.widthOfTextAtSize(line, QR_CAPTION_SIZE)
+      page.drawText(line, {
+        x: left + (QR_SIZE - w) / 2,
+        y: cy,
+        size: QR_CAPTION_SIZE,
+        font: fonts.italic,
+        color: MUTED,
+      })
+      cy -= 8
+    }
+    return cy
+  }
+
   const header = (first: boolean) => {
     y = PAGE_H - MARGIN - 14
     const title = first
@@ -161,8 +200,10 @@ export async function buildSheetPdf({ name, fillIn, sheet }: SheetSpec): Promise
       : `${heading.charAt(0).toUpperCase() + heading.slice(1)} (continued)`
     page.drawText(clean(title), { x: MARGIN, y, size: 15, font: fonts.bold, color: INK })
     y -= 16
+    // On page one the header shares its width with the QR block.
+    const textW = first ? CONTENT_W - QR_SIZE - QR_GAP : CONTENT_W
     if (first) {
-      for (const line of wrapPlain(intro, fonts.italic, 8.5, CONTENT_W)) {
+      for (const line of wrapPlain(intro, fonts.italic, 8.5, textW)) {
         page.drawText(line, { x: MARGIN, y, size: 8.5, font: fonts.italic, color: MUTED })
         y -= 11
       }
@@ -170,11 +211,12 @@ export async function buildSheetPdf({ name, fillIn, sheet }: SheetSpec): Promise
     y -= 8
     page.drawLine({
       start: { x: MARGIN, y },
-      end: { x: PAGE_W - MARGIN, y },
+      end: { x: MARGIN + textW, y },
       thickness: 0.7,
       color: RULE,
     })
     y -= 30
+    if (first) y = Math.min(y, drawQr() - 14)
     footer()
   }
 

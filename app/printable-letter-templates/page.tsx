@@ -46,6 +46,10 @@ const faqs = [
     a: 'Yes — every sheet has a "Download the PDF" button next to the Print button, and both formats have their own file. The PDF is a real A4 document with the blanks, the ruled lines and the small prompts already on it, so you can keep it, email it to someone, or print it from a phone. Nothing is gated: no sign-up, no email address, no watermark across the page.',
   },
   {
+    q: 'What is the QR code on the PDF for?',
+    a: 'Every downloaded sheet has a small QR code in the top corner. Point a phone camera at it and it opens the online version of the same letter, with the occasion already chosen — so the person you hand the printed sheet to can write one back digitally, with a photo, a theme and a song under it. The code carries nothing you wrote: the PDF is built from the template, not from anything you typed into it.',
+  },
+  {
     q: 'How do I print one?',
     a: 'Open any occasion below and press the Print button in the printable section. The page prints as a clean sheet in black ink — no navigation, no colours, no marketing around the edges — sized for A4 or US Letter. If you would rather have the file first, use the Download the PDF button and print that instead.',
   },

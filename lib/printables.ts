@@ -24,11 +24,12 @@ export type Printable = {
   slug: string
   name: string
   fillIn: string[]
+  type?: string // LETTER_TYPES id, so the sheet can link back into /write
 }
 
 const PRINTABLES: Printable[] = [
   { slug: GENERAL_SLUG, name: 'Any occasion', fillIn: GENERAL_FILL_IN },
-  ...OCCASIONS.map(o => ({ slug: o.slug, name: o.name, fillIn: o.fillIn })),
+  ...OCCASIONS.map(o => ({ slug: o.slug, name: o.name, fillIn: o.fillIn, type: o.type })),
 ]
 
 export function getPrintable(slug: string): Printable | undefined {
@@ -37,6 +38,18 @@ export function getPrintable(slug: string): Printable | undefined {
 
 export function allPrintables(): Printable[] {
   return PRINTABLES
+}
+
+// Where the QR code on a printed sheet lands. The sheets are occasion
+// templates, not copies of one person's letter, so there is no per-letter URL
+// to encode here — the honest target is the digital version of the same
+// letter, with the occasion already chosen.
+export function printableWriteUrl(p: Printable): string {
+  const params = new URLSearchParams()
+  if (p.type) params.set('type', p.type)
+  params.set('utm_source', 'printable')
+  params.set('utm_medium', 'qr')
+  return `https://www.shareloveletters.com/write?${params.toString()}`
 }
 
 // "Love Letter" and "Secret Letter" already end in the word, so appending

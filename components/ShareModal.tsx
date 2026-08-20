@@ -29,6 +29,20 @@ export default function ShareModal({ shareId, onClose, showPasswordSetup = false
     if (showAccountOffer) sendGAEvent('event', 'account_offer_shown', { placement: 'share_modal' })
   }, [showAccountOffer])
 
+  // The QR is generated in the browser, from the link that is already on
+  // screen — nothing about this letter is sent to a QR service. Loaded lazily
+  // so the generator never lands in the write page's initial bundle.
+  const [qr, setQr] = useState<{ path: string; viewBox: string } | null>(null)
+  useEffect(() => {
+    let live = true
+    import('@/lib/qr').then(({ qrSvg }) => {
+      if (live) setQr(qrSvg(shareUrl))
+    })
+    return () => {
+      live = false
+    }
+  }, [shareUrl])
+
   const [copied, setCopied] = useState(false)
   const [hasPassword, setHasPassword] = useState(initialHasPassword)
   const [password, setPassword] = useState('')
@@ -49,6 +63,24 @@ export default function ShareModal({ shareId, onClose, showPasswordSetup = false
   const copyLinkOnly = async () => {
     await navigator.clipboard.writeText(shareUrl)
     toast.success('Link copied!')
+  }
+
+  const downloadQr = () => {
+    if (!qr) return
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="${qr.viewBox}" shape-rendering="crispEdges"><rect width="100%" height="100%" fill="#ffffff"/><path d="${qr.path}" fill="#111111"/></svg>`
+    const img = new Image()
+    img.onload = () => {
+      const canvas = document.createElement('canvas')
+      canvas.width = 512
+      canvas.height = 512
+      canvas.getContext('2d')?.drawImage(img, 0, 0, 512, 512)
+      const a = document.createElement('a')
+      a.href = canvas.toDataURL('image/png')
+      a.download = 'letter-qr-code.png'
+      a.click()
+      sendGAEvent('event', 'share_qr_downloaded', {})
+    }
+    img.src = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`
   }
 
   const handleToggle = async () => {
@@ -96,7 +128,7 @@ export default function ShareModal({ shareId, onClose, showPasswordSetup = false
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-6 fade-in">
+      <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-6 fade-in max-h-[90vh] overflow-y-auto">
         <div className="text-center mb-6">
           <div className="text-4xl mb-2">🎉</div>
           <h2 className="font-serif text-2xl font-bold text-rose-900">Your Letter is Ready!</h2>
@@ -127,6 +159,34 @@ export default function ShareModal({ shareId, onClose, showPasswordSetup = false
             </button>
           </div>
         </div>
+
+        {/* QR code — for handing the link over on paper */}
+        {qr && (
+          <div className="border border-rose-100 rounded-2xl p-4 mb-4 flex items-center gap-4">
+            <svg
+              viewBox={qr.viewBox}
+              shapeRendering="crispEdges"
+              className="w-24 h-24 flex-shrink-0 bg-white rounded-lg"
+              role="img"
+              aria-label="QR code for this letter's link"
+            >
+              <path d={qr.path} fill="#111111" />
+            </svg>
+            <div className="min-w-0">
+              <p className="text-sm font-medium text-rose-900">Or let them scan it</p>
+              <p className="text-xs text-rose-700/60 leading-relaxed mt-0.5">
+                A phone camera opens the letter. Print it, tuck it inside a card, or tape it to a
+                gift.
+              </p>
+              <button
+                onClick={downloadQr}
+                className="text-[11px] text-rose-500 underline hover:text-rose-700 mt-1.5"
+              >
+                Download QR code
+              </button>
+            </div>
+          </div>
+        )}
 
         {/* Password protection */}
         {showPasswordSetup && (

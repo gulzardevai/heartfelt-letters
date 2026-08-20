@@ -1,6 +1,12 @@
 import { notFound } from 'next/navigation'
 import { buildSheetPdf } from '@/lib/printable-pdf'
-import { allPrintables, getPrintable, pdfFilename, type SheetMode } from '@/lib/printables'
+import {
+  allPrintables,
+  getPrintable,
+  pdfFilename,
+  printableWriteUrl,
+  type SheetMode,
+} from '@/lib/printables'
 
 // The sheets are built from code, not from the database, so every PDF can be
 // generated once at build time and served as a static file.
@@ -25,7 +31,12 @@ export async function GET(
   const printable = getPrintable(params.slug)
   if (!sheet || !printable) notFound()
 
-  const pdf = await buildSheetPdf({ name: printable.name, fillIn: printable.fillIn, sheet })
+  const pdf = await buildSheetPdf({
+    name: printable.name,
+    fillIn: printable.fillIn,
+    sheet,
+    qrUrl: printableWriteUrl(printable),
+  })
 
   return new Response(Buffer.from(pdf), {
     headers: {
