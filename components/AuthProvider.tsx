@@ -2,6 +2,7 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { User } from '@supabase/supabase-js'
 import { createSupabaseBrowserClient } from '@/lib/supabase-browser'
+import { captureAttribution, syncAttributionToProfile } from '@/lib/attribution'
 
 type Profile = {
   id: string
@@ -11,6 +12,8 @@ type Profile = {
   plan: 'free' | 'pro'
   letter_count: number
   welcome_sent_at: string | null
+  created_at?: string | null
+  first_seen_at?: string | null
 }
 
 type AuthCtx = {
@@ -42,10 +45,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         welcomeRequested = true
         fetch('/api/welcome', { method: 'POST' }).catch(() => {})
       }
+      // Brand-new account? Stamp its first touch. The profiles row is created
+      // by the on_auth_user_created trigger, so this has to happen on the first
+      // authenticated profile fetch — a write in either sign-in handler would
+      // miss the other path (OAuth vs. email confirmation link).
+      syncAttributionToProfile(data as Profile)
     }
   }
 
   useEffect(() => {
+    // Record the visitor's first touch (referrer + UTM) in localStorage before
+    // they browse away from the landing page. No request, no third-party script.
+    captureAttribution()
     supabase.auth.getUser().then(({ data: { user } }) => {
       setUser(user)
       if (user) fetchProfile(user.id)

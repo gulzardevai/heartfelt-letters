@@ -19,6 +19,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="font-serif text-2xl font-bold text-rose-900 mb-3">1. Information We Collect</h2>
             <p>We collect information you provide directly: your email address and name when you create an account, and the content of letters you write. We also collect usage data such as pages visited and features used, and technical information like IP address, browser type, and device information.</p>
+            <p>When you create an account we also record how you first found us — the site that linked you to us and any campaign tags in the link, without their query strings — so we know which channels bring people here. It is stored on your account only, never on your letters, and it is never sold or shared.</p>
           </section>
 
           <section>
