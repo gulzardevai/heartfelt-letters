@@ -78,7 +78,7 @@ export default function Home() {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               { icon: '✉️', title: 'Envelope Opening Magic', desc: 'Your letter arrives as a sealed envelope with a wax seal — recipients tap to open it with a beautiful animation.' },
-              { icon: '🔐', title: 'AES-256 Encrypted', desc: 'Bank-grade encryption means your letters are unreadable in storage — your words are for their eyes only.' },
+              { icon: '🔐', title: 'AES-256 Encrypted', desc: 'Bank-grade AES-256 encryption means the database holds only ciphertext — and your letter is never public, indexed, or searchable.' },
               { icon: '📝', title: '30+ Templates', desc: 'Thoughtfully crafted templates for every occasion — love, birthdays, apologies, gratitude, and more.' },
               { icon: '🔑', title: 'Password Protection', desc: 'Lock any letter with a password so only your person can open it.' },
               { icon: '🕶️', title: 'Anonymous Letters', desc: 'Send a letter without an account or a name — perfect for secret admirers.' },
@@ -170,7 +170,7 @@ export default function Home() {
               { q: 'Is ShareLove Letters really free?', a: 'Yes. Writing and sharing letters is completely free — templates, the editor, photo uploads, private links, and password protection included. No credit card, and you can even write without an account.' },
               { q: 'Can I write a love letter without signing up?', a: 'Yes. Guests can write and share a letter with no account at all. A guest link expires after 7 days and a guest never finds out whether the letter was opened. A free account keeps the letter for 30 days and shows you in your dashboard when it was opened, how many times, and every reply it received. You can sign up after sending and keep the letter you just wrote.' },
               { q: 'How does the recipient open my letter?', a: 'You share a private link. When your recipient opens it, they see a sealed envelope with their name on it — they tap to break the wax seal and the letter unfolds with a beautiful animation.' },
-              { q: 'Are my letters private and secure?', a: 'Yes. Every letter is encrypted at rest with AES-256 encryption — the same standard banks use — so no one can read it in storage. You can also add a password so only your recipient can open it. Letters are never public, indexed, or searchable.' },
+              { q: 'Are my letters private and secure?', a: 'Yes. Every letter is encrypted at rest with AES-256 — the same standard banks use — so the database holds only ciphertext. You can also add a password so only your recipient can open it, and letters are never public, indexed, or searchable. To be exact about what that does and does not mean: we hold the encryption key, because the letter has to be decrypted to be shown to your recipient. So encryption protects your letter from anyone who reaches the database — it is not a claim that we are unable to read it.' },
             ].map(item => (
               <details key={item.q} className="bg-white rounded-2xl border border-rose-100 px-5 py-4 group">
                 <summary className="font-medium text-rose-900 cursor-pointer text-sm list-none flex justify-between items-center">
